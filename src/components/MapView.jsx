@@ -1,116 +1,138 @@
-import { useEffect, useRef } from 'react';
-import { initMap, plotRoute } from '../utils/mapUtils';
+import { useEffect } from 'react';
+import { MapContainer, TileLayer, Marker, Popup, Polyline, useMap } from 'react-leaflet';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
+
+const ACCENT = '#E8472A';
 
 const CITY_CENTERS = {
-  guangzhou: { lat: 23.1291, lng: 113.2644 },
-  shenzhen: { lat: 22.5431, lng: 114.0579 },
-  shanghai: { lat: 31.2304, lng: 121.4737 },
+  guangzhou: [23.1291, 113.2644],
+  shenzhen: [22.5431, 114.0579],
+  shanghai: [31.2304, 121.4737],
 };
 
+function numberedIcon(n) {
+  return L.divIcon({
+    className: '',
+    html: `<div style="
+      width:30px;height:30px;border-radius:50%;
+      background:${ACCENT};border:3px solid #fff;
+      display:flex;align-items:center;justify-content:center;
+      font-size:12px;font-weight:800;color:#fff;
+      box-shadow:0 2px 10px rgba(0,0,0,0.3);
+      font-family:'DM Sans',sans-serif;
+    ">${n}</div>`,
+    iconSize: [30, 30],
+    iconAnchor: [15, 15],
+    popupAnchor: [0, -18],
+  });
+}
+
+function FitBounds({ stops }) {
+  const map = useMap();
+  useEffect(() => {
+    if (!stops.length) return;
+    if (stops.length === 1) {
+      map.setView([stops[0].lat, stops[0].lng], 14);
+    } else {
+      map.fitBounds(
+        stops.map(s => [s.lat, s.lng]),
+        { padding: [40, 40], maxZoom: 15 }
+      );
+    }
+  }, [stops, map]);
+  return null;
+}
+
 export default function MapView({ days, dayStops, activeDay, onDayChange, primaryCity }) {
-  const containerRef = useRef(null);
-  const mapRef = useRef(null);
-
-  useEffect(() => {
-    if (!containerRef.current) return;
-    if (mapRef.current) { mapRef.current.remove(); mapRef.current = null; }
-
-    const center = CITY_CENTERS[days[activeDay]?.city || primaryCity] || CITY_CENTERS.guangzhou;
-
-    const token = import.meta.env.VITE_MAPBOX_TOKEN;
-    if (!token) {
-      return; // Map container shows fallback
-    }
-
-    const map = initMap(containerRef.current, center);
-    mapRef.current = map;
-
-    map.on('load', () => {
-      const stops = dayStops[activeDay] || [];
-      if (stops.length > 0) plotRoute(map, stops);
-    });
-
-    return () => {
-      if (mapRef.current) { mapRef.current.remove(); mapRef.current = null; }
-    };
-  }, [activeDay, primaryCity]);
-
-  // Update route when day changes but map already loaded
-  useEffect(() => {
-    if (!mapRef.current) return;
-    const stops = dayStops[activeDay] || [];
-    if (mapRef.current.isStyleLoaded()) {
-      plotRoute(mapRef.current, stops);
-    }
-  }, [dayStops, activeDay]);
-
-  const hasToken = !!import.meta.env.VITE_MAPBOX_TOKEN;
+  const stops = dayStops[activeDay] || [];
+  const positions = stops.map(s => [s.lat, s.lng]);
+  const center = CITY_CENTERS[days[activeDay]?.city || primaryCity] || CITY_CENTERS.guangzhou;
 
   return (
-    <div className="flex flex-col h-screen" style={{ paddingBottom: 64 }}>
+    <div style={{ display: 'flex', flexDirection: 'column', height: 'calc(100vh - 64px)' }}>
       {/* Day tabs */}
-      <div className="flex gap-2 p-3 overflow-x-auto" style={{ background: 'var(--surface)' }}>
+      <div
+        style={{
+          display: 'flex', gap: 8, padding: '10px 12px',
+          overflowX: 'auto', background: '#fff',
+          borderBottom: '1px solid #f1f5f9', flexShrink: 0,
+        }}
+      >
         {days.map((day, i) => {
-          const isActive = i === activeDay;
+          const active = i === activeDay;
           return (
             <button
               key={i}
               onClick={() => onDayChange(i)}
-              className="flex-shrink-0 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all"
               style={{
-                background: isActive ? 'var(--accent-tint)' : '#f1f5f9',
-                color: isActive ? 'var(--accent)' : 'var(--text-muted)',
-                border: isActive ? '1.5px solid var(--accent)' : '1.5px solid transparent',
+                flexShrink: 0, padding: '6px 14px', borderRadius: 20,
+                fontSize: 12, fontWeight: 600, cursor: 'pointer', border: 'none',
+                background: active ? 'rgba(232,71,42,0.12)' : '#f1f5f9',
+                color: active ? ACCENT : '#64748b',
+                outline: active ? `1.5px solid ${ACCENT}` : 'none',
               }}
             >
               {day.label}
-              {day.cityHeader && <span className="ml-1">{day.cityHeader.emoji}</span>}
+              {day.cityHeader ? ` ${day.cityHeader.emoji}` : ''}
             </button>
           );
         })}
       </div>
 
-      {/* Map or fallback */}
-      <div className="flex-1 relative">
-        {hasToken ? (
-          <div ref={containerRef} id="map-container" style={{ width: '100%', height: '100%' }} />
-        ) : (
-          <div className="flex flex-col items-center justify-center h-full px-6 text-center"
-            style={{ background: '#f8fafc' }}>
-            <p className="text-4xl mb-4">🗺️</p>
-            <h3 className="font-bold text-base mb-2" style={{ color: 'var(--text-primary)' }}>
-              Map needs a Mapbox token
-            </h3>
-            <p className="text-sm mb-4" style={{ color: 'var(--text-muted)' }}>
-              Add <code className="bg-gray-100 px-1 rounded">VITE_MAPBOX_TOKEN</code> to your <code className="bg-gray-100 px-1 rounded">.env</code> file
-            </p>
-            <a
-              href="https://mapbox.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm font-semibold"
-              style={{ color: 'var(--accent)' }}
-            >
-              Get a free token →
-            </a>
-            {/* Stop list fallback */}
-            <div className="w-full mt-8 text-left">
-              {(dayStops[activeDay] || []).map((stop, i) => (
-                <div key={stop.id} className="flex items-center gap-3 py-2 border-b" style={{ borderColor: '#e2e8f0' }}>
-                  <div
-                    className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold text-white flex-shrink-0"
-                    style={{ background: 'var(--accent)' }}
-                  >
-                    {i + 1}
-                  </div>
-                  <div>
-                    <p className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>{stop.name}</p>
-                    <p className="text-xs" style={{ color: 'var(--text-muted)' }}>{stop.startTime} · {stop.district}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
+      {/* Map */}
+      <div style={{ flex: 1, position: 'relative' }}>
+        {stops.length === 0 ? (
+          <div style={{
+            display: 'flex', flexDirection: 'column', alignItems: 'center',
+            justifyContent: 'center', height: '100%', color: '#94a3b8',
+          }}>
+            <p style={{ fontSize: 32, marginBottom: 8 }}>🗺️</p>
+            <p style={{ fontSize: 14 }}>No stops for this day</p>
           </div>
+        ) : (
+          <MapContainer
+            center={center}
+            zoom={13}
+            style={{ width: '100%', height: '100%' }}
+            zoomControl={false}
+          >
+            <TileLayer
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+
+            <FitBounds stops={stops} />
+
+            {/* Dashed route line */}
+            {positions.length > 1 && (
+              <Polyline
+                positions={positions}
+                pathOptions={{
+                  color: ACCENT,
+                  weight: 2.5,
+                  dashArray: '8, 6',
+                  opacity: 0.85,
+                }}
+              />
+            )}
+
+            {/* Numbered pins */}
+            {stops.map((stop, i) => (
+              <Marker key={stop.id} position={[stop.lat, stop.lng]} icon={numberedIcon(i + 1)}>
+                <Popup closeButton={false} offset={[0, -10]}>
+                  <div style={{ fontFamily: "'DM Sans', sans-serif", padding: '2px 4px', minWidth: 140 }}>
+                    <p style={{ fontWeight: 700, fontSize: 13, margin: '0 0 3px', color: '#1a1a2e' }}>
+                      {stop.name}
+                    </p>
+                    <p style={{ fontSize: 11, color: '#64748b', margin: 0 }}>
+                      {stop.startTime}–{stop.endTime} · {stop.district}
+                    </p>
+                  </div>
+                </Popup>
+              </Marker>
+            ))}
+          </MapContainer>
         )}
       </div>
     </div>
