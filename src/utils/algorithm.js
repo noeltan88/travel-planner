@@ -180,15 +180,9 @@ export function recommendHotel(allDayStops, hotels) {
 }
 
 export function buildFullItinerary(answers) {
-  const cityValue = answers.city;
+  // city is now always an array from multi-select
+  const cities = Array.isArray(answers.city) ? answers.city : [answers.city].filter(Boolean);
   const totalDays = answers.duration || 4;
-
-  let cities = [];
-  if (cityValue === 'guangzhou') cities = ['guangzhou'];
-  else if (cityValue === 'shenzhen') cities = ['shenzhen'];
-  else if (cityValue === 'shanghai') cities = ['shanghai'];
-  else if (cityValue === 'gz-sz') cities = ['guangzhou', 'shenzhen'];
-  else if (cityValue === 'all') cities = ['guangzhou', 'shenzhen', 'shanghai'];
 
   const allocation = allocateDaysPerCity(cities, totalDays);
   const allDays = [];

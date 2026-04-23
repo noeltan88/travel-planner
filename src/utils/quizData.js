@@ -3,15 +3,13 @@ export const QUIZ = [
     id: 'city',
     label: 'DESTINATION',
     title: 'Which city are you visiting?',
-    sub: 'You can mix cities for a longer trip',
-    multi: false,
+    sub: 'Select one or more cities',
+    multi: true,
     deco: '中',
     options: [
       { icon: '🏯', name: 'Guangzhou', desc: 'Old Canton, food capital of China', value: 'guangzhou' },
       { icon: '🌆', name: 'Shenzhen', desc: "China's future city, tech & beaches", value: 'shenzhen' },
       { icon: '🏙️', name: 'Shanghai', desc: 'Where old Shanghai meets tomorrow', value: 'shanghai' },
-      { icon: '🗺️', name: 'Guangzhou + Shenzhen', desc: 'Pearl River Delta combo — 6–7 days', value: 'gz-sz' },
-      { icon: '✈️', name: 'All 3 cities', desc: 'The full Southern China experience', value: 'all' },
     ]
   },
   {
