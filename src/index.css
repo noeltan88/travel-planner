@@ -1,0 +1,142 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  background: #EEF2F7;
+  max-width: 430px;
+  margin: 0 auto;
+  min-height: 100vh;
+  position: relative;
+}
+
+::-webkit-scrollbar { display: none; }
+* { scrollbar-width: none; }
+
+:root {
+  --bg: #EEF2F7;
+  --surface: #ffffff;
+
+  --hero-from: #1a0a05;
+  --hero-mid: #2d1208;
+  --hero-to: #0f2027;
+
+  --accent: #E8472A;
+  --accent-dark: #c93820;
+  --accent-glow: rgba(232,71,42,0.35);
+  --accent-tint: rgba(232,71,42,0.12);
+  --accent-deco: rgba(232,71,42,0.07);
+
+  --blue: #0EA5E9;
+  --green: #10B981;
+  --amber: #F59E0B;
+  --purple: #8B5CF6;
+  --pink: #EC4899;
+
+  --swap-bg: #F59E0B;
+  --delete-bg: #EF4444;
+  --klook-from: #FF6B35;
+  --klook-to: #FF4D1C;
+
+  --text-primary: #1a1a2e;
+  --text-secondary: #64748b;
+  --text-muted: #94a3b8;
+
+  --shadow-card: 0 2px 14px rgba(0,0,0,0.07);
+  --shadow-hotel: 0 8px 32px rgba(26,10,5,0.3);
+  --shadow-agoda: 0 4px 16px rgba(232,71,42,0.35);
+}
+
+.hero-bg {
+  background: linear-gradient(155deg, var(--hero-from) 0%, var(--hero-mid) 40%, var(--hero-to) 100%);
+}
+
+/* Swipe card animation */
+.swipe-card-container {
+  overflow: hidden;
+  position: relative;
+  border-radius: 16px;
+  margin-bottom: 10px;
+}
+
+.swipe-card-actions {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  width: 120px;
+}
+
+.swipe-card-face {
+  position: relative;
+  z-index: 1;
+  background: white;
+  transition: transform 0.2s ease;
+  will-change: transform;
+}
+
+/* Klook button gradient */
+.klook-btn {
+  background: linear-gradient(135deg, var(--klook-from), var(--klook-to));
+}
+
+/* Insider tip expand */
+.tip-content {
+  overflow: hidden;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+}
+
+/* Bottom nav safe area */
+.bottom-nav {
+  padding-bottom: env(safe-area-inset-bottom, 8px);
+}
+
+/* Generating screen animations */
+@keyframes pulse-scale {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+
+@keyframes bounce-dot {
+  0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
+  40% { transform: translateY(-8px); opacity: 1; }
+}
+
+.animate-pulse-scale {
+  animation: pulse-scale 1.6s ease-in-out infinite;
+}
+
+.bounce-dot {
+  animation: bounce-dot 1.4s ease-in-out infinite;
+}
+.bounce-dot:nth-child(2) { animation-delay: 0.2s; }
+.bounce-dot:nth-child(3) { animation-delay: 0.4s; }
+
+/* Step indicator */
+@keyframes step-done {
+  from { opacity: 0; transform: scale(0.5); }
+  to { opacity: 1; transform: scale(1); }
+}
+.step-done { animation: step-done 0.3s ease forwards; }
+
+/* Delete collapse */
+@keyframes collapse-height {
+  from { max-height: 200px; opacity: 1; margin-bottom: 10px; }
+  to { max-height: 0; opacity: 0; margin-bottom: 0; }
+}
+.card-collapsing {
+  animation: collapse-height 0.35s ease forwards;
+}
+
+/* Map container */
+#map-container {
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+}

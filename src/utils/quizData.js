@@ -1,0 +1,79 @@
+export const QUIZ = [
+  {
+    id: 'city',
+    label: 'DESTINATION',
+    title: 'Which city are you visiting?',
+    sub: 'You can mix cities for a longer trip',
+    multi: false,
+    deco: '中',
+    options: [
+      { icon: '🏯', name: 'Guangzhou', desc: 'Old Canton, food capital of China', value: 'guangzhou' },
+      { icon: '🌆', name: 'Shenzhen', desc: "China's future city, tech & beaches", value: 'shenzhen' },
+      { icon: '🏙️', name: 'Shanghai', desc: 'Where old Shanghai meets tomorrow', value: 'shanghai' },
+      { icon: '🗺️', name: 'Guangzhou + Shenzhen', desc: 'Pearl River Delta combo — 6–7 days', value: 'gz-sz' },
+      { icon: '✈️', name: 'All 3 cities', desc: 'The full Southern China experience', value: 'all' },
+    ]
+  },
+  {
+    id: 'duration',
+    label: 'DURATION',
+    title: 'How many days?',
+    sub: "We'll pace your stops accordingly",
+    multi: false,
+    deco: '天',
+    options: [
+      { icon: '⚡', name: '2–3 days', desc: 'Weekend getaway — tight but doable', value: 2 },
+      { icon: '🗓️', name: '4–5 days', desc: 'Comfortable pace, most highlights', value: 4 },
+      { icon: '📅', name: '6–7 days', desc: 'Deep dive with breathing room', value: 6 },
+      { icon: '🌏', name: '8–10 days', desc: 'Two cities, everything worth seeing', value: 8 },
+      { icon: '🚀', name: '10–14 days', desc: 'All 3 cities, full immersion', value: 12 },
+    ]
+  },
+  {
+    id: 'group',
+    label: 'TRAVEL GROUP',
+    title: 'Who are you travelling with?',
+    sub: "We'll adjust stops for your group",
+    multi: false,
+    deco: '家',
+    options: [
+      { icon: '🧍', name: 'Solo', desc: 'Freedom, flexibility, your pace', value: 'solo' },
+      { icon: '👫', name: 'Couple', desc: 'Romantic spots & date-worthy dinners', value: 'couple' },
+      { icon: '👨‍👩‍👧', name: 'Family with kids', desc: 'Kid-friendly stops, less walking', value: 'family-kids' },
+      { icon: '👴', name: 'With elderly', desc: 'Accessible routes, no steep climbs', value: 'family-elderly' },
+      { icon: '👥', name: 'Group of friends', desc: 'Nightlife, food & hidden gems', value: 'friends' },
+    ]
+  },
+  {
+    id: 'vibe',
+    label: 'YOUR VIBE',
+    title: 'What kind of trip do you want?',
+    sub: 'Pick up to 3 — we mix them every day',
+    multi: true,
+    maxSelect: 3,
+    deco: '玩',
+    options: [
+      { icon: '🏘️', name: 'Local hangouts', desc: 'Where the locals actually go', value: 'local' },
+      { icon: '📸', name: 'Instagrammable', desc: 'Photogenic, shareable, beautiful', value: 'instagrammable' },
+      { icon: '🌿', name: 'Scenic & nature', desc: 'Parks, rivers, mountain views', value: 'scenic' },
+      { icon: '🏛️', name: 'History & culture', desc: 'Temples, museums, old towns', value: 'culture' },
+      { icon: '💎', name: 'Hidden gems', desc: 'Off the beaten path, crowd-free', value: 'hidden-gem' },
+      { icon: '🛍️', name: 'Shopping & food', desc: 'Markets, malls, street eats', value: 'shopping' },
+    ]
+  },
+  {
+    id: 'dietary',
+    label: 'DIETARY NEEDS',
+    title: 'Any dietary requirements?',
+    sub: "We'll filter your food picks",
+    multi: true,
+    maxSelect: 4,
+    deco: '食',
+    options: [
+      { icon: '✓', name: 'No restrictions', desc: 'I eat everything — surprise me', value: 'none' },
+      { icon: '🌙', name: 'Halal', desc: 'Muslim-friendly restaurants only', value: 'halal' },
+      { icon: '🥦', name: 'Vegetarian', desc: 'Plant-based options available', value: 'vegetarian' },
+      { icon: '🚫', name: 'No pork', desc: 'Excluding pork from food picks', value: 'no-pork' },
+    ]
+  }
+];

@@ -1,0 +1,719 @@
+{
+  "name": "Shenzhen",
+  "chinese": "深圳",
+  "nickname": "鹏城 (Roc City)",
+  "tagline": "China's Future City With a Local Soul",
+  "hero_color": "#1A5276",
+  "lat": 22.5431,
+  "lng": 114.0579,
+  "best_time": "October–December. Best months are November–December.",
+  "days_recommended": "3–4 days",
+  "attractions": [
+    {
+      "id": "sz-001",
+      "name": "Ping An Finance Centre Observation Deck",
+      "chinese": "平安国际金融中心·观光层",
+      "category": "attraction",
+      "vibe_tags": [
+        "instagrammable",
+        "scenic",
+        "touristy"
+      ],
+      "companion_tags": [
+        "couple",
+        "solo",
+        "elderly-friendly"
+      ],
+      "practical_tags": [
+        "book-ahead",
+        "evening-best"
+      ],
+      "duration_hrs": 1.5,
+      "price_rmb": "220",
+      "free": false,
+      "lat": 22.5357,
+      "lng": 114.0478,
+      "district": "Futian",
+      "tip": "World's 4th tallest building at 599m. 'Free Sky' observation deck at 116th floor. On a clear day you can see Hong Kong's New Territories. Nicknamed '春笋' (bamboo shoot) by locals. Go evening for the best city lights. Book online — walk-up queue is brutal.",
+      "elderly_note": "Full elevator access. Suitable for elderly."
+    },
+    {
+      "id": "sz-002",
+      "name": "OCT Loft Creative Culture Park",
+      "chinese": "华侨城创意文化园",
+      "category": "attraction",
+      "vibe_tags": [
+        "local",
+        "hidden-gem",
+        "trending"
+      ],
+      "companion_tags": [
+        "couple",
+        "solo"
+      ],
+      "practical_tags": [
+        "free-entry"
+      ],
+      "duration_hrs": 2,
+      "price_rmb": "0",
+      "free": true,
+      "lat": 22.5449,
+      "lng": 113.9976,
+      "district": "Nanshan",
+      "tip": "Former factory district turned creative enclave. The abandoned aircraft inside (刷爆小红书的废弃飞机) went viral on 小红书 — it's a real decommissioned aircraft on-site used as an art installation. Galleries, cool indie cafes, street art, vintage markets. Called 'a hipster's paradise.'",
+      "elderly_note": "Mostly flat. Some cobblestone between buildings."
+    },
+    {
+      "id": "sz-003",
+      "name": "Dafen Oil Painting Village",
+      "chinese": "大芬油画村",
+      "category": "attraction",
+      "vibe_tags": [
+        "local",
+        "hidden-gem",
+        "instagrammable"
+      ],
+      "companion_tags": [
+        "couple",
+        "solo"
+      ],
+      "practical_tags": [
+        "free-entry"
+      ],
+      "duration_hrs": 2,
+      "price_rmb": "0",
+      "free": true,
+      "lat": 22.596,
+      "lng": 114.07,
+      "district": "Longhua",
+      "tip": "Village that once produced 60% of the world's oil paintings. Artists now making original work alongside copies. Get a custom oil portrait for ¥200–500. The alleyways now have trendy cafes and galleries alongside the studios. Very photogenic.",
+      "elderly_note": "Some uneven alley surfaces. Otherwise accessible."
+    },
+    {
+      "id": "sz-004",
+      "name": "Lianhuashan Park",
+      "chinese": "莲花山公园",
+      "category": "nature",
+      "vibe_tags": [
+        "scenic",
+        "local"
+      ],
+      "companion_tags": [
+        "elderly-friendly",
+        "kid-friendly",
+        "solo"
+      ],
+      "practical_tags": [
+        "free-entry",
+        "morning-only"
+      ],
+      "duration_hrs": 1.5,
+      "price_rmb": "0",
+      "free": true,
+      "lat": 22.5479,
+      "lng": 114.0601,
+      "district": "Futian",
+      "tip": "Bronze Deng Xiaoping statue at the top is a pilgrimage for mainland Chinese visitors. The panoramic Shenzhen skyline from the hill is perfectly aligned with the Civic Center skyscrapers — iconic shot. Described as 'a hidden gem — hard to believe it's in the middle of the city.' Spotlessly maintained.",
+      "elderly_note": "Gentle incline to top. Benches throughout."
+    },
+    {
+      "id": "sz-005",
+      "name": "Nantou Ancient Town",
+      "chinese": "南头古城",
+      "category": "attraction",
+      "vibe_tags": [
+        "local",
+        "hidden-gem",
+        "instagrammable"
+      ],
+      "companion_tags": [
+        "couple",
+        "solo"
+      ],
+      "practical_tags": [
+        "free-entry"
+      ],
+      "duration_hrs": 2.5,
+      "price_rmb": "0",
+      "free": true,
+      "lat": 22.5385,
+      "lng": 113.9243,
+      "district": "Nanshan",
+      "tip": "1,700-year-old walled city revitalized since 2019. Where the Treaty of Nanjing was signed inside — both Shenzhen and Hong Kong trace their administrative roots here. Now: red brick lanes, craft coffee shops, indie boutiques, art exhibitions, weekend pop-up markets. Best described: 'ancient China meets Brooklyn.' Open daily 10am–8pm, closed Mondays.",
+      "elderly_note": "Mostly flat cobblestone lanes."
+    },
+    {
+      "id": "sz-006",
+      "name": "Dameisha Beach",
+      "chinese": "大梅沙海滨公园",
+      "category": "nature",
+      "vibe_tags": [
+        "scenic",
+        "nature",
+        "local"
+      ],
+      "companion_tags": [
+        "kid-friendly",
+        "couple",
+        "solo"
+      ],
+      "practical_tags": [
+        "free-entry",
+        "morning-only"
+      ],
+      "duration_hrs": 3,
+      "price_rmb": "0",
+      "free": true,
+      "lat": 22.598,
+      "lng": 114.3109,
+      "district": "Yantian",
+      "tip": "1.8km of golden sand backed by green hills — free entry, genuinely beautiful. Best beach in mainland China near a major city. Parasol and jet ski rentals available. Go weekday morning — weekend crowds are enormous. Metro Line 8 to Dameisha Station.",
+      "elderly_note": "Flat beach. Suitable with care on sand."
+    },
+    {
+      "id": "sz-007",
+      "name": "Yantian Coastal Boardwalk",
+      "chinese": "盐田海滨栈道",
+      "category": "nature",
+      "vibe_tags": [
+        "scenic",
+        "nature",
+        "hidden-gem"
+      ],
+      "companion_tags": [
+        "couple",
+        "solo"
+      ],
+      "practical_tags": [
+        "free-entry",
+        "morning-only"
+      ],
+      "duration_hrs": 3,
+      "price_rmb": "0",
+      "free": true,
+      "lat": 22.5644,
+      "lng": 114.25,
+      "district": "Yantian",
+      "tip": "19.5km coastal greenway — Shenzhen's most beautiful coastal walk. Connects Shatoujiao, Yantian Harbour, Dameisha to Xiaomeisha. Rocky sea views, lighthouse at Beizai Corner, 'Fairy Tale Town' photo spot. Sunrise is spectacular. Cycle or walk.",
+      "elderly_note": "Long route — do only sections. Metro access at multiple points."
+    },
+    {
+      "id": "sz-008",
+      "name": "Dongmen Pedestrian Street",
+      "chinese": "东门步行街",
+      "category": "shopping",
+      "vibe_tags": [
+        "local",
+        "touristy"
+      ],
+      "companion_tags": [
+        "solo",
+        "couple",
+        "kid-friendly"
+      ],
+      "practical_tags": [
+        "free-entry",
+        "evening-best"
+      ],
+      "duration_hrs": 2,
+      "price_rmb": "0",
+      "free": true,
+      "lat": 22.5473,
+      "lng": 114.1124,
+      "district": "Luohu",
+      "tip": "Shenzhen's oldest shopping street — bulk fashion, electronics, street food. The fresh-pounded lemon tea (手打柠檬茶) stalls here are a Shenzhen institution. White Rabbit sweet variations in multiple flavors at corner stalls. BBQ skewers everywhere. Evening atmosphere is chaotic and fun.",
+      "elderly_note": "Flat pedestrian street."
+    },
+    {
+      "id": "sz-009",
+      "name": "Window of the World",
+      "chinese": "世界之窗",
+      "category": "attraction",
+      "vibe_tags": [
+        "touristy",
+        "instagrammable"
+      ],
+      "companion_tags": [
+        "kid-friendly",
+        "elderly-friendly",
+        "couple"
+      ],
+      "practical_tags": [
+        "book-ahead",
+        "evening-best"
+      ],
+      "duration_hrs": 4,
+      "price_rmb": "120–180",
+      "free": false,
+      "lat": 22.5359,
+      "lng": 113.9738,
+      "district": "Nanshan",
+      "tip": "130 miniature world landmarks. Sunday night at 9pm: 1,500-drone light show above the Arch of Triumph — cyberpunk patterns. Robot interactions near major landmarks weekends 2–4pm. Best for families and kids. Evening has more atmosphere than daytime.",
+      "elderly_note": "Tram transport within park. Suitable."
+    },
+    {
+      "id": "sz-010",
+      "name": "Dapeng Peninsula & Ancient City",
+      "chinese": "大鹏半岛·大鹏所城",
+      "category": "nature",
+      "vibe_tags": [
+        "scenic",
+        "hidden-gem",
+        "nature"
+      ],
+      "companion_tags": [
+        "couple",
+        "solo"
+      ],
+      "practical_tags": [],
+      "duration_hrs": 5,
+      "price_rmb": "free–paid",
+      "free": false,
+      "lat": 22.5886,
+      "lng": 114.45,
+      "district": "Dapeng",
+      "tip": "Eastern peninsula: speed boats, clifftop hikes, fresh seafood fishing villages. Dapeng Ancient City (大鹏所城) is a 600-year-old Ming dynasty fortress — well-preserved, less touristy. Combine with Judiaosha Beach (角场尾) and Yangmeikeng (杨梅坑 — the bluest water in Shenzhen) for a full day.",
+      "elderly_note": "Not suitable due to distance and terrain."
+    },
+    {
+      "id": "sz-011",
+      "name": "Sea World (Shekou)",
+      "chinese": "海上世界",
+      "category": "experience",
+      "vibe_tags": [
+        "local",
+        "instagrammable"
+      ],
+      "companion_tags": [
+        "couple",
+        "solo"
+      ],
+      "practical_tags": [
+        "evening-best",
+        "free-entry"
+      ],
+      "duration_hrs": 2,
+      "price_rmb": "0",
+      "free": true,
+      "lat": 22.4862,
+      "lng": 113.912,
+      "district": "Nanshan",
+      "tip": "Expat enclave with Western-style bars and restaurants built around a grounded ship (Minghu). The adjacent Sea World Culture and Arts Center is an excellent contemporary art museum — free on some days. Easy access to Hong Kong ferry from here.",
+      "elderly_note": "Flat area. Suitable."
+    },
+    {
+      "id": "sz-012",
+      "name": "Shenzhen Bay Park",
+      "chinese": "深圳湾公园",
+      "category": "nature",
+      "vibe_tags": [
+        "scenic",
+        "local"
+      ],
+      "companion_tags": [
+        "elderly-friendly",
+        "couple",
+        "kid-friendly"
+      ],
+      "practical_tags": [
+        "free-entry"
+      ],
+      "duration_hrs": 2,
+      "price_rmb": "0",
+      "free": true,
+      "lat": 22.5096,
+      "lng": 113.9578,
+      "district": "Nanshan",
+      "tip": "6.6km seafront greenway along Shenzhen Bay — bike, walk, or rollerskate. Sunset views of the bay and Shenzhen Bay Bridge are excellent. Migratory birds (Oct–March) including rare black-faced spoonbills. Best evening city walk in Shenzhen. Metro Line 9 to Shenzhen Bay Park Station Exit D2.",
+      "elderly_note": "Flat paved path. Ideal for elderly."
+    },
+    {
+      "id": "sz-013",
+      "name": "Huaqiangbei Electronics Market",
+      "chinese": "华强北电子市场",
+      "category": "shopping",
+      "vibe_tags": [
+        "local",
+        "touristy",
+        "hidden-gem"
+      ],
+      "companion_tags": [
+        "solo",
+        "couple"
+      ],
+      "practical_tags": [
+        "free-entry",
+        "morning-only"
+      ],
+      "duration_hrs": 2,
+      "price_rmb": "0",
+      "free": true,
+      "lat": 22.5484,
+      "lng": 114.0927,
+      "district": "Futian",
+      "tip": "China's electronics wholesale capital — phone parts, gadgets, robotics, surveillance systems, drones. SEG E-Market and Huaqiangbei Road have floor after floor of component stalls. If you like tech, this is mesmerizing. Don't buy without knowing prices first. Metro: Huaqiang North Station.",
+      "elderly_note": "Busy and crowded. Not recommended for elderly."
+    },
+    {
+      "id": "sz-014",
+      "name": "Gangtang Hakka Ancient Town",
+      "chinese": "甘坑客家小镇",
+      "category": "attraction",
+      "vibe_tags": [
+        "local",
+        "hidden-gem",
+        "instagrammable"
+      ],
+      "companion_tags": [
+        "couple",
+        "solo",
+        "kid-friendly"
+      ],
+      "practical_tags": [
+        "free-entry"
+      ],
+      "duration_hrs": 3,
+      "price_rmb": "0",
+      "free": true,
+      "lat": 22.6483,
+      "lng": 114.0636,
+      "district": "Longgang",
+      "tip": "Called 'Shenzhen's 梦华录' (Dream of Splendor). Hakka culture village with 350-year history — ancient watchtowers, traditional houses, manga museum, ceramics workshop, and Hakka food. Rent hanfu (汉服) from ¥40 for photos. Weekday recommended. Metro Line 10 to Gangtang Station, then community bus.",
+      "elderly_note": "Some uneven paths. Mostly accessible."
+    },
+    {
+      "id": "sz-015",
+      "name": "Zhong-Ying Street (Chung Ying Street)",
+      "chinese": "中英街",
+      "category": "attraction",
+      "vibe_tags": [
+        "hidden-gem",
+        "culture"
+      ],
+      "companion_tags": [
+        "solo",
+        "couple"
+      ],
+      "practical_tags": [
+        "book-ahead"
+      ],
+      "duration_hrs": 1.5,
+      "price_rmb": "0",
+      "free": true,
+      "lat": 22.5397,
+      "lng": 114.2747,
+      "district": "Yantian",
+      "tip": "Historically unique: one side is Shenzhen, the other is Hong Kong (Sha Tau Kok). 4-meter-wide street, two systems. Old shopfront signs in both Simplified and Traditional Chinese. Requires ID registration to enter. Historic for 'one country two systems' photography. Not busy — almost no tourists know it.",
+      "elderly_note": "Flat street. Easy walking."
+    },
+    {
+      "id": "sz-016",
+      "name": "OCT Harbour & Bay Glory Ferris Wheel",
+      "chinese": "欢乐港湾·湾区之光摩天轮",
+      "category": "experience",
+      "vibe_tags": [
+        "instagrammable",
+        "scenic",
+        "trending"
+      ],
+      "companion_tags": [
+        "couple",
+        "solo"
+      ],
+      "practical_tags": [
+        "evening-best",
+        "book-ahead"
+      ],
+      "duration_hrs": 2,
+      "price_rmb": "50–80",
+      "free": false,
+      "lat": 22.5181,
+      "lng": 113.8941,
+      "district": "Bao'an",
+      "tip": "Called '湾区之光' (Light of the Bay Area) — one of China's largest sea-view Ferris wheels with transparent gondolas. 360-degree view: Shenzhen Bay, Qianhai, Hong Kong on clear days. Photo spot at the LOVE light sign at base. Best 30 minutes after sunset when city lights come on. Book online.",
+      "elderly_note": "Gondola entry requires stepping. Otherwise suitable."
+    },
+    {
+      "id": "sz-017",
+      "name": "Talangshan Country Park (Sunset Hike)",
+      "chinese": "塘朗山郊野公园",
+      "category": "nature",
+      "vibe_tags": [
+        "scenic",
+        "nature",
+        "hidden-gem"
+      ],
+      "companion_tags": [
+        "couple",
+        "solo"
+      ],
+      "practical_tags": [
+        "evening-best"
+      ],
+      "duration_hrs": 2.5,
+      "price_rmb": "0",
+      "free": true,
+      "lat": 22.5549,
+      "lng": 113.9851,
+      "district": "Nanshan",
+      "tip": "1-hour hike to summit — panoramic Shenzhen city and bay views. Perfect for sunset: start at 6pm, reach top at 7pm as city lights emerge. Metro Line 5 to Tanglang Station. Bring hiking shoes and water. Less crowded than other Shenzhen hills.",
+      "elderly_note": "Steep hill. Not suitable for elderly."
+    },
+    {
+      "id": "sz-018",
+      "name": "Splendid China Folk Village",
+      "chinese": "锦绣中华·民俗文化村",
+      "category": "attraction",
+      "vibe_tags": [
+        "touristy",
+        "culture"
+      ],
+      "companion_tags": [
+        "kid-friendly",
+        "elderly-friendly"
+      ],
+      "practical_tags": [
+        "book-ahead"
+      ],
+      "duration_hrs": 4,
+      "price_rmb": "120–160",
+      "free": false,
+      "lat": 22.5347,
+      "lng": 113.9718,
+      "district": "Nanshan",
+      "tip": "Miniature reproductions of 82 China landmarks (Great Wall, Forbidden City, Potala Palace, Terracotta Warriors) at 1:15 scale plus 27 ethnic minority villages. Evening light shows. Good for one comprehensive China culture overview before visiting real sites.",
+      "elderly_note": "Large park — tram available. Good for elderly."
+    },
+    {
+      "id": "sz-019",
+      "name": "Shenzhen Museum",
+      "chinese": "深圳博物馆",
+      "category": "attraction",
+      "vibe_tags": [
+        "culture",
+        "local"
+      ],
+      "companion_tags": [
+        "solo",
+        "couple",
+        "elderly-friendly"
+      ],
+      "practical_tags": [
+        "free-entry",
+        "book-ahead"
+      ],
+      "duration_hrs": 1.5,
+      "price_rmb": "0",
+      "free": true,
+      "lat": 22.5368,
+      "lng": 114.0596,
+      "district": "Futian",
+      "tip": "Tells Shenzhen's incredible story from a 1970s fishing village to China's Silicon Valley in 40 years. Free entry — book via WeChat in advance. The history exhibition is genuinely fascinating: includes exhibits on the first people to 'jump into the sea' (下海) to start businesses after Deng Xiaoping's reform.",
+      "elderly_note": "Fully accessible museum."
+    },
+    {
+      "id": "sz-020",
+      "name": "Shenzhen Happy Valley Theme Park",
+      "chinese": "深圳欢乐谷",
+      "category": "attraction",
+      "vibe_tags": [
+        "touristy"
+      ],
+      "companion_tags": [
+        "kid-friendly"
+      ],
+      "practical_tags": [
+        "book-ahead"
+      ],
+      "duration_hrs": 6,
+      "price_rmb": "180–260",
+      "free": false,
+      "lat": 22.5432,
+      "lng": 113.9794,
+      "district": "Nanshan",
+      "tip": "86-acre theme park with 100+ rides. China's first suspended roller coaster (Xueshan Feilong). Playa Maya Water Park inside, open May–early October. Night shows on weekends. Best for families with teens.",
+      "elderly_note": "Not suitable for most elderly — rides are intense."
+    }
+  ],
+  "food": [
+    {
+      "id": "sz-f001",
+      "name": "Dim Sum at Fanlou",
+      "chinese": "蘩楼点心",
+      "category": "must-order",
+      "price_range": "¥60–100pp",
+      "where": "Fanlou 蘩楼 — Futian District, multiple locations. Famous spot always with queues.",
+      "dietary_tags": [
+        "veg-options"
+      ],
+      "tip": "Arrive before 10am to get a number. XLB (小笼包), siu mai (烧卖), and shrimp dumplings (虾饺) are standouts. Check Dianping for voucher deals — usually 80元 for 100元 worth. The cha siu bao (叉烧包) here is exceptional.",
+      "halal": false
+    },
+    {
+      "id": "sz-f002",
+      "name": "Taier Sauerkraut Fish",
+      "chinese": "太二酸菜鱼",
+      "category": "local-classic",
+      "price_range": "¥60–100pp",
+      "where": "Taier 太二 — multiple Shenzhen locations (CoCo Park, Coastal City, etc.)",
+      "dietary_tags": [],
+      "tip": "Famous Shenzhen-origin chain known for historic 4-hour queues. Use WeChat/app remote queue while exploring nearby. One fish, one pot, one sauce. The sauerkraut broth is genuinely unlike fish hotpot anywhere else. The restaurant's cheeky rule: 'No modifications to the menu.'",
+      "halal": false
+    },
+    {
+      "id": "sz-f003",
+      "name": "BBQ Skewers at CoCo Park",
+      "chinese": "串串烧烤·COCOPARK",
+      "category": "street-food",
+      "price_range": "¥1–3 per stick",
+      "where": "西塔老太太泥炉烤肉 at CoCo Park, Futian — popular Friday night local hangout",
+      "dietary_tags": [
+        "veg-options"
+      ],
+      "tip": "The grilled eel (烤鳗鱼) here is extraordinary — smoky sweetness unlike anything in Singapore. Lemon8 SG travellers repeatedly call it a 'taste you can't find back home.' Also order: enoki mushrooms with chili oil (金针菇), lamb skewers (羊肉串).",
+      "halal": false
+    },
+    {
+      "id": "sz-f004",
+      "name": "Fermented Rice Wine Milk Tea",
+      "chinese": "米酒奶茶",
+      "category": "trending-drink",
+      "price_range": "¥25–40",
+      "where": "阿嬷手作 (Grandma Handmade) — Futian area multiple locations",
+      "dietary_tags": [
+        "veg-ok"
+      ],
+      "tip": "Exclusive to Shenzhen/GZ PRD region. Fermented rice wine base with taro balls and milk tea cream — complex, slightly tart, unlike anything in Singapore. Multiple Lemon8 reviewers call it their single best drink discovery in China.",
+      "halal": false
+    },
+    {
+      "id": "sz-f005",
+      "name": "Spicy Sour Glass Noodles",
+      "chinese": "酸辣粉",
+      "category": "street-food",
+      "price_range": "¥10–20",
+      "where": "连城新天地 (Liancheng Xintianye) mall food court",
+      "dietary_tags": [
+        "veg-options"
+      ],
+      "tip": "Thick potato starch noodles in a spicy-sour broth — 中辣 (medium) unless you're confident. At ¥9.90 a bowl, best value eat in Shenzhen. Completely different texture from Singapore's instant version.",
+      "halal": false
+    },
+    {
+      "id": "sz-f006",
+      "name": "Crab Roe Pasta (Trending Fusion)",
+      "chinese": "蟹黄意面",
+      "category": "trending",
+      "price_range": "¥60–90",
+      "where": "Gentle Pasta 健意 — PA Mall, Futian",
+      "dietary_tags": [],
+      "tip": "Italian pasta with Chinese crab roe sauce — trending hard on 小红书 and Lemon8. Weekend wait is about 30 mins. The signature crab roe pasta is non-negotiable order. Unusual fusion that works remarkably well.",
+      "halal": false
+    },
+    {
+      "id": "sz-f007",
+      "name": "Egg Tarts (HK Style)",
+      "chinese": "港式蛋挞",
+      "category": "snack",
+      "price_range": "¥8–15",
+      "where": "HK-style cha chaan teng cafes throughout Shenzhen; Sudaxing bakery",
+      "dietary_tags": [
+        "veg-ok"
+      ],
+      "tip": "Shenzhen's proximity to HK means exceptional Hong Kong-style egg tarts everywhere. Multi-layered flaky pastry, creamy custard. Eat fresh out of the oven. Significantly better and cheaper than Singapore versions.",
+      "halal": false
+    },
+    {
+      "id": "sz-f008",
+      "name": "Claypot Rice (Random Local Shop)",
+      "chinese": "煲仔饭",
+      "category": "local-classic",
+      "price_range": "¥25–50",
+      "where": "Any local 煲仔饭 shop in Futian or Luohu neighborhoods — look for the clay pots on open stoves",
+      "dietary_tags": [],
+      "tip": "In Shenzhen, unlike GZ, good claypot rice isn't at famous shops — it's the random neighborhood place. Multiple Lemon8 reviews: 'went into a random place in Futian, staff so friendly, food so good and cheap.' Look for smoke coming from the pots.",
+      "halal": false
+    },
+    {
+      "id": "sz-f009",
+      "name": "Potchuang Hakka Food at Gangtang",
+      "chinese": "甘坑客家菜",
+      "category": "local-classic",
+      "price_range": "¥40–80pp",
+      "where": "Restaurants inside Gangtang Hakka Town 甘坑客家小镇",
+      "dietary_tags": [],
+      "tip": "Hakka cuisine: 酿豆腐 (stuffed tofu with pork — Hakka's most famous dish), 猪肚鸡 (pork stomach and chicken soup with white pepper), 客家黄酒 (fermented rice wine). Earthy, home-style, deeply traditional. Very different from Cantonese.",
+      "halal": false
+    },
+    {
+      "id": "sz-f010",
+      "name": "Late Night Congee Street (Sandpot Congee)",
+      "chinese": "砂锅粥·深夜食堂",
+      "category": "street-food",
+      "price_range": "¥30–60pp",
+      "where": "卖鱼佬砂锅粥 (Luohu) — Dianping 2024 Must-Eat Award winner. 牛巷番薯粥 — Dianping Top 1 small eats.",
+      "dietary_tags": [],
+      "tip": "Shenzhen's late-night supper culture is centered around slow-cooked sandpot congee. Unlike Guangzhou's boat congee, this version simmers longer and is served in hot clay pots. Seafood, pork, fish — order the freshest item of the day. Best after 9pm.",
+      "halal": false
+    },
+    {
+      "id": "sz-f011",
+      "name": "Hand-Pounded Lemon Tea",
+      "chinese": "手打柠檬茶",
+      "category": "trending-drink",
+      "price_range": "¥15–25",
+      "where": "Stalls throughout Dongmen and Futian areas — look for live pounding action",
+      "dietary_tags": [
+        "veg-ok",
+        "halal-ok"
+      ],
+      "tip": "The lemon tea here is fresh-pounded with actual whole lemons bashed against the cup to release oils from the skin. Completely different from Singapore's bottled lemon tea. Always order 微糖 (low sugar). A Shenzhen institution.",
+      "halal": true
+    },
+    {
+      "id": "sz-f012",
+      "name": "Braised Duck & Chicken Feet",
+      "chinese": "卤鸭·凤爪",
+      "category": "street-food",
+      "price_range": "¥20–40",
+      "where": "Dongmen area stalls; Shuiwei Night Market, Futian",
+      "dietary_tags": [],
+      "tip": "Shenzhen's brine-braised meats are exceptional — braised duck with aromatic spice broth, chicken feet in mala (spicy numbing) or lemon flavor. The Shuiwei Night Market in Futian is the best night food destination —琳琅满目的小吃 (endless variety of local snacks).",
+      "halal": false
+    },
+    {
+      "id": "sz-f013",
+      "name": "Chagee (Tea) — Original",
+      "chinese": "霸王茶姬",
+      "category": "trending-drink",
+      "price_range": "¥18–35",
+      "where": "Multiple locations throughout Shenzhen",
+      "dietary_tags": [
+        "veg-ok",
+        "halal-ok"
+      ],
+      "tip": "Chagee originated in Yunnan and exploded across China. In Shenzhen it's ¥18–25 vs Singapore's ¥7–10 premium. The TGTC (Tie Guan Yin milk tea with cheese cream) here uses actual tieguanyin — different product to what Singapore gets. Worth the comparison.",
+      "halal": true
+    },
+    {
+      "id": "sz-f014",
+      "name": "Omakase at Sushi Jyukan",
+      "chinese": "鱼鸟中村·怀石料理",
+      "category": "trending",
+      "price_range": "¥200–300pp",
+      "where": "Sushi Jyukan — Futian District (search on Gaode Maps)",
+      "dietary_tags": [],
+      "tip": "Premium omakase with foie gras and sea urchin for ~SGD$56 — viral on Lemon8 SG as the best value omakase outside Japan. The quality-to-price ratio shocked multiple Singapore reviewers. Booking essential — WeChat only.",
+      "halal": false
+    }
+  ],
+  "practical": {
+    "payment": "Alipay and WeChat Pay. Link YouTrip or Trust Bank card for fee-free CNY payments. ¥200 cash for markets.",
+    "transport": "17-line metro — very efficient and bilingual. High-speed rail to Guangzhou takes 30–40 mins from Shenzhen North (深圳北). Easy day trip between cities.",
+    "from_hk": "High-speed rail from West Kowloon to Futian: 13 minutes. Lo Wu/Lok Ma Chau border crossing also easy. Ferry from Shekou to Hong Kong Pier: 30 mins.",
+    "connectivity": "VPN essential before arrival. Airalo eSIM recommended. Download DiDi for taxis.",
+    "best_time": "October–December. Avoid summer (extremely hot and humid). November–December best weather.",
+    "booking_apps": "Dianping for restaurant discovery and vouchers. Klook for Window of the World, Happy Valley, theme parks. WeChat for most local bookings.",
+    "book_ahead": "Ping An observation deck online. Window of the World drone show — Sunday 9pm. Gangtang recommended weekdays."
+  }
+}

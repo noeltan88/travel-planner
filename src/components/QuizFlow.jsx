@@ -1,0 +1,140 @@
+import { useState } from 'react';
+import { QUIZ } from '../utils/quizData';
+
+export default function QuizFlow({ onComplete }) {
+  const [step, setStep] = useState(0);
+  const [answers, setAnswers] = useState({});
+
+  const q = QUIZ[step];
+  const selected = answers[q.id] || (q.multi ? [] : null);
+  const canContinue = q.multi ? selected.length > 0 : selected !== null;
+
+  function toggle(value) {
+    if (q.multi) {
+      const cur = answers[q.id] || [];
+      if (cur.includes(value)) {
+        setAnswers({ ...answers, [q.id]: cur.filter(v => v !== value) });
+      } else if (cur.length < (q.maxSelect || 99)) {
+        setAnswers({ ...answers, [q.id]: [...cur, value] });
+      }
+    } else {
+      setAnswers({ ...answers, [q.id]: value });
+    }
+  }
+
+  function handleContinue() {
+    if (step < QUIZ.length - 1) {
+      setStep(step + 1);
+    } else {
+      // Flatten single-select answers from array to scalar
+      const flat = {};
+      QUIZ.forEach(q => {
+        flat[q.id] = q.multi ? (answers[q.id] || []) : answers[q.id];
+      });
+      onComplete(flat);
+    }
+  }
+
+  function isSelected(value) {
+    if (q.multi) return (answers[q.id] || []).includes(value);
+    return answers[q.id] === value;
+  }
+
+  return (
+    <div className="hero-bg min-h-screen flex flex-col relative overflow-hidden">
+      {/* Decorative Chinese character */}
+      <div
+        className="absolute top-8 right-6 text-[120px] font-black leading-none pointer-events-none select-none"
+        style={{ color: 'var(--accent-deco)', opacity: 0.5 }}
+      >
+        {q.deco}
+      </div>
+
+      {/* Progress bar */}
+      <div className="px-6 pt-14 pb-4">
+        <div className="flex gap-2 mb-2">
+          {QUIZ.map((_, i) => (
+            <div
+              key={i}
+              className="h-1 flex-1 rounded-full transition-all duration-300"
+              style={{ background: i <= step ? 'var(--accent)' : 'rgba(255,255,255,0.2)' }}
+            />
+          ))}
+        </div>
+        <p className="text-xs font-semibold tracking-widest" style={{ color: 'var(--accent)' }}>
+          {q.label} · {step + 1}/{QUIZ.length}
+        </p>
+      </div>
+
+      {/* Question */}
+      <div className="px-6 pt-2 pb-6">
+        <h1 className="text-2xl font-bold text-white leading-tight mb-1">{q.title}</h1>
+        <p className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>{q.sub}</p>
+        {q.multi && (
+          <p className="text-xs mt-1" style={{ color: 'var(--accent)' }}>
+            {(answers[q.id] || []).length}/{q.maxSelect} selected
+          </p>
+        )}
+      </div>
+
+      {/* Options */}
+      <div className="flex-1 px-4 pb-4 overflow-y-auto flex flex-col gap-3">
+        {q.options.map(opt => {
+          const sel = isSelected(opt.value);
+          return (
+            <button
+              key={opt.value}
+              onClick={() => toggle(opt.value)}
+              className="w-full flex items-center gap-3 p-4 rounded-2xl text-left transition-all duration-200"
+              style={{
+                background: sel ? 'var(--accent-tint)' : 'rgba(255,255,255,0.07)',
+                border: sel ? '2px solid var(--accent)' : '2px solid rgba(255,255,255,0.12)',
+              }}
+            >
+              <span className="text-2xl w-8 flex-shrink-0 text-center">{opt.icon}</span>
+              <div className="flex-1 min-w-0">
+                <div className="font-semibold text-white text-sm">{opt.name}</div>
+                <div className="text-xs truncate" style={{ color: 'rgba(255,255,255,0.55)' }}>{opt.desc}</div>
+              </div>
+              <div
+                className="w-5 h-5 rounded-full flex-shrink-0 flex items-center justify-center border-2 transition-all"
+                style={{
+                  borderColor: sel ? 'var(--accent)' : 'rgba(255,255,255,0.3)',
+                  background: sel ? 'var(--accent)' : 'transparent',
+                }}
+              >
+                {sel && <svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>}
+              </div>
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Navigation */}
+      <div className="px-6 pt-2 pb-8 flex gap-3">
+        {step > 0 && (
+          <button
+            onClick={() => setStep(step - 1)}
+            className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0"
+            style={{ background: 'rgba(255,255,255,0.1)' }}
+          >
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M13 4L7 10L13 16" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </button>
+        )}
+        <button
+          onClick={handleContinue}
+          disabled={!canContinue}
+          className="flex-1 h-12 rounded-2xl font-bold text-white transition-all duration-200"
+          style={{
+            background: canContinue ? 'var(--accent)' : 'rgba(255,255,255,0.15)',
+            opacity: canContinue ? 1 : 0.6,
+          }}
+        >
+          {step < QUIZ.length - 1 ? 'Continue' : 'Build My Itinerary →'}
+        </button>
+      </div>
+    </div>
+  );
+}
