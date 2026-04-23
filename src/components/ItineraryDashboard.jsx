@@ -1,4 +1,4 @@
-import { useRef, lazy, Suspense, useState } from 'react';
+import { useRef, lazy, Suspense, useState, Component } from 'react';
 import DayTimeline from './DayTimeline';
 import HotelCard from './HotelCard';
 import FoodSection from './FoodSection';
@@ -9,6 +9,23 @@ import { exportToPDF } from '../utils/pdfExport';
 import { loadCityData } from '../utils/algorithm';
 
 const MapView = lazy(() => import('./MapView'));
+
+class MapErrorBoundary extends Component {
+  constructor(props) { super(props); this.state = { error: false }; }
+  static getDerivedStateFromError() { return { error: true }; }
+  render() {
+    if (this.state.error) {
+      return (
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', color: '#94a3b8', gap: 8 }}>
+          <p style={{ fontSize: 32 }}>🗺️</p>
+          <p style={{ fontSize: 14 }}>Map failed to load</p>
+          <button onClick={() => this.setState({ error: false })} style={{ marginTop: 8, fontSize: 12, color: '#E8472A', background: 'none', border: 'none', cursor: 'pointer' }}>Try again</button>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
 
 const CITY_DECOS = {
   guangzhou: { char: '穗', emoji: '🏯', name: 'Guangzhou', zh: '广州' },
@@ -55,15 +72,17 @@ export default function ItineraryDashboard({
     return (
       <div className="min-h-screen flex flex-col" style={{ background: 'var(--bg)' }}>
         <div className="flex-1 relative" style={{ paddingBottom: 64 }}>
-          <Suspense fallback={<div className="flex items-center justify-center h-64"><p className="text-sm" style={{ color: 'var(--text-muted)' }}>Loading map...</p></div>}>
-            <MapView
-              days={days}
-              dayStops={dayStops}
-              activeDay={activeDay}
-              onDayChange={setActiveDay}
-              primaryCity={primaryCity}
-            />
-          </Suspense>
+          <MapErrorBoundary>
+            <Suspense fallback={<div className="flex items-center justify-center h-64"><p className="text-sm" style={{ color: 'var(--text-muted)' }}>Loading map...</p></div>}>
+              <MapView
+                days={days}
+                dayStops={dayStops}
+                activeDay={activeDay}
+                onDayChange={setActiveDay}
+                primaryCity={primaryCity}
+              />
+            </Suspense>
+          </MapErrorBoundary>
         </div>
         <BottomNav activeTab={activeTab} onTabChange={setActiveTab} />
       </div>

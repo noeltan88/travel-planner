@@ -49,7 +49,7 @@ export default function MapView({ days, dayStops, activeDay, onDayChange, primar
   const center = CITY_CENTERS[days[activeDay]?.city || primaryCity] || CITY_CENTERS.guangzhou;
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: 'calc(100vh - 64px)' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', height: 'calc(100vh - 64px)', overflow: 'hidden' }}>
       {/* Day tabs */}
       <div
         style={{
@@ -80,7 +80,7 @@ export default function MapView({ days, dayStops, activeDay, onDayChange, primar
       </div>
 
       {/* Map */}
-      <div style={{ flex: 1, position: 'relative' }}>
+      <div style={{ flex: 1, position: 'relative', minHeight: 0 }}>
         {stops.length === 0 ? (
           <div style={{
             display: 'flex', flexDirection: 'column', alignItems: 'center',
