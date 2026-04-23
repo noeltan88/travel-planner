@@ -10,6 +10,10 @@ export const QUIZ = [
       { icon: '🏯', name: 'Guangzhou', desc: 'Old Canton, food capital of China', value: 'guangzhou' },
       { icon: '🌆', name: 'Shenzhen', desc: "China's future city, tech & beaches", value: 'shenzhen' },
       { icon: '🏙️', name: 'Shanghai', desc: 'Where old Shanghai meets tomorrow', value: 'shanghai' },
+      { icon: '🌆', name: 'Chongqing', desc: "China's most dramatic mountain city", value: 'chongqing' },
+      { icon: '🐼', name: 'Chengdu', desc: 'Slow down, eat more, see pandas', value: 'chengdu' },
+      { icon: '🏯', name: 'Beijing', desc: '5,000 years of history in one city', value: 'beijing' },
+      { icon: '🌊', name: 'Hangzhou', desc: "Heaven on earth — China's most romantic city", value: 'hangzhou' },
     ]
   },
   {

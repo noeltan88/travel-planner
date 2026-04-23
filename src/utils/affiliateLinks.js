@@ -45,4 +45,32 @@ export const HOTELS = {
     { id: 'sh-h4', name: 'Sinan Mansions Hotel', stars: 4, area: 'French Concession', lat: 31.2178, lng: 121.4692, price: '¥800/night', rating: 9.0, reviews: '1,560', agodaId: '444555' },
     { id: 'sh-h5', name: 'Jinlai Hotel Nanjing East', stars: 3, area: 'Huangpu', lat: 31.2372, lng: 121.4819, price: '¥250/night', rating: 8.3, reviews: '3,900', agodaId: '555666' },
   ],
+  chongqing: [
+    { id: 'cq-h1', name: 'Raffles Chongqing', stars: 5, area: 'Chaotianmen, Yuzhong', lat: 29.5687, lng: 106.5888, price: '¥2,500/night', rating: 9.5, reviews: '890', agodaId: '701234' },
+    { id: 'cq-h2', name: 'Hyatt Regency Chongqing', stars: 5, area: 'Jiefangbei, Yuzhong', lat: 29.5591, lng: 106.5765, price: '¥900/night', rating: 9.1, reviews: '2,100', agodaId: '702345' },
+    { id: 'cq-h3', name: 'JW Marriott Chongqing', stars: 5, area: 'Guanyinqiao, Jiangbei', lat: 29.5923, lng: 106.5414, price: '¥800/night', rating: 9.0, reviews: '1,800', agodaId: '703456' },
+    { id: 'cq-h4', name: 'Vienna Hotel Jiefangbei', stars: 3, area: 'Jiefangbei, Yuzhong', lat: 29.5572, lng: 106.5742, price: '¥220/night', rating: 8.2, reviews: '3,400', agodaId: '704567' },
+    { id: 'cq-h5', name: 'Home Inn Plus Hongyadong', stars: 3, area: 'Hongyadong, Yuzhong', lat: 29.5645, lng: 106.5793, price: '¥190/night', rating: 8.0, reviews: '2,100', agodaId: '705678' },
+  ],
+  chengdu: [
+    { id: 'cd-h1', name: 'The Temple House Chengdu', stars: 5, area: 'Taikoo Li, Jinjiang', lat: 30.6578, lng: 104.0812, price: '¥1,800/night', rating: 9.6, reviews: '760', agodaId: '801234' },
+    { id: 'cd-h2', name: 'Shangri-La Chengdu', stars: 5, area: 'Renmin Road, Jinjiang', lat: 30.6512, lng: 104.0714, price: '¥1,100/night', rating: 9.2, reviews: '1,980', agodaId: '802345' },
+    { id: 'cd-h3', name: 'Crowne Plaza Chengdu City Center', stars: 5, area: 'Chunxi Road, Jinjiang', lat: 30.6569, lng: 104.0778, price: '¥700/night', rating: 8.9, reviews: '2,450', agodaId: '803456' },
+    { id: 'cd-h4', name: 'Vienna Hotel Chunxi Road', stars: 3, area: 'Chunxi Road, Jinjiang', lat: 30.6578, lng: 104.0798, price: '¥210/night', rating: 8.3, reviews: '4,100', agodaId: '804567' },
+    { id: 'cd-h5', name: 'Ibis Chengdu Kuanzhai Alley', stars: 3, area: 'Kuanzhai Alley, Qingyang', lat: 30.6670, lng: 104.0528, price: '¥180/night', rating: 8.1, reviews: '2,900', agodaId: '805678' },
+  ],
+  beijing: [
+    { id: 'bj-h1', name: 'Aman at Summer Palace', stars: 5, area: 'Summer Palace, Haidian', lat: 40.0006, lng: 116.2746, price: '¥4,500/night', rating: 9.8, reviews: '420', agodaId: '901234' },
+    { id: 'bj-h2', name: 'The Peninsula Beijing', stars: 5, area: 'Wangfujing, Dongcheng', lat: 39.9178, lng: 116.4108, price: '¥3,000/night', rating: 9.5, reviews: '890', agodaId: '902345' },
+    { id: 'bj-h3', name: 'Regent Beijing', stars: 5, area: 'Jinbao Street, Dongcheng', lat: 39.9159, lng: 116.4204, price: '¥1,200/night', rating: 9.2, reviews: '1,780', agodaId: '903456' },
+    { id: 'bj-h4', name: 'ibis Beijing Sanyuan Bridge', stars: 3, area: 'Chaoyang', lat: 39.9646, lng: 116.4671, price: '¥250/night', rating: 8.3, reviews: '5,200', agodaId: '904567' },
+    { id: 'bj-h5', name: 'Nostalgia Hotel Qianmen', stars: 3, area: 'Qianmen, Dongcheng', lat: 39.8982, lng: 116.3957, price: '¥220/night', rating: 8.1, reviews: '3,100', agodaId: '905678' },
+  ],
+  hangzhou: [
+    { id: 'hz-h1', name: 'Amanfayun Hangzhou', stars: 5, area: 'Lingyin Temple, Xihu', lat: 30.2442, lng: 120.0961, price: '¥5,000/night', rating: 9.8, reviews: '320', agodaId: '111234' },
+    { id: 'hz-h2', name: 'Four Seasons Hangzhou', stars: 5, area: 'West Lake, Xihu', lat: 30.2442, lng: 120.0994, price: '¥3,500/night', rating: 9.6, reviews: '580', agodaId: '112345' },
+    { id: 'hz-h3', name: 'Banyan Tree Hangzhou', stars: 5, area: 'West Lake South', lat: 30.2298, lng: 120.1367, price: '¥2,200/night', rating: 9.4, reviews: '720', agodaId: '113456' },
+    { id: 'hz-h4', name: 'Radisson Blu Hangzhou', stars: 4, area: 'Qianjiang New City', lat: 30.2301, lng: 120.2012, price: '¥450/night', rating: 8.8, reviews: '2,100', agodaId: '114567' },
+    { id: 'hz-h5', name: 'ibis Hangzhou West Lake', stars: 3, area: 'Wensan Road, Xihu', lat: 30.2721, lng: 120.1248, price: '¥220/night', rating: 8.2, reviews: '3,800', agodaId: '115678' },
+  ],
 };

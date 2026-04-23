@@ -1,9 +1,21 @@
 import guangzhouData from '../data/guangzhou.json';
 import shenzhenData from '../data/shenzhen.json';
 import shanghaiData from '../data/shanghai.json';
+import chongqingData from '../data/chongqing.json';
+import chengduData from '../data/chengdu.json';
+import beijingData from '../data/beijing.json';
+import hangzhouData from '../data/hangzhou.json';
 
 export function loadCityData(city) {
-  const map = { guangzhou: guangzhouData, shenzhen: shenzhenData, shanghai: shanghaiData };
+  const map = {
+    guangzhou: guangzhouData,
+    shenzhen: shenzhenData,
+    shanghai: shanghaiData,
+    chongqing: chongqingData,
+    chengdu: chengduData,
+    beijing: beijingData,
+    hangzhou: hangzhouData,
+  };
   return map[city];
 }
 
@@ -13,11 +25,12 @@ export function allocateDaysPerCity(cities, totalDays) {
     [cities[0]]: Math.floor(totalDays / 2),
     [cities[1]]: Math.ceil(totalDays / 2),
   };
-  return {
-    guangzhou: Math.floor(totalDays * 0.3),
-    shenzhen: Math.floor(totalDays * 0.3),
-    shanghai: Math.ceil(totalDays * 0.4),
-  };
+  // 3+ cities: distribute as evenly as possible, last city gets remainder
+  const base = Math.floor(totalDays / cities.length);
+  const remainder = totalDays - base * cities.length;
+  const result = {};
+  cities.forEach((c, i) => { result[c] = base + (i === cities.length - 1 ? remainder : 0); });
+  return result;
 }
 
 export function buildItinerary(userInputs, attractionsData, foodData) {
@@ -200,7 +213,7 @@ export function buildFullItinerary(answers) {
       days[0].cityHeader = {
         name: data.name,
         chinese: data.chinese,
-        emoji: city === 'guangzhou' ? '🏯' : city === 'shenzhen' ? '🌆' : '🏙️',
+        emoji: data.emoji || { guangzhou: '🏯', shenzhen: '🌆', shanghai: '🏙️' }[city] || '🏙️',
         tagline: data.tagline,
       };
     }

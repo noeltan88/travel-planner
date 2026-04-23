@@ -8,6 +8,10 @@ const CITY_CENTERS = {
   guangzhou: [23.1291, 113.2644],
   shenzhen: [22.5431, 114.0579],
   shanghai: [31.2304, 121.4737],
+  chongqing: [29.5630, 106.5516],
+  chengdu: [30.5728, 104.0668],
+  beijing: [39.9042, 116.4074],
+  hangzhou: [30.2741, 120.1551],
 };
 
 function numberedIcon(n) {

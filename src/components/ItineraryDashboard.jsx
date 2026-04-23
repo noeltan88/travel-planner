@@ -31,6 +31,10 @@ const CITY_DECOS = {
   guangzhou: { char: '穗', emoji: '🏯', name: 'Guangzhou', zh: '广州' },
   shenzhen: { char: '深', emoji: '🌆', name: 'Shenzhen', zh: '深圳' },
   shanghai: { char: '沪', emoji: '🏙️', name: 'Shanghai', zh: '上海' },
+  chongqing: { char: '渝', emoji: '🌆', name: 'Chongqing', zh: '重庆' },
+  chengdu: { char: '蓉', emoji: '🐼', name: 'Chengdu', zh: '成都' },
+  beijing: { char: '京', emoji: '🏯', name: 'Beijing', zh: '北京' },
+  hangzhou: { char: '杭', emoji: '🌊', name: 'Hangzhou', zh: '杭州' },
 };
 
 export default function ItineraryDashboard({

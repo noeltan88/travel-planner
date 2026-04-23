@@ -1,0 +1,942 @@
+{
+  "id": "chongqing",
+  "name": "Chongqing",
+  "chinese": "重庆",
+  "emoji": "🌆",
+  "tagline": "China's Most Dramatic City",
+  "lat": 29.563,
+  "lng": 106.5516,
+  "bestTime": "Mar–May, Sep–Nov",
+  "daysRecommended": "3–4",
+  "version": 2,
+  "attractions": [
+    {
+      "id": "cq-001",
+      "name": "Hongyadong",
+      "chinese": "洪崖洞",
+      "category": "landmark",
+      "district": "Yuzhong",
+      "vibe_tags": [
+        "instagrammable",
+        "scenic",
+        "trending",
+        "local"
+      ],
+      "companion_tags": [
+        "solo",
+        "couple",
+        "friends",
+        "elderly-friendly"
+      ],
+      "practical_tags": [
+        "evening-best",
+        "free-entry"
+      ],
+      "duration_hrs": 2,
+      "price_rmb": "0",
+      "free": true,
+      "lat": 29.5647,
+      "lng": 106.5788,
+      "icon": "🏮",
+      "tip": "The real-life Spirited Away. Go after 7pm when the lights come on. Best photos from Qiansi Gate Bridge (千厮门大桥) across the river — exit Line 6 at Dajuyuan, walk to Bao Ding Gate stairs down. Bridge lights: 19:00–21:30.",
+      "bookable": false,
+      "klookId": null
+    },
+    {
+      "id": "cq-002",
+      "name": "Jiefangbei CBD",
+      "chinese": "解放碑",
+      "category": "landmark",
+      "district": "Yuzhong",
+      "vibe_tags": [
+        "local",
+        "trending",
+        "shopping"
+      ],
+      "companion_tags": [
+        "solo",
+        "couple",
+        "friends",
+        "elderly-friendly"
+      ],
+      "practical_tags": [
+        "free-entry",
+        "evening-best"
+      ],
+      "duration_hrs": 1.5,
+      "price_rmb": "0",
+      "free": true,
+      "lat": 29.5579,
+      "lng": 106.5752,
+      "icon": "🏛️",
+      "tip": "Chongqing's Times Square. The liberation monument dates to 1945. Skip the tourist-trap Haochi Street nearby — locals eat at Guanyin Bridge (观音桥好吃街) or Huayuan Night Market instead.",
+      "bookable": false,
+      "klookId": null
+    },
+    {
+      "id": "cq-003",
+      "name": "Ciqikou Ancient Town",
+      "chinese": "磁器口古镇",
+      "category": "historic-district",
+      "district": "Shapingba",
+      "vibe_tags": [
+        "local",
+        "culture",
+        "instagrammable"
+      ],
+      "companion_tags": [
+        "solo",
+        "couple",
+        "friends",
+        "elderly-friendly",
+        "family-kids"
+      ],
+      "practical_tags": [
+        "morning-only",
+        "free-entry"
+      ],
+      "duration_hrs": 2,
+      "price_rmb": "0",
+      "free": true,
+      "lat": 29.5656,
+      "lng": 106.4481,
+      "icon": "🏘️",
+      "tip": "Nearly 1,000 years of history. Go before 9am to beat tour groups. Buy the Chen twisted doughnuts (陈麻花) fresh from the fryer. The riverside end has the best views — follow the alley all the way down.",
+      "bookable": false,
+      "klookId": null
+    },
+    {
+      "id": "cq-004",
+      "name": "Liziba Monorail Station",
+      "chinese": "李子坝轻轨站",
+      "category": "attraction",
+      "district": "Jiangbei",
+      "vibe_tags": [
+        "instagrammable",
+        "trending",
+        "hidden-gem"
+      ],
+      "companion_tags": [
+        "solo",
+        "couple",
+        "friends"
+      ],
+      "practical_tags": [
+        "free-entry"
+      ],
+      "duration_hrs": 1,
+      "price_rmb": "0",
+      "free": true,
+      "lat": 29.5583,
+      "lng": 106.5274,
+      "icon": "🚇",
+      "tip": "The monorail that passes THROUGH a residential building on floors 6–8. Best viewed from the observation platform below. Trains pass every 2–3 minutes. Take Line 2 to Liziba station. Completely free — just stand and watch.",
+      "bookable": false,
+      "klookId": null
+    },
+    {
+      "id": "cq-005",
+      "name": "Eling Erchang (Old Factory Park)",
+      "chinese": "鹅岭二厂",
+      "category": "arts-district",
+      "district": "Yuzhong",
+      "vibe_tags": [
+        "instagrammable",
+        "hidden-gem",
+        "trending"
+      ],
+      "companion_tags": [
+        "solo",
+        "couple",
+        "friends"
+      ],
+      "practical_tags": [
+        "free-entry"
+      ],
+      "duration_hrs": 1.5,
+      "price_rmb": "0",
+      "free": true,
+      "lat": 29.5567,
+      "lng": 106.5367,
+      "icon": "🏭",
+      "tip": "Former 1940s printing factory turned film set. Filming location for 'From Your Window'. The red umbrella mural wall is the most photographed spot. Combined with nearby Liziba — walk downhill from here to the monorail station.",
+      "bookable": false,
+      "klookId": null
+    },
+    {
+      "id": "cq-006",
+      "name": "Yangtze River Cable Car",
+      "chinese": "长江索道",
+      "category": "attraction",
+      "district": "Yuzhong",
+      "vibe_tags": [
+        "scenic",
+        "instagrammable",
+        "trending"
+      ],
+      "companion_tags": [
+        "solo",
+        "couple",
+        "friends",
+        "elderly-friendly"
+      ],
+      "practical_tags": [
+        "book-ahead"
+      ],
+      "duration_hrs": 1,
+      "price_rmb": "35",
+      "free": false,
+      "lat": 29.5618,
+      "lng": 106.5906,
+      "icon": "🚡",
+      "tip": "Cross the Yangtze in a cable car with panoramic mountain city views. Buy return tickets (单程+回程). Evening rides are most cinematic. Long queues on weekends — aim for weekday afternoons.",
+      "bookable": true,
+      "klookId": "cq-cable-car"
+    },
+    {
+      "id": "cq-007",
+      "name": "Nanshan One Tree Viewpoint",
+      "chinese": "南山一棵树观景台",
+      "category": "viewpoint",
+      "district": "Nanan",
+      "vibe_tags": [
+        "scenic",
+        "instagrammable",
+        "evening-best"
+      ],
+      "companion_tags": [
+        "solo",
+        "couple",
+        "friends"
+      ],
+      "practical_tags": [
+        "evening-best"
+      ],
+      "duration_hrs": 1.5,
+      "price_rmb": "50",
+      "free": false,
+      "lat": 29.5045,
+      "lng": 106.5858,
+      "icon": "🌃",
+      "tip": "Best panoramic night view of the whole city — 360° lights. Take a taxi (¥30 from city centre) as buses are infrequent. Arrive 30 mins before sunset for golden hour, stay for the 8pm light show. The newer 壹华里 park below is free and less crowded.",
+      "bookable": false,
+      "klookId": null
+    },
+    {
+      "id": "cq-008",
+      "name": "Baixiang Residence",
+      "chinese": "白象居",
+      "category": "attraction",
+      "district": "Yuzhong",
+      "vibe_tags": [
+        "instagrammable",
+        "hidden-gem",
+        "local"
+      ],
+      "companion_tags": [
+        "solo",
+        "couple",
+        "friends"
+      ],
+      "practical_tags": [
+        "free-entry",
+        "morning-only"
+      ],
+      "duration_hrs": 1,
+      "price_rmb": "0",
+      "free": true,
+      "lat": 29.5636,
+      "lng": 106.5905,
+      "icon": "🏢",
+      "tip": "Layered residential building from the film 'Better Days' (少年的你) — also the best spot to photograph the cable car. Go to building No.3 platform for cable car shots. Residents still live here, be respectful and quiet.",
+      "bookable": false,
+      "klookId": null
+    },
+    {
+      "id": "cq-009",
+      "name": "Daijiaxiang Alley",
+      "chinese": "戴家巷",
+      "category": "local-hangout",
+      "district": "Yuzhong",
+      "vibe_tags": [
+        "local",
+        "hidden-gem",
+        "scenic"
+      ],
+      "companion_tags": [
+        "solo",
+        "couple",
+        "friends"
+      ],
+      "practical_tags": [
+        "free-entry",
+        "evening-best"
+      ],
+      "duration_hrs": 1,
+      "price_rmb": "0",
+      "free": true,
+      "lat": 29.5658,
+      "lng": 106.5742,
+      "icon": "🌿",
+      "tip": "600m hillside alley with cascading city views. Best in the evening when lights come on. The stairs at the bottom lead to the river — wonderful for golden hour photos. Very local atmosphere, far fewer tourists than Hongyadong.",
+      "bookable": false,
+      "klookId": null
+    },
+    {
+      "id": "cq-010",
+      "name": "Three Gorges Museum",
+      "chinese": "三峡博物馆",
+      "category": "museum",
+      "district": "Yuzhong",
+      "vibe_tags": [
+        "culture",
+        "local"
+      ],
+      "companion_tags": [
+        "solo",
+        "couple",
+        "friends",
+        "elderly-friendly",
+        "family-kids"
+      ],
+      "practical_tags": [
+        "free-entry",
+        "book-ahead"
+      ],
+      "duration_hrs": 2,
+      "price_rmb": "0",
+      "free": true,
+      "lat": 29.558,
+      "lng": 106.5525,
+      "icon": "🏛️",
+      "tip": "World-class free museum covering Chongqing and Three Gorges history. The flooded city diorama showing submerged towns is hauntingly beautiful. Collect all 60+ stamps in a notebook — a beloved local tradition. Book via WeChat. Closed Mondays.",
+      "bookable": true,
+      "klookId": null
+    },
+    {
+      "id": "cq-011",
+      "name": "Huguang Guild Hall",
+      "chinese": "湖广会馆",
+      "category": "historic-site",
+      "district": "Yuzhong",
+      "vibe_tags": [
+        "culture",
+        "instagrammable",
+        "hidden-gem"
+      ],
+      "companion_tags": [
+        "solo",
+        "couple",
+        "friends",
+        "elderly-friendly"
+      ],
+      "practical_tags": [
+        "book-ahead"
+      ],
+      "duration_hrs": 1.5,
+      "price_rmb": "25",
+      "free": false,
+      "lat": 29.5601,
+      "lng": 106.5943,
+      "icon": "🏮",
+      "tip": "China's largest surviving Ming-Qing guild hall complex — built by wealthy Hubei merchants in the 1700s. The yellow walls photograph beautifully from every angle. 300+ intricate wood carvings inside. Daily afternoon Sichuan opera performance included.",
+      "bookable": true,
+      "klookId": "cq-huguang"
+    },
+    {
+      "id": "cq-012",
+      "name": "Shancheng Stepway (Shan Cheng Bu Dao)",
+      "chinese": "山城步道",
+      "category": "local-hangout",
+      "district": "Yuzhong",
+      "vibe_tags": [
+        "local",
+        "scenic",
+        "hidden-gem"
+      ],
+      "companion_tags": [
+        "solo",
+        "couple",
+        "friends"
+      ],
+      "practical_tags": [
+        "free-entry"
+      ],
+      "duration_hrs": 2,
+      "price_rmb": "0",
+      "free": true,
+      "lat": 29.5612,
+      "lng": 106.5698,
+      "icon": "🪜",
+      "tip": "Chongqing's most iconic stepped walkway — string of historical sites, suspended walkways with river views, indie cafes and art studios. Walk the Shanyi section (山城巷): Kangjiandang Theatre, ancient city wall, Buddha Tower. Best late afternoon.",
+      "bookable": false,
+      "klookId": null
+    },
+    {
+      "id": "cq-013",
+      "name": "Wulong Tiankeng (Natural Bridges)",
+      "chinese": "武隆天生三桥",
+      "category": "nature",
+      "district": "Wulong",
+      "vibe_tags": [
+        "scenic",
+        "hidden-gem",
+        "culture"
+      ],
+      "companion_tags": [
+        "solo",
+        "couple",
+        "friends"
+      ],
+      "practical_tags": [
+        "book-ahead",
+        "morning-only"
+      ],
+      "duration_hrs": 4,
+      "price_rmb": "115",
+      "free": false,
+      "lat": 29.3328,
+      "lng": 107.7544,
+      "icon": "🏔️",
+      "tip": "UNESCO World Heritage Site — world's largest natural stone bridge group. Filming location for Zhang Yimou's 'Curse of the Golden Flower'. 2hrs from city by train. Book the earliest time slot. Take the electric car inside (¥15) to save legs for the walk.",
+      "bookable": true,
+      "klookId": "cq-wulong"
+    },
+    {
+      "id": "cq-014",
+      "name": "18 Steps (Shiba Ti)",
+      "chinese": "十八梯",
+      "category": "historic-district",
+      "district": "Yuzhong",
+      "vibe_tags": [
+        "local",
+        "instagrammable",
+        "culture"
+      ],
+      "companion_tags": [
+        "solo",
+        "couple",
+        "friends"
+      ],
+      "practical_tags": [
+        "free-entry"
+      ],
+      "duration_hrs": 1.5,
+      "price_rmb": "0",
+      "free": true,
+      "lat": 29.5541,
+      "lng": 106.5785,
+      "icon": "🪜",
+      "tip": "Ancient stepped lanes connecting upper and lower Chongqing — renovated in 2021. The city terrace at the top gives a great panoramic view. Starbucks inside a historic gatehouse at the top. Good photo opportunity from the 较场口 metro exit.",
+      "bookable": false,
+      "klookId": null
+    },
+    {
+      "id": "cq-015",
+      "name": "Jingangbei Ancient Village",
+      "chinese": "金刚碑古村落",
+      "category": "hidden-gem",
+      "district": "Beibei",
+      "vibe_tags": [
+        "hidden-gem",
+        "scenic",
+        "local"
+      ],
+      "companion_tags": [
+        "solo",
+        "couple",
+        "friends"
+      ],
+      "practical_tags": [
+        "free-entry",
+        "morning-only"
+      ],
+      "duration_hrs": 2,
+      "price_rmb": "0",
+      "free": true,
+      "lat": 29.8234,
+      "lng": 106.4123,
+      "icon": "🏡",
+      "tip": "A genuinely hidden ancient village beneath Jinyun Mountain. Preserved Ming/Qing buildings along a stream. Locals say this is how Chongqing looked 100 years ago. Weekdays are very quiet. About 40km from city centre — worth the taxi ride out.",
+      "bookable": false,
+      "klookId": null
+    },
+    {
+      "id": "cq-016",
+      "name": "Luozhonglizhuzao Qianxi Gate Bridge Viewpoint",
+      "chinese": "千厮门大桥拍摄点",
+      "category": "viewpoint",
+      "district": "Jiangbei",
+      "vibe_tags": [
+        "instagrammable",
+        "scenic",
+        "trending"
+      ],
+      "companion_tags": [
+        "solo",
+        "couple",
+        "friends"
+      ],
+      "practical_tags": [
+        "free-entry",
+        "evening-best"
+      ],
+      "duration_hrs": 0.5,
+      "price_rmb": "0",
+      "free": true,
+      "lat": 29.5681,
+      "lng": 106.5768,
+      "icon": "📸",
+      "tip": "THE spot to photograph Hongyadong from below — glittering reflections in the Jialing River. Take Line 6 to Dajuyuan station, navigate to Bao Ding Gate (保定门) stairs down to river level. Bridge lights on 19:00–21:30 (weekends to 22:30). Free.",
+      "bookable": false,
+      "klookId": null
+    },
+    {
+      "id": "cq-017",
+      "name": "Hua Yuan Night Market",
+      "chinese": "花卉园夜市",
+      "category": "local-hangout",
+      "district": "Jiangbei",
+      "vibe_tags": [
+        "local",
+        "hidden-gem",
+        "trending"
+      ],
+      "companion_tags": [
+        "solo",
+        "couple",
+        "friends"
+      ],
+      "practical_tags": [
+        "evening-best",
+        "free-entry"
+      ],
+      "duration_hrs": 1.5,
+      "price_rmb": "0",
+      "free": true,
+      "lat": 29.5867,
+      "lng": 106.5345,
+      "icon": "🌙",
+      "tip": "Where locals actually eat — not the tourist Haochi Street. Open from 5pm. Skewers, grilled fish, cold noodles, cold skin noodles (凉皮), stinky tofu. Very affordable (¥20–40pp). The energy here at 9pm on a Friday is pure Chongqing.",
+      "bookable": false,
+      "klookId": null
+    },
+    {
+      "id": "cq-018",
+      "name": "Huangque Pinggu Old Street",
+      "chinese": "黄桷坪涂鸦街",
+      "category": "arts-district",
+      "district": "Jiulongpo",
+      "vibe_tags": [
+        "instagrammable",
+        "hidden-gem",
+        "local"
+      ],
+      "companion_tags": [
+        "solo",
+        "couple",
+        "friends"
+      ],
+      "practical_tags": [
+        "free-entry"
+      ],
+      "duration_hrs": 1.5,
+      "price_rmb": "0",
+      "free": true,
+      "lat": 29.5123,
+      "lng": 106.4867,
+      "icon": "🎨",
+      "tip": "The Chongqing Academy of Fine Arts (川美) neighbourhood — entire street buildings covered in murals painted by students and artists. The Traffic Teahouse (交通茶馆) is one of the last original 1970s-style teahouses in China — ¥10 bottomless tea.",
+      "bookable": false,
+      "klookId": null
+    },
+    {
+      "id": "cq-019",
+      "name": "People's Liberation Monument + Underground Mall",
+      "chinese": "解放碑地下商城",
+      "category": "shopping",
+      "district": "Yuzhong",
+      "vibe_tags": [
+        "local",
+        "shopping",
+        "hidden-gem"
+      ],
+      "companion_tags": [
+        "solo",
+        "couple",
+        "friends",
+        "elderly-friendly"
+      ],
+      "practical_tags": [
+        "free-entry"
+      ],
+      "duration_hrs": 1,
+      "price_rmb": "0",
+      "free": true,
+      "lat": 29.5572,
+      "lng": 106.5747,
+      "icon": "🛍️",
+      "tip": "Largest underground shopping mall in Asia beneath Jiefangbei. 10km of passages, 1,000+ shops. Air-conditioned escape in summer heat. Locals shop here; far cheaper than above-ground stores. The direct underground connection to Raffles City is remarkable.",
+      "bookable": false,
+      "klookId": null
+    },
+    {
+      "id": "cq-020",
+      "name": "Chongqing People's Hall",
+      "chinese": "重庆人民大礼堂",
+      "category": "landmark",
+      "district": "Yuzhong",
+      "vibe_tags": [
+        "culture",
+        "instagrammable",
+        "hidden-gem"
+      ],
+      "companion_tags": [
+        "solo",
+        "couple",
+        "friends",
+        "elderly-friendly"
+      ],
+      "practical_tags": [
+        "free-entry",
+        "morning-only"
+      ],
+      "duration_hrs": 1,
+      "price_rmb": "0",
+      "free": true,
+      "lat": 29.5543,
+      "lng": 106.5489,
+      "icon": "🏛️",
+      "tip": "Modelled on the Temple of Heaven in Beijing, this 1954 civic hall is magnificent. Free to enter the grounds. The view from the steps looking down to the Three Gorges Museum creates a perfect symmetrical photo. Combine with the museum next door.",
+      "bookable": false,
+      "klookId": null
+    },
+    {
+      "id": "cq-021",
+      "name": "Two Rivers Ferry (Liang Jiang Xiao Du)",
+      "chinese": "两江小渡",
+      "category": "local-hangout",
+      "district": "Yuzhong",
+      "vibe_tags": [
+        "local",
+        "scenic",
+        "hidden-gem"
+      ],
+      "companion_tags": [
+        "solo",
+        "couple",
+        "friends"
+      ],
+      "practical_tags": [
+        "free-entry"
+      ],
+      "duration_hrs": 1,
+      "price_rmb": "10",
+      "free": false,
+      "lat": 29.5689,
+      "lng": 106.5896,
+      "icon": "⛴️",
+      "tip": "The hidden-gem experience in Chongqing — a ¥10 local ferry from Chaotianmen to Danzi Shi. On the water, surrounded by the dramatic city skyline. Locals commute on this. Operating hours 6am–10pm. The 10-minute ride gives the best city views.",
+      "bookable": false,
+      "klookId": null
+    },
+    {
+      "id": "cq-022",
+      "name": "Sanxia Guangchang (Times Square View)",
+      "chinese": "来福士广场观景台",
+      "category": "viewpoint",
+      "district": "Yuzhong",
+      "vibe_tags": [
+        "instagrammable",
+        "scenic",
+        "trending"
+      ],
+      "companion_tags": [
+        "solo",
+        "couple",
+        "friends"
+      ],
+      "practical_tags": [
+        "book-ahead"
+      ],
+      "duration_hrs": 1,
+      "price_rmb": "78",
+      "free": false,
+      "lat": 29.5689,
+      "lng": 106.5901,
+      "icon": "🌆",
+      "tip": "The sky bridge connecting the twin Raffles City towers at 250m — best city view from a building. The glass floor section is terrifying and wonderful. Book online. The free lobby view below the bridge is pretty good too if you skip the ticket.",
+      "bookable": true,
+      "klookId": "cq-raffles"
+    },
+    {
+      "id": "cq-023",
+      "name": "Zhazi Cave (Red Rock Site)",
+      "chinese": "渣滓洞",
+      "category": "culture",
+      "district": "Shapingba",
+      "vibe_tags": [
+        "culture",
+        "hidden-gem"
+      ],
+      "companion_tags": [
+        "solo",
+        "couple",
+        "friends",
+        "elderly-friendly"
+      ],
+      "practical_tags": [
+        "free-entry",
+        "morning-only"
+      ],
+      "duration_hrs": 1.5,
+      "price_rmb": "0",
+      "free": true,
+      "lat": 29.5789,
+      "lng": 106.4512,
+      "icon": "🏚️",
+      "tip": "Former KMT prison from the 1940s Civil War — historically significant, sobering experience. Based on the novel 'Red Rock'. Free entry. Combined with White Mansion (白公馆) nearby. Take T198 bus from Ciqikou. Closed Mondays.",
+      "bookable": false,
+      "klookId": null
+    },
+    {
+      "id": "cq-024",
+      "name": "Wansheng Black Valley",
+      "chinese": "万盛黑山谷",
+      "category": "nature",
+      "district": "Wansheng",
+      "vibe_tags": [
+        "scenic",
+        "hidden-gem"
+      ],
+      "companion_tags": [
+        "solo",
+        "couple",
+        "friends"
+      ],
+      "practical_tags": [
+        "book-ahead",
+        "morning-only"
+      ],
+      "duration_hrs": 5,
+      "price_rmb": "130",
+      "free": false,
+      "lat": 28.9753,
+      "lng": 106.9246,
+      "icon": "🌲",
+      "tip": "Spectacular karst canyon 2hrs from city — glass walkways, waterfalls, ancient forests. The 'swinging glass bridge' is terrifying in the best way. Avoid summer and Golden Week holidays (200k visitors/day). Book early time slot.",
+      "bookable": true,
+      "klookId": "cq-blackvalley"
+    },
+    {
+      "id": "cq-025",
+      "name": "Dazu Rock Carvings",
+      "chinese": "大足石刻",
+      "category": "culture",
+      "district": "Dazu",
+      "vibe_tags": [
+        "culture",
+        "scenic",
+        "hidden-gem"
+      ],
+      "companion_tags": [
+        "solo",
+        "couple",
+        "friends",
+        "elderly-friendly"
+      ],
+      "practical_tags": [
+        "book-ahead",
+        "morning-only"
+      ],
+      "duration_hrs": 3,
+      "price_rmb": "115",
+      "free": false,
+      "lat": 29.7019,
+      "lng": 105.7155,
+      "icon": "🗿",
+      "tip": "UNESCO World Heritage Site — 75,000 Buddhist, Taoist and Confucian sculptures carved into cliffs from the 9th–13th century. Baoding Shan section is the main highlight. 1.5hrs from city by high-speed train. An often-overlooked world treasure.",
+      "bookable": true,
+      "klookId": "cq-dazu"
+    }
+  ],
+  "food": [
+    {
+      "id": "cq-f001",
+      "name": "Chongqing Hotpot (Old Style)",
+      "chinese": "老火锅",
+      "category": "hotpot",
+      "price_range": "¥80–150pp",
+      "where": "Zhuyi Road (诸一路) area or Nanbin Road riverside",
+      "dietary_tags": [
+        "contains-pork",
+        "spicy"
+      ],
+      "halal": false,
+      "tip": "Order the 九宫格 (9-grid) pot. Must-try: 毛肚 (tripe), 鸭肠 (duck intestines), 黄喉 (pork throat). Real Chongqing hotpot uses beef tallow (牛油) base — heavier and more flavourful. Dip in sesame oil + garlic. One of the essential China food experiences.",
+      "icon": "🍲"
+    },
+    {
+      "id": "cq-f002",
+      "name": "Chongqing Xiaomian (Spicy Noodles)",
+      "chinese": "重庆小面",
+      "category": "noodles",
+      "price_range": "¥8–15pp",
+      "where": "Any small local shop — avoid places near tourist spots",
+      "dietary_tags": [
+        "contains-pork",
+        "spicy"
+      ],
+      "halal": false,
+      "tip": "The ultimate Chongqing breakfast. Bowl of spicy noodles with 7+ condiments for under ¥15. Order 干溜 (no soup) for the richest version. The city's unofficial 'Michelin Guide' is the annual Top 50 Xiaomian list — any shop on that list is exceptional.",
+      "icon": "🍜"
+    },
+    {
+      "id": "cq-f003",
+      "name": "Suan La Fen (Sour Spicy Noodles)",
+      "chinese": "酸辣粉",
+      "category": "street-food",
+      "price_range": "¥12–20pp",
+      "where": "Jiefangbei Haochi Street or Guanyin Bridge area",
+      "dietary_tags": [
+        "vegetarian-ok"
+      ],
+      "halal": false,
+      "tip": "Sweet potato glass noodles in sour-spicy broth, topped with peanuts, yellow beans and coriander. One of the most satisfying cheap eats in China. Look for shops with a line — the handmade noodle version is superior to the reconstituted type.",
+      "icon": "🍝"
+    },
+    {
+      "id": "cq-f004",
+      "name": "Mao Xue Wang",
+      "chinese": "毛血旺",
+      "category": "local-dish",
+      "price_range": "¥40–60pp",
+      "where": "Jianghu Cai restaurants in Shapingba or Jiangbei",
+      "dietary_tags": [
+        "contains-pork",
+        "spicy"
+      ],
+      "halal": false,
+      "tip": "Spicy broth loaded with duck blood (not pork), tripe, bean sprouts and glass noodles — a Chongqing jianghu classic. Perfect shared dish. Pair with steamed rice to balance the heat. Not for the timid but deeply satisfying.",
+      "icon": "🌶️"
+    },
+    {
+      "id": "cq-f005",
+      "name": "Chen Mahu a (Ciqikou Twisted Doughnuts)",
+      "chinese": "磁器口陈麻花",
+      "category": "snack",
+      "price_range": "¥15–30",
+      "where": "Ciqikou Ancient Town main street",
+      "dietary_tags": [
+        "vegetarian-ok"
+      ],
+      "halal": false,
+      "tip": "Crispy sesame-coated twisted doughnuts — signature snack of Ciqikou since the Qing dynasty. Three flavours: original, spicy, sweet. Buy freshly made — they go stale within hours. Great edible souvenir.",
+      "icon": "🥨"
+    },
+    {
+      "id": "cq-f006",
+      "name": "Kao Naohua (Grilled Brain)",
+      "chinese": "烤脑花",
+      "category": "street-food",
+      "price_range": "¥20–35",
+      "where": "Night market stalls near Hongyadong or Jiefangbei",
+      "dietary_tags": [
+        "adventurous"
+      ],
+      "halal": false,
+      "tip": "Pig brain grilled in tin foil with chilli, garlic and spring onion. Silky, creamy texture like firm tofu. A true Chongqing specialty you won't find elsewhere. The adventurous eater's badge of honour in this city.",
+      "icon": "🧠"
+    },
+    {
+      "id": "cq-f007",
+      "name": "Wanzhou Grilled Fish",
+      "chinese": "万州烤鱼",
+      "category": "restaurant",
+      "price_range": "¥60–100pp",
+      "where": "Wanzhou Grilled Fish restaurants citywide",
+      "dietary_tags": [
+        "contains-fish"
+      ],
+      "halal": false,
+      "tip": "Whole fish grilled then sizzled on a hotplate with toppings. Order the spicy bean curd (麻辣豆腐) version. Keep the heat on low — sauce gets better as it reduces. Very shareable, one fish serves 2–3 people.",
+      "icon": "🐟"
+    },
+    {
+      "id": "cq-f008",
+      "name": "Douhua Rice",
+      "chinese": "豆花饭",
+      "category": "local-dish",
+      "price_range": "¥15–25pp",
+      "where": "Small local restaurants across the city",
+      "dietary_tags": [
+        "vegetarian-ok"
+      ],
+      "halal": false,
+      "tip": "Freshly-made soft tofu served with a dipping sauce of chilli oil, sesame paste and soy, plus steamed rice. Under ¥20/person. A simple but deeply satisfying Chongqing meal. The best douhua is jiggly and silky — never watery.",
+      "icon": "🍚"
+    }
+  ],
+  "hotels": [
+    {
+      "id": "cq-h1",
+      "name": "Raffles Chongqing",
+      "stars": 5,
+      "area": "Chaotianmen, Yuzhong",
+      "lat": 29.5687,
+      "lng": 106.5888,
+      "price": "¥2,500/night",
+      "rating": 9.5,
+      "reviews": "890",
+      "agodaId": "701234"
+    },
+    {
+      "id": "cq-h2",
+      "name": "Hyatt Regency Chongqing",
+      "stars": 5,
+      "area": "Jiefangbei, Yuzhong",
+      "lat": 29.5591,
+      "lng": 106.5765,
+      "price": "¥900/night",
+      "rating": 9.1,
+      "reviews": "2,100",
+      "agodaId": "702345"
+    },
+    {
+      "id": "cq-h3",
+      "name": "JW Marriott Chongqing",
+      "stars": 5,
+      "area": "Guanyinqiao, Jiangbei",
+      "lat": 29.5923,
+      "lng": 106.5414,
+      "price": "¥800/night",
+      "rating": 9,
+      "reviews": "1,800",
+      "agodaId": "703456"
+    },
+    {
+      "id": "cq-h4",
+      "name": "Vienna Hotel Jiefangbei",
+      "stars": 3,
+      "area": "Jiefangbei, Yuzhong",
+      "lat": 29.5572,
+      "lng": 106.5742,
+      "price": "¥220/night",
+      "rating": 8.2,
+      "reviews": "3,400",
+      "agodaId": "704567"
+    },
+    {
+      "id": "cq-h5",
+      "name": "Home Inn Plus Hongyadong",
+      "stars": 3,
+      "area": "Hongyadong, Yuzhong",
+      "lat": 29.5645,
+      "lng": 106.5793,
+      "price": "¥190/night",
+      "rating": 8,
+      "reviews": "2,100",
+      "agodaId": "705678"
+    }
+  ]
+}

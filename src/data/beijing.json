@@ -1,0 +1,855 @@
+{
+  "id": "beijing",
+  "name": "Beijing",
+  "chinese": "北京",
+  "emoji": "🏯",
+  "tagline": "5,000 Years of History in One City",
+  "lat": 39.9042,
+  "lng": 116.4074,
+  "bestTime": "Apr–May, Sep–Oct",
+  "daysRecommended": "4–5",
+  "version": 2,
+  "attractions": [
+    {
+      "id": "bj-001",
+      "name": "Forbidden City (Palace Museum)",
+      "chinese": "故宫博物院",
+      "category": "landmark",
+      "district": "Dongcheng",
+      "vibe_tags": [
+        "culture",
+        "instagrammable",
+        "touristy",
+        "trending"
+      ],
+      "companion_tags": [
+        "solo",
+        "couple",
+        "friends",
+        "elderly-friendly",
+        "family-kids"
+      ],
+      "practical_tags": [
+        "morning-only",
+        "book-ahead"
+      ],
+      "duration_hrs": 3,
+      "price_rmb": "60",
+      "free": false,
+      "lat": 39.9163,
+      "lng": 116.3972,
+      "icon": "🏯",
+      "tip": "980 buildings, 8,700 rooms, 600 years. Book weeks ahead — only sold online, no walk-in. Arrive at 8:30am opening. Skip the front courtyard crowds and go directly to the Treasure Hall and Clock Museum (¥10 each extra). The Imperial Garden at the back is often overlooked.",
+      "bookable": true,
+      "klookId": "bj-forbidden-city"
+    },
+    {
+      "id": "bj-002",
+      "name": "Great Wall (Mutianyu Section)",
+      "chinese": "慕田峪长城",
+      "category": "landmark",
+      "district": "Huairou",
+      "vibe_tags": [
+        "scenic",
+        "culture",
+        "instagrammable"
+      ],
+      "companion_tags": [
+        "solo",
+        "couple",
+        "friends"
+      ],
+      "practical_tags": [
+        "morning-only",
+        "book-ahead"
+      ],
+      "duration_hrs": 4,
+      "price_rmb": "65",
+      "free": false,
+      "lat": 40.4318,
+      "lng": 116.5643,
+      "icon": "🏔️",
+      "tip": "Skip crowded Badaling — Mutianyu has 70% forest coverage and far fewer tourists. Take the cable car up (¥100 return). The toboggan ride back down is brilliant. Most towers are accessible. Hire a driver from Beijing (¥400 return) or book the tourist bus.",
+      "bookable": true,
+      "klookId": "bj-great-wall"
+    },
+    {
+      "id": "bj-003",
+      "name": "Temple of Heaven",
+      "chinese": "天坛",
+      "category": "historic-site",
+      "district": "Dongcheng",
+      "vibe_tags": [
+        "culture",
+        "scenic",
+        "instagrammable"
+      ],
+      "companion_tags": [
+        "solo",
+        "couple",
+        "friends",
+        "elderly-friendly"
+      ],
+      "practical_tags": [
+        "morning-only",
+        "book-ahead"
+      ],
+      "duration_hrs": 2,
+      "price_rmb": "35",
+      "free": false,
+      "lat": 39.8822,
+      "lng": 116.4066,
+      "icon": "⛩️",
+      "tip": "Go at 7am — the park opens before the temple buildings. You'll see elderly locals doing tai chi, playing Chinese chess and performing Peking opera in the echoey walls. The Hall of Prayer for Good Harvests has extraordinary triple-roof geometry. Blue tiles represent heaven.",
+      "bookable": true,
+      "klookId": "bj-temple-of-heaven"
+    },
+    {
+      "id": "bj-004",
+      "name": "Summer Palace",
+      "chinese": "颐和园",
+      "category": "historic-site",
+      "district": "Haidian",
+      "vibe_tags": [
+        "scenic",
+        "culture",
+        "instagrammable"
+      ],
+      "companion_tags": [
+        "solo",
+        "couple",
+        "friends",
+        "elderly-friendly"
+      ],
+      "practical_tags": [
+        "morning-only",
+        "book-ahead"
+      ],
+      "duration_hrs": 3,
+      "price_rmb": "30",
+      "free": false,
+      "lat": 40.0006,
+      "lng": 116.2755,
+      "icon": "🏞️",
+      "tip": "Imperial garden with 3,000+ structures around Kunming Lake. Rent a rowboat (¥50) — views of the marble boat from the water are extraordinary. The 728m Long Corridor (长廊) has 14,000 paintings. Autumn colours are spectacular. Avoid Golden Week.",
+      "bookable": true,
+      "klookId": "bj-summer-palace"
+    },
+    {
+      "id": "bj-005",
+      "name": "Nanluoguxiang Hutong",
+      "chinese": "南锣鼓巷",
+      "category": "historic-district",
+      "district": "Dongcheng",
+      "vibe_tags": [
+        "local",
+        "instagrammable",
+        "trending"
+      ],
+      "companion_tags": [
+        "solo",
+        "couple",
+        "friends"
+      ],
+      "practical_tags": [
+        "free-entry",
+        "evening-best"
+      ],
+      "duration_hrs": 2,
+      "price_rmb": "0",
+      "free": true,
+      "lat": 39.9356,
+      "lng": 116.4058,
+      "icon": "🏘️",
+      "tip": "Skip the main alley — duck into the 8 side hutongs (try Mao'er Hutong and Banchang Hutong) for authentic old Beijing. Get the famous clay-pot yoghurt (¥5) and sour plum juice. Evening is most atmospheric when lanterns light up.",
+      "bookable": false,
+      "klookId": null
+    },
+    {
+      "id": "bj-006",
+      "name": "Tiananmen Square & Gate",
+      "chinese": "天安门广场",
+      "category": "landmark",
+      "district": "Dongcheng",
+      "vibe_tags": [
+        "culture",
+        "touristy"
+      ],
+      "companion_tags": [
+        "solo",
+        "couple",
+        "friends",
+        "elderly-friendly",
+        "family-kids"
+      ],
+      "practical_tags": [
+        "morning-only",
+        "free-entry"
+      ],
+      "duration_hrs": 1,
+      "price_rmb": "0",
+      "free": true,
+      "lat": 39.9055,
+      "lng": 116.3976,
+      "icon": "🏛️",
+      "tip": "Bring your passport — required to enter the square. The flag-raising ceremony at sunrise draws huge crowds but is genuinely moving. The Tiananmen Gate tower can be climbed (¥15) for a face-to-face view of the famous portrait. Free after 5pm.",
+      "bookable": false,
+      "klookId": null
+    },
+    {
+      "id": "bj-007",
+      "name": "Yonghe Lama Temple",
+      "chinese": "雍和宫",
+      "category": "temple",
+      "district": "Dongcheng",
+      "vibe_tags": [
+        "culture",
+        "instagrammable",
+        "hidden-gem"
+      ],
+      "companion_tags": [
+        "solo",
+        "couple",
+        "friends",
+        "elderly-friendly"
+      ],
+      "practical_tags": [
+        "morning-only",
+        "book-ahead"
+      ],
+      "duration_hrs": 1.5,
+      "price_rmb": "25",
+      "free": false,
+      "lat": 39.9474,
+      "lng": 116.4099,
+      "icon": "🪷",
+      "tip": "China's most important Tibetan Buddhist temple. The 26m sandalwood Maitreya Buddha carved from a single tree trunk is breathtaking. Incense smoke fills the courtyards at morning prayer time. In snow, this rivals the Forbidden City without the crowds.",
+      "bookable": true,
+      "klookId": "bj-lama-temple"
+    },
+    {
+      "id": "bj-008",
+      "name": "798 Art District",
+      "chinese": "798艺术区",
+      "category": "arts-district",
+      "district": "Chaoyang",
+      "vibe_tags": [
+        "instagrammable",
+        "local",
+        "hidden-gem",
+        "trending"
+      ],
+      "companion_tags": [
+        "solo",
+        "couple",
+        "friends"
+      ],
+      "practical_tags": [
+        "free-entry"
+      ],
+      "duration_hrs": 2,
+      "price_rmb": "0",
+      "free": true,
+      "lat": 39.984,
+      "lng": 116.4988,
+      "icon": "🎨",
+      "tip": "Former Bauhaus-style military factory complex turned contemporary art hub. Free to roam. UCCA gallery (¥60) has world-class exhibitions. The 'Tank' building has dramatic permanent installations. Best on weekday afternoons. Weekend crowds are significant.",
+      "bookable": false,
+      "klookId": null
+    },
+    {
+      "id": "bj-009",
+      "name": "Jingshan Park (Panoramic View)",
+      "chinese": "景山公园",
+      "category": "viewpoint",
+      "district": "Dongcheng",
+      "vibe_tags": [
+        "scenic",
+        "instagrammable",
+        "hidden-gem"
+      ],
+      "companion_tags": [
+        "solo",
+        "couple",
+        "friends",
+        "elderly-friendly"
+      ],
+      "practical_tags": [
+        "morning-only"
+      ],
+      "duration_hrs": 1,
+      "price_rmb": "2",
+      "free": false,
+      "lat": 39.9247,
+      "lng": 116.3913,
+      "icon": "🌅",
+      "tip": "Only ¥2 and the absolute best view of the Forbidden City from above. 10 minutes walk from the palace's north gate. Sunrise from the Wanchun Pavilion is extraordinary — arrive by 5:30am in summer. Elderly locals sing Peking opera in the park below.",
+      "bookable": false,
+      "klookId": null
+    },
+    {
+      "id": "bj-010",
+      "name": "National Museum of China",
+      "chinese": "中国国家博物馆",
+      "category": "museum",
+      "district": "Dongcheng",
+      "vibe_tags": [
+        "culture",
+        "hidden-gem"
+      ],
+      "companion_tags": [
+        "solo",
+        "couple",
+        "friends",
+        "elderly-friendly"
+      ],
+      "practical_tags": [
+        "book-ahead",
+        "free-entry"
+      ],
+      "duration_hrs": 3,
+      "price_rmb": "0",
+      "free": true,
+      "lat": 39.9042,
+      "lng": 116.4039,
+      "icon": "🏛️",
+      "tip": "One of the world's largest museums — 1.4M artefacts, free entry, but must book via WeChat. The 'Ancient China' permanent exhibition spanning 5,000 years is unmissable. The bronze collection is world-class. Allow 3+ hours minimum. Closed Mondays.",
+      "bookable": true,
+      "klookId": null
+    },
+    {
+      "id": "bj-011",
+      "name": "Houhai Lake & Hutong District",
+      "chinese": "后海",
+      "category": "local-hangout",
+      "district": "Xicheng",
+      "vibe_tags": [
+        "local",
+        "scenic",
+        "trending"
+      ],
+      "companion_tags": [
+        "solo",
+        "couple",
+        "friends"
+      ],
+      "practical_tags": [
+        "free-entry",
+        "evening-best"
+      ],
+      "duration_hrs": 2,
+      "price_rmb": "0",
+      "free": true,
+      "lat": 39.9367,
+      "lng": 116.3802,
+      "icon": "🌊",
+      "tip": "Beautiful lake surrounded by hutongs, bars and traditional courtyard restaurants. Rent a pedal boat in summer (¥40/hr). In winter the lake freezes and locals ice skate. Stroll the hutong streets after dark — the bar scene here is low-key and local.",
+      "bookable": false,
+      "klookId": null
+    },
+    {
+      "id": "bj-012",
+      "name": "Temple of Earth (Ditan Park)",
+      "chinese": "地坛公园",
+      "category": "historic-site",
+      "district": "Dongcheng",
+      "vibe_tags": [
+        "local",
+        "scenic",
+        "hidden-gem",
+        "culture"
+      ],
+      "companion_tags": [
+        "solo",
+        "couple",
+        "friends",
+        "elderly-friendly"
+      ],
+      "practical_tags": [
+        "free-entry",
+        "morning-only"
+      ],
+      "duration_hrs": 1.5,
+      "price_rmb": "0",
+      "free": true,
+      "lat": 39.9513,
+      "lng": 116.4104,
+      "icon": "🌿",
+      "tip": "The square counterpart to the round Temple of Heaven — where emperors worshipped the Earth. Far less visited than its famous sibling. The silver ginkgo trees in November turn the park gold — one of Beijing's most beautiful seasonal spectacles. Free entry.",
+      "bookable": false,
+      "klookId": null
+    },
+    {
+      "id": "bj-013",
+      "name": "Wangfujing Street & Snack Alley",
+      "chinese": "王府井步行街",
+      "category": "shopping",
+      "district": "Dongcheng",
+      "vibe_tags": [
+        "trending",
+        "local",
+        "shopping"
+      ],
+      "companion_tags": [
+        "solo",
+        "couple",
+        "friends",
+        "elderly-friendly",
+        "family-kids"
+      ],
+      "practical_tags": [
+        "free-entry",
+        "evening-best"
+      ],
+      "duration_hrs": 1.5,
+      "price_rmb": "0",
+      "free": true,
+      "lat": 39.9178,
+      "lng": 116.4108,
+      "icon": "🛍️",
+      "tip": "Beijing's most famous commercial street. The snack alley side street has scorpions, starfish and grasshoppers on sticks — mostly tourist theatre, but fun. For serious shopping: SKP department store at the south end is better. Best in the evening when lit up.",
+      "bookable": false,
+      "klookId": null
+    },
+    {
+      "id": "bj-014",
+      "name": "Five Daos Alley (Wudaoying Hutong)",
+      "chinese": "五道营胡同",
+      "category": "local-hangout",
+      "district": "Dongcheng",
+      "vibe_tags": [
+        "local",
+        "hidden-gem",
+        "instagrammable"
+      ],
+      "companion_tags": [
+        "solo",
+        "couple",
+        "friends"
+      ],
+      "practical_tags": [
+        "free-entry",
+        "evening-best"
+      ],
+      "duration_hrs": 1.5,
+      "price_rmb": "0",
+      "free": true,
+      "lat": 39.9456,
+      "lng": 116.4114,
+      "icon": "🏘️",
+      "tip": "Next to Lama Temple — a quiet hutong with excellent independent cafes, craft beer bars and vintage shops. Less touristy than Nanluoguxiang but more interesting. The rooftops of some bars overlook the temple roofs. Great for a slow afternoon.",
+      "bookable": false,
+      "klookId": null
+    },
+    {
+      "id": "bj-015",
+      "name": "Drum Tower & Bell Tower",
+      "chinese": "鼓楼 & 钟楼",
+      "category": "landmark",
+      "district": "Dongcheng",
+      "vibe_tags": [
+        "culture",
+        "instagrammable",
+        "hidden-gem"
+      ],
+      "companion_tags": [
+        "solo",
+        "couple",
+        "friends",
+        "elderly-friendly"
+      ],
+      "practical_tags": [
+        "book-ahead"
+      ],
+      "duration_hrs": 1.5,
+      "price_rmb": "20",
+      "free": false,
+      "lat": 39.9392,
+      "lng": 116.3953,
+      "icon": "🥁",
+      "tip": "Two 14th-century towers that kept time for the city for 600 years. Drum beating performance every 30 minutes. Climb the Drum Tower for great views over the surrounding hutong rooftops. Combine with Houhai Lake and Nanluoguxiang nearby for a full day.",
+      "bookable": true,
+      "klookId": "bj-drum-tower"
+    },
+    {
+      "id": "bj-016",
+      "name": "Old Summer Palace (Yuanmingyuan)",
+      "chinese": "圆明园",
+      "category": "historic-site",
+      "district": "Haidian",
+      "vibe_tags": [
+        "culture",
+        "scenic",
+        "hidden-gem"
+      ],
+      "companion_tags": [
+        "solo",
+        "couple",
+        "friends",
+        "elderly-friendly"
+      ],
+      "practical_tags": [
+        "morning-only"
+      ],
+      "duration_hrs": 2,
+      "price_rmb": "25",
+      "free": false,
+      "lat": 40.0091,
+      "lng": 116.2975,
+      "icon": "🏚️",
+      "tip": "The ruins of the original Summer Palace — deliberately left unrestored after being looted and burned by British-French forces in 1860. Hauntingly beautiful and historically significant. The lotus lake in summer is extraordinary. Far fewer visitors than New Summer Palace.",
+      "bookable": false,
+      "klookId": null
+    },
+    {
+      "id": "bj-017",
+      "name": "Badachu (Eight Great Sites)",
+      "chinese": "八大处公园",
+      "category": "nature",
+      "district": "Shijingshan",
+      "vibe_tags": [
+        "scenic",
+        "hidden-gem",
+        "culture"
+      ],
+      "companion_tags": [
+        "solo",
+        "couple",
+        "friends",
+        "elderly-friendly"
+      ],
+      "practical_tags": [
+        "free-entry",
+        "morning-only"
+      ],
+      "duration_hrs": 3,
+      "price_rmb": "10",
+      "free": false,
+      "lat": 39.9456,
+      "lng": 116.1789,
+      "icon": "🌲",
+      "tip": "Eight ancient temples along a forested hillside in western Beijing — almost completely unknown to tourists. Autumn maple leaves and spring cherry blossoms are spectacular. The Buddhist relics here predate some Forbidden City artefacts. ¥10 entry. Take the cable car up.",
+      "bookable": false,
+      "klookId": null
+    },
+    {
+      "id": "bj-018",
+      "name": "Niujie Mosque & Halal Food Street",
+      "chinese": "牛街清真寺 & 牛街",
+      "category": "culture",
+      "district": "Xicheng",
+      "vibe_tags": [
+        "local",
+        "culture",
+        "hidden-gem"
+      ],
+      "companion_tags": [
+        "solo",
+        "couple",
+        "friends",
+        "elderly-friendly",
+        "family-kids"
+      ],
+      "practical_tags": [
+        "free-entry",
+        "morning-only"
+      ],
+      "duration_hrs": 2,
+      "price_rmb": "0",
+      "free": true,
+      "lat": 39.8989,
+      "lng": 116.3612,
+      "icon": "🌙",
+      "tip": "Beijing's oldest mosque (996 AD) in the city's Muslim Quarter. The most reliable halal food area in Beijing. Juyibao Yuan lamb hotpot (聚宝源) is the city's best — get there at opening. The street has Beijing's best Muslim pastries and sweets.",
+      "bookable": false,
+      "klookId": null
+    },
+    {
+      "id": "bj-019",
+      "name": "Beijing Zoo & Panda House",
+      "chinese": "北京动物园",
+      "category": "attraction",
+      "district": "Haidian",
+      "vibe_tags": [
+        "local",
+        "instagrammable",
+        "family-kids"
+      ],
+      "companion_tags": [
+        "family-kids",
+        "elderly-friendly",
+        "couple"
+      ],
+      "practical_tags": [
+        "morning-only"
+      ],
+      "duration_hrs": 3,
+      "price_rmb": "20",
+      "free": false,
+      "lat": 39.9367,
+      "lng": 116.3334,
+      "icon": "🦁",
+      "tip": "One of the best value attractions in Beijing — ¥20 for one of China's best zoos. The separate panda house is ¥5 extra. Unlike Chengdu's base, you can get remarkably close to the pandas here. The ocean aquarium inside the zoo is excellent for families.",
+      "bookable": false,
+      "klookId": null
+    },
+    {
+      "id": "bj-020",
+      "name": "Sanlitun & Workers' Stadium",
+      "chinese": "三里屯",
+      "category": "shopping",
+      "district": "Chaoyang",
+      "vibe_tags": [
+        "trending",
+        "local",
+        "shopping"
+      ],
+      "companion_tags": [
+        "solo",
+        "couple",
+        "friends"
+      ],
+      "practical_tags": [
+        "free-entry",
+        "evening-best"
+      ],
+      "duration_hrs": 2,
+      "price_rmb": "0",
+      "free": true,
+      "lat": 39.9339,
+      "lng": 116.4546,
+      "icon": "🌃",
+      "tip": "Beijing's trendiest neighbourhood. Workers' Stadium was renovated in 2023 into a world-class multi-use venue. The 'Village' shopping is good but expensive. The real draw is wandering the streets at night — international restaurants, rooftop bars and the buzz of the city's young crowd.",
+      "bookable": false,
+      "klookId": null
+    },
+    {
+      "id": "bj-021",
+      "name": "Fragrant Hills (Xiangshan Park)",
+      "chinese": "香山公园",
+      "category": "nature",
+      "district": "Haidian",
+      "vibe_tags": [
+        "scenic",
+        "instagrammable",
+        "hidden-gem"
+      ],
+      "companion_tags": [
+        "solo",
+        "couple",
+        "friends",
+        "elderly-friendly"
+      ],
+      "practical_tags": [
+        "morning-only"
+      ],
+      "duration_hrs": 3,
+      "price_rmb": "10",
+      "free": false,
+      "lat": 40.0023,
+      "lng": 116.1968,
+      "icon": "🍁",
+      "tip": "Best in late October when the maple leaves turn crimson — the autumn colour show here is Beijing's most spectacular seasonal event. Take the cable car up (¥50) and walk down through the red maple groves. Get there before 8am to beat the leaf-peeping crowds.",
+      "bookable": false,
+      "klookId": null
+    },
+    {
+      "id": "bj-022",
+      "name": "Shichahai Historic District",
+      "chinese": "什刹海",
+      "category": "local-hangout",
+      "district": "Xicheng",
+      "vibe_tags": [
+        "local",
+        "scenic",
+        "hidden-gem",
+        "instagrammable"
+      ],
+      "companion_tags": [
+        "solo",
+        "couple",
+        "friends",
+        "elderly-friendly"
+      ],
+      "practical_tags": [
+        "free-entry"
+      ],
+      "duration_hrs": 2,
+      "price_rmb": "0",
+      "free": true,
+      "lat": 39.9402,
+      "lng": 116.3789,
+      "icon": "🌊",
+      "tip": "Three connected lakes in the centre of Beijing's oldest neighbourhood. Less touristy than nearby Houhai, more authentic. Rent a bicycle and circle all three lakes (6km). The Silver Ingot Bridge (银锭桥) gives rare views of the Western Hills on a clear day.",
+      "bookable": false,
+      "klookId": null
+    }
+  ],
+  "food": [
+    {
+      "id": "bj-f001",
+      "name": "Peking Duck",
+      "chinese": "北京烤鸭",
+      "category": "restaurant",
+      "price_range": "¥100–200pp",
+      "where": "Da Dong (大董) — creative version; Quanjude (全聚德) Qianmen — classic since 1864",
+      "dietary_tags": [
+        "contains-pork-optional"
+      ],
+      "halal": false,
+      "tip": "The definitive Beijing experience. Order one duck between 2 people. Eat the crispy skin first with just sugar — this is how connoisseurs eat it. Da Dong's version has thinner, crispier skin than Quanjude. Must pre-book Da Dong 1–2 days ahead.",
+      "icon": "🦆"
+    },
+    {
+      "id": "bj-f002",
+      "name": "Zha Jiang Mian (Beijing Noodles)",
+      "chinese": "炸酱面",
+      "category": "noodles",
+      "price_range": "¥20–35pp",
+      "where": "Old Beijing Noodle King (老北京炸酱面大王) near Qianmen",
+      "dietary_tags": [
+        "contains-pork"
+      ],
+      "halal": false,
+      "tip": "Beijing's signature noodle — thick wheat noodles topped with fried soybean paste and minced pork, garnished with 8 fresh vegetable toppings you mix yourself. A Ming dynasty institution. The texture should be silky from rendered lard.",
+      "icon": "🍜"
+    },
+    {
+      "id": "bj-f003",
+      "name": "Lamb Hotpot (Halal)",
+      "chinese": "涮羊肉",
+      "category": "hotpot",
+      "price_range": "¥80–150pp",
+      "where": "Juyibao Yuan (聚宝源) on Niujie — halal certified",
+      "dietary_tags": [
+        "halal-certified",
+        "no-pork"
+      ],
+      "halal": true,
+      "tip": "Beijing's classic Mongolian copper pot hotpot. Paper-thin lamb slices in clear broth, dipped in sesame paste. Juyibao Yuan on Niujie (牛街) is halal-certified and considered the city's best. Always packed — arrive at opening or book ahead.",
+      "icon": "🍲"
+    },
+    {
+      "id": "bj-f004",
+      "name": "Jian Bing (Street Crepe)",
+      "chinese": "煎饼果子",
+      "category": "street-food",
+      "price_range": "¥8–15",
+      "where": "Street carts at metro exits citywide — especially in the morning",
+      "dietary_tags": [
+        "vegetarian-ok",
+        "contains-egg"
+      ],
+      "halal": false,
+      "tip": "Beijing's legendary breakfast crepe. Thin mung bean batter on a griddle, topped with egg, spring onion, chilli sauce, fermented bean paste and a crispy wonton wafer. Only ¥10. Always made to order in under 2 minutes. The most democratic food in Beijing.",
+      "icon": "🥞"
+    },
+    {
+      "id": "bj-f005",
+      "name": "Tanghulu (Sugar-Coated Haws)",
+      "chinese": "糖葫芦",
+      "category": "street-food",
+      "price_range": "¥5–15",
+      "where": "Wangfujing Snack Street and hutong areas",
+      "dietary_tags": [
+        "vegan-ok",
+        "vegetarian-ok"
+      ],
+      "halal": true,
+      "tip": "Crunchy sugar-coated hawthorn berries on a stick — Beijing's most iconic snack since the Song dynasty. The traditional hawthorn-only version is best. Best in winter when the sugar shell crackles in the cold. Modern versions with strawberry or kiwi are everywhere.",
+      "icon": "🍡"
+    },
+    {
+      "id": "bj-f006",
+      "name": "Douzhi (Fermented Mung Bean Drink)",
+      "chinese": "豆汁",
+      "category": "street-food",
+      "price_range": "¥5–10",
+      "where": "Traditional breakfast stalls in old hutong areas",
+      "dietary_tags": [
+        "vegan-ok",
+        "vegetarian-ok"
+      ],
+      "halal": true,
+      "tip": "The most divisive food in Beijing — fermented mung bean juice with a sour, funky smell. Old Beijingers swear by it for breakfast with fried dough rings (焦圈) and pickled vegetables. Considered a rite of passage. You either love it or flee the stall. Worth trying once.",
+      "icon": "🥛"
+    },
+    {
+      "id": "bj-f007",
+      "name": "Jiao Quan (Fried Dough Rings)",
+      "chinese": "焦圈",
+      "category": "street-food",
+      "price_range": "¥3–8",
+      "where": "Traditional breakfast stalls throughout the city",
+      "dietary_tags": [
+        "vegan-ok",
+        "vegetarian-ok"
+      ],
+      "halal": true,
+      "tip": "Small, perfectly golden deep-fried dough rings — the Beijing companion to douzhi and porridge. Lighter and crispier than you'd expect. The old hutong breakfast shops that serve these are disappearing — seek them out in Drum Tower and Niujie areas.",
+      "icon": "🍩"
+    }
+  ],
+  "hotels": [
+    {
+      "id": "bj-h1",
+      "name": "Aman at Summer Palace",
+      "stars": 5,
+      "area": "Summer Palace, Haidian",
+      "lat": 40.0006,
+      "lng": 116.2746,
+      "price": "¥4,500/night",
+      "rating": 9.8,
+      "reviews": "420",
+      "agodaId": "901234"
+    },
+    {
+      "id": "bj-h2",
+      "name": "The Peninsula Beijing",
+      "stars": 5,
+      "area": "Wangfujing, Dongcheng",
+      "lat": 39.9178,
+      "lng": 116.4108,
+      "price": "¥3,000/night",
+      "rating": 9.5,
+      "reviews": "890",
+      "agodaId": "902345"
+    },
+    {
+      "id": "bj-h3",
+      "name": "Regent Beijing",
+      "stars": 5,
+      "area": "Jinbao Street, Dongcheng",
+      "lat": 39.9159,
+      "lng": 116.4204,
+      "price": "¥1,200/night",
+      "rating": 9.2,
+      "reviews": "1,780",
+      "agodaId": "903456"
+    },
+    {
+      "id": "bj-h4",
+      "name": "ibis Beijing Sanyuan Bridge",
+      "stars": 3,
+      "area": "Chaoyang",
+      "lat": 39.9646,
+      "lng": 116.4671,
+      "price": "¥250/night",
+      "rating": 8.3,
+      "reviews": "5,200",
+      "agodaId": "904567"
+    },
+    {
+      "id": "bj-h5",
+      "name": "Nostalgia Hotel Qianmen",
+      "stars": 3,
+      "area": "Qianmen, Dongcheng",
+      "lat": 39.8982,
+      "lng": 116.3957,
+      "price": "¥220/night",
+      "rating": 8.1,
+      "reviews": "3,100",
+      "agodaId": "905678"
+    }
+  ]
+}
