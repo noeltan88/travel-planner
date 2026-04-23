@@ -48,9 +48,8 @@ export const QUIZ = [
     id: 'vibe',
     label: 'YOUR VIBE',
     title: 'What kind of trip do you want?',
-    sub: 'Pick up to 3 — we mix them every day',
+    sub: 'Pick as many as you like',
     multi: true,
-    maxSelect: 3,
     deco: '玩',
     options: [
       { icon: '🏘️', name: 'Local hangouts', desc: 'Where the locals actually go', value: 'local' },
@@ -67,13 +66,13 @@ export const QUIZ = [
     title: 'Any dietary requirements?',
     sub: "We'll filter your food picks",
     multi: true,
-    maxSelect: 4,
     deco: '食',
     options: [
       { icon: '✓', name: 'No restrictions', desc: 'I eat everything — surprise me', value: 'none' },
+      { icon: '🥦', name: 'Vegetarian', desc: 'Plant-based, no meat or fish', value: 'vegetarian' },
+      { icon: '🌱', name: 'Vegan', desc: 'No animal products at all', value: 'vegan' },
       { icon: '🌙', name: 'Halal', desc: 'Muslim-friendly restaurants only', value: 'halal' },
-      { icon: '🥦', name: 'Vegetarian', desc: 'Plant-based options available', value: 'vegetarian' },
-      { icon: '🚫', name: 'No pork', desc: 'Excluding pork from food picks', value: 'no-pork' },
+      { icon: '✏️', name: 'Others', desc: 'Type your own requirement', value: 'others' },
     ]
   }
 ];

@@ -1,9 +1,10 @@
-import { useRef, lazy, Suspense } from 'react';
+import { useRef, lazy, Suspense, useState } from 'react';
 import DayTimeline from './DayTimeline';
 import HotelCard from './HotelCard';
 import FoodSection from './FoodSection';
 import PracticalTips from './PracticalTips';
 import BottomNav from './BottomNav';
+import PrintView from './PrintView';
 import { exportToPDF } from '../utils/pdfExport';
 import { loadCityData } from '../utils/algorithm';
 
@@ -21,6 +22,8 @@ export default function ItineraryDashboard({
   itineraryRef, quizAnswers,
 }) {
   const exportRef = useRef(null);
+  const printRef = useRef(null);
+  const [exporting, setExporting] = useState(false);
   if (!itinerary) return null;
 
   const { days, allAttractionsByCity, cities, hotel, otherHotels } = itinerary;
@@ -38,8 +41,13 @@ export default function ItineraryDashboard({
   const freeStops = dayStops.flat().filter(s => s.free).length;
 
   async function handleExport() {
-    if (!exportRef.current) return;
-    await exportToPDF(exportRef, primaryCity, days.length);
+    if (!printRef.current || exporting) return;
+    setExporting(true);
+    try {
+      await exportToPDF(printRef, primaryCity, days.length);
+    } finally {
+      setExporting(false);
+    }
   }
 
   // Show map tab
@@ -86,23 +94,26 @@ export default function ItineraryDashboard({
           <p className="text-4xl mb-4">📋</p>
           <h2 className="text-xl font-bold mb-2" style={{ color: 'var(--text-primary)' }}>Export Your Itinerary</h2>
           <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
-            Download a PDF with all days, stops, and hotel recommendations
+            Full itinerary — all days, stops, food picks & hotel recommendation
           </p>
         </div>
         <button
           onClick={handleExport}
+          disabled={exporting}
           className="w-full max-w-xs py-4 rounded-2xl font-bold text-white mb-4"
-          style={{ background: 'var(--accent)' }}
+          style={{ background: exporting ? '#94a3b8' : 'var(--accent)' }}
         >
-          📥 Download PDF
+          {exporting ? 'Generating PDF…' : '📥 Download PDF'}
         </button>
         <p className="text-xs text-center" style={{ color: 'var(--text-muted)' }}>
-          {days.length} days · {totalStops} stops · {cities?.join(' + ')}
+          Saves as {primaryCity}-{days.length}-day-itinerary.pdf
         </p>
-        {/* Hidden export target */}
-        <div ref={exportRef} style={{ position: 'absolute', left: '-9999px', top: 0 }}>
-          <div ref={itineraryRef} />
-        </div>
+        <PrintView
+          printRef={printRef}
+          itinerary={itinerary}
+          dayStops={dayStops}
+          quizAnswers={quizAnswers}
+        />
         <BottomNav activeTab={activeTab} onTabChange={setActiveTab} />
       </div>
     );

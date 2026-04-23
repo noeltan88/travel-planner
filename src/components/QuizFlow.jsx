@@ -1,12 +1,18 @@
 import { useState } from 'react';
 import { QUIZ } from '../utils/quizData';
 
+const LAST_STEP = QUIZ.length - 1;
+
 export default function QuizFlow({ onComplete }) {
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState({});
+  const [othersText, setOthersText] = useState('');
 
   const q = QUIZ[step];
+  const isLastStep = step === LAST_STEP;
+  const isDietary = q.id === 'dietary';
   const selected = answers[q.id] || (q.multi ? [] : null);
+  const othersSelected = isDietary && (answers.dietary || []).includes('others');
   const canContinue = q.multi ? selected.length > 0 : selected !== null;
 
   function toggle(value) {
@@ -14,7 +20,7 @@ export default function QuizFlow({ onComplete }) {
       const cur = answers[q.id] || [];
       if (cur.includes(value)) {
         setAnswers({ ...answers, [q.id]: cur.filter(v => v !== value) });
-      } else if (cur.length < (q.maxSelect || 99)) {
+      } else {
         setAnswers({ ...answers, [q.id]: [...cur, value] });
       }
     } else {
@@ -23,14 +29,14 @@ export default function QuizFlow({ onComplete }) {
   }
 
   function handleContinue() {
-    if (step < QUIZ.length - 1) {
+    if (step < LAST_STEP) {
       setStep(step + 1);
     } else {
-      // Flatten single-select answers from array to scalar
       const flat = {};
       QUIZ.forEach(q => {
         flat[q.id] = q.multi ? (answers[q.id] || []) : answers[q.id];
       });
+      if (othersText.trim()) flat.dietaryOthers = othersText.trim();
       onComplete(flat);
     }
   }
@@ -67,47 +73,73 @@ export default function QuizFlow({ onComplete }) {
       </div>
 
       {/* Question */}
-      <div className="px-6 pt-2 pb-6">
+      <div className="px-6 pt-2 pb-4">
         <h1 className="text-2xl font-bold text-white leading-tight mb-1">{q.title}</h1>
         <p className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>{q.sub}</p>
-        {q.multi && (
-          <p className="text-xs mt-1" style={{ color: 'var(--accent)' }}>
-            {(answers[q.id] || []).length}/{q.maxSelect} selected
-          </p>
-        )}
       </div>
 
       {/* Options */}
-      <div className="flex-1 px-4 pb-4 overflow-y-auto flex flex-col gap-3">
+      <div className="flex-1 px-4 pb-2 overflow-y-auto flex flex-col gap-3">
         {q.options.map(opt => {
           const sel = isSelected(opt.value);
           return (
-            <button
-              key={opt.value}
-              onClick={() => toggle(opt.value)}
-              className="w-full flex items-center gap-3 p-4 rounded-2xl text-left transition-all duration-200"
-              style={{
-                background: sel ? 'var(--accent-tint)' : 'rgba(255,255,255,0.07)',
-                border: sel ? '2px solid var(--accent)' : '2px solid rgba(255,255,255,0.12)',
-              }}
-            >
-              <span className="text-2xl w-8 flex-shrink-0 text-center">{opt.icon}</span>
-              <div className="flex-1 min-w-0">
-                <div className="font-semibold text-white text-sm">{opt.name}</div>
-                <div className="text-xs truncate" style={{ color: 'rgba(255,255,255,0.55)' }}>{opt.desc}</div>
-              </div>
-              <div
-                className="w-5 h-5 rounded-full flex-shrink-0 flex items-center justify-center border-2 transition-all"
+            <div key={opt.value}>
+              <button
+                onClick={() => toggle(opt.value)}
+                className="w-full flex items-center gap-3 p-4 rounded-2xl text-left transition-all duration-200"
                 style={{
-                  borderColor: sel ? 'var(--accent)' : 'rgba(255,255,255,0.3)',
-                  background: sel ? 'var(--accent)' : 'transparent',
+                  background: sel ? 'var(--accent-tint)' : 'rgba(255,255,255,0.07)',
+                  border: sel ? '2px solid var(--accent)' : '2px solid rgba(255,255,255,0.12)',
                 }}
               >
-                {sel && <svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>}
-              </div>
-            </button>
+                <span className="text-2xl w-8 flex-shrink-0 text-center">{opt.icon}</span>
+                <div className="flex-1 min-w-0">
+                  <div className="font-semibold text-white text-sm">{opt.name}</div>
+                  <div className="text-xs truncate" style={{ color: 'rgba(255,255,255,0.55)' }}>{opt.desc}</div>
+                </div>
+                <div
+                  className="w-5 h-5 rounded-full flex-shrink-0 flex items-center justify-center border-2 transition-all"
+                  style={{
+                    borderColor: sel ? 'var(--accent)' : 'rgba(255,255,255,0.3)',
+                    background: sel ? 'var(--accent)' : 'transparent',
+                  }}
+                >
+                  {sel && (
+                    <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
+                      <path d="M1 4L3.5 6.5L9 1" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  )}
+                </div>
+              </button>
+
+              {/* Others free text input */}
+              {opt.value === 'others' && sel && (
+                <div className="mt-2 px-1">
+                  <input
+                    type="text"
+                    value={othersText}
+                    onChange={e => setOthersText(e.target.value)}
+                    placeholder="e.g. nut allergy, no shellfish…"
+                    className="w-full px-4 py-3 rounded-xl text-sm outline-none"
+                    style={{
+                      background: 'rgba(255,255,255,0.12)',
+                      border: '1.5px solid rgba(255,255,255,0.25)',
+                      color: 'white',
+                    }}
+                    autoFocus
+                  />
+                </div>
+              )}
+            </div>
           );
         })}
+
+        {/* Dietary disclaimer */}
+        {isDietary && (
+          <p className="text-xs px-1 pb-2 leading-relaxed" style={{ color: 'rgba(255,255,255,0.35)' }}>
+            Recommendations are based on our research. Always verify with the restaurant directly as dietary information may change.
+          </p>
+        )}
       </div>
 
       {/* Navigation */}
@@ -132,7 +164,7 @@ export default function QuizFlow({ onComplete }) {
             opacity: canContinue ? 1 : 0.6,
           }}
         >
-          {step < QUIZ.length - 1 ? 'Continue' : 'Build My Itinerary →'}
+          {isLastStep ? 'Build My Itinerary →' : 'Continue →'}
         </button>
       </div>
     </div>
