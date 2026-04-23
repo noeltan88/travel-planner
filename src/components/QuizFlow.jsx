@@ -8,13 +8,20 @@ export default function QuizFlow({ onComplete }) {
   const [answers, setAnswers] = useState({});
   const [othersText, setOthersText] = useState('');
   const [comingSoonTapped, setComingSoonTapped] = useState(null);
+  const [citySearch, setCitySearch] = useState('');
 
   const q = QUIZ[step];
   const isLastStep = step === LAST_STEP;
   const isDietary = q.id === 'dietary';
+  const isCity = q.id === 'city';
   const selected = answers[q.id] || (q.multi ? [] : null);
   const othersSelected = isDietary && (answers.dietary || []).includes('others');
   const canContinue = q.multi ? selected.length > 0 : selected !== null;
+
+  const visibleOptions = isCity && citySearch.trim()
+    ? q.options.filter(opt => opt.name.toLowerCase().includes(citySearch.toLowerCase()))
+    : q.options;
+  const selectedCityCount = (answers.city || []).length;
 
   function toggle(value, comingSoon) {
     if (comingSoon) {
@@ -36,6 +43,7 @@ export default function QuizFlow({ onComplete }) {
 
   function handleContinue() {
     if (step < LAST_STEP) {
+      setCitySearch('');
       setStep(step + 1);
     } else {
       const flat = {};
@@ -84,9 +92,44 @@ export default function QuizFlow({ onComplete }) {
         <p className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>{q.sub}</p>
       </div>
 
+      {/* City search bar */}
+      {isCity && (
+        <div className="px-4 pb-3 flex-shrink-0">
+          <div className="relative">
+            <input
+              type="text"
+              value={citySearch}
+              onChange={e => setCitySearch(e.target.value)}
+              placeholder="Search cities…"
+              className="w-full px-4 py-3 rounded-2xl text-sm outline-none"
+              style={{
+                background: 'rgba(255,255,255,0.1)',
+                border: '1.5px solid rgba(255,255,255,0.2)',
+                color: 'white',
+              }}
+            />
+            {citySearch && (
+              <button
+                onClick={() => setCitySearch('')}
+                style={{
+                  position: 'absolute', right: 14, top: '50%', transform: 'translateY(-50%)',
+                  color: 'rgba(255,255,255,0.45)', background: 'none', border: 'none',
+                  cursor: 'pointer', fontSize: 18, lineHeight: 1,
+                }}
+              >×</button>
+            )}
+          </div>
+          <p className="text-xs mt-2 px-1" style={{ color: 'rgba(255,255,255,0.45)' }}>
+            {selectedCityCount === 0
+              ? 'No cities selected'
+              : `${selectedCityCount} ${selectedCityCount === 1 ? 'city' : 'cities'} selected`}
+          </p>
+        </div>
+      )}
+
       {/* Options */}
       <div className="flex-1 px-4 pb-2 overflow-y-auto flex flex-col gap-3">
-        {q.options.map(opt => {
+        {visibleOptions.map(opt => {
           const sel = isSelected(opt.value);
           const isTappedSoon = comingSoonTapped === opt.value;
           return (
