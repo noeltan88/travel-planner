@@ -7,6 +7,7 @@ export default function QuizFlow({ onComplete }) {
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState({});
   const [othersText, setOthersText] = useState('');
+  const [comingSoonTapped, setComingSoonTapped] = useState(null);
 
   const q = QUIZ[step];
   const isLastStep = step === LAST_STEP;
@@ -15,7 +16,12 @@ export default function QuizFlow({ onComplete }) {
   const othersSelected = isDietary && (answers.dietary || []).includes('others');
   const canContinue = q.multi ? selected.length > 0 : selected !== null;
 
-  function toggle(value) {
+  function toggle(value, comingSoon) {
+    if (comingSoon) {
+      setComingSoonTapped(value);
+      return;
+    }
+    setComingSoonTapped(null);
     if (q.multi) {
       const cur = answers[q.id] || [];
       if (cur.includes(value)) {
@@ -82,35 +88,64 @@ export default function QuizFlow({ onComplete }) {
       <div className="flex-1 px-4 pb-2 overflow-y-auto flex flex-col gap-3">
         {q.options.map(opt => {
           const sel = isSelected(opt.value);
+          const isTappedSoon = comingSoonTapped === opt.value;
           return (
             <div key={opt.value}>
               <button
-                onClick={() => toggle(opt.value)}
+                onClick={() => toggle(opt.value, opt.comingSoon)}
                 className="w-full flex items-center gap-3 p-4 rounded-2xl text-left transition-all duration-200"
                 style={{
-                  background: sel ? 'var(--accent-tint)' : 'rgba(255,255,255,0.07)',
-                  border: sel ? '2px solid var(--accent)' : '2px solid rgba(255,255,255,0.12)',
+                  background: opt.comingSoon
+                    ? 'rgba(255,255,255,0.03)'
+                    : sel ? 'var(--accent-tint)' : 'rgba(255,255,255,0.07)',
+                  border: opt.comingSoon
+                    ? '2px solid rgba(255,255,255,0.06)'
+                    : sel ? '2px solid var(--accent)' : '2px solid rgba(255,255,255,0.12)',
+                  opacity: opt.comingSoon ? 0.5 : 1,
+                  cursor: opt.comingSoon ? 'default' : 'pointer',
                 }}
               >
-                <span className="text-2xl w-8 flex-shrink-0 text-center">{opt.icon}</span>
+                <span className="text-2xl w-8 flex-shrink-0 text-center" style={{ filter: opt.comingSoon ? 'grayscale(1)' : 'none' }}>{opt.icon}</span>
                 <div className="flex-1 min-w-0">
-                  <div className="font-semibold text-white text-sm">{opt.name}</div>
-                  <div className="text-xs truncate" style={{ color: 'rgba(255,255,255,0.55)' }}>{opt.desc}</div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-semibold text-white text-sm">{opt.name}</span>
+                    {opt.comingSoon && (
+                      <span
+                        className="text-xs font-semibold px-2 py-0.5 rounded-full"
+                        style={{ background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.45)', fontSize: 10 }}
+                      >
+                        Coming Soon
+                      </span>
+                    )}
+                  </div>
+                  <div className="text-xs truncate" style={{ color: 'rgba(255,255,255,0.4)' }}>{opt.desc}</div>
                 </div>
-                <div
-                  className="w-5 h-5 rounded-full flex-shrink-0 flex items-center justify-center border-2 transition-all"
-                  style={{
-                    borderColor: sel ? 'var(--accent)' : 'rgba(255,255,255,0.3)',
-                    background: sel ? 'var(--accent)' : 'transparent',
-                  }}
-                >
-                  {sel && (
-                    <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
-                      <path d="M1 4L3.5 6.5L9 1" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                  )}
-                </div>
+                {!opt.comingSoon && (
+                  <div
+                    className="w-5 h-5 rounded-full flex-shrink-0 flex items-center justify-center border-2 transition-all"
+                    style={{
+                      borderColor: sel ? 'var(--accent)' : 'rgba(255,255,255,0.3)',
+                      background: sel ? 'var(--accent)' : 'transparent',
+                    }}
+                  >
+                    {sel && (
+                      <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
+                        <path d="M1 4L3.5 6.5L9 1" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    )}
+                  </div>
+                )}
               </button>
+
+              {/* Coming soon tap message */}
+              {isTappedSoon && (
+                <div
+                  className="mt-1 mx-1 px-3 py-2 rounded-xl text-xs"
+                  style={{ background: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.6)' }}
+                >
+                  We're working on it — China is ready now!
+                </div>
+              )}
 
               {/* Others free text input */}
               {opt.value === 'others' && sel && (
