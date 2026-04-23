@@ -3,3 +3,7 @@ dist
 .env
 .env.local
 .vercel
+.DS_Store
+*.DS_Store
+cities-4-5-7-12-v2.json
+travel-planner-db.json
