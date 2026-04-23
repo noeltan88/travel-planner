@@ -1,22 +1,7 @@
-import guangzhouData from '../data/guangzhou.json';
-import shenzhenData from '../data/shenzhen.json';
-import shanghaiData from '../data/shanghai.json';
-import chongqingData from '../data/chongqing.json';
-import chengduData from '../data/chengdu.json';
-import beijingData from '../data/beijing.json';
-import hangzhouData from '../data/hangzhou.json';
+import masterDb from '../data/china-master-db-v1.json';
 
 export function loadCityData(city) {
-  const map = {
-    guangzhou: guangzhouData,
-    shenzhen: shenzhenData,
-    shanghai: shanghaiData,
-    chongqing: chongqingData,
-    chengdu: chengduData,
-    beijing: beijingData,
-    hangzhou: hangzhouData,
-  };
-  return map[city];
+  return masterDb.cities[city] || null;
 }
 
 export function allocateDaysPerCity(cities, totalDays) {
