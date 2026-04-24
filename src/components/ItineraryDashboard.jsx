@@ -112,9 +112,12 @@ export default function ItineraryDashboard({
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', background: 'var(--bg)' }}>
 
       {/* ══ MAP TAB — full-screen, always mounted ════════════════════════════ */}
+      {/* height = viewport minus BottomNav so the map fills all usable space  */}
       <div style={{
-        display: activeTab === 'map' ? 'flex' : 'none',
-        flexDirection: 'column', flex: '1 1 auto', paddingBottom: 64,
+        display:  activeTab === 'map' ? 'block' : 'none',
+        position: 'relative',
+        height:   'calc(100vh - 64px)',
+        overflow: 'hidden',
       }}>
         <MapErrorBoundary>
           <MapView
@@ -124,6 +127,9 @@ export default function ItineraryDashboard({
             onDayChange={setActiveDay}
             primaryCity={primaryCity}
             isVisible={activeTab === 'map'}
+            deleteStop={deleteStop}
+            swapStop={swapStop}
+            allAttractions={allAttractions}
           />
         </MapErrorBoundary>
       </div>

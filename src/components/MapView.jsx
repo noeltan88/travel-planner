@@ -1,14 +1,13 @@
 import { useEffect, useRef, useState, Component } from 'react';
 import mapboxgl from 'mapbox-gl';
+import AttractionImage from './AttractionImage';
+import { getSwapAlternatives } from '../utils/algorithm';
+import { ChevronRight, X, ArrowUp, ArrowDown } from 'lucide-react';
 
-// ─── Token ────────────────────────────────────────────────────────────────────
-// Read from the environment so the value is never committed to git.
-// Local dev: set in .env.local (gitignored).
-// Vercel / CI: add env var VITE_MAPBOX_TOKEN in the project settings.
-// NOTE: Vite exposes env vars via import.meta.env.VITE_*, NOT process.env.
 const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN;
-
 const ACCENT = '#E8472A';
+const DAY_TABS_H = 56;   // px — height of day-tab row
+const CARD_H     = 160;  // px — card height
 
 const CITY_CENTERS = {
   guangzhou:    { lng: 113.2644, lat: 23.1291 },
@@ -34,199 +33,534 @@ const CITY_CENTERS = {
   qingdao:      { lng: 120.3826, lat: 36.0671 },
 };
 
-// ─── Error boundary ───────────────────────────────────────────────────────────
+// ─── Error boundary (re-exported so ItineraryDashboard can wrap us) ───────────
 export class MapErrorBoundary extends Component {
   constructor(props) { super(props); this.state = { error: false }; }
   static getDerivedStateFromError() { return { error: true }; }
   render() {
-    if (this.state.error) {
-      return (
-        <div style={{
-          display: 'flex', flexDirection: 'column', alignItems: 'center',
-          justifyContent: 'center', height: 300, color: '#94a3b8', gap: 8,
-          background: '#f1f5f9', borderRadius: 12,
-        }}>
-          <span style={{ fontSize: 36 }}>🗺️</span>
-          <p style={{ fontSize: 14, margin: 0 }}>Map unavailable</p>
-          <button
-            onClick={() => this.setState({ error: false })}
-            style={{
-              marginTop: 4, fontSize: 12, fontWeight: 600,
-              color: ACCENT, background: 'none', border: 'none', cursor: 'pointer',
-            }}
-          >
-            Try again
-          </button>
-        </div>
-      );
-    }
+    if (this.state.error) return (
+      <div style={{ display:'flex', flexDirection:'column', alignItems:'center',
+        justifyContent:'center', height:'100%', color:'#94a3b8', gap:8, background:'#f1f5f9' }}>
+        <span style={{ fontSize:36 }}>🗺️</span>
+        <p style={{ fontSize:14, margin:0 }}>Map unavailable</p>
+        <button onClick={() => this.setState({ error:false })}
+          style={{ fontSize:12, fontWeight:600, color:ACCENT, background:'none', border:'none', cursor:'pointer' }}>
+          Try again
+        </button>
+      </div>
+    );
     return this.props.children;
   }
 }
 
+// ─── StopCard ─────────────────────────────────────────────────────────────────
+function StopCard({ stop, index, active, onSwipeUp, onSwipeDown }) {
+  const dragRef  = useRef(null);
+  const [dragY, setDragY] = useState(0);
+
+  function onPointerDown(e) {
+    dragRef.current = { startX: e.clientX, startY: e.clientY, locked: null };
+  }
+
+  function onPointerMove(e) {
+    const d = dragRef.current;
+    if (!d) return;
+    const dx = e.clientX - d.startX;
+    const dy = e.clientY - d.startY;
+
+    if (!d.locked) {
+      if (Math.abs(dx) > 8 || Math.abs(dy) > 8)
+        d.locked = Math.abs(dy) > Math.abs(dx) ? 'y' : 'x';
+    }
+    if (d.locked === 'y') setDragY(Math.max(-110, Math.min(80, dy)));
+  }
+
+  function onPointerUp(e) {
+    const d = dragRef.current;
+    if (!d) return;
+    const dy = e.clientY - d.startY;
+    const dx = e.clientX - d.startX;
+    if (d.locked === 'y' && Math.abs(dy) > 60 && Math.abs(dy) > Math.abs(dx)) {
+      if (dy < 0) onSwipeUp();
+      else        onSwipeDown();
+    }
+    setDragY(0);
+    dragRef.current = null;
+  }
+
+  const distLabel = (stop.district || (stop.cluster_group || '').replace(/-/g, ' ')).trim();
+
+  return (
+    <div
+      className="stop-card"
+      onPointerDown={onPointerDown}
+      onPointerMove={onPointerMove}
+      onPointerUp={onPointerUp}
+      onPointerCancel={() => { setDragY(0); dragRef.current = null; }}
+      style={{
+        flexShrink:     0,
+        width:          'calc(100vw - 60px)',
+        maxWidth:       370,
+        height:         CARD_H,
+        borderRadius:   16,
+        background:     '#fff',
+        boxShadow:      active
+          ? '0 8px 28px rgba(0,0,0,0.18)'
+          : '0 3px 12px rgba(0,0,0,0.10)',
+        display:        'flex',
+        overflow:       'hidden',
+        scrollSnapAlign:'center',
+        transform:      `translateY(${dragY}px)`,
+        transition:     dragY === 0
+          ? 'transform 0.25s ease, box-shadow 0.2s ease, border-color 0.15s'
+          : 'none',
+        cursor:         'grab',
+        userSelect:     'none',
+        touchAction:    'pan-x',
+        border:         `2px solid ${active ? ACCENT : 'transparent'}`,
+      }}
+    >
+      {/* Photo */}
+      <div style={{ width:100, height:'100%', flexShrink:0, overflow:'hidden', position:'relative' }}>
+        <AttractionImage src={stop.photo_url || null} alt={stop.name} category={stop.category} />
+        <div style={{
+          position:'absolute', top:8, left:8,
+          width:22, height:22, borderRadius:'50%',
+          background: active ? ACCENT : 'rgba(0,0,0,0.55)',
+          display:'flex', alignItems:'center', justifyContent:'center',
+          fontSize:11, fontWeight:800, color:'#fff', zIndex:1,
+        }}>
+          {index + 1}
+        </div>
+      </div>
+
+      {/* Text */}
+      <div style={{ flex:1, padding:'14px 14px 10px', display:'flex', flexDirection:'column', justifyContent:'space-between', minWidth:0 }}>
+        <div>
+          <p style={{
+            fontWeight:700, fontSize:14, color:'#1a1a2e',
+            margin:'0 0 4px',
+            overflow:'hidden', display:'-webkit-box',
+            WebkitLineClamp:2, WebkitBoxOrient:'vertical',
+          }}>
+            {stop.name}
+          </p>
+          <p style={{ fontSize:12, color:'#64748b', margin:'0 0 3px', fontWeight:500 }}>
+            {stop.startTime}–{stop.endTime}
+          </p>
+          {distLabel && (
+            <p style={{ fontSize:11, color:'#94a3b8', margin:0,
+              overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>
+              {distLabel}
+            </p>
+          )}
+        </div>
+
+        {/* Swipe hints */}
+        <div style={{ display:'flex', gap:8, alignItems:'center', marginTop:6 }}>
+          <div style={{ display:'flex', alignItems:'center', gap:2, color:'#94a3b8' }}>
+            <ArrowUp size={9} />
+            <span style={{ fontSize:9, fontWeight:600 }}>swap</span>
+          </div>
+          <div style={{ width:1, height:9, background:'#e2e8f0' }} />
+          <div style={{ display:'flex', alignItems:'center', gap:2, color:'#94a3b8' }}>
+            <ArrowDown size={9} />
+            <span style={{ fontSize:9, fontWeight:600 }}>remove</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── SwapPanel ────────────────────────────────────────────────────────────────
+function SwapPanel({ stop, alternatives, onSwap, onClose }) {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => { requestAnimationFrame(() => setVisible(true)); }, []);
+
+  function animatedClose() {
+    setVisible(false);
+    setTimeout(onClose, 320);
+  }
+
+  return (
+    <div style={{ position:'absolute', inset:0, zIndex:25 }}>
+      {/* Backdrop */}
+      <div
+        onClick={animatedClose}
+        style={{
+          position:'absolute', inset:0,
+          background: `rgba(0,0,0,${visible ? 0.42 : 0})`,
+          transition: 'background 0.3s ease',
+        }}
+      />
+
+      {/* Sheet */}
+      <div style={{
+        position:'absolute', bottom:0, left:0, right:0,
+        background:'#fff',
+        borderRadius:'24px 24px 0 0',
+        transform:`translateY(${visible ? '0%' : '100%'})`,
+        transition:'transform 0.35s cubic-bezier(0.32, 0.72, 0, 1)',
+        maxHeight:'65%',
+        display:'flex', flexDirection:'column',
+        overflow:'hidden',
+      }}>
+        {/* Handle */}
+        <div style={{ display:'flex', justifyContent:'center', padding:'12px 0 4px', flexShrink:0 }}>
+          <div style={{ width:40, height:4, borderRadius:2, background:'#e2e8f0' }} />
+        </div>
+
+        {/* Header */}
+        <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between',
+          padding:'8px 20px 12px', flexShrink:0 }}>
+          <div>
+            <p style={{ fontWeight:700, fontSize:16, margin:'0 0 2px', color:'#1a1a2e' }}>Swap stop</p>
+            <p style={{ fontSize:11, color:'#64748b', margin:0 }}>Replace "{stop.name}"</p>
+          </div>
+          <button onClick={animatedClose}
+            style={{ background:'none', border:'none', cursor:'pointer', padding:6,
+              color:'#94a3b8', display:'flex', borderRadius:8 }}>
+            <X size={18} />
+          </button>
+        </div>
+
+        {/* Alternatives */}
+        <div style={{ overflowY:'auto', padding:'0 16px 32px',
+          display:'flex', flexDirection:'column', gap:10 }}>
+          {alternatives.length === 0 ? (
+            <p style={{ color:'#94a3b8', fontSize:13, textAlign:'center', padding:'24px 0' }}>
+              No nearby alternatives available.
+            </p>
+          ) : alternatives.map(alt => (
+            <div
+              key={alt.id}
+              onClick={() => { onSwap(alt); onClose(); }}
+              style={{
+                display:'flex', alignItems:'center', gap:12,
+                padding:'10px 12px', borderRadius:14,
+                border:'1.5px solid #f1f5f9', cursor:'pointer',
+                background:'#fafafa', transition:'border-color 0.15s',
+              }}
+              onMouseEnter={e => e.currentTarget.style.borderColor = ACCENT}
+              onMouseLeave={e => e.currentTarget.style.borderColor = '#f1f5f9'}
+            >
+              <div style={{ width:56, height:56, borderRadius:10, overflow:'hidden', flexShrink:0 }}>
+                <AttractionImage src={alt.photo_url || null} alt={alt.name} category={alt.category} />
+              </div>
+              <div style={{ flex:1, minWidth:0 }}>
+                <p style={{ fontWeight:600, fontSize:13, margin:'0 0 3px',
+                  overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap', color:'#1a1a2e' }}>
+                  {alt.name}
+                </p>
+                <p style={{ fontSize:11, color:'#64748b', margin:0 }}>
+                  {alt.duration_hrs ? `${alt.duration_hrs}h` : ''}{alt.vibe_tags?.[0] ? ` · ${alt.vibe_tags[0]}` : ''}
+                </p>
+              </div>
+              <ChevronRight size={16} color="#cbd5e1" style={{ flexShrink:0 }} />
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ─── MapView ──────────────────────────────────────────────────────────────────
+export default function MapView({
+  days, dayStops, activeDay, onDayChange, primaryCity, isVisible,
+  deleteStop, swapStop, allAttractions,
+}) {
+  const mapRef          = useRef(null);
+  const mapInitialized  = useRef(false);
+  const containerRef    = useRef(null);
+  const markersRef      = useRef([]);
+  const resizeTimer     = useRef(null);
+  const scrollRef       = useRef(null);
+  // Keep a ref of activeCardIdx so effects that fire asynchronously
+  // (e.g. map.once('load')) can read the current value without stale closure.
+  const activeCardIdxRef = useRef(0);
 
-export default function MapView({ days, dayStops, activeDay, onDayChange, primaryCity, isVisible }) {
-  // Rule 4: map instance lives in a ref, never in state
-  const map            = useRef(null);
-  const mapInitialized = useRef(false);   // Rule 2: single-init guard
-  const containerRef   = useRef(null);    // Rule 6: ref to the container div
-  const markersRef     = useRef([]);
-  const popupRef       = useRef(null);
-  const resizeTimer    = useRef(null);
-
-  const [selectedId, setSelectedId] = useState(null);
-  const [initError,  setInitError]  = useState(false);
+  const [activeCardIdx, setActiveCardIdx] = useState(0);
+  const [swapState, setSwapState]         = useState(null); // { stop, dayIdx }
+  const [swapAlts, setSwapAlts]           = useState([]);
 
   const stops   = dayStops[activeDay] || [];
   const cityKey = days[activeDay]?.city || primaryCity;
   const center  = CITY_CENTERS[cityKey] || CITY_CENTERS.guangzhou;
 
-  // ── Rule 2 + 7: initialise ONCE, clean up on true unmount ───────────────────
+  // Sync ref so async callbacks read current value
+  useEffect(() => { activeCardIdxRef.current = activeCardIdx; }, [activeCardIdx]);
+
+  // ── Single-init Mapbox instance ────────────────────────────────────────────
   useEffect(() => {
     if (mapInitialized.current || !containerRef.current) return;
 
+    mapboxgl.accessToken = MAPBOX_TOKEN;
     try {
-      mapboxgl.accessToken = MAPBOX_TOKEN;
-
-      map.current = new mapboxgl.Map({
+      mapRef.current = new mapboxgl.Map({
         container:          containerRef.current,
         style:              'mapbox://styles/mapbox/streets-v12',
         center:             [center.lng, center.lat],
         zoom:               12,
         attributionControl: false,
       });
-
-      map.current.addControl(
-        new mapboxgl.NavigationControl({ showCompass: false }),
-        'top-right',
-      );
-
       mapInitialized.current = true;
     } catch (err) {
-      console.error('[MapView] init failed:', err);
-      setInitError(true);
+      console.error('[MapView] init error:', err);
     }
 
-    // Rule 7: cleanup fires only when the component truly unmounts
     return () => {
       clearTimeout(resizeTimer.current);
-      if (map.current) {
-        map.current.remove();
-        map.current       = null;
+      if (mapRef.current) {
+        mapRef.current.remove();
+        mapRef.current       = null;
         mapInitialized.current = false;
       }
     };
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // ── Rule 3: resize with 100 ms delay whenever the tab becomes visible ────────
+  // ── Resize on visibility change (60 ms delay per spec) ────────────────────
   useEffect(() => {
-    if (isVisible && map.current) {
+    if (isVisible && mapRef.current) {
       clearTimeout(resizeTimer.current);
-      resizeTimer.current = setTimeout(() => {
-        if (map.current) map.current.resize();
-      }, 100);
+      resizeTimer.current = setTimeout(() => { mapRef.current?.resize(); }, 60);
     }
   }, [isVisible]);
 
-  // ── Refresh markers whenever the active day changes ──────────────────────────
-  useEffect(() => {
-    if (!map.current) return;
+  // ── Place / refresh markers when day or stops change ──────────────────────
+  const stopsKey = stops.map(s => s.id).join(',');
 
-    // Clear old markers and popup
+  useEffect(() => {
+    if (!mapRef.current) return;
+
     markersRef.current.forEach(m => m.remove());
     markersRef.current = [];
-    popupRef.current?.remove();
-    popupRef.current = null;
-    setSelectedId(null);
 
     const valid = stops.filter(s => s.lat && s.lng);
     if (!valid.length) return;
 
-    function placeMarkers() {
+    function place() {
       valid.forEach((stop, i) => {
-        const el = document.createElement('div');
-        el.style.cssText = [
-          'width:30px', 'height:30px', 'border-radius:50%',
-          `background:${ACCENT}`, 'border:3px solid #fff',
-          'display:flex', 'align-items:center', 'justify-content:center',
-          'font-size:12px', 'font-weight:800', 'color:#fff',
-          "font-family:'DM Sans',sans-serif",
-          'box-shadow:0 2px 10px rgba(0,0,0,0.35)',
-          'cursor:pointer',
-        ].join(';');
-        el.textContent = String(i + 1);
-
-        el.addEventListener('click', () => {
-          setSelectedId(prev => (prev === stop.id ? null : stop.id));
-          popupRef.current?.remove();
-          popupRef.current = new mapboxgl.Popup({ offset: 20, closeButton: false })
-            .setLngLat([stop.lng, stop.lat])
-            .setHTML(`
-              <div style="font-family:'DM Sans',sans-serif;padding:2px 4px;min-width:140px;max-width:200px">
-                <p style="font-weight:700;font-size:13px;margin:0 0 3px;color:#1a1a2e">${stop.name}</p>
-                <p style="font-size:11px;color:#64748b;margin:0">${stop.startTime}–${stop.endTime} · ${stop.district}</p>
-              </div>
-            `)
-            .addTo(map.current);
-        });
-
+        const active = i === activeCardIdxRef.current;
+        const el = buildMarkerEl(i + 1, active);
         markersRef.current.push(
           new mapboxgl.Marker({ element: el })
             .setLngLat([stop.lng, stop.lat])
-            .addTo(map.current),
+            .addTo(mapRef.current),
         );
       });
-
-      // Fit viewport
-      if (valid.length === 1) {
-        map.current.flyTo({ center: [valid[0].lng, valid[0].lat], zoom: 14, duration: 700 });
-      } else {
-        const lngs = valid.map(s => s.lng);
-        const lats = valid.map(s => s.lat);
-        map.current.fitBounds(
-          [[Math.min(...lngs), Math.min(...lats)], [Math.max(...lngs), Math.max(...lats)]],
-          { padding: 60, maxZoom: 15, duration: 700 },
-        );
-      }
+      fitBounds(valid);
     }
 
-    if (map.current.isStyleLoaded()) {
-      placeMarkers();
+    if (mapRef.current.isStyleLoaded()) place();
+    else mapRef.current.once('load', place);
+
+  }, [stopsKey, activeDay]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // ── Update marker styles + pan when active card changes ───────────────────
+  useEffect(() => {
+    markersRef.current.forEach((marker, i) => {
+      updateMarkerEl(marker.getElement(), i + 1, i === activeCardIdx);
+    });
+    const stop = stops[activeCardIdx];
+    if (stop?.lat && stop?.lng && mapRef.current) {
+      mapRef.current.flyTo({ center: [stop.lng, stop.lat], zoom: 14, duration: 400 });
+    }
+  }, [activeCardIdx]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // ── Reset card position when switching days ────────────────────────────────
+  useEffect(() => {
+    setActiveCardIdx(0);
+    activeCardIdxRef.current = 0;
+    // Instant scroll-to-start without animation to avoid fighting scroll-snap
+    setTimeout(() => {
+      if (scrollRef.current) scrollRef.current.scrollLeft = 0;
+    }, 30);
+  }, [activeDay]);
+
+  // ── Clamp card index if stops were deleted ─────────────────────────────────
+  useEffect(() => {
+    const max = Math.max(0, stops.length - 1);
+    if (activeCardIdx > max) setActiveCardIdx(max);
+  }, [stops.length]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // ── Helpers ────────────────────────────────────────────────────────────────
+  function fitBounds(valid) {
+    if (!mapRef.current || !valid.length) return;
+    if (valid.length === 1) {
+      mapRef.current.flyTo({ center: [valid[0].lng, valid[0].lat], zoom: 14, duration: 700 });
     } else {
-      map.current.once('load', placeMarkers);
+      const lngs = valid.map(s => s.lng);
+      const lats = valid.map(s => s.lat);
+      mapRef.current.fitBounds(
+        [[Math.min(...lngs), Math.min(...lats)], [Math.max(...lngs), Math.max(...lats)]],
+        // Extra bottom padding so markers aren't hidden behind cards
+        { padding: { top: 70, bottom: 270, left: 60, right: 60 }, maxZoom: 15, duration: 700 },
+      );
     }
-  }, [activeDay]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  // ── Rule 8: error fallback ────────────────────────────────────────────────────
-  if (initError) {
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column', height: 'calc(100vh - 64px)', overflow: 'hidden', background: '#f8fafc' }}>
-        <div style={{
-          height: 300, display: 'flex', flexDirection: 'column',
-          alignItems: 'center', justifyContent: 'center',
-          background: '#f1f5f9', gap: 8, color: '#94a3b8',
-        }}>
-          <span style={{ fontSize: 36 }}>🗺️</span>
-          <p style={{ fontSize: 14, margin: 0 }}>Map failed to load</p>
-          <button
-            onClick={() => { setInitError(false); mapInitialized.current = false; }}
-            style={{ fontSize: 12, fontWeight: 600, color: ACCENT, background: 'none', border: 'none', cursor: 'pointer' }}
-          >
-            Retry
-          </button>
-        </div>
-      </div>
-    );
   }
 
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: 'calc(100vh - 64px)', overflow: 'hidden', background: '#f8fafc' }}>
+  function buildMarkerEl(num, active) {
+    const el   = document.createElement('div');
+    const size = active ? 36 : 26;
+    Object.assign(el.style, {
+      width:        `${size}px`,
+      height:       `${size}px`,
+      borderRadius: '50%',
+      background:   active ? '#fff' : ACCENT,
+      border:       active ? `2.5px solid ${ACCENT}` : '2.5px solid rgba(255,255,255,0.9)',
+      display:      'flex',
+      alignItems:   'center',
+      justifyContent: 'center',
+      fontSize:     '12px',
+      fontWeight:   '800',
+      color:        active ? ACCENT : '#fff',
+      fontFamily:   "'DM Sans', sans-serif",
+      boxShadow:    active
+        ? `0 4px 16px rgba(232,71,42,0.45)`
+        : '0 2px 8px rgba(0,0,0,0.28)',
+      cursor:       'pointer',
+      transition:   'all 0.25s ease',
+    });
+    el.textContent = String(num);
+    return el;
+  }
 
-      {/* Day tabs */}
+  function updateMarkerEl(el, num, active) {
+    if (!el) return;
+    const size = active ? 36 : 26;
+    Object.assign(el.style, {
+      width:      `${size}px`,
+      height:     `${size}px`,
+      background: active ? '#fff' : ACCENT,
+      border:     active ? `2.5px solid ${ACCENT}` : '2.5px solid rgba(255,255,255,0.9)',
+      color:      active ? ACCENT : '#fff',
+      boxShadow:  active
+        ? `0 4px 16px rgba(232,71,42,0.45)`
+        : '0 2px 8px rgba(0,0,0,0.28)',
+    });
+    void num; // suppress unused-var lint
+  }
+
+  // ── Detect centred card on scroll ──────────────────────────────────────────
+  function handleScroll() {
+    const container = scrollRef.current;
+    if (!container) return;
+    const scrollCenter = container.scrollLeft + container.clientWidth / 2;
+    const cards        = Array.from(container.children);
+    let minDist = Infinity, idx = 0;
+    cards.forEach((card, i) => {
+      const dist = Math.abs((card.offsetLeft + card.offsetWidth / 2) - scrollCenter);
+      if (dist < minDist) { minDist = dist; idx = i; }
+    });
+    if (idx !== activeCardIdx) setActiveCardIdx(idx);
+  }
+
+  // ── Open swap panel ────────────────────────────────────────────────────────
+  function openSwap(stop) {
+    const usedIds = new Set(stops.map(s => s.id));
+    const alts    = getSwapAlternatives(stop, allAttractions || [], usedIds, 3);
+    setSwapAlts(alts);
+    setSwapState({ stop, dayIdx: activeDay });
+  }
+
+  function handleSwap(newStop) {
+    if (!swapState) return;
+    swapStop(swapState.dayIdx, swapState.stop.id, newStop);
+    setSwapState(null);
+  }
+
+  // ── Layout constants ────────────────────────────────────────────────────────
+  // 30 px side-padding on the scroll container → 20 px peek after 10 px gap
+  const SCROLL_PADDING = 30;
+  const CARDS_BOTTOM   = DAY_TABS_H + 12; // px from bottom of container
+
+  // ── Render ──────────────────────────────────────────────────────────────────
+  return (
+    <div style={{
+      position: 'relative', width: '100%', height: '100%',
+      overflow: 'hidden', background: '#e8eaf0',
+    }}>
+
+      {/* ── Map canvas fills everything ──────────────────────────────────── */}
+      <div ref={containerRef} style={{ position: 'absolute', inset: 0 }} />
+
+      {/* ── Empty-day overlay ────────────────────────────────────────────── */}
+      {stops.length === 0 && (
+        <div style={{
+          position: 'absolute', inset: 0,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          pointerEvents: 'none',
+        }}>
+          <div style={{
+            background: 'rgba(255,255,255,0.92)', borderRadius: 20,
+            padding: '24px 36px', textAlign: 'center',
+            backdropFilter: 'blur(8px)',
+          }}>
+            <p style={{ fontSize: 32, margin: '0 0 8px' }}>📍</p>
+            <p style={{ fontSize: 14, color: '#64748b', margin: 0, fontWeight: 600 }}>
+              No stops for Day {activeDay + 1}
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* ── Horizontal snap-scroll cards ─────────────────────────────────── */}
+      {stops.length > 0 && (
+        <div style={{
+          position: 'absolute',
+          bottom:   CARDS_BOTTOM,
+          left: 0, right: 0,
+        }}>
+          {/* Webkit scrollbar: handled by global CSS or hidden on mobile by default */}
+          <div
+            ref={scrollRef}
+            onScroll={handleScroll}
+            style={{
+              display:               'flex',
+              overflowX:             'auto',
+              scrollSnapType:        'x mandatory',
+              WebkitOverflowScrolling:'touch',
+              gap:                   10,
+              paddingLeft:           SCROLL_PADDING,
+              paddingRight:          SCROLL_PADDING,
+              paddingTop:            8,
+              paddingBottom:         8,
+              scrollbarWidth:        'none',
+              msOverflowStyle:       'none',
+            }}
+          >
+            {stops.map((stop, i) => (
+              <StopCard
+                key={stop.id}
+                stop={stop}
+                index={i}
+                active={i === activeCardIdx}
+                onSwipeUp={()  => openSwap(stop)}
+                onSwipeDown={() => deleteStop && deleteStop(activeDay, stop.id)}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* ── Day tabs — pinned at the bottom ──────────────────────────────── */}
       <div style={{
-        display: 'flex', gap: 8, padding: '10px 12px', overflowX: 'auto',
-        background: '#fff', borderBottom: '1px solid #f1f5f9', flexShrink: 0,
+        position:        'absolute',
+        bottom:          0, left: 0, right: 0,
+        height:          DAY_TABS_H,
+        display:         'flex',
+        alignItems:      'center',
+        gap:             8,
+        padding:         '0 12px',
+        overflowX:       'auto',
+        background:      'rgba(255,255,255,0.92)',
+        backdropFilter:  'blur(12px)',
+        borderTop:       '1px solid rgba(241,245,249,0.8)',
+        scrollbarWidth:  'none',
+        msOverflowStyle: 'none',
       }}>
         {days.map((day, i) => {
           const active = i === activeDay;
@@ -235,88 +569,34 @@ export default function MapView({ days, dayStops, activeDay, onDayChange, primar
               key={i}
               onClick={() => onDayChange(i)}
               style={{
-                flexShrink: 0, padding: '6px 14px', borderRadius: 20,
-                fontSize: 12, fontWeight: 600, cursor: 'pointer', border: 'none',
-                background: active ? 'rgba(232,71,42,0.12)' : '#f1f5f9',
-                color:      active ? ACCENT : '#64748b',
-                outline:    active ? `1.5px solid ${ACCENT}` : 'none',
+                flexShrink:   0,
+                padding:      '6px 14px',
+                borderRadius: 20,
+                fontSize:     12,
+                fontWeight:   600,
+                cursor:       'pointer',
+                border:       'none',
+                background:   active ? 'rgba(232,71,42,0.12)' : '#f1f5f9',
+                color:        active ? ACCENT : '#64748b',
+                outline:      active ? `1.5px solid ${ACCENT}` : 'none',
+                whiteSpace:   'nowrap',
               }}
             >
-              {day.label}{day.cityHeader ? ` ${day.cityHeader.emoji}` : ''}
+              Day {i + 1}{day.cityHeader ? ` ${day.cityHeader.emoji}` : ''}
             </button>
           );
         })}
       </div>
 
-      {/* Rule 6: map container div with EXPLICIT pixel height — never percentage */}
-      {/* Rule 1: this div is always in the DOM; visibility is controlled by the  */}
-      {/*         parent (ItineraryDashboard) with CSS display:none/block          */}
-      <div style={{ flexShrink: 0, position: 'relative' }}>
-        <div
-          ref={containerRef}
-          style={{ width: '100%', height: '300px' }}  // explicit px so Mapbox can measure
+      {/* ── Swap panel (slides up from bottom) ───────────────────────────── */}
+      {swapState && (
+        <SwapPanel
+          stop={swapState.stop}
+          alternatives={swapAlts}
+          onSwap={handleSwap}
+          onClose={() => setSwapState(null)}
         />
-        {stops.length === 0 && (
-          <div style={{
-            position: 'absolute', inset: 0, pointerEvents: 'none',
-            display: 'flex', flexDirection: 'column', alignItems: 'center',
-            justifyContent: 'center', background: '#f1f5f9', color: '#94a3b8',
-          }}>
-            <span style={{ fontSize: 32, marginBottom: 8 }}>🗺️</span>
-            <p style={{ fontSize: 14, margin: 0 }}>No stops for this day</p>
-          </div>
-        )}
-      </div>
-
-      {/* Stop list */}
-      <div style={{ flex: 1, overflowY: 'auto', padding: '12px 16px', display: 'flex', flexDirection: 'column', gap: 8 }}>
-        {stops.length === 0 ? (
-          <p style={{ textAlign: 'center', color: '#94a3b8', fontSize: 13, marginTop: 24 }}>
-            No stops planned for this day.
-          </p>
-        ) : stops.map((stop, i) => {
-          const sel = selectedId === stop.id;
-          return (
-            <div
-              key={stop.id}
-              onClick={() => {
-                const nowSel = !sel;
-                setSelectedId(nowSel ? stop.id : null);
-                popupRef.current?.remove();
-                popupRef.current = null;
-                if (nowSel && map.current && stop.lng && stop.lat) {
-                  map.current.flyTo({ center: [stop.lng, stop.lat], zoom: 15, duration: 500 });
-                }
-              }}
-              style={{
-                background:  sel ? 'rgba(232,71,42,0.06)' : '#fff',
-                border:      `1.5px solid ${sel ? ACCENT : '#f1f5f9'}`,
-                borderRadius: 14, padding: '10px 14px',
-                display:     'flex', alignItems: 'center', gap: 12,
-                cursor:      'pointer', transition: 'border-color 0.15s',
-                boxShadow:   '0 1px 6px rgba(0,0,0,0.05)',
-              }}
-            >
-              <div style={{
-                width: 28, height: 28, borderRadius: '50%', background: ACCENT,
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontSize: 12, fontWeight: 800, color: '#fff', flexShrink: 0,
-              }}>
-                {i + 1}
-              </div>
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <p style={{ fontWeight: 600, fontSize: 13, color: '#1a1a2e', margin: '0 0 2px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                  {stop.name}
-                </p>
-                <p style={{ fontSize: 11, color: '#64748b', margin: 0 }}>
-                  {stop.startTime}–{stop.endTime} · {stop.district}
-                </p>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-
+      )}
     </div>
   );
 }
