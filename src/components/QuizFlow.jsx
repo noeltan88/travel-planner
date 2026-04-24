@@ -180,7 +180,7 @@ function FlightTimePicker({ label, value, onChange }) {
 
 export default function QuizFlow({ onComplete }) {
   const [step, setStep] = useState(0);
-  const [answers, setAnswers] = useState({});
+  const [answers, setAnswers] = useState({ country: 'china' });
   const [othersText, setOthersText] = useState('');
   const [comingSoonTapped, setComingSoonTapped] = useState(null);
   const [citySearch, setCitySearch] = useState('');
@@ -194,14 +194,6 @@ export default function QuizFlow({ onComplete }) {
   const isFamilyKids = answers.group === 'family-kids';
   const selected = answers[q.id] || (q.multi ? [] : null);
   const othersSelected = isDietary && (answers.dietary || []).includes('others');
-
-  // Auto-advance through country screen (China auto-selected after 0.5 s, advances at 1 s)
-  useEffect(() => {
-    if (QUIZ[step]?.id !== 'country') return;
-    const t1 = setTimeout(() => setAnswers(a => ({ ...a, country: 'china' })), 500);
-    const t2 = setTimeout(() => { setCitySearch(''); setStep(s => s + 1); }, 1000);
-    return () => { clearTimeout(t1); clearTimeout(t2); };
-  }, [step]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Auto-select "No restrictions" when landing on dietary step for the first time
   useEffect(() => {
