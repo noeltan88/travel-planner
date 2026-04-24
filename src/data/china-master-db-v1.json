@@ -961,6 +961,110 @@
           ],
           "tip": "Hand-made coconut ice cream using the original 1920s recipe. Very fresh, not over-sweet. The mango gelato is also excellent. A childhood memory for all Guangzhou locals over 40.",
           "halal": true
+        },
+        {
+          "id": "gz-fc001",
+          "name": "% Arabica Guangzhou",
+          "chinese": "% Arabica 广州",
+          "type": "cafe",
+          "cluster_group": "yuexiu-historic",
+          "vibe": [
+            "instagrammable",
+            "specialty-coffee"
+          ],
+          "price_range": "mid",
+          "near": "Near Beijing Road, Yuexiu",
+          "must_order": "Iced latte, pour-over single origin",
+          "tip": "The Japanese minimalist coffee brand beloved across Asia. The Guangzhou location has a striking all-white interior that photographs beautifully. Always a queue on weekends. The coffee quality is excellent — not just for photos.",
+          "lat": 23.1234,
+          "lng": 113.2934
+        },
+        {
+          "id": "gz-fc002",
+          "name": "Lianxiang Lou (莲香楼) Dim Sum",
+          "chinese": "莲香楼",
+          "type": "restaurant",
+          "cluster_group": "yuexiu-historic",
+          "vibe": [
+            "must-eat",
+            "local",
+            "iconic"
+          ],
+          "price_range": "budget",
+          "near": "Beijing Road / Liwan area",
+          "must_order": "Char siu bao (BBQ pork bun), egg tart, turnip cake",
+          "tip": "One of Guangzhou's oldest and most celebrated dim sum restaurants — over 100 years old. The breakfast dim sum (6–11am) is the quintessential old Canton experience. Noisy, steamy, joyful chaos. Push carts come to your table. Arrive before 8am or expect a long wait.",
+          "lat": 23.1189,
+          "lng": 113.2845
+        },
+        {
+          "id": "gz-fc003",
+          "name": "Guangzhou Wonton Noodle Shops",
+          "chinese": "云吞面",
+          "type": "restaurant",
+          "cluster_group": "yuexiu-historic",
+          "vibe": [
+            "must-eat",
+            "local",
+            "hidden-gem"
+          ],
+          "price_range": "budget",
+          "near": "Any traditional street near Beijing Road",
+          "must_order": "Wonton noodle soup — shrimp and pork wontons in clear broth",
+          "tip": "Guangzhou's definitive breakfast dish — silky noodles in a clear pork bone and dried flounder broth with plump wontons. Look for old-school shops with red-and-white tile, plastic stools, and elderly proprietors. ¥12–20 per bowl. Ask locals where they go — the best ones have no English menu.",
+          "lat": 23.1256,
+          "lng": 113.2912
+        },
+        {
+          "id": "gz-fc004",
+          "name": "Bingsheng Pinwei (炳胜品味)",
+          "chinese": "炳胜品味",
+          "type": "restaurant",
+          "cluster_group": "pearl-river",
+          "vibe": [
+            "must-eat",
+            "instagrammable"
+          ],
+          "price_range": "mid",
+          "near": "Pearl River / Tianhe area",
+          "must_order": "Creative Cantonese dim sum, signature steamed dishes",
+          "tip": "The most creative Cantonese cuisine in Guangzhou — not traditional, but pushing boundaries. The dim sum here is extraordinary — unusual ingredients, beautiful presentation. Popular with business diners and food-forward visitors. Book ahead for weekend lunch.",
+          "lat": 23.1156,
+          "lng": 113.3245
+        },
+        {
+          "id": "gz-fc005",
+          "name": "Canton Tower Observation Café",
+          "chinese": "广州塔观光咖啡",
+          "type": "cafe",
+          "cluster_group": "pearl-river",
+          "vibe": [
+            "instagrammable",
+            "views"
+          ],
+          "price_range": "mid",
+          "near": "Canton Tower base / Pearl River",
+          "must_order": "Coffee with Pearl River panorama",
+          "tip": "Multiple cafes at the base of Canton Tower with river views. At night the tower changes colors against the city skyline. The riverside promenade has outdoor seating. For the ultimate Canton Tower photo, shoot from the Pearl River cruise at sunset — the tower and city skyline reflected in the water.",
+          "lat": 23.1056,
+          "lng": 113.3178
+        },
+        {
+          "id": "gz-fc006",
+          "name": "Chimelong Food Street",
+          "chinese": "长隆美食街",
+          "type": "food-street",
+          "cluster_group": "panyu-chimelong",
+          "vibe": [
+            "family",
+            "local"
+          ],
+          "price_range": "mid",
+          "near": "Chimelong Resort, Panyu",
+          "must_order": "Any Cantonese theme park food",
+          "tip": "Multiple dining options inside Chimelong Resort complex — the food quality is better than average theme park food. There are also many restaurants outside the main gate in Panyu where locals eat — 30% cheaper than park prices. Ask your hotel to recommend the best nearby.",
+          "lat": 22.9978,
+          "lng": 113.3289
         }
       ],
       "practical": {
@@ -2005,6 +2109,96 @@
           "dietary_tags": [],
           "tip": "Premium omakase with foie gras and sea urchin for ~SGD$56 — viral on Lemon8 SG as the best value omakase outside Japan. The quality-to-price ratio shocked multiple Singapore reviewers. Booking essential — WeChat only.",
           "halal": false
+        },
+        {
+          "id": "sz-fc001",
+          "name": "OCT-LOFT Cafes & Restaurants",
+          "chinese": "华侨城创意园咖啡",
+          "type": "cafe",
+          "cluster_group": "nanshan-oct",
+          "vibe": [
+            "instagrammable",
+            "artsy",
+            "hidden-gem"
+          ],
+          "price_range": "mid",
+          "near": "OCT-LOFT Creative Culture Park, Nanshan",
+          "must_order": "Single origin coffee, creative lunch sets",
+          "tip": "Shenzhen's coolest creative district — converted factory buildings filled with galleries, indie cafes and design studios. The cafes here are all independently run with distinct concepts. Browse the whole park before settling on one. Best on weekday afternoons.",
+          "lat": 22.5456,
+          "lng": 113.9789
+        },
+        {
+          "id": "sz-fc002",
+          "name": "Sea World Shekou Food Strip",
+          "chinese": "海上世界美食街",
+          "type": "food-street",
+          "cluster_group": "nanshan-oct",
+          "vibe": [
+            "instagrammable",
+            "local",
+            "evening"
+          ],
+          "price_range": "mid",
+          "near": "Shekou Sea World, Nanshan",
+          "must_order": "International food variety — Thai, Japanese, Western, local",
+          "tip": "Shenzhen's most international food strip — dozens of restaurants surrounding the permanently docked cruise ship 'The World'. Young, vibrant atmosphere. Best at night when the Sea World plaza fills up. Good options for SEA travellers who want familiar flavours with a Shenzhen twist.",
+          "lat": 22.4934,
+          "lng": 113.9067
+        },
+        {
+          "id": "sz-fc003",
+          "name": "Shenzhen Bay Park Cafe",
+          "chinese": "深圳湾公园咖啡",
+          "type": "cafe",
+          "cluster_group": "nanshan-theme-parks",
+          "vibe": [
+            "instagrammable",
+            "scenic",
+            "outdoor"
+          ],
+          "price_range": "mid",
+          "near": "Shenzhen Bay Park, Nanshan",
+          "must_order": "Cold brew to go, walk along bay",
+          "tip": "Multiple cafe kiosks along the Shenzhen Bay waterfront with views to Hong Kong across the bay. Best at sunset when the light turns golden and Hong Kong's New Territories mountains are silhouetted. Cyclists and joggers fill the path — great energy.",
+          "lat": 22.5189,
+          "lng": 113.9534
+        },
+        {
+          "id": "sz-fc004",
+          "name": "Futian CBD Rooftop Bars",
+          "chinese": "福田CBD天台酒吧",
+          "type": "bar",
+          "cluster_group": "futian-center",
+          "vibe": [
+            "instagrammable",
+            "views",
+            "evening"
+          ],
+          "price_range": "mid",
+          "near": "Futian CBD, near Ping An Finance Centre",
+          "must_order": "Cocktail at sunset with city skyline view",
+          "tip": "Shenzhen's most dramatic city views — the Ping An Finance Centre (599m, world's 4th tallest) dominates the skyline. COCO Park area has several rooftop bars with excellent views. Go at dusk to see the city transition from day to night. A spectacular contrast to Hong Kong's harbour.",
+          "lat": 22.5345,
+          "lng": 113.9934
+        },
+        {
+          "id": "sz-fc005",
+          "name": "MixC Shenzhen Bay Food Hall",
+          "chinese": "万象城美食广场",
+          "type": "food-hall",
+          "cluster_group": "nanshan-theme-parks",
+          "vibe": [
+            "local",
+            "family",
+            "trending"
+          ],
+          "price_range": "mid",
+          "near": "MixC Shenzhen Bay mall, Nanshan",
+          "must_order": "Browse — best regional Chinese food stalls in one place",
+          "tip": "Shenzhen's locals eat here — a massive food hall in the MixC mall with every regional Chinese cuisine. Peking duck, Sichuan hot pot, Cantonese roast meats, Yunnan rice noodles all under one roof. Much better value than tourist restaurants. Kids love the variety.",
+          "lat": 22.5156,
+          "lng": 113.9623
         }
       ],
       "practical": {
@@ -3244,6 +3438,164 @@
           "dietary_tags": [],
           "tip": "Crispy fried pork ribs served with soft, chewy rice cakes in special sauce — a pairing unique to Shanghai. Xian De Lai has been making this since the 1940s. The rice cake (年糕) absorbs the sauce perfectly. Very cheap, very local, very satisfying.",
           "halal": false
+        },
+        {
+          "id": "sh-fc001",
+          "name": "Seesaw Coffee (Bund area)",
+          "chinese": "喜茶·悦鲜茶 外滩",
+          "type": "cafe",
+          "cluster_group": "pudong-bund",
+          "vibe": [
+            "instagrammable",
+            "specialty-coffee"
+          ],
+          "price_range": "mid",
+          "near": "Bund waterfront, 5 min walk",
+          "must_order": "Cold brew, oat milk latte with Bund view",
+          "tip": "Multiple excellent specialty coffee options near the Bund. Seesaw and M on the Bund area cafes have river views. The key is finding a window or terrace seat overlooking the Huangpu River — go early morning before the Bund crowds arrive.",
+          "lat": 31.2398,
+          "lng": 121.4912
+        },
+        {
+          "id": "sh-fc002",
+          "name": "Jia Jia Tang Bao",
+          "chinese": "佳家汤包",
+          "type": "restaurant",
+          "cluster_group": "pudong-bund",
+          "vibe": [
+            "must-eat",
+            "local"
+          ],
+          "price_range": "budget",
+          "near": "Near People's Square, 10 min from Bund",
+          "must_order": "Xiaolongbao (pork soup dumplings), crab xiaolongbao in season",
+          "tip": "Shanghai's most famous xiaolongbao — always a queue but moves fast. The crab roe version (蟹黄汤包) in autumn is extraordinary. Price is a fraction of Din Tai Fung for the same (or better) quality. Open from 6:30am — perfect pre-Bund breakfast.",
+          "lat": 31.2334,
+          "lng": 121.4723
+        },
+        {
+          "id": "sh-fc003",
+          "name": "Bar Rouge Rooftop",
+          "chinese": "胭脂吧",
+          "type": "bar-cafe",
+          "cluster_group": "pudong-bund",
+          "vibe": [
+            "instagrammable",
+            "evening",
+            "rooftop"
+          ],
+          "price_range": "luxury",
+          "near": "Bund 18, direct Bund location",
+          "must_order": "Classic cocktail with Pudong skyline view",
+          "tip": "The most celebrated rooftop bar on the Bund — 7th floor terrace looking directly at the Pudong skyline. Arrive at sunset (6–7pm) to see the towers light up as day turns to night. Book a terrace spot ahead — it fills fast on weekends.",
+          "lat": 31.2378,
+          "lng": 121.4889
+        },
+        {
+          "id": "sh-fc004",
+          "name": "13DE MARZO Bear Cafe (Anfu Road)",
+          "chinese": "十三月·安福路",
+          "type": "cafe",
+          "cluster_group": "french-concession",
+          "vibe": [
+            "instagrammable",
+            "trending",
+            "viral"
+          ],
+          "price_range": "mid",
+          "near": "Anfu Road, French Concession heart",
+          "must_order": "Any drink — the bear charm is the point",
+          "tip": "The most viral cafe in Shanghai 2024–2025 — every drink comes with a collectible removable bear charm. Chinese fashion brand turned cafe. Always a queue but moves relatively fast. The tree-lined Anfu Road backdrop makes every photo worth it. Wukang Road is 5 min walk.",
+          "lat": 31.2178,
+          "lng": 121.4423
+        },
+        {
+          "id": "sh-fc005",
+          "name": "Luneurs Bakery",
+          "chinese": "卢内尔面包房",
+          "type": "cafe-bakery",
+          "cluster_group": "french-concession",
+          "vibe": [
+            "instagrammable",
+            "hidden-gem",
+            "must-eat"
+          ],
+          "price_range": "mid",
+          "near": "Anfu Road / Changshu Road area, French Concession",
+          "must_order": "Croissant, kouign-amann, seasonal tart",
+          "tip": "The best bakery in Shanghai — a genuine rarity. French-trained bakers making exceptional bread and pastries. The croissants are perfectly laminated. Always sells out by 11am on weekends — arrive early. Small queue but worth it. No seating — take your pastry to Fuxing Park 5 min away.",
+          "lat": 31.2134,
+          "lng": 121.4445
+        },
+        {
+          "id": "sh-fc006",
+          "name": "Tianzifang Alley Food & Cafes",
+          "chinese": "田子坊",
+          "type": "food-street",
+          "cluster_group": "french-concession",
+          "vibe": [
+            "instagrammable",
+            "local",
+            "hidden-gem"
+          ],
+          "price_range": "mid",
+          "near": "Tianzifang, South French Concession",
+          "must_order": "Coffee at any indie cafe, Shanghai scallion pancake from street stalls",
+          "tip": "A maze of narrow alleyways converted from 1930s factory buildings — dozens of indie cafes, restaurants and art studios. More authentic atmosphere than Xintiandi. Look for cafes with rooftop or second-floor terrace seating. Best visited in the morning before crowds.",
+          "lat": 31.2089,
+          "lng": 121.4578
+        },
+        {
+          "id": "sh-fc007",
+          "name": "Fu 1088",
+          "chinese": "福1088",
+          "type": "restaurant",
+          "cluster_group": "french-concession",
+          "vibe": [
+            "must-eat",
+            "instagrammable"
+          ],
+          "price_range": "luxury",
+          "near": "Yuyuan Road, Jing'an / French Concession border",
+          "must_order": "Red-braised pork (Hong Shao Rou), steamed fish, Lion's Head meatball",
+          "tip": "The best traditional Shanghainese cuisine in the city — in a restored 1930s villa with rooms named after different eras of Shanghai history. The setting is extraordinary. Book ahead. The red-braised pork belly is legendary — rich, gelatinous, perfectly sweet.",
+          "lat": 31.2256,
+          "lng": 121.4367
+        },
+        {
+          "id": "sh-fc008",
+          "name": "Cloud 9 Bar (Grand Hyatt)",
+          "chinese": "九重天酒吧",
+          "type": "bar",
+          "cluster_group": "pudong-century",
+          "vibe": [
+            "instagrammable",
+            "luxury",
+            "views"
+          ],
+          "price_range": "luxury",
+          "near": "Grand Hyatt, Jin Mao Tower, Pudong",
+          "must_order": "Signature cocktail with Shanghai Tower view",
+          "tip": "87th floor bar inside Jin Mao Tower — the atrium view looking straight down through 30 floors of hotel is mind-bending, and the city views are extraordinary. Best at night. Minimum spend applies. Worth every yuan for the view.",
+          "lat": 31.2356,
+          "lng": 121.5023
+        },
+        {
+          "id": "sh-fc009",
+          "name": "Xiao Long Bao Din Tai Fung",
+          "chinese": "鼎泰丰",
+          "type": "restaurant",
+          "cluster_group": "pudong-century",
+          "vibe": [
+            "must-eat",
+            "family"
+          ],
+          "price_range": "mid",
+          "near": "Multiple locations, closest to Pudong at Super Brand Mall",
+          "must_order": "Pork xiaolongbao, shrimp dumpling, taro dessert",
+          "tip": "The most reliable xiaolongbao experience for first-timers — Michelin one-star consistently, English menu, see-through kitchen. More expensive than local alternatives but the quality is impeccable. The pork and crab roe dumplings in autumn are outstanding.",
+          "lat": 31.2312,
+          "lng": 121.5045
         }
       ],
       "practical": {
@@ -4548,6 +4900,95 @@
           "halal": false,
           "tip": "Freshly-made soft tofu served with a dipping sauce of chilli oil, sesame paste and soy, plus steamed rice. Under ¥20/person. A simple but deeply satisfying Chongqing meal. The best douhua is jiggly and silky — never watery.",
           "icon": "🍚"
+        },
+        {
+          "id": "cq-fc001",
+          "name": "Jiefangbei Rooftop Cafes",
+          "chinese": "解放碑天台咖啡",
+          "type": "cafe",
+          "cluster_group": "yuzhong-peninsula",
+          "vibe": [
+            "instagrammable",
+            "views"
+          ],
+          "price_range": "mid",
+          "near": "Liberation Monument (Jiefangbei), Yuzhong",
+          "must_order": "Coffee with Yangtze River view",
+          "tip": "Several rooftop cafes near Jiefangbei offer views of the Yangtze and Jialing Rivers merging. At night the entire peninsula lights up spectacularly — Chongqing has China's best city-at-night photography. The confluence of two rivers from the rooftop is a signature Chongqing shot.",
+          "lat": 29.5623,
+          "lng": 106.5756
+        },
+        {
+          "id": "cq-fc002",
+          "name": "Hongyadong Hot Pot",
+          "chinese": "洪崖洞火锅",
+          "type": "restaurant",
+          "cluster_group": "yuzhong-peninsula",
+          "vibe": [
+            "must-eat",
+            "instagrammable",
+            "local"
+          ],
+          "price_range": "mid",
+          "near": "Hongyadong Stilted Buildings, Yuzhong",
+          "must_order": "Chongqing numbing-spicy hotpot — pork slices, tripe, brain, mochi",
+          "tip": "Chongqing is the hotpot capital of China — more intense, more numbing (麻), more spicy than anywhere else. The area around Hongyadong has dozens of good hotpot restaurants. Tell the server 'zhong la' (medium spicy) unless you have a high spice tolerance. Order brain if adventurous — it's a Chongqing delicacy.",
+          "lat": 29.5656,
+          "lng": 106.5712
+        },
+        {
+          "id": "cq-fc003",
+          "name": "Ciqikou Ancient Town Tea Houses",
+          "chinese": "磁器口茶馆",
+          "type": "teahouse",
+          "cluster_group": "yuzhong-peninsula",
+          "vibe": [
+            "local",
+            "instagrammable",
+            "hidden-gem"
+          ],
+          "price_range": "budget",
+          "near": "Ciqikou Ancient Town, Shapingba District",
+          "must_order": "Gaiwan tea, dan dan noodles, mochi",
+          "tip": "Traditional teahouses in the ancient Ming dynasty town — sit on wooden chairs in a riverside pavilion drinking gaiwan tea while watching the river. Much more authentic than tourist spots. The small streets behind the main tourist drag have the best local food. Try the handmade mochi and dan dan noodles.",
+          "lat": 29.5678,
+          "lng": 106.4534
+        },
+        {
+          "id": "cq-fc004",
+          "name": "Yangtze River Night View Restaurants",
+          "chinese": "长江夜景餐厅",
+          "type": "restaurant",
+          "cluster_group": "yuzhong-peninsula",
+          "vibe": [
+            "instagrammable",
+            "evening",
+            "scenic"
+          ],
+          "price_range": "mid",
+          "near": "Nanbin Road riverside, Nanan District",
+          "must_order": "Sichuan cuisine with river view, night photography perch",
+          "tip": "Nanbin Road is the best place to photograph Chongqing's famous night skyline. Dozens of restaurants line the south bank of the Yangtze with unobstructed views of the illuminated Yuzhong Peninsula. Arrive at sunset (6:30pm). The light show begins around 8pm. Bring a tripod or lean on railings for long-exposure shots.",
+          "lat": 29.5445,
+          "lng": 106.5812
+        },
+        {
+          "id": "cq-fc005",
+          "name": "Small Noodle (Xiaomian) Street",
+          "chinese": "小面街",
+          "type": "restaurant",
+          "cluster_group": "yuzhong-peninsula",
+          "vibe": [
+            "must-eat",
+            "local",
+            "budget"
+          ],
+          "price_range": "budget",
+          "near": "Any local neighbourhood in Chongqing",
+          "must_order": "Chongqing xiao mian — ¥8–12 per bowl",
+          "tip": "Chongqing's signature street food — thick wheat noodles in a complex spicy sauce with peanuts, sesame paste, Sichuan pepper and preserved vegetables. ¥8–12 per bowl from any local shop with plastic stools. The definitive cheap local breakfast. Every neighbourhood has its best xiaomian shop — ask hotel staff which one is theirs.",
+          "lat": 29.5567,
+          "lng": 106.5623
         }
       ],
       "hotels": [
@@ -5511,6 +5952,112 @@
           "halal": false,
           "tip": "Chengdu's most iconic wonton shop, founded 1941. The wontons are silkier and thinner-skinned than northern versions. Original broth (清汤) or red oil (红油) dressing. The set meal with dandan noodles is the local classic order.",
           "icon": "🥟"
+        },
+        {
+          "id": "cd-fc001",
+          "name": "% Arabica Kuanzhai Alley",
+          "chinese": "% Arabica 宽窄巷子",
+          "type": "cafe",
+          "cluster_group": "city-centre",
+          "vibe": [
+            "instagrammable",
+            "must-visit"
+          ],
+          "price_range": "mid",
+          "near": "Kuanzhai Alley (Narrow Alley section), Qingyang District",
+          "must_order": "Iced latte, pour-over, their signature % logo drink",
+          "tip": "One of the most photographed Arabica branches in the world — B.L.U.E Architecture Studio converted a Qing dynasty siheyuan (courtyard home). The contrast of white minimalist interior against grey Sichuan tile roofs is stunning. Always a queue — go early morning for empty courtyard shots.",
+          "lat": 30.6712,
+          "lng": 104.0534
+        },
+        {
+          "id": "cd-fc002",
+          "name": "Heming Teahouse (People's Park)",
+          "chinese": "鹤鸣茶社 人民公园",
+          "type": "teahouse",
+          "cluster_group": "city-centre",
+          "vibe": [
+            "must-visit",
+            "local",
+            "instagrammable"
+          ],
+          "price_range": "budget",
+          "near": "People's Park (Renmin Park), Qingyang",
+          "must_order": "Gaiwan jasmine tea — ¥15–20, refilled all day",
+          "tip": "The most authentic Chengdu experience — over 100 years old, this teahouse inside People's Park is where locals spend entire mornings playing mahjong, having their ears cleaned, and drinking tea. Order a gaiwan of jasmine tea (¥15) and stay as long as you like. The earwax cleaning experience (¥15) is bizarre and wonderful.",
+          "lat": 30.6645,
+          "lng": 104.0456
+        },
+        {
+          "id": "cd-fc003",
+          "name": "Chengdu Sichuan Hot Pot (Haidilao)",
+          "chinese": "海底捞 成都",
+          "type": "restaurant",
+          "cluster_group": "city-centre",
+          "vibe": [
+            "must-eat",
+            "instagrammable",
+            "family"
+          ],
+          "price_range": "mid",
+          "near": "Chunxi Road / Taikoo Li area",
+          "must_order": "Chengdu red oil broth, fresh vegetables, sliced beef, tripe",
+          "tip": "Haidilao Chengdu has the best service of any hot pot chain — tableside noodle-pulling performance, free manicures while you wait, unlimited snacks. The Chengdu red oil broth is more complex and fragrant than other cities. Reserve online — always a queue. Kids are well looked after. The 'dancing noodles' show is genuine fun.",
+          "lat": 30.6578,
+          "lng": 104.0823
+        },
+        {
+          "id": "cd-fc004",
+          "name": "Horikoshi Coffee (锦里附近)",
+          "chinese": "堀越咖啡",
+          "type": "cafe",
+          "cluster_group": "city-centre",
+          "vibe": [
+            "instagrammable",
+            "specialty-coffee",
+            "hidden-gem"
+          ],
+          "price_range": "mid",
+          "near": "Near Jinli Street, Wuhou District",
+          "must_order": "Japanese-style pour-over, matcha series",
+          "tip": "Japanese-run specialty coffee near Jinli Street — meticulous brewing, beautiful minimalist space. Very different from the tourist food around Jinli. A peaceful respite after the busy ancient street. The Japanese owners speak some English and are very welcoming to foreign visitors.",
+          "lat": 30.6423,
+          "lng": 104.0612
+        },
+        {
+          "id": "cd-fc005",
+          "name": "Daci Temple Courtyard Cafe",
+          "chinese": "大慈寺院内茶馆",
+          "type": "cafe",
+          "cluster_group": "city-centre",
+          "vibe": [
+            "instagrammable",
+            "unique",
+            "local"
+          ],
+          "price_range": "mid",
+          "near": "Daci Temple, inside Taikoo Li, Jinjiang District",
+          "must_order": "Traditional tea, creative Sichuan-flavoured coffee drinks",
+          "tip": "The cafe inside the 1,600-year-old Daci Temple courtyard — one of Chengdu's most unique settings. The contrast of ancient Buddhist architecture and a modern specialty coffee bar is very Chengdu. Monks still practice here. The morning incense smoke drifting through the courtyard is extraordinary. Walk directly from Taikoo Li.",
+          "lat": 30.6589,
+          "lng": 104.0856
+        },
+        {
+          "id": "cd-fc006",
+          "name": "Panda Base Area Cafes",
+          "chinese": "大熊猫基地附近咖啡",
+          "type": "cafe",
+          "cluster_group": "jinniu-north",
+          "vibe": [
+            "instagrammable",
+            "trending"
+          ],
+          "price_range": "mid",
+          "near": "Chengdu Research Base of Giant Panda Breeding entrance",
+          "must_order": "Panda-themed lattes and desserts",
+          "tip": "Several panda-themed cafes cluster near the Panda Base entrance on Panda Avenue (熊猫大道). The panda latte art is extremely Instagrammable. Good for a coffee before or after the base visit. Arrive by 8am for the pandas — they are most active in the cool morning feeding hours.",
+          "lat": 30.7345,
+          "lng": 104.1423
         }
       ],
       "hotels": [
@@ -6938,6 +7485,214 @@
           "halal": true,
           "tip": "Small, perfectly golden deep-fried dough rings — the Beijing companion to douzhi and porridge. Lighter and crispier than you'd expect. The old hutong breakfast shops that serve these are disappearing — seek them out in Drum Tower and Niujie areas.",
           "icon": "🍩"
+        },
+        {
+          "id": "bj-fc001",
+          "name": "Metal Hands Cafe",
+          "chinese": "铁手咖啡制造局",
+          "type": "cafe",
+          "cluster_group": "hutong-drum-tower",
+          "vibe": [
+            "instagrammable",
+            "specialty-coffee"
+          ],
+          "price_range": "mid",
+          "near": "Nanluoguxiang hutong, 5 min walk from Drum Tower",
+          "must_order": "Pistachio Dirty, Vienna Coffee",
+          "tip": "Only Asian cafe in global top 50. French retro-industrial style inside a historic hutong courtyard. The bar counter lets you watch the baristas up close. Expect a queue on weekends.",
+          "lat": 39.9378,
+          "lng": 116.4034
+        },
+        {
+          "id": "bj-fc002",
+          "name": "Voyage Coffee",
+          "chinese": "航行者咖啡",
+          "type": "cafe",
+          "cluster_group": "hutong-drum-tower",
+          "vibe": [
+            "instagrammable",
+            "hidden-gem"
+          ],
+          "price_range": "mid",
+          "near": "Yuhe Heritage Site, near Nanluoguxiang",
+          "must_order": "Single-origin pour-over, seasonal filter coffee",
+          "tip": "Tucked inside a 100-year-old courtyard at the Yuhe Heritage Site. Two interconnected courtyards — the back one has shady trees and riverside seating. Magnolia blooms in spring (Mar–Apr), golden ginkgo in autumn (Oct–Nov). Stunning in both seasons.",
+          "lat": 39.9356,
+          "lng": 116.3989
+        },
+        {
+          "id": "bj-fc003",
+          "name": "Fú Dǐng Café",
+          "chinese": "福鼎咖啡",
+          "type": "cafe",
+          "cluster_group": "hutong-drum-tower",
+          "vibe": [
+            "instagrammable",
+            "rooftop-view"
+          ],
+          "price_range": "mid",
+          "near": "Lama Temple (Yonghegong), 2 min walk",
+          "must_order": "Matcha latte, pour-over with temple view",
+          "tip": "Rooftop terrace overlooking the Lama Temple rooftops — one of Beijing's best cafe views. Zen-inspired interior combining Chinese aesthetics with Western coffee. Best at golden hour (4–6pm) when the temple tiles glow.",
+          "lat": 39.9478,
+          "lng": 116.4123
+        },
+        {
+          "id": "bj-fc004",
+          "name": "Wudaoying Hutong Cafes",
+          "chinese": "五道营胡同咖啡街",
+          "type": "cafe-street",
+          "cluster_group": "hutong-drum-tower",
+          "vibe": [
+            "instagrammable",
+            "local",
+            "hidden-gem"
+          ],
+          "price_range": "budget",
+          "near": "Lama Temple, 3 min walk",
+          "must_order": "Whatever looks interesting — browse first",
+          "tip": "A quieter alternative to Nanluoguxiang — 500m hutong lined with independent cafes, bookshops and art studios. Much less crowded, more authentic atmosphere. The entire street is photogenic. Go on weekday mornings for an empty hutong experience.",
+          "lat": 39.9445,
+          "lng": 116.4156
+        },
+        {
+          "id": "bj-fc005",
+          "name": "Peking Duck at Siheyuan",
+          "chinese": "四合院烤鸭",
+          "type": "restaurant",
+          "cluster_group": "hutong-drum-tower",
+          "vibe": [
+            "local",
+            "must-eat"
+          ],
+          "price_range": "mid",
+          "near": "Drum Tower hutong area",
+          "must_order": "Full Peking duck set — pancakes, hoisin, scallion",
+          "tip": "TRB Hutong is the best sit-down Peking duck experience in the hutong area — converted courtyard, exceptional duck. For budget Peking duck, Da Dong (大董) near Dongsi is the most celebrated affordable version. Both require booking ahead.",
+          "lat": 39.9345,
+          "lng": 116.4012
+        },
+        {
+          "id": "bj-fc006",
+          "name": "Palace Museum Café (Forbidden City)",
+          "chinese": "故宫咖啡馆",
+          "type": "cafe",
+          "cluster_group": "forbidden-city-core",
+          "vibe": [
+            "instagrammable",
+            "unique"
+          ],
+          "price_range": "mid",
+          "near": "Inside the Forbidden City",
+          "must_order": "Palace-themed drinks — osmanthus latte, chrysanthemum tea latte",
+          "tip": "Multiple cafes inside the palace grounds — look for ones in the side courtyards. The combination of Ming dynasty architecture and your coffee cup makes for extraordinary photos. Only accessible with Forbidden City entry ticket.",
+          "lat": 39.9163,
+          "lng": 116.3972
+        },
+        {
+          "id": "bj-fc007",
+          "name": "Wangfujing Snack Street",
+          "chinese": "王府井小吃街",
+          "type": "food-street",
+          "cluster_group": "forbidden-city-core",
+          "vibe": [
+            "local",
+            "must-eat",
+            "instagrammable"
+          ],
+          "price_range": "budget",
+          "near": "Wangfujing, 5 min walk from Forbidden City east gate",
+          "must_order": "Tanghulu (candied hawthorn), fried scorpion (for photos), jianbing",
+          "tip": "Classic Beijing street food experience. The fried scorpions and starfish are mostly for tourist photos — the ones actually worth eating are tanghulu (glazed hawthorn on a stick), jianbing (savoury crepe) and candied haw flakes. Go at dusk when it lights up.",
+          "lat": 39.9134,
+          "lng": 116.4089
+        },
+        {
+          "id": "bj-fc008",
+          "name": "Still Water Coffee",
+          "chinese": "静水咖啡",
+          "type": "cafe",
+          "cluster_group": "forbidden-city-core",
+          "vibe": [
+            "instagrammable",
+            "hidden-gem"
+          ],
+          "price_range": "mid",
+          "near": "Shichahai / Xicheng area, 20 min walk from Forbidden City",
+          "must_order": "Orange Iced Americano, Pour-over Coffee",
+          "tip": "A bamboo-and-pond courtyard cafe in Xicheng — wooden doors, flowing water, bamboo grove. You receive a horse-shaped buzzer after ordering which is great for photos. The upstairs terrace overlooks grey Beijing rooftops. One of Beijing's most calming cafes.",
+          "lat": 39.9289,
+          "lng": 116.3845
+        },
+        {
+          "id": "bj-fc009",
+          "name": "798 Art District Cafes",
+          "chinese": "798艺术区咖啡",
+          "type": "cafe",
+          "cluster_group": "olympic-park",
+          "vibe": [
+            "instagrammable",
+            "artsy"
+          ],
+          "price_range": "mid",
+          "near": "798 Art District, 15 min from Olympic Park",
+          "must_order": "House espresso, seasonal pastries",
+          "tip": "Dozens of excellent cafes inside the converted Bauhaus factory complex. UCCA Cafe (inside UCCA art gallery) is the most acclaimed. The industrial architecture with exposed Mao-era slogans and contemporary art is extraordinary. Best on weekday mornings before tour groups arrive.",
+          "lat": 39.9834,
+          "lng": 116.4923
+        },
+        {
+          "id": "bj-fc010",
+          "name": "Olympic Park Night Walk + Street Food",
+          "chinese": "奥林匹克公园夜市",
+          "type": "food-street",
+          "cluster_group": "olympic-park",
+          "vibe": [
+            "local",
+            "instagrammable"
+          ],
+          "price_range": "budget",
+          "near": "Bird's Nest / Olympic Park",
+          "must_order": "Grilled lamb skewers, cold noodles, local snacks",
+          "tip": "The area around the Bird's Nest and Water Cube comes alive at night with street food vendors and illuminated Olympic structures. Walk the lake promenade with food and take photos of the lit-up stadiums reflected in the water. Best 7–10pm.",
+          "lat": 40.0023,
+          "lng": 116.3912
+        },
+        {
+          "id": "bj-fc011",
+          "name": "Houhai Lakeside Bars & Cafes",
+          "chinese": "后海湖边咖啡酒吧",
+          "type": "cafe",
+          "cluster_group": "xicheng-zoo",
+          "vibe": [
+            "instagrammable",
+            "local",
+            "evening"
+          ],
+          "price_range": "mid",
+          "near": "Houhai Lake, Xicheng",
+          "must_order": "Coffee by day, local beer or cocktails by evening",
+          "tip": "The waterfront cafes around Houhai Lake are a Beijing institution. Cycle around the lake then stop for coffee at a lakeside terrace. At night it transforms into a bar scene. The reflection of traditional architecture in the lake is beautiful at dusk.",
+          "lat": 39.9378,
+          "lng": 116.3823
+        },
+        {
+          "id": "bj-fc012",
+          "name": "Summer Palace Teahouse",
+          "chinese": "颐和园茶馆",
+          "type": "teahouse",
+          "cluster_group": "summer-palace",
+          "vibe": [
+            "instagrammable",
+            "local",
+            "scenic"
+          ],
+          "price_range": "mid",
+          "near": "Inside Summer Palace grounds",
+          "must_order": "Jasmine tea, lotus seed pastries",
+          "tip": "Traditional teahouse inside the Summer Palace grounds with lakeside pavilion setting. The combination of imperial garden views and a pot of Chinese tea is a quintessential Beijing experience. Included with Summer Palace admission. Best in the late afternoon.",
+          "lat": 39.9989,
+          "lng": 116.2812
         }
       ],
       "hotels": [
@@ -7921,6 +8676,95 @@
           "halal": true,
           "tip": "Hangzhou's unique street food — a crispy green onion and plain fried dough stick pressed flat on a griddle and glazed with sweet and spicy sauce. Named after Yue Fei's traitor Qin Gui — pressing the dough stick is symbolic revenge. ¥6 and utterly satisfying.",
           "icon": "🥖"
+        },
+        {
+          "id": "hz-fc001",
+          "name": "West Lake Su Causeway Cafes",
+          "chinese": "苏堤咖啡",
+          "type": "cafe",
+          "cluster_group": "xihu-south",
+          "vibe": [
+            "instagrammable",
+            "scenic"
+          ],
+          "price_range": "mid",
+          "near": "Su Causeway, West Lake",
+          "must_order": "Longjing green tea latte, lotus seed cake",
+          "tip": "Several cafes along the Su Causeway with direct West Lake views. Morning mist over the lake in spring and autumn is magical — some of China's most photographed scenery. The combination of weeping willows, peach blossoms (March–April) and a West Lake view from your table is exceptional.",
+          "lat": 30.2478,
+          "lng": 120.1112
+        },
+        {
+          "id": "hz-fc002",
+          "name": "Longjing Village Tea Farms",
+          "chinese": "龙井村茶馆",
+          "type": "teahouse",
+          "cluster_group": "xihu-south",
+          "vibe": [
+            "must-visit",
+            "local",
+            "instagrammable"
+          ],
+          "price_range": "mid",
+          "near": "Longjing Village, 20 min from West Lake by bus",
+          "must_order": "Freshly picked and roasted Longjing green tea, tea eggs",
+          "tip": "Visit the actual tea farms where China's most famous green tea is grown. Farmers sell direct — 3x cheaper than city shops and infinitely fresher. Watch the tea being pan-roasted right in front of you. The terraced tea fields with misty mountains behind are stunning in spring (April is harvest season). Sit at a farm table and taste 5 different grades.",
+          "lat": 30.2156,
+          "lng": 120.0978
+        },
+        {
+          "id": "hz-fc003",
+          "name": "Hefang Street (河坊街) Snacks",
+          "chinese": "河坊街小吃",
+          "type": "food-street",
+          "cluster_group": "xihu-south",
+          "vibe": [
+            "local",
+            "must-eat",
+            "instagrammable"
+          ],
+          "price_range": "budget",
+          "near": "Hefang Street, Shangcheng District, 15 min from West Lake",
+          "must_order": "West Lake vinegar fish (醋鱼), dongpo pork, osmanthus glutinous rice",
+          "tip": "Hangzhou's historic food street — osmanthus wine, West Lake lotus root, fried spring rolls. The West Lake vinegar fish (醋鱼) is the signature Hangzhou dish — mild, sweet, fragrant with vinegar. Louwailou restaurant (over 170 years old) on the lake is where you should eat it if budget allows. ¥120–160/dish.",
+          "lat": 30.2434,
+          "lng": 120.1623
+        },
+        {
+          "id": "hz-fc004",
+          "name": "Canal-side Cafes (Grand Canal)",
+          "chinese": "运河边咖啡",
+          "type": "cafe",
+          "cluster_group": "gongshu-canal",
+          "vibe": [
+            "instagrammable",
+            "hidden-gem",
+            "evening"
+          ],
+          "price_range": "mid",
+          "near": "Gongchen Bridge, Grand Canal area",
+          "must_order": "Coffee with canal view, local pastries",
+          "tip": "The Grand Canal area (especially Gongchen Bridge area) has a cluster of design cafes overlooking the ancient waterway. Much less crowded than West Lake. UNESCO Grand Canal heritage scenery with wooden boats, old bridges and weeping willows. Excellent evening photography location.",
+          "lat": 30.3023,
+          "lng": 120.1345
+        },
+        {
+          "id": "hz-fc005",
+          "name": "Zhiweiguan (知味观) Restaurant",
+          "chinese": "知味观",
+          "type": "restaurant",
+          "cluster_group": "xihu-south",
+          "vibe": [
+            "must-eat",
+            "iconic",
+            "local"
+          ],
+          "price_range": "mid",
+          "near": "Yan'an Road, near West Lake",
+          "must_order": "Xiao Long Bao, Dongpo Pork, West Lake fish in sweet-sour sauce",
+          "tip": "Hangzhou's most famous and beloved traditional restaurant — over 100 years old. Dongpo pork here (named after the poet Su Dongpo who invented it in Hangzhou) is the benchmark. Rich, melt-in-mouth, perfectly braised. The restaurant is a Chinese heritage brand. Go for dinner — lunch gets very crowded with tour groups.",
+          "lat": 30.2512,
+          "lng": 120.1489
         }
       ],
       "hotels": [
@@ -8785,6 +9629,113 @@
           "halal": true,
           "tip": "Flat fried pancakes made with persimmon fruit — crispy outside, sticky-sweet inside. Shaanxi is China's biggest persimmon province. Best in autumn (October) when persimmons ripen. One of Xi'an's most underrated street snacks.",
           "icon": "🥞"
+        },
+        {
+          "id": "xa-fc001",
+          "name": "Muslim Quarter Street Food",
+          "chinese": "回民街小吃",
+          "type": "food-street",
+          "cluster_group": "old-city-centre",
+          "vibe": [
+            "must-eat",
+            "instagrammable",
+            "local"
+          ],
+          "price_range": "budget",
+          "near": "Muslim Quarter (Huimin Jie), Bell Tower area",
+          "must_order": "Roujiamo (meat sandwich), liangpi (cold noodles), pomegranate juice, persimmon cake",
+          "tip": "Xi'an's most essential food experience — a maze of streets lined with Muslim Hui minority food stalls and restaurants. Go at night when it's busiest. Key dishes: roujiamo (shredded braised beef in crispy flatbread — China's original burger), liangpi (cold starchy noodles in vinegar and chilli sauce), persimmon cakes (fresh in autumn). The chaos and aroma are part of the experience.",
+          "lat": 34.2623,
+          "lng": 108.9434
+        },
+        {
+          "id": "xa-fc002",
+          "name": "Yang's Rou Jia Mo (老孙家)",
+          "chinese": "老孙家肉夹馍",
+          "type": "restaurant",
+          "cluster_group": "old-city-centre",
+          "vibe": [
+            "must-eat",
+            "iconic",
+            "local"
+          ],
+          "price_range": "budget",
+          "near": "Muslim Quarter, Bell Tower area",
+          "must_order": "Roujiamo with braised beef, lamb paomo soup",
+          "tip": "Over 100-year-old institution for Xi'an's most famous street food. The pita bread is baked fresh throughout the day — crispy, charred edges, soft inside. Braised beef filling has been simmering for decades (they add to the same pot). ¥10–15 per sandwich. Get there by 11am or the best bread is sold out.",
+          "lat": 34.2634,
+          "lng": 108.9423
+        },
+        {
+          "id": "xa-fc003",
+          "name": "South Gate (Nanmen) Teahouse",
+          "chinese": "南门茶馆",
+          "type": "teahouse",
+          "cluster_group": "old-city-centre",
+          "vibe": [
+            "instagrammable",
+            "local",
+            "scenic"
+          ],
+          "price_range": "mid",
+          "near": "South Gate (Yongning Men), Ancient City Wall",
+          "must_order": "Shaanxi blossom tea, osmanthus cake",
+          "tip": "Traditional teahouse near the South Gate of Xi'an's ancient city walls. Watch the gate's nightly light show (7:30pm) from the teahouse terrace. The city wall illuminated at night is one of Xi'an's best photo moments. Book a window seat for the light show — it's free to watch from anywhere near the gate.",
+          "lat": 34.2534,
+          "lng": 108.9456
+        },
+        {
+          "id": "xa-fc004",
+          "name": "Datang Everbright City Food Street",
+          "chinese": "大唐不夜城美食街",
+          "type": "food-street",
+          "cluster_group": "yanta-district",
+          "vibe": [
+            "instagrammable",
+            "trending",
+            "evening"
+          ],
+          "price_range": "mid",
+          "near": "Big Wild Goose Pagoda area, Yanta District",
+          "must_order": "Tang dynasty themed food and drinks",
+          "tip": "The best evening food and walking street in Xi'an — a spectacular Tang dynasty-themed pedestrian boulevard with life-size statues of Tang era figures, light projections and costumed performers. The food stalls sell both traditional Xi'an food and creative Tang-themed versions. Best 7–10pm. The 不倒翁 (Roly-Poly Girl) viral performer appears nightly.",
+          "lat": 34.2123,
+          "lng": 108.9623
+        },
+        {
+          "id": "xa-fc005",
+          "name": "Shaanxi Cuisine Restaurant (Tóng Shēng Xiáng)",
+          "chinese": "同盛祥",
+          "type": "restaurant",
+          "cluster_group": "old-city-centre",
+          "vibe": [
+            "must-eat",
+            "iconic",
+            "local"
+          ],
+          "price_range": "mid",
+          "near": "Muslim Quarter vicinity",
+          "must_order": "Yangrou Paomo (lamb broth with hand-torn flatbread)",
+          "tip": "The definitive Xi'an meal — you personally tear the flatbread into small pieces (takes 10–15 minutes of dedicated tearing), hand it back to the kitchen, and it returns as a magnificent bowl of rich lamb broth with your bread, glass noodles and lamb. The process is part of the ritual. Tongshengxiang has been making this since 1920.",
+          "lat": 34.2612,
+          "lng": 108.9412
+        },
+        {
+          "id": "xa-fc006",
+          "name": "Lintong Local Restaurants near Terracotta Warriors",
+          "chinese": "兵马俑附近当地餐厅",
+          "type": "restaurant",
+          "cluster_group": "lintong-east",
+          "vibe": [
+            "local",
+            "budget"
+          ],
+          "price_range": "budget",
+          "near": "Terracotta Warriors entrance area, Lintong",
+          "must_order": "Biángbiáng noodles (手拍宽面), cold shaanxi liangpi",
+          "tip": "Don't eat inside the tourist restaurants at the Terracotta Warriors entrance — 3x the price for half the quality. Walk 500m toward the village and find local noodle shops. The best thing to eat in the area is biángbiáng noodles — extra wide hand-pulled noodles with chilli oil and vinegar. ¥15–20 per bowl.",
+          "lat": 34.3845,
+          "lng": 109.2734
         }
       ],
       "hotels": [
@@ -9516,6 +10467,94 @@
           "halal": false,
           "tip": "Glutinous rice cooked inside bamboo tubes over fire — the bamboo imparts a subtle sweetness. A Zhuang minority speciality sold at the entrance to the rice terraces. Crack the bamboo open yourself. Goes perfectly with stir-fried mountain greens.",
           "icon": "🎋"
+        },
+        {
+          "id": "gl-fc001",
+          "name": "Zhengyang Pedestrian Street Cafes",
+          "chinese": "正阳步行街咖啡",
+          "type": "cafe",
+          "cluster_group": "guilin-city",
+          "vibe": [
+            "instagrammable",
+            "local"
+          ],
+          "price_range": "mid",
+          "near": "Zhengyang Pedestrian Street, central Guilin",
+          "must_order": "Coffee with karst mountain backdrop, guilin rice noodles",
+          "tip": "Guilin's main pedestrian food and shopping street has several good cafes with outdoor seating. The karst mountains visible from every direction make even an ordinary coffee moment look extraordinary. Best in the late afternoon when the mountains glow in low light.",
+          "lat": 25.2734,
+          "lng": 110.2912
+        },
+        {
+          "id": "gl-fc002",
+          "name": "Guilin Rice Noodles (桂林米粉)",
+          "chinese": "桂林米粉",
+          "type": "restaurant",
+          "cluster_group": "guilin-city",
+          "vibe": [
+            "must-eat",
+            "local",
+            "budget"
+          ],
+          "price_range": "budget",
+          "near": "Any local shop in Guilin — everywhere",
+          "must_order": "Beef or braised pork rice noodles with toppings bar",
+          "tip": "Guilin's signature dish — thin rice noodles in a rich broth with a self-service toppings bar (pickled beans, peanuts, crispy fried dough, chilli). ¥8–12 per bowl. The key is the broth — simmered for hours with pork bones and spices. Every Guilin local has their 'best' shop. Ask your hotel receptionist for their recommendation.",
+          "lat": 25.2712,
+          "lng": 110.2934
+        },
+        {
+          "id": "gl-fc003",
+          "name": "Two Rivers Four Lakes Night Cruise Food",
+          "chinese": "两江四湖游船美食",
+          "type": "experience",
+          "cluster_group": "guilin-city",
+          "vibe": [
+            "instagrammable",
+            "evening"
+          ],
+          "price_range": "mid",
+          "near": "Two Rivers Four Lakes cruise departure point",
+          "must_order": "Beer on the boat, snacks from riverside stalls before boarding",
+          "tip": "The evening cruise on the Two Rivers Four Lakes illuminated waterway is one of Guilin's best experiences. Stock up on local snacks and cold beer from riverside stalls before boarding. The pagodas, bridges and karst mountains reflected in floodlit water are extraordinary for photography. Bring a tripod or use a phone stabiliser.",
+          "lat": 25.2689,
+          "lng": 110.2878
+        },
+        {
+          "id": "gl-fc004",
+          "name": "West Street Cafes (Yangshuo)",
+          "chinese": "西街咖啡 阳朔",
+          "type": "cafe",
+          "cluster_group": "yangshuo-valley",
+          "vibe": [
+            "instagrammable",
+            "local",
+            "backpacker"
+          ],
+          "price_range": "budget",
+          "near": "West Street (Xi Jie), Yangshuo",
+          "must_order": "Fresh fruit shake, local beer, banana pancake",
+          "tip": "Yangshuo West Street has been the heartbeat of China's backpacker scene since the 1980s. Dozens of cafes with outdoor seating under karst mountains. The famous 'banana pancake trail' passes through here. Fresh fruit shakes from Li River fruit vendors (mango, papaya, passion fruit) are extraordinary. Best evenings when the street lights up and musicians play.",
+          "lat": 24.7756,
+          "lng": 110.4912
+        },
+        {
+          "id": "gl-fc005",
+          "name": "Yulong River Countryside Restaurants",
+          "chinese": "遇龙河农家乐",
+          "type": "restaurant",
+          "cluster_group": "yangshuo-valley",
+          "vibe": [
+            "local",
+            "scenic",
+            "hidden-gem"
+          ],
+          "price_range": "budget",
+          "near": "Yulong River cycling route, Yangshuo",
+          "must_order": "Beer fish (啤酒鱼), steamed river shrimp, rural rice",
+          "tip": "The best food experience near Yangshuo — small farmhouses (农家乐) along the Yulong River cycling route. The signature dish is beer fish — river carp braised in local beer with tomatoes and peppers. Order with cold local beer and eat watching bamboo rafts drift past. ¥80–120 for two people including cold beers.",
+          "lat": 24.7434,
+          "lng": 110.4712
         }
       ],
       "hotels": [
@@ -10260,6 +11299,95 @@
           "halal": false,
           "tip": "The dish Mao reportedly ate every day — pork belly slowly braised in soy, rice wine and sugar until a deep mahogany. The fat is completely transformed — not greasy but silky. The family restaurant in Shaoshan (his birthplace) serves the closest to the original.",
           "icon": "🍖"
+        },
+        {
+          "id": "cs-fc001",
+          "name": "Wenhe You (文和友)",
+          "chinese": "文和友",
+          "type": "restaurant",
+          "cluster_group": "wuyi-city-centre",
+          "vibe": [
+            "instagrammable",
+            "trending",
+            "must-visit"
+          ],
+          "price_range": "mid",
+          "near": "Near IFS Tower, Furong District",
+          "must_order": "Stinky tofu (臭豆腐), crayfish (小龙虾), all local Hunan snacks",
+          "tip": "The most viral restaurant in China 2020–2025 — a 7-storey recreation of 1980s Changsha street life with food stalls, vintage storefronts and performers. The queue is always long — book ahead via WeChat. The food (stinky tofu, crayfish) is authentic and excellent. Even if the queue is too long, the entrance area is worth seeing.",
+          "lat": 28.2034,
+          "lng": 112.9756
+        },
+        {
+          "id": "cs-fc002",
+          "name": "Taiping Street Night Market (太平街)",
+          "chinese": "太平街夜市",
+          "type": "food-street",
+          "cluster_group": "wuyi-city-centre",
+          "vibe": [
+            "must-eat",
+            "local",
+            "instagrammable"
+          ],
+          "price_range": "budget",
+          "near": "Taiping Street, Tianxin District, central Changsha",
+          "must_order": "Stinky tofu (must-try), sugar fried chestnuts, spicy crawfish",
+          "tip": "The most authentic food street in Changsha — Ming dynasty commercial street lined with local snack stalls. The stinky tofu here (臭豆腐, Changsha-style) is unlike anywhere else in China — deep fried until puffed, served with chilli sauce. It smells terrible and tastes extraordinary. Changsha's most defining food experience.",
+          "lat": 28.2012,
+          "lng": 112.9812
+        },
+        {
+          "id": "cs-fc003",
+          "name": "Mango Dessert Cafes",
+          "chinese": "芒果甜品店",
+          "type": "cafe",
+          "cluster_group": "wuyi-city-centre",
+          "vibe": [
+            "instagrammable",
+            "trending"
+          ],
+          "price_range": "budget",
+          "near": "Central Changsha, near Hunan University area",
+          "must_order": "Fresh mango desserts, mango bingsu, mango ice cream",
+          "tip": "Changsha is famous as China's mango dessert capital. The local mango-themed dessert shops are extraordinary — fresh mango in every form, mango soft serve, mango layers. The Chinese brand 茶颜悦色 (Cha Yan Yue Se) tea drink originated in Changsha and is not available elsewhere in China — it's a must. Long queues everywhere.",
+          "lat": 28.2067,
+          "lng": 112.9734
+        },
+        {
+          "id": "cs-fc004",
+          "name": "Yuelu Mountain Foot Cafes",
+          "chinese": "岳麓山山脚咖啡",
+          "type": "cafe",
+          "cluster_group": "yuelu-mountain",
+          "vibe": [
+            "instagrammable",
+            "local",
+            "scenic"
+          ],
+          "price_range": "mid",
+          "near": "Yuelu Mountain base, Yuelu District",
+          "must_order": "Coffee before the mountain hike, local sweet rice wine",
+          "tip": "Several charming cafes cluster at the foot of Yuelu Mountain near Hunan University. The campus itself is beautiful — worth walking through. Autumn (October) brings stunning maple and ginkgo foliage on the mountain. Stop for coffee at a campus-adjacent cafe before climbing up to Aiwan Pavilion.",
+          "lat": 28.1978,
+          "lng": 112.9334
+        },
+        {
+          "id": "cs-fc005",
+          "name": "Cha Yan Yue Se Tea Drink",
+          "chinese": "茶颜悦色",
+          "type": "cafe",
+          "cluster_group": "wuyi-city-centre",
+          "vibe": [
+            "must-visit",
+            "instagrammable",
+            "trending"
+          ],
+          "price_range": "budget",
+          "near": "Multiple locations across central Changsha — exclusive to Changsha",
+          "must_order": "Yuanyangji (鸳鸯机) milk tea, any seasonal special",
+          "tip": "This tea drink brand is ONLY available in Changsha — it's become a major reason young Chinese visit the city. The drinks use traditional Chinese tea leaves with a modern milk tea format. Beautiful branding and packaging. Always long queues — find the one with the shortest wait. Buy extras as gifts — they don't survive long journeys so drink here.",
+          "lat": 28.2045,
+          "lng": 112.9712
         }
       ],
       "hotels": [
@@ -10892,6 +12020,59 @@
           "halal": false,
           "tip": "Fish broth fermented in clay pots with wild mountain herbs — sour, warming and slightly spicy. The mountain stream fish are noticeably sweeter than lowland fish. A remarkable dish unique to this region.",
           "icon": "🐟"
+        },
+        {
+          "id": "zjj-fc001",
+          "name": "Wulingyuan Entrance Village Restaurants",
+          "chinese": "武陵源口子村餐厅",
+          "type": "restaurant",
+          "cluster_group": "wulingyuan-core",
+          "vibe": [
+            "local",
+            "budget"
+          ],
+          "price_range": "budget",
+          "near": "Wulingyuan scenic area entrance village",
+          "must_order": "Tujia minority claypot rice, smoked pork, wild mountain vegetables",
+          "tip": "The village restaurants at the park entrance serve Tujia minority cuisine — the indigenous people of Zhangjiajie. Smoked pork (腊肉) cured in woodsmoke, wild fern and forest mushrooms, claypot rice. ¥50–80 per person. These are the most authentic meals you'll find. Stock up on snacks and water before early morning park entry.",
+          "lat": 29.3445,
+          "lng": 110.5423
+        },
+        {
+          "id": "zjj-fc002",
+          "name": "Zhangjiajie City Street Food",
+          "chinese": "张家界市区街头美食",
+          "type": "food-street",
+          "cluster_group": "city-south",
+          "vibe": [
+            "local",
+            "budget",
+            "hidden-gem"
+          ],
+          "price_range": "budget",
+          "near": "Yongding city centre, near Tianmen Mountain base",
+          "must_order": "Ge Tao (葛根粉糕), rice tofu, Tujia sour fish",
+          "tip": "The city centre around Yongding has better and cheaper food than the park entrance. Ge Tao — a local dessert made from kudzu root — is a Zhangjiajie speciality. Tujia sour fish (酸鱼) is a preserved delicacy. The night market near the Zhangjiajie station area is lively and cheap. ¥30–50 for a full local meal.",
+          "lat": 29.1234,
+          "lng": 110.4789
+        },
+        {
+          "id": "zjj-fc003",
+          "name": "Tianmen Mountain Top Cafe",
+          "chinese": "天门山山顶咖啡",
+          "type": "cafe",
+          "cluster_group": "city-south",
+          "vibe": [
+            "instagrammable",
+            "views",
+            "unique"
+          ],
+          "price_range": "mid",
+          "near": "Tianmen Mountain summit, accessible by cable car",
+          "must_order": "Coffee above the clouds",
+          "tip": "Coffee at 1,518m — the cable car summit station has a small cafe where you can drink with views over the sea of clouds. On clear mornings the cloud sea below you stretches to the horizon. The glass walkway on the cliff edge is right outside. Combine with the coachway (99 hairpin bends) and Heaven's Gate cave for a full Tianmen Mountain day.",
+          "lat": 29.1045,
+          "lng": 110.4623
         }
       ],
       "hotels": [
@@ -11638,6 +12819,96 @@
           "halal": false,
           "tip": "Skewers of mushrooms, tofu, vegetables and meat cooked over charcoal with chilli oil and cumin. The stalls set up at dusk around both ancient towns. The wild mushroom skewers are extraordinary — order regardless of what else you get.",
           "icon": "🍡"
+        },
+        {
+          "id": "yn-fc001",
+          "name": "Shuhe Ancient Town Cafes",
+          "chinese": "束河古镇咖啡馆",
+          "type": "cafe",
+          "cluster_group": "lijiang-core",
+          "vibe": [
+            "instagrammable",
+            "hidden-gem",
+            "local"
+          ],
+          "price_range": "mid",
+          "near": "Shuhe Ancient Town, 4km from Lijiang old town",
+          "must_order": "Yunnan coffee (云南小粒咖啡), Naxi-spiced cake",
+          "tip": "Shuhe is quieter and more atmospheric than the touristy Lijiang old town. The cafes here are in ancient Naxi courtyards with Jade Dragon Snow Mountain visible from rooftop terraces. Yunnan grows excellent arabica coffee — this is the origin of China's best beans. Any local cafe in Shuhe will serve exceptional Yunnan coffee.",
+          "lat": 26.8989,
+          "lng": 100.2134
+        },
+        {
+          "id": "yn-fc002",
+          "name": "Lijiang Old Town Bar Street (酒吧街)",
+          "chinese": "丽江古城酒吧街",
+          "type": "bar-cafe",
+          "cluster_group": "lijiang-core",
+          "vibe": [
+            "instagrammable",
+            "evening",
+            "local"
+          ],
+          "price_range": "mid",
+          "near": "Lijiang Ancient Town, Sifang Street area",
+          "must_order": "Yunnan craft beer, fresh ginger tea, Naxi ethnic cocktails",
+          "tip": "The streets around Sifang Square at night are full of music — local Naxi minority musicians performing traditional songs in bars and street cafes. The combination of cobblestone lanes, red lanterns reflected in water channels and live ethnic music is enchanting. Best after 8pm. Avoid the tourist restaurants on the main drag — walk one alley back.",
+          "lat": 26.8712,
+          "lng": 100.2378
+        },
+        {
+          "id": "yn-fc003",
+          "name": "Dali Ancient City Cafes",
+          "chinese": "大理古城咖啡馆",
+          "type": "cafe",
+          "cluster_group": "dali-core",
+          "vibe": [
+            "instagrammable",
+            "hidden-gem",
+            "local"
+          ],
+          "price_range": "budget",
+          "near": "Dali Ancient City, Renmin Road",
+          "must_order": "Yunnan coffee, Bai minority cheese (乳扇), milk cake",
+          "tip": "Dali has a deeply established expat and digital nomad cafe culture. The cafes on Renmin Road and Fuxing Road are excellent — many with views of the city gate and Cangshan mountains. Yunnan fried cheese (乳扇) is a Bai minority speciality unique to Dali — caramelised in a wok with chilli and honey. ¥5 from street stalls.",
+          "lat": 25.6934,
+          "lng": 100.1578
+        },
+        {
+          "id": "yn-fc004",
+          "name": "Shangri-La (Zhongdian) Tibetan Restaurants",
+          "chinese": "香格里拉藏式餐厅",
+          "type": "restaurant",
+          "cluster_group": "shangri-la",
+          "vibe": [
+            "must-eat",
+            "local",
+            "unique"
+          ],
+          "price_range": "mid",
+          "near": "Dukezong Ancient Town, Shangri-La City",
+          "must_order": "Yak butter tea, barley wine (青稞酒), tsampa, yak hotpot",
+          "tip": "The Tibetan food experience in Shangri-La is unique in all of China. Yak butter tea (酥油茶) is salty, fatty and an acquired taste — try it at least once. Tsampa (roasted barley flour) is the Tibetan staple. Yak hotpot is extraordinary — rich, gamey meat that's completely different from beef. The altitude (3,300m) affects both taste and alcohol tolerance — take it easy on the barley wine.",
+          "lat": 27.8234,
+          "lng": 99.7089
+        },
+        {
+          "id": "yn-fc005",
+          "name": "Kunming Bird & Flower Market (Dounan)",
+          "chinese": "斗南花卉市场",
+          "type": "market",
+          "cluster_group": "kunming-city",
+          "vibe": [
+            "instagrammable",
+            "hidden-gem",
+            "local"
+          ],
+          "price_range": "budget",
+          "near": "Dounan, Kunming, 30 min from city centre",
+          "must_order": "Fresh flowers direct from farmers, Yunnan crossing-the-bridge rice noodles nearby",
+          "tip": "Asia's largest fresh flower market — 80% of China's cut flowers come through here. Open 24hrs but best at 3–6am when the trading is most frantic. For tourists, early morning is when the market is piled high with flowers in every colour. The Yunnan rice noodle shops outside the market serve crossing-the-bridge noodles (过桥米线) from ¥20.",
+          "lat": 24.9423,
+          "lng": 102.8234
         }
       ],
       "hotels": [
@@ -12314,6 +13585,96 @@
           "halal": false,
           "tip": "Thicker and more refined than Cantonese congee — with local pickled vegetables, shredded ginger and sesame oil. Find it at local neighbourhood markets rather than tourist areas. A quiet window into how Suzhou people actually eat.",
           "icon": "🍚"
+        },
+        {
+          "id": "sz2-fc001",
+          "name": "Pingjiang Road Canal Cafes",
+          "chinese": "平江路运河咖啡",
+          "type": "cafe",
+          "cluster_group": "gusu-old-town",
+          "vibe": [
+            "instagrammable",
+            "must-visit",
+            "local"
+          ],
+          "price_range": "mid",
+          "near": "Pingjiang Road, Gusu District — Suzhou's most atmospheric street",
+          "must_order": "Tea or coffee with canal view, Suzhou sesame cake",
+          "tip": "Pingjiang Road is the best-preserved ancient street in Suzhou — 1,700m of canal-side pathway lined with willow trees, white-walled historic houses and indie cafes. The cafes here have tables beside the water with wooden boats drifting past. Morning (8–10am) is magical — empty streets, mist on the canal. A shortlist of China's most photogenic streets.",
+          "lat": 31.3289,
+          "lng": 120.6312
+        },
+        {
+          "id": "sz2-fc002",
+          "name": "Suzhou Museum Courtyard Tea",
+          "chinese": "苏州博物馆茶室",
+          "type": "teahouse",
+          "cluster_group": "gusu-old-town",
+          "vibe": [
+            "instagrammable",
+            "unique",
+            "hidden-gem"
+          ],
+          "price_range": "mid",
+          "near": "Suzhou Museum (I.M. Pei building), adjacent to Humble Administrator's Garden",
+          "must_order": "Longjing green tea, Suzhou mooncakes (seasonal)",
+          "tip": "I.M. Pei's masterpiece museum has a courtyard teahouse with pond, bamboo and pebble-mosaic garden views. One of the most beautiful indoor spaces in China. Sip tea while looking at the pei-designed courtyard — architecture as art. Requires museum entry booking. The gift shop has the best Chinese design products in Suzhou.",
+          "lat": 31.3267,
+          "lng": 120.6234
+        },
+        {
+          "id": "sz2-fc003",
+          "name": "Shantang Street Food (山塘街)",
+          "chinese": "山塘街小吃",
+          "type": "food-street",
+          "cluster_group": "gusu-west",
+          "vibe": [
+            "local",
+            "instagrammable",
+            "must-eat"
+          ],
+          "price_range": "budget",
+          "near": "Shantang Street, Gusu West",
+          "must_order": "Suzhou-style soup dumplings, pine nut fudge (松子糖), scallion oil noodles",
+          "tip": "Shantang Street at night (lanterns reflected in the canal) is one of the most beautiful food walking streets in China. Suzhou soup dumplings (different from Shanghai's) are sweeter and more delicate. The pine nut fudge is an iconic Suzhou sweet — ¥20/100g. The canal boat rides from here are the best evening activity in Suzhou.",
+          "lat": 31.3289,
+          "lng": 120.5923
+        },
+        {
+          "id": "sz2-fc004",
+          "name": "Zhouzhuang Water Town Restaurants",
+          "chinese": "周庄水乡餐厅",
+          "type": "restaurant",
+          "cluster_group": "water-towns",
+          "vibe": [
+            "local",
+            "instagrammable",
+            "must-eat"
+          ],
+          "price_range": "mid",
+          "near": "Zhouzhuang Water Town, Kunshan (45 min from Suzhou)",
+          "must_order": "Wanjia Rou (万三猪蹄 — braised pork trotter), river shrimp, water spinach",
+          "tip": "The famous Wansan Pork Trotter (万三猪蹄) originated in Zhouzhuang — braised until gelatinous and rich, served sliced. Every restaurant in Zhouzhuang sells it. The river shrimp from the connected canals is extraordinarily fresh. Eat lunch here — the town is much quieter after the day-trippers leave in the afternoon.",
+          "lat": 31.1134,
+          "lng": 120.8512
+        },
+        {
+          "id": "sz2-fc005",
+          "name": "Deyue Lou (得月楼) Suzhou Cuisine",
+          "chinese": "得月楼",
+          "type": "restaurant",
+          "cluster_group": "gusu-old-town",
+          "vibe": [
+            "must-eat",
+            "iconic",
+            "local"
+          ],
+          "price_range": "mid",
+          "near": "Guanqian Street, Gusu old town",
+          "must_order": "Sweet and sour Mandarin fish (松鼠鳜鱼), beggar's chicken, scallion oil noodles",
+          "tip": "Suzhou's most famous restaurant — over 400 years old, featured in Dream of the Red Chamber. The sweet and sour Mandarin fish (松鼠鳜鱼) is the signature Suzhou dish — whole fish deep fried in the shape of a squirrel, covered in sweet tomato sauce. Theatrical and delicious. Book ahead for dinner.",
+          "lat": 31.3189,
+          "lng": 120.6278
         }
       ],
       "hotels": [
@@ -12788,6 +14149,40 @@
           "halal": false,
           "tip": "Jiuzhaigou's famous thick yak yoghurt topped with brown sugar — rich, tangy and much thicker than regular yoghurt. The Tibetan bread (手抓饼) alongside is chewy and satisfying. A great light lunch on the go between lakes.",
           "icon": "🥛"
+        },
+        {
+          "id": "jzg-fc001",
+          "name": "Jiuzhaigou Hotel Restaurants",
+          "chinese": "九寨沟酒店餐厅",
+          "type": "restaurant",
+          "cluster_group": "jiuzhaigou-entrance",
+          "vibe": [
+            "local",
+            "budget"
+          ],
+          "price_range": "mid",
+          "near": "Park entrance area hotels",
+          "must_order": "Tibetan barley noodles, wild mushroom soup, yak meat",
+          "tip": "Food in Jiuzhaigou valley is limited and expensive. The hotel restaurants near the park entrance are the best option — Tibetan-influenced dishes using yak meat and wild mountain vegetables. Stock up on snacks and water in Chengdu or Jiuhuang Airport before arriving — everything is 2-3x Chengdu prices inside the valley.",
+          "lat": 33.2645,
+          "lng": 103.9245
+        },
+        {
+          "id": "jzg-fc002",
+          "name": "Songpan Ancient Town Food Street",
+          "chinese": "松潘古城美食街",
+          "type": "food-street",
+          "cluster_group": "jiuzhaigou-entrance",
+          "vibe": [
+            "local",
+            "hidden-gem"
+          ],
+          "price_range": "budget",
+          "near": "Songpan Town, 90 min from Jiuzhaigou park entrance",
+          "must_order": "Horse meat sausage, yak jerky, Tibetan tsampa",
+          "tip": "Songpan is the most interesting town near Jiuzhaigou — a remarkably preserved Ming dynasty walled town with Tibetan, Hui Muslim and Han Chinese cultures coexisting. The food is extraordinary: horse meat sausage (unique to this area), yak jerky, Muslim-style flatbreads. A much better lunch stop than the overpriced park entrance restaurants.",
+          "lat": 32.6534,
+          "lng": 103.5823
         }
       ],
       "hotels": [
@@ -13421,6 +14816,94 @@
           "halal": true,
           "tip": "A lightly fermented rye bread drink — between beer and kombucha, barely alcoholic, slightly sour. The Qiulin brand is the original. The national Wahaha brand tastes nothing like the real thing. Best served cold even in winter.",
           "icon": "🍺"
+        },
+        {
+          "id": "hrb-fc001",
+          "name": "Central Street (Zhongyang Dajie) Food",
+          "chinese": "中央大街美食",
+          "type": "food-street",
+          "cluster_group": "daoli-central",
+          "vibe": [
+            "must-eat",
+            "instagrammable",
+            "local"
+          ],
+          "price_range": "budget",
+          "near": "Central Street, Daoli District",
+          "must_order": "Russian bread (大列巴), beer sausage (红肠), ice cream in winter (-30°C)",
+          "tip": "Harbin's most beloved street food is the legacy of Russian colonial influence. The Central Street food shops sell: da lieba (giant sourdough bread rounds, baked in wood-fired ovens, ¥20–30), hong chang (smoked red sausage, ¥15–25/piece) and traditional horse-hoofed ice cream. In winter the ice cream stalls outside in −30°C temperatures are surreal — the ice cream doesn't melt, you do.",
+          "lat": 45.7712,
+          "lng": 126.6256
+        },
+        {
+          "id": "hrb-fc002",
+          "name": "Ice Bar (冰酒吧) at Ice Festival",
+          "chinese": "冰雕酒吧",
+          "type": "bar",
+          "cluster_group": "songbei-north",
+          "vibe": [
+            "instagrammable",
+            "unique",
+            "trending"
+          ],
+          "price_range": "mid",
+          "near": "Ice and Snow World, Songbei District",
+          "must_order": "Ice-glass cocktail inside ice bar",
+          "tip": "During the Ice Festival (Jan–Feb), Ice and Snow World has an ice bar where everything is carved from ice — bar, stools, walls, cups. Cocktails served in ice glasses that are part of the decor. Temperature inside is −5°C even when it's −30°C outside. One of the most unique bar experiences in the world. Included in Ice and Snow World entry or visit separately.",
+          "lat": 45.8234,
+          "lng": 126.4912
+        },
+        {
+          "id": "hrb-fc003",
+          "name": "St. Sophia Cathedral Cafe Area",
+          "chinese": "圣索菲亚教堂咖啡区",
+          "type": "cafe",
+          "cluster_group": "daoli-central",
+          "vibe": [
+            "instagrammable",
+            "local",
+            "hidden-gem"
+          ],
+          "price_range": "mid",
+          "near": "St. Sophia Cathedral, Daoli District",
+          "must_order": "Hot coffee or mulled wine, Russian-influenced pastries",
+          "tip": "The area around St. Sophia Cathedral (the Orthodox cathedral at the heart of Harbin's Russian colonial heritage) has several cafes with Russian-influenced decor and menus. In winter the cathedral covered in snow against a blue sky is one of China's most dramatic architectural photos. Arrive early morning for empty square shots.",
+          "lat": 45.7734,
+          "lng": 126.6256
+        },
+        {
+          "id": "hrb-fc004",
+          "name": "Haerbin Beer Brewery Restaurants",
+          "chinese": "哈尔滨啤酒博物馆周边餐厅",
+          "type": "restaurant",
+          "cluster_group": "daoli-central",
+          "vibe": [
+            "local",
+            "must-eat"
+          ],
+          "price_range": "mid",
+          "near": "Near Harbin Beer Museum, Daoli",
+          "must_order": "Fresh draft Harbin beer, smoked pork knuckle, pickled vegetables",
+          "tip": "Harbin is the birthplace of Chinese beer — Harbin Beer (哈啤) was founded in 1900. The area near the beer museum has good restaurants for Dongbei (Northeast Chinese) cuisine — hearty, meat-heavy, perfect for cold weather. Iron pot stew (铁锅炖), pork knuckle, pickled cabbage stewed with pork ribs. Wash down with fresh draft Harbin beer.",
+          "lat": 45.7456,
+          "lng": 126.5934
+        },
+        {
+          "id": "hrb-fc005",
+          "name": "Yabuli Ski Resort Cafes",
+          "chinese": "亚布力滑雪场餐厅",
+          "type": "cafe",
+          "cluster_group": "songbei-north",
+          "vibe": [
+            "instagrammable",
+            "winter-sport"
+          ],
+          "price_range": "mid",
+          "near": "Yabuli Ski Resort, 2hr from Harbin",
+          "must_order": "Hot chocolate, hot pot after skiing",
+          "tip": "Yabuli is China's most prestigious ski resort — base lodge cafes and restaurants are typical ski resort fare but the setting (birch forest mountains) is beautiful. After skiing, the hot pot restaurants at the base are excellent. Combine with a night in Harbin for the Ice Festival for a full Northeast China winter experience.",
+          "lat": 45.0234,
+          "lng": 128.6512
         }
       ],
       "hotels": [
@@ -14049,6 +15532,59 @@
           "price_range": "mid",
           "dietary": [],
           "tip": "Genuine Korean-style BBQ in Yanji — marinated beef and pork grilled at the table, served with banchan side dishes. Much more authentic than the Korean BBQ in Chinese cities. Water market area (水上市场) is the best food strip."
+        },
+        {
+          "id": "cbs-fc001",
+          "name": "Wanda Resort Hot Spring Restaurant",
+          "chinese": "万达温泉餐厅",
+          "type": "restaurant",
+          "cluster_group": "wanda-resort",
+          "vibe": [
+            "local",
+            "luxury"
+          ],
+          "price_range": "luxury",
+          "near": "Wanda International Resort complex",
+          "must_order": "Northeast iron pot stew (铁锅炖), wild mushroom hot pot",
+          "tip": "The resort hotels all have restaurants but the quality varies. The best is the iron pot stew (铁锅炖) concept — pork belly, mushrooms, glass noodles and tofu braised in a cast iron pot over an open flame. Incredibly warming after skiing. Wild mushrooms from Changbaishan forests are extraordinary — order any mushroom dish.",
+          "lat": 42.0623,
+          "lng": 127.3901
+        },
+        {
+          "id": "cbs-fc002",
+          "name": "Erdaobai River Local Restaurants",
+          "chinese": "二道白河本地餐厅",
+          "type": "restaurant",
+          "cluster_group": "erdaobai-town",
+          "vibe": [
+            "local",
+            "budget",
+            "hidden-gem"
+          ],
+          "price_range": "budget",
+          "near": "Erdaobai River town, north slope base",
+          "must_order": "Yanbian Korean cold noodles, Korean BBQ, Northeast stew",
+          "tip": "The town at the north slope base has much cheaper restaurants than the Wanda resort — 60–70% less for the same food quality. Korean influence is strong (Yanbian Korean Autonomous Prefecture is nearby) — try the cold noodles and the Korean-style BBQ. The local mushroom markets sell Changbaishan specialties at source prices.",
+          "lat": 42.4245,
+          "lng": 128.5078
+        },
+        {
+          "id": "cbs-fc003",
+          "name": "Yanji Korean Quarter Restaurants",
+          "chinese": "延吉朝鲜族餐厅",
+          "type": "restaurant",
+          "cluster_group": "yanji-city",
+          "vibe": [
+            "must-eat",
+            "hidden-gem",
+            "unique"
+          ],
+          "price_range": "budget",
+          "near": "Yanji City, Yanbian Korean Autonomous Prefecture",
+          "must_order": "Authentic Korean cold noodles (냉면), Korean BBQ, kimchi jjigae",
+          "tip": "Yanji feels like visiting Korea without a visa — Korean script everywhere, genuine Korean food at Chinese prices. The cold noodles (冷面) here are made by ethnic Koreans to the original recipe — completely different from Chinese imitations. The Korean BBQ restaurants near the Water Market (水上市场) are excellent. ¥40–60 per person for a full meal.",
+          "lat": 42.8956,
+          "lng": 129.5134
         }
       ],
       "hotels": [
@@ -14558,6 +16094,95 @@
           "price_range": "budget",
           "dietary": [],
           "tip": "Hainan's answer to Singapore chicken rice — free-range chicken steamed then served with rice cooked in chicken broth, with ginger-scallion sauce. Light and clean flavour. SEA visitors immediately recognise it. Wenchang is the origin city (2hrs north) but Sanya has many excellent versions."
+        },
+        {
+          "id": "sy-fc001",
+          "name": "Atlantis Lost Chambers Cafe",
+          "chinese": "亚特兰蒂斯海底咖啡",
+          "type": "cafe",
+          "cluster_group": "haitang-bay",
+          "vibe": [
+            "instagrammable",
+            "unique",
+            "family"
+          ],
+          "price_range": "mid",
+          "near": "Atlantis Resort, Haitang Bay",
+          "must_order": "Shark-blue latte, tropical fruit cocktail",
+          "tip": "Coffee surrounded by massive aquarium tanks containing sharks and rays. Atlantis's underwater aquarium dining is one of China's most unusual food experiences. The blue ambient light and marine life create extraordinary photos. Accessible with Atlantis resort day pass or aquarium ticket.",
+          "lat": 18.3678,
+          "lng": 109.7645
+        },
+        {
+          "id": "sy-fc002",
+          "name": "Coconut Chicken Hot Pot Restaurants",
+          "chinese": "椰子鸡火锅",
+          "type": "restaurant",
+          "cluster_group": "sanya-bay",
+          "vibe": [
+            "must-eat",
+            "local",
+            "family"
+          ],
+          "price_range": "mid",
+          "near": "Throughout Sanya — ask hotel for best non-tourist option",
+          "must_order": "Fresh coconut cracked at table, chicken, dipping sauce",
+          "tip": "Hainan's signature dish — a fresh whole coconut cracked at your table, the juice becomes the cooking broth, the young chicken cooks inside. Light, sweet and utterly unique. The freshly cracked coconut fragrance is amazing. Price varies enormously — avoid tourist restaurants near the main beach strip. Ask hotel staff for their local favourite.",
+          "lat": 18.2489,
+          "lng": 109.5234
+        },
+        {
+          "id": "sy-fc003",
+          "name": "Houhai Village Surf Cafes",
+          "chinese": "后海村冲浪咖啡",
+          "type": "cafe",
+          "cluster_group": "haitang-bay",
+          "vibe": [
+            "instagrammable",
+            "local",
+            "trending"
+          ],
+          "price_range": "mid",
+          "near": "Houhai Village surf area",
+          "must_order": "Post-surf cold brew, fresh açaí bowl, tropical smoothie",
+          "tip": "Houhai is China's surf capital and has developed a genuine surf cafe culture — colorful shacks and boutique cafes overlooking the beach. The vibe is closest to Bali or Hawaii of anywhere in China. Fresh tropical fruit, cold brew coffee, surf boards everywhere. Best late morning after the first surf session.",
+          "lat": 18.3234,
+          "lng": 109.7912
+        },
+        {
+          "id": "sy-fc004",
+          "name": "Wenchang Chicken Rice Restaurants",
+          "chinese": "文昌鸡饭",
+          "type": "restaurant",
+          "cluster_group": "sanya-bay",
+          "vibe": [
+            "must-eat",
+            "local"
+          ],
+          "price_range": "budget",
+          "near": "Any local area in Sanya — ask locals",
+          "must_order": "Wenchang chicken rice — steamed chicken, ginger-scallion sauce, broth-cooked rice",
+          "tip": "Hainan chicken rice is the ancestor of Singapore chicken rice — lighter, more fragrant, with better dipping sauces. The best is found in local coffee shops (not tourist restaurants) around Jiefang Road market area. SEA visitors immediately recognise the format and usually find the Hainanese original superior. ¥25–40 per person.",
+          "lat": 18.2523,
+          "lng": 109.5156
+        },
+        {
+          "id": "sy-fc005",
+          "name": "68 Global Food Street",
+          "chinese": "68号环球美食街",
+          "type": "food-street",
+          "cluster_group": "haitang-bay",
+          "vibe": [
+            "instagrammable",
+            "family",
+            "international"
+          ],
+          "price_range": "mid",
+          "near": "Adjacent to Duty-Free Mall, Haitang Bay",
+          "must_order": "Browse the stalls — everything from Thai to Cantonese to Japanese",
+          "tip": "Massive international food street next to the duty-free mall — dozens of stalls and restaurants covering global cuisines. Good for families with picky eaters. Evening atmosphere is lively with outdoor seating, live music and food stalls lighting up. Best visited after duty-free shopping.",
+          "lat": 18.3623,
+          "lng": 109.7534
         }
       ],
       "hotels": [
@@ -15052,6 +16677,96 @@
             "vegan"
           ],
           "tip": "Inside Nanputuo Temple — creative Buddhist vegetarian cuisine presented beautifully. Dishes named poetically after Buddhist concepts. The mock-meat dishes are extraordinary. Book ahead — always full. One of China's most famous vegetarian restaurants. Excellent for non-meat eaters."
+        },
+        {
+          "id": "xm-fc001",
+          "name": "Gulangyu Dragon Head Road Snacks",
+          "chinese": "鼓浪屿龙头路小吃",
+          "type": "food-street",
+          "cluster_group": "gulangyu-island",
+          "vibe": [
+            "must-eat",
+            "instagrammable",
+            "local"
+          ],
+          "price_range": "budget",
+          "near": "Dragon Head Road (Longtou Lu), Gulangyu Island",
+          "must_order": "Salty fish balls (鱼丸), satay noodle soup (沙茶面), peanut soup, oyster omelette",
+          "tip": "Gulangyu's main food strip — buy snacks and eat while walking. The island specialties: fish balls in clear broth (bouncy, fresh), satay-based noodle soup (Fujian's Southeast Asian influence is clear), peanut soup (hot, sweet, rich). Zhang Sanfeng (张三疯) milk tea always has a queue — join it. Buy before noon before the best items sell out.",
+          "lat": 24.4467,
+          "lng": 118.0645
+        },
+        {
+          "id": "xm-fc002",
+          "name": "Only One Coffee Xiamen",
+          "chinese": "唯一咖啡 厦门",
+          "type": "cafe",
+          "cluster_group": "gulangyu-island",
+          "vibe": [
+            "instagrammable",
+            "trending",
+            "scenic"
+          ],
+          "price_range": "mid",
+          "near": "Near Gulangyu ferry terminal or Zengcuoan village",
+          "must_order": "Couple set — drinks, snack platter and dessert",
+          "tip": "The most photogenic cafe in Xiamen — viral on Xiaohongshu (RED) for its beautiful decor and photo spots. Multiple Instagram-worthy corners throughout. The couple set is popular. Check their current location as they may have moved or opened new branches since 2025.",
+          "lat": 24.4423,
+          "lng": 118.1234
+        },
+        {
+          "id": "xm-fc003",
+          "name": "Nanputuo Buddhist Vegetarian Restaurant",
+          "chinese": "南普陀素菜馆",
+          "type": "restaurant",
+          "cluster_group": "siming-south",
+          "vibe": [
+            "must-eat",
+            "unique",
+            "instagrammable"
+          ],
+          "price_range": "mid",
+          "near": "Inside Nanputuo Temple, Siming South",
+          "must_order": "Creative tofu dishes, seasonal vegetarian menu",
+          "tip": "One of China's most famous vegetarian restaurants inside a 1,000-year-old Buddhist temple — dishes are named after Buddhist concepts and presented beautifully. The mock-meat dishes are extraordinary. Book ahead — always full for lunch. ¥30–80 per dish. The setting (temple garden) is as remarkable as the food. Walk to Xiamen University gate afterwards.",
+          "lat": 24.4456,
+          "lng": 118.0923
+        },
+        {
+          "id": "xm-fc004",
+          "name": "Zengcuoan Night Market",
+          "chinese": "曾厝垵夜市",
+          "type": "food-street",
+          "cluster_group": "siming-south",
+          "vibe": [
+            "local",
+            "instagrammable",
+            "trending"
+          ],
+          "price_range": "budget",
+          "near": "Zengcuoan village, Siming South",
+          "must_order": "Oyster omelette (蚵仔煎), seafood, local beer",
+          "tip": "The best evening experience in Xiamen — the village transforms into a vibrant night market after 7pm. Local seafood stalls, indie bars and live music. Much more authentic than Gulangyu's tourist strip. The beachfront boardwalk at the edge of the village is beautiful at night. Walk here from Xiamen University along the coastal path.",
+          "lat": 24.4423,
+          "lng": 118.1234
+        },
+        {
+          "id": "xm-fc005",
+          "name": "Shapowei Old Harbour Cafes",
+          "chinese": "沙坡尾创意咖啡馆",
+          "type": "cafe",
+          "cluster_group": "siming-south",
+          "vibe": [
+            "instagrammable",
+            "hidden-gem",
+            "local"
+          ],
+          "price_range": "mid",
+          "near": "Shapowei Old Harbour area, Siming",
+          "must_order": "Iced coffee, local oyster toast, passionfruit tea",
+          "tip": "Xiamen's last working harbour turned artsy neighbourhood. The container-style art gallery cafes have harbour views and are much less crowded than Gulangyu. Visit late afternoon when the low light hits the old fishing boats. The combination of weathered boats, colourful murals and artisan coffee is very Xiamen.",
+          "lat": 24.4467,
+          "lng": 118.0812
         }
       ],
       "hotels": [
@@ -15533,6 +17248,93 @@
             "vegetarian"
           ],
           "tip": "Food on the mountain summit costs 3-5x what it costs at the base. Buy energy bars, instant noodles, water and snacks at Tangkou before going up. The mountain hotels serve basic meals (¥60–120/dish) — fine for dinner if staying overnight but overpriced for day trippers."
+        },
+        {
+          "id": "hs-fc001",
+          "name": "Tangkou Base Town Restaurants",
+          "chinese": "汤口当地餐厅",
+          "type": "restaurant",
+          "cluster_group": "tangkou-base",
+          "vibe": [
+            "local",
+            "budget"
+          ],
+          "price_range": "budget",
+          "near": "Tangkou town, Huangshan mountain base",
+          "must_order": "Stinky Mandarin Fish (臭鳜鱼), Huangshan sesame cakes",
+          "tip": "Tangkou has many good Huizhou restaurants at reasonable prices. The stinky mandarin fish is the must-try signature dish — fermented for 7 days then braised in spicy Hui sauce. Intimidating smell, extraordinary taste. The sesame sesame cakes (¥3–5 each) from street stalls are the best hiking snack. Stock up before going up the mountain.",
+          "lat": 30.1267,
+          "lng": 118.1412
+        },
+        {
+          "id": "hs-fc002",
+          "name": "Hongcun Moon Pond Cafes",
+          "chinese": "宏村月沼咖啡馆",
+          "type": "cafe",
+          "cluster_group": "hongcun-xidi",
+          "vibe": [
+            "instagrammable",
+            "unique",
+            "scenic"
+          ],
+          "price_range": "mid",
+          "near": "Inside Hongcun village, next to Moon Pond",
+          "must_order": "Coffee reflected in Moon Pond, Huizhou osmanthus cake",
+          "tip": "Several cafes around the Moon Pond have second-floor terraces looking down at the reflected Hui village architecture. The early morning (6:30–8am) Moon Pond reflection with mist is one of China's iconic landscape photos. Sit upstairs with coffee and wait for the light to be perfect. Photography-focused visitors come specifically for this view.",
+          "lat": 29.8445,
+          "lng": 117.9734
+        },
+        {
+          "id": "hs-fc003",
+          "name": "Xidi Village Courtyard Restaurants",
+          "chinese": "西递村农家乐",
+          "type": "restaurant",
+          "cluster_group": "hongcun-xidi",
+          "vibe": [
+            "local",
+            "hidden-gem"
+          ],
+          "price_range": "budget",
+          "near": "Inside Xidi Ancient Village",
+          "must_order": "Mao tofu (毛豆腐), Huizhou braised tofu, wild mountain vegetables",
+          "tip": "Family-run restaurants inside Xidi village serve genuine Huizhou home cooking. Mao tofu (fermented tofu covered in white mould, pan-fried with chilli) is sold from street stalls for ¥2–3 each. The braised tofu with dried mushrooms is a Huizhou staple. Cheaper and more authentic than Hongcun's tourist restaurants.",
+          "lat": 29.9189,
+          "lng": 117.9312
+        },
+        {
+          "id": "hs-fc004",
+          "name": "Tunxi Old Street Tea Merchants",
+          "chinese": "屯溪老街茶叶店",
+          "type": "experience",
+          "cluster_group": "tunxi-oldstreet",
+          "vibe": [
+            "local",
+            "must-visit",
+            "hidden-gem"
+          ],
+          "price_range": "mid",
+          "near": "Tunxi Old Street, Huangshan City",
+          "must_order": "Maojian green tea, Keemun black tea",
+          "tip": "The tea merchants on Tunxi Old Street sell Huangshan's legendary teas direct: Huangshan Maojian (yellow mountain fine tip) and Keemun black tea (the world's most famous black tea, used in Earl Grey). Buy 50–100g for tasting at the source — a fraction of city prices. Shop owners brew samples — take your time and taste multiple grades.",
+          "lat": 29.7145,
+          "lng": 118.3189
+        },
+        {
+          "id": "hs-fc005",
+          "name": "Summit Mountain Instant Noodles",
+          "chinese": "山顶泡面",
+          "type": "experience",
+          "cluster_group": "huangshan-front",
+          "vibe": [
+            "local",
+            "unique"
+          ],
+          "price_range": "budget",
+          "near": "Any mountain hut on Huangshan summit",
+          "must_order": "Instant noodles, boiled eggs, summit tea",
+          "tip": "At 1,800m in sub-zero temperatures, a ¥25 bowl of instant noodles from a mountain hut is one of China's most satisfying food experiences. The mountain hut restaurants serve basic food at 3–5x base prices but nothing has ever tasted better than hot noodles after 4 hours of mountain hiking. Bring your own snacks but budget for one summit meal.",
+          "lat": 30.1267,
+          "lng": 118.1556
         }
       ],
       "hotels": [
@@ -16022,6 +17824,95 @@
           "price_range": "mid",
           "dietary": [],
           "tip": "Restored Qing dynasty neighbourhood near Confucius Temple — much less touristy than the temple area, better food, more authentic architecture. 蒋有记锅贴 (Jiang Youji pan-fried dumplings) and 蓝老大糖藕粥 (lotus root porridge) are famous. Great for dinner before a Qinhuai river night cruise."
+        },
+        {
+          "id": "nj-fc001",
+          "name": "Old Menbdong (老门东) Food Street",
+          "chinese": "老门东",
+          "type": "food-street",
+          "cluster_group": "qinhuai-district",
+          "vibe": [
+            "must-eat",
+            "instagrammable",
+            "local"
+          ],
+          "price_range": "mid",
+          "near": "Old Menbdong district, adjacent to Confucius Temple",
+          "must_order": "Pan-fried dumplings (锅贴), lotus root porridge, duck blood soup",
+          "tip": "The best food strip in Nanjing — restored Qing dynasty neighbourhood with better food and more authentic atmosphere than the Confucius Temple tourist area. Jiang Youji (蒋有记锅贴) pan-fried dumplings are legendary — crispy-bottomed, soup-filled. Lotus root porridge (藕粉) and sugar-lotus root (糖桂花藕) are Nanjing specialities. Walk here before the Qinhuai River night cruise.",
+          "lat": 32.0189,
+          "lng": 118.7934
+        },
+        {
+          "id": "nj-fc002",
+          "name": "Salted Duck Market (盐水鸭市场)",
+          "chinese": "盐水鸭",
+          "type": "restaurant",
+          "cluster_group": "qinhuai-district",
+          "vibe": [
+            "must-eat",
+            "local",
+            "iconic"
+          ],
+          "price_range": "budget",
+          "near": "Jianing Road Duck Market, Gulou District",
+          "must_order": "Half a salted duck — ask them to chop it",
+          "tip": "Nanjing's most famous food — lightly salted whole duck, served cold, with delicate white skin and clean flavour. Buy from a deli counter in the market at ¥60–80 per duck (or half). Eat at the market or take back to hotel. The definitive Nanjing eating experience. Every local has a preferred duck vendor — ask hotel staff.",
+          "lat": 32.0745,
+          "lng": 118.7823
+        },
+        {
+          "id": "nj-fc003",
+          "name": "1912 Street Cafes & Bars",
+          "chinese": "1912街区咖啡酒吧",
+          "type": "cafe",
+          "cluster_group": "daxinggong",
+          "vibe": [
+            "instagrammable",
+            "evening",
+            "local"
+          ],
+          "price_range": "mid",
+          "near": "1912 Street, adjacent to Presidential Palace",
+          "must_order": "Creative cocktails in Republican-era building",
+          "tip": "A cluster of bars and cafes in restored Republican-era (民国) buildings — the architectural style unique to Nanjing. Best at night when the buildings are lit up. Walk here after visiting the Presidential Palace next door. The contrast of 1930s architecture with modern cafe menus is very Nanjing.",
+          "lat": 32.0467,
+          "lng": 118.7956
+        },
+        {
+          "id": "nj-fc004",
+          "name": "Zhongshan Scenic Area Teahouse",
+          "chinese": "中山陵茶馆",
+          "type": "teahouse",
+          "cluster_group": "zhongshan-scenic",
+          "vibe": [
+            "scenic",
+            "local"
+          ],
+          "price_range": "mid",
+          "near": "Zhongshan National Park, near Ming Xiaoling Mausoleum",
+          "must_order": "Purple mountain tea, chrysanthemum cake",
+          "tip": "Small teahouses within Zhongshan National Park offer a peaceful rest after climbing the 392 steps of the Sun Yat-sen Mausoleum. The ginkgo alleys in October turn golden and the park becomes one of Nanjing's most beautiful spaces. Rest with tea while other tourists hurry past.",
+          "lat": 32.0545,
+          "lng": 118.8423
+        },
+        {
+          "id": "nj-fc005",
+          "name": "Duck Blood Vermicelli Soup Breakfast",
+          "chinese": "鸭血粉丝汤早餐",
+          "type": "restaurant",
+          "cluster_group": "qinhuai-district",
+          "vibe": [
+            "must-eat",
+            "local",
+            "budget"
+          ],
+          "price_range": "budget",
+          "near": "Near Confucius Temple area, early morning",
+          "must_order": "Duck blood vermicelli soup (鸭血粉丝汤)",
+          "tip": "The quintessential Nanjing breakfast — glass noodles, duck blood cubes, duck liver and tofu in a light fragrant broth. Available from ¥10–15 at any local breakfast stall near the Confucius Temple area before 9am. The texture of fresh duck blood is silky and mild. If you have the courage to try it, it's genuinely delicious.",
+          "lat": 32.0234,
+          "lng": 118.7923
         }
       ],
       "hotels": [
@@ -16509,6 +18400,97 @@
           "price_range": "budget",
           "dietary": [],
           "tip": "Qingdao's best local seafood market — arrive 7–9am for the freshest catch. Razor clams, sea urchin, swimming crabs, sea cucumbers, mantis shrimp. Buy live seafood and have it cooked at a nearby restaurant (加工费). Much cheaper than restaurants and higher quality than tourist seafood streets. Always confirm price per jin before agreeing."
+        },
+        {
+          "id": "qd-fc001",
+          "name": "Tsingtao Beer Fresh Tap Stalls",
+          "chinese": "青岛啤酒原浆街边摊",
+          "type": "experience",
+          "cluster_group": "zhongshan-road",
+          "vibe": [
+            "must-eat",
+            "local",
+            "instagrammable"
+          ],
+          "price_range": "budget",
+          "near": "Dengzhou Road (登州路) Brewery Street, near Tsingtao Brewery",
+          "must_order": "Fresh unfiltered Tsingtao (原浆) in plastic bag — ¥5/litre",
+          "tip": "The most authentic Qingdao experience — buying freshly tapped unfiltered beer in a plastic bag from a street vendor near the original brewery. ¥5 for 1 litre, ice cold and foamy. Eat alongside with hot clams from a nearby stall. This combination — plastic bag beer + clams + outdoor table — is Qingdao's defining food culture.",
+          "lat": 36.0878,
+          "lng": 120.3634
+        },
+        {
+          "id": "qd-fc002",
+          "name": "Spicy Clam Restaurants (辣炒蛤蜊)",
+          "chinese": "辣炒蛤蜊",
+          "type": "restaurant",
+          "cluster_group": "zhongshan-road",
+          "vibe": [
+            "must-eat",
+            "local",
+            "budget"
+          ],
+          "price_range": "budget",
+          "near": "Near Tuan Dao Market or local seafood areas, Shinan",
+          "must_order": "Spicy stir-fried clams, beer sausage, shrimp",
+          "tip": "Qingdao's unofficial city dish — small clams wok-fried with dry chilli and garlic. Order a bowl (¥30–50) with cold draft beer. The combination is extraordinary. Jiulong Restaurant or any busy seafood restaurant near Taidong market area is reliable. Always confirm price before ordering — tourist areas charge double.",
+          "lat": 36.0723,
+          "lng": 120.3456
+        },
+        {
+          "id": "qd-fc003",
+          "name": "Eight Great Passes Villa Cafes",
+          "chinese": "八大关别墅咖啡",
+          "type": "cafe",
+          "cluster_group": "eight-passes",
+          "vibe": [
+            "instagrammable",
+            "hidden-gem",
+            "scenic"
+          ],
+          "price_range": "mid",
+          "near": "Eight Great Passes villa district, Shinan",
+          "must_order": "Coffee on villa terrace, German cake",
+          "tip": "The cafe scene inside the Eight Great Passes is excellent — independently run cafes in or adjacent to the 1930s colonial villas. Spring brings cherry blossom on Shaoguan Road (韶关路) — the pink canopy over the cafe tables is extraordinary. Autumn ginkgo trees turn golden. Visit slow, walk between cafes.",
+          "lat": 36.0456,
+          "lng": 120.3512
+        },
+        {
+          "id": "qd-fc004",
+          "name": "Second Beach Seafood Restaurants",
+          "chinese": "第二海水浴场海鲜餐厅",
+          "type": "restaurant",
+          "cluster_group": "eight-passes",
+          "vibe": [
+            "local",
+            "scenic",
+            "must-eat"
+          ],
+          "price_range": "mid",
+          "near": "Second Beach (第二海水浴场), near Eight Great Passes",
+          "must_order": "Fresh sea urchin, grilled scallops, sea cucumber",
+          "tip": "The restaurant strip adjacent to Second Beach is where Qingdao locals eat — better quality and lower prices than tourist seafood areas. Always confirm price per jin (500g) before agreeing to anything. Grilled scallops with garlic and glass noodles (¥35/6 pieces), fresh sea urchin in shell (¥15–20 each) are outstanding.",
+          "lat": 36.0423,
+          "lng": 120.3567
+        },
+        {
+          "id": "qd-fc005",
+          "name": "Qingdao Taidong Night Market",
+          "chinese": "台东夜市",
+          "type": "food-street",
+          "cluster_group": "wusi-square",
+          "vibe": [
+            "instagrammable",
+            "local",
+            "trending",
+            "evening"
+          ],
+          "price_range": "budget",
+          "near": "Taidong pedestrian area, Shibei District",
+          "must_order": "Korean BBQ, local seafood skewers, fresh fruit desserts",
+          "tip": "Qingdao's best night market — Korean and Chinese food stalls, fresh seafood grilled over charcoal, cold plastic-bag beer everywhere. The Taidong pedestrian street at night is young, loud and vibrant — very different from the historic old city. Best 8–11pm. Much more local than the tourist Zhongshan Road area.",
+          "lat": 36.0912,
+          "lng": 120.3745
         }
       ],
       "hotels": [
