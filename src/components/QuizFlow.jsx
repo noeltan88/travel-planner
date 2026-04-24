@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { QUIZ } from '../utils/quizData';
 
 const HOLIDAYS = [
@@ -23,6 +23,123 @@ const AGE_GROUPS = [
 
 const LAST_STEP = QUIZ.length - 1;
 
+// ── Inline calendar helpers ──────────────────────────────────────
+const MONTH_NAMES = [
+  'January','February','March','April','May','June',
+  'July','August','September','October','November','December',
+];
+const DAY_LABELS = ['Mo','Tu','We','Th','Fr','Sa','Su'];
+
+function formatDateDisplay(dateStr) {
+  if (!dateStr) return null;
+  const [y, m, d] = dateStr.split('-').map(Number);
+  const M = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return `${d} ${M[m - 1]} ${y}`;
+}
+
+function MonthGrid({ year, month, today, dep, ret, onDayClick }) {
+  const firstDow   = new Date(year, month, 1).getDay(); // 0=Sun
+  const startPad   = (firstDow + 6) % 7;               // Monday-first offset
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const cells = [
+    ...Array(startPad).fill(null),
+    ...Array.from({ length: daysInMonth }, (_, i) => i + 1),
+  ];
+
+  const ACC      = '#E8472A';
+  const ACC_TINT = 'rgba(232,71,42,0.18)';
+
+  return (
+    <div style={{ marginBottom: 28 }}>
+      <p style={{ textAlign: 'center', fontWeight: 700, color: 'white', marginBottom: 10, fontSize: 14, letterSpacing: '0.01em' }}>
+        {MONTH_NAMES[month]} {year}
+      </p>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)' }}>
+        {DAY_LABELS.map(d => (
+          <div key={d} style={{ textAlign: 'center', fontSize: 11, color: 'rgba(255,255,255,0.3)', paddingBottom: 6, fontWeight: 600 }}>
+            {d}
+          </div>
+        ))}
+        {cells.map((day, idx) => {
+          if (day === null) return <div key={`p${idx}`} style={{ height: 36 }} />;
+
+          const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+          const isPast     = dateStr < today;
+          const isDep      = dateStr === dep;
+          const isRet      = dateStr === ret;
+          const inRange    = dep && ret && dateStr > dep && dateStr < ret;
+          const isSelected = isDep || isRet;
+
+          return (
+            <div
+              key={day}
+              onClick={() => !isPast && onDayClick(dateStr)}
+              style={{
+                height: 36, display: 'flex', alignItems: 'center', justifyContent: 'center',
+                position: 'relative', cursor: isPast ? 'default' : 'pointer',
+              }}
+            >
+              {/* Half-pill tint on the departure side */}
+              {isDep && ret && (
+                <div style={{ position: 'absolute', top: 2, bottom: 2, left: '50%', right: 0, background: ACC_TINT, zIndex: 0 }} />
+              )}
+              {/* Half-pill tint on the return side */}
+              {isRet && dep && (
+                <div style={{ position: 'absolute', top: 2, bottom: 2, left: 0, right: '50%', background: ACC_TINT, zIndex: 0 }} />
+              )}
+              {/* Full-width tint for dates in the range */}
+              {inRange && (
+                <div style={{ position: 'absolute', top: 2, bottom: 2, left: 0, right: 0, background: ACC_TINT, zIndex: 0 }} />
+              )}
+              {/* Date circle */}
+              <div style={{
+                width: 32, height: 32, borderRadius: '50%',
+                background: isSelected ? ACC : 'transparent',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                position: 'relative', zIndex: 1,
+              }}>
+                <span style={{
+                  fontSize: 13,
+                  fontWeight: isSelected ? 700 : 400,
+                  color: isPast
+                    ? 'rgba(255,255,255,0.2)'
+                    : isSelected
+                    ? 'white'
+                    : 'rgba(255,255,255,0.85)',
+                }}>
+                  {day}
+                </span>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+function InlineCalendar({ dep, ret, today, onDayTap }) {
+  const yr0 = Number(today.slice(0, 4));
+  const mo0 = Number(today.slice(5, 7)) - 1;
+  const months = Array.from({ length: 12 }, (_, i) => {
+    const m = mo0 + i;
+    return { year: yr0 + Math.floor(m / 12), month: m % 12 };
+  });
+  return (
+    <div>
+      {months.map(({ year, month }) => (
+        <MonthGrid
+          key={`${year}-${month}`}
+          year={year} month={month}
+          today={today} dep={dep} ret={ret}
+          onDayClick={onDayTap}
+        />
+      ))}
+    </div>
+  );
+}
+// ────────────────────────────────────────────────────────────────
+
 export default function QuizFlow({ onComplete }) {
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState({});
@@ -39,6 +156,14 @@ export default function QuizFlow({ onComplete }) {
   const isFamilyKids = answers.group === 'family-kids';
   const selected = answers[q.id] || (q.multi ? [] : null);
   const othersSelected = isDietary && (answers.dietary || []).includes('others');
+
+  // Auto-advance through country screen (China auto-selected after 0.5 s, advances at 1 s)
+  useEffect(() => {
+    if (QUIZ[step]?.id !== 'country') return;
+    const t1 = setTimeout(() => setAnswers(a => ({ ...a, country: 'china' })), 500);
+    const t2 = setTimeout(() => { setCitySearch(''); setStep(s => s + 1); }, 1000);
+    return () => { clearTimeout(t1); clearTimeout(t2); };
+  }, [step]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Date range state
   const datesAnswer = answers.dates || {};
@@ -62,6 +187,29 @@ export default function QuizFlow({ onComplete }) {
 
   function updateDate(field, value) {
     setAnswers(prev => ({ ...prev, dates: { ...(prev.dates || {}), [field]: value } }));
+  }
+
+  function handleDayTap(dateStr) {
+    if (dateStr < today) return;
+    if (!dep) {
+      // Nothing selected → set departure
+      setAnswers(prev => ({ ...prev, dates: { departure: dateStr, return: '' } }));
+    } else if (!ret) {
+      // Only departure set
+      if (dateStr === dep) {
+        // Tap same day → clear
+        setAnswers(prev => ({ ...prev, dates: { departure: '', return: '' } }));
+      } else if (dateStr < dep) {
+        // Tap before departure → move departure
+        setAnswers(prev => ({ ...prev, dates: { departure: dateStr, return: '' } }));
+      } else {
+        // Tap after departure → set return
+        updateDate('return', dateStr);
+      }
+    } else {
+      // Both set → reset, start fresh with new departure
+      setAnswers(prev => ({ ...prev, dates: { departure: dateStr, return: '' } }));
+    }
   }
 
   function toggleKidsAge(value) {
@@ -195,62 +343,66 @@ export default function QuizFlow({ onComplete }) {
         </div>
       )}
 
-      {/* Date range picker */}
+      {/* Date range picker — inline calendar */}
       {isDateRange && (
-        <div className="flex-1 px-4 pb-2 overflow-y-auto flex flex-col gap-3">
-          {/* Departure */}
-          <div>
-            <p className="text-xs font-semibold tracking-widest mb-2" style={{ color: 'rgba(255,255,255,0.5)' }}>DEPARTURE DATE</p>
-            <input
-              type="date"
-              value={dep}
-              min={today}
-              onChange={e => updateDate('departure', e.target.value)}
-              className="w-full pl-4 pr-10 py-3 rounded-2xl text-sm outline-none"
-              style={{ background: 'rgba(255,255,255,0.1)', border: `1.5px solid ${dep ? 'rgba(255,255,255,0.35)' : 'rgba(255,255,255,0.15)'}`, color: dep ? 'white' : 'rgba(255,255,255,0.4)', colorScheme: 'dark' }}
-            />
-          </div>
+        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', padding: '0 16px 8px' }}>
 
-          {/* Return */}
-          <div>
-            <p className="text-xs font-semibold tracking-widest mb-2" style={{ color: 'rgba(255,255,255,0.5)' }}>RETURN DATE</p>
-            <input
-              type="date"
-              value={ret}
-              min={dep || today}
-              onChange={e => updateDate('return', e.target.value)}
-              className="w-full pl-4 pr-10 py-3 rounded-2xl text-sm outline-none"
-              style={{ background: 'rgba(255,255,255,0.1)', border: `1.5px solid ${ret ? 'rgba(255,255,255,0.35)' : 'rgba(255,255,255,0.15)'}`, color: ret ? 'white' : 'rgba(255,255,255,0.4)', colorScheme: 'dark' }}
-            />
-          </div>
-
-          {/* Error */}
-          {dateError && (
-            <div className="px-4 py-3 rounded-2xl" style={{ background: 'rgba(239,68,68,0.15)', border: '1.5px solid rgba(239,68,68,0.3)' }}>
-              <p className="text-sm" style={{ color: '#fca5a5' }}>Return date must be after departure date.</p>
-            </div>
-          )}
-
-          {/* Day count */}
-          {totalDays >= 1 && !dateError && (
-            <div className="px-4 py-4 rounded-2xl flex items-center gap-3" style={{ background: 'rgba(255,255,255,0.08)', border: '1.5px solid rgba(255,255,255,0.12)' }}>
-              <div className="text-center" style={{ minWidth: 48 }}>
-                <p className="text-3xl font-black text-white leading-none">{totalDays}</p>
-                <p className="text-xs font-semibold" style={{ color: 'rgba(255,255,255,0.45)' }}>days</p>
-              </div>
-              <div style={{ width: 1, height: 36, background: 'rgba(255,255,255,0.15)' }} />
-              <p className="text-sm font-semibold" style={{ color: 'rgba(255,255,255,0.75)' }}>That's {totalDays} days in China</p>
-            </div>
-          )}
-
-          {/* Holiday warnings */}
-          {overlappingHolidays.map(h => (
-            <div key={h.name} className="px-4 py-3 rounded-2xl" style={{ background: 'rgba(245,158,11,0.12)', border: '1.5px solid rgba(245,158,11,0.35)' }}>
-              <p className="text-sm leading-relaxed" style={{ color: '#fde68a' }}>
-                ⚠️ Your dates overlap with <span className="font-semibold">{h.name}</span> — popular attractions will be very crowded. Consider adjusting dates or booking everything well in advance.
+          {/* Summary row */}
+          <div style={{
+            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 16,
+            background: 'rgba(255,255,255,0.08)', borderRadius: 16,
+            padding: '12px 20px', marginBottom: 14, flexShrink: 0,
+          }}>
+            <div style={{ textAlign: 'center' }}>
+              <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.45)', fontWeight: 600, letterSpacing: '0.07em', marginBottom: 3 }}>DEPARTURE</p>
+              <p style={{ fontSize: 15, fontWeight: 700, color: dep ? 'white' : 'rgba(255,255,255,0.3)' }}>
+                {dep ? formatDateDisplay(dep) : 'Tap a date'}
               </p>
             </div>
-          ))}
+            <span style={{ fontSize: 18, color: 'rgba(255,255,255,0.3)' }}>→</span>
+            <div style={{ textAlign: 'center' }}>
+              <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.45)', fontWeight: 600, letterSpacing: '0.07em', marginBottom: 3 }}>RETURN</p>
+              <p style={{ fontSize: 15, fontWeight: 700, color: ret ? 'white' : 'rgba(255,255,255,0.3)' }}>
+                {ret ? formatDateDisplay(ret) : dep ? 'Tap return date' : '—'}
+              </p>
+            </div>
+          </div>
+
+          {/* Scrollable calendar + counters */}
+          <div style={{ flex: 1, overflowY: 'auto' }}>
+            <InlineCalendar dep={dep} ret={ret} today={today} onDayTap={handleDayTap} />
+
+            {/* Day count */}
+            {totalDays >= 1 && (
+              <div style={{
+                display: 'flex', alignItems: 'center', gap: 12,
+                background: 'rgba(255,255,255,0.08)', border: '1.5px solid rgba(255,255,255,0.12)',
+                borderRadius: 16, padding: '14px 18px', marginBottom: 10,
+              }}>
+                <div style={{ textAlign: 'center', minWidth: 44 }}>
+                  <p style={{ fontSize: 28, fontWeight: 900, color: 'white', lineHeight: 1 }}>{totalDays}</p>
+                  <p style={{ fontSize: 11, fontWeight: 600, color: 'rgba(255,255,255,0.45)' }}>days</p>
+                </div>
+                <div style={{ width: 1, height: 32, background: 'rgba(255,255,255,0.15)' }} />
+                <p style={{ fontSize: 13, fontWeight: 600, color: 'rgba(255,255,255,0.75)' }}>
+                  That's {totalDays} days in China
+                </p>
+              </div>
+            )}
+
+            {/* Holiday warnings */}
+            {overlappingHolidays.map(h => (
+              <div key={h.name} style={{
+                background: 'rgba(245,158,11,0.12)', border: '1.5px solid rgba(245,158,11,0.35)',
+                borderRadius: 16, padding: '12px 16px', marginBottom: 10,
+              }}>
+                <p style={{ fontSize: 13, color: '#fde68a', lineHeight: 1.5 }}>
+                  ⚠️ Your dates overlap with <strong>{h.name}</strong> — popular attractions will be very crowded. Consider adjusting dates or booking well in advance.
+                </p>
+              </div>
+            ))}
+            <div style={{ height: 8 }} />
+          </div>
         </div>
       )}
 

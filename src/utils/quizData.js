@@ -52,6 +52,21 @@ const cityOptions = CITY_ORDER.map(id => {
 
 export const QUIZ = [
   {
+    id: 'country',
+    label: 'DESTINATION',
+    title: 'Where are you heading?',
+    sub: 'Select your destination country',
+    multi: false,
+    deco: '国',
+    options: [
+      { icon: '🇨🇳', name: 'China', desc: 'Guangzhou · Shanghai · Beijing & more', value: 'china' },
+      { icon: '🇹🇭', name: 'Thailand', desc: 'Bangkok, Chiang Mai, Phuket', value: 'thailand', comingSoon: true },
+      { icon: '🇯🇵', name: 'Japan', desc: 'Tokyo, Osaka, Kyoto', value: 'japan', comingSoon: true },
+      { icon: '🇻🇳', name: 'Vietnam', desc: 'Hanoi, Ho Chi Minh, Da Nang', value: 'vietnam', comingSoon: true },
+      { icon: '🇰🇷', name: 'South Korea', desc: 'Seoul, Busan, Jeju', value: 'southkorea', comingSoon: true },
+    ],
+  },
+  {
     id: 'city',
     label: 'DESTINATION',
     title: 'Which city are you visiting?',
