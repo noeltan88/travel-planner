@@ -7,6 +7,13 @@ const CITY_ORDER = [
 ];
 
 const EMOJI_OVERRIDES = {
+  guangzhou:    '🥘',
+  shenzhen:     '🤖',
+  shanghai:     '🌆',
+  chongqing:    '🌶️',
+  chengdu:      '🐼',
+  beijing:      '🏯',
+  hangzhou:     '🍵',
   changbaishan: '⛷️',
   sanya:        '🏖️',
   xiamen:       '🎹',
