@@ -81,13 +81,14 @@ export default function SwipeCard({ stop, index, onDelete, onSwapRequest, collap
         onPointerCancel={onPointerUp}
       >
         {/* ── Photo (160px) ───────────────────────────────────────────────── */}
+        {/* TODO: replace with real attraction photos */}
         <div style={{ height: 160, position: 'relative', overflow: 'hidden' }}>
-          {stop.photo_url && !imgError ? (
+          {!imgError ? (
             <img
-              src={stop.photo_url}
+              src={`https://picsum.photos/seed/${stop.id}/800/500`}
               alt={stop.name}
               loading="lazy"
-              onError={() => setImgError(true)}
+              onError={(e) => { e.target.style.display = 'none'; setImgError(true); }}
               style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
             />
           ) : (
