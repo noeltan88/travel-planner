@@ -67,20 +67,35 @@ export const QUIZ = [
     ]
   },
   {
+    id: 'pace',
+    label: 'PACE',
+    title: 'How packed do you like your days?',
+    sub: "We'll adjust how much we fit in each day",
+    multi: false,
+    deco: '速',
+    options: [
+      { icon: '🌿', name: 'Chill', desc: '2–3 stops, lots of breathing room', value: 'chill' },
+      { icon: '⚖️', name: 'Balance', desc: '4–5 stops, relaxed but fulfilling', value: 'balance' },
+      { icon: '⚡', name: 'Pack it in', desc: '6+ stops, maximise every hour', value: 'pack' },
+    ],
+  },
+  {
     id: 'vibe',
     label: 'YOUR VIBE',
     title: 'What kind of trip do you want?',
     sub: 'Pick as many as you like',
+    note: 'Or let us decide 👇',
     multi: true,
     deco: '玩',
     options: [
-      { icon: '🏘️', name: 'Local hangouts', desc: 'Where the locals actually go', value: 'local' },
-      { icon: '📸', name: 'Instagrammable', desc: 'Photogenic, shareable, beautiful', value: 'instagrammable' },
-      { icon: '🌿', name: 'Scenic & nature', desc: 'Parks, rivers, mountain views', value: 'scenic' },
-      { icon: '🏛️', name: 'History & culture', desc: 'Temples, museums, old towns', value: 'culture' },
-      { icon: '💎', name: 'Hidden gems', desc: 'Off the beaten path, crowd-free', value: 'hidden-gem' },
-      { icon: '🛍️', name: 'Shopping & food', desc: 'Markets, malls, street eats', value: 'shopping' },
-    ]
+      { icon: '🌿', name: 'Scenic & nature',     desc: 'Parks, rivers, mountains, lakes',                   value: 'scenic' },
+      { icon: '🏛️', name: 'History & culture',   desc: 'Temples, museums, old towns, heritage',              value: 'culture' },
+      { icon: '📸', name: 'Instagrammable',       desc: 'Photogenic, shareable, beautiful spots',             value: 'instagrammable' },
+      { icon: '🛍️', name: 'Shopping & food',     desc: 'Markets, malls, street eats, cafes',                value: 'shopping' },
+      { icon: '🗺️', name: 'Local & hidden gems', desc: 'Where locals go, off the beaten path',               value: 'local' },
+      { icon: '🎢', name: 'Fun & adventure',      desc: 'Theme parks, cable cars, hot springs, skiing',       value: 'adventure' },
+      { icon: '🎲', name: 'Surprise me',          desc: 'No preference — show me the best of everything',     value: 'surprise', exclusive: true },
+    ],
   },
   {
     id: 'dietary',

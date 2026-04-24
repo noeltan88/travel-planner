@@ -80,10 +80,16 @@ export default function QuizFlow({ onComplete }) {
     setComingSoonTapped(null);
     if (q.multi) {
       const cur = answers[q.id] || [];
+      const opt = q.options.find(o => o.value === value);
       if (cur.includes(value)) {
         setAnswers({ ...answers, [q.id]: cur.filter(v => v !== value) });
+      } else if (opt?.exclusive) {
+        // Exclusive option (e.g. "Surprise me") — deselect everything else
+        setAnswers({ ...answers, [q.id]: [value] });
       } else {
-        setAnswers({ ...answers, [q.id]: [...cur, value] });
+        // Regular option — drop any currently-selected exclusive options
+        const exclusiveVals = q.options.filter(o => o.exclusive).map(o => o.value);
+        setAnswers({ ...answers, [q.id]: [...cur.filter(v => !exclusiveVals.includes(v)), value] });
       }
     } else {
       // When switching away from family-kids, clear family extras
@@ -151,6 +157,7 @@ export default function QuizFlow({ onComplete }) {
       <div className="px-6 pt-2 pb-4">
         <h1 className="text-2xl font-bold text-white leading-tight mb-1">{q.title}</h1>
         <p className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>{q.sub}</p>
+        {q.note && <p className="text-sm mt-0.5" style={{ color: 'rgba(255,255,255,0.4)' }}>{q.note}</p>}
       </div>
 
       {/* City search bar */}
