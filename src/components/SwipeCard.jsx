@@ -2,65 +2,55 @@ import { useState, useRef } from 'react';
 import { getKlookLink } from '../utils/affiliateLinks';
 
 export default function SwipeCard({ stop, index, onDelete, onSwapRequest, collapsing }) {
-  const [offset, setOffset] = useState(0);
+  const [offset, setOffset]   = useState(0);
+  const [dragging, setDragging] = useState(false); // drives CSS transition only
   const [tipOpen, setTipOpen] = useState(false);
-  const startX = useRef(null);
-  const isDragging = useRef(false);
-  const MAX_REVEAL = 120;
-  const SNAP_THRESHOLD = 50;
-  const klookLink = getKlookLink(stop.id);
 
-  function onTouchStart(e) {
-    startX.current = e.touches[0].clientX;
-    isDragging.current = true;
+  const startXRef      = useRef(null);
+  const startOffsetRef = useRef(0);
+  const isDraggingRef  = useRef(false); // ref copy avoids stale closures in handlers
+  const rafRef         = useRef(null);
+
+  const MAX_REVEAL     = 120;
+  const SNAP_THRESHOLD = 80;
+  const klookLink      = getKlookLink(stop.id);
+
+  // ── Pointer handlers ───────────────────────────────────────────
+
+  function onPointerDown(e) {
+    startXRef.current      = e.clientX;
+    startOffsetRef.current = offset;
+    isDraggingRef.current  = true;
+    setDragging(true);
+    // Capture so we keep events even if the pointer leaves the element
+    try { e.currentTarget.setPointerCapture(e.pointerId); } catch (_) { /* noop */ }
   }
 
-  function onTouchMove(e) {
-    if (!isDragging.current) return;
-    const dx = e.touches[0].clientX - startX.current;
-    const newOffset = Math.max(-MAX_REVEAL, Math.min(0, dx + (offset === -MAX_REVEAL ? -MAX_REVEAL : 0)));
-    setOffset(newOffset);
+  function onPointerMove(e) {
+    if (!isDraggingRef.current || startXRef.current === null) return;
+    const dx        = e.clientX - startXRef.current;
+    const newOffset = Math.max(-MAX_REVEAL, Math.min(0, startOffsetRef.current + dx));
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    rafRef.current = requestAnimationFrame(() => setOffset(newOffset));
   }
 
-  function onTouchEnd() {
-    isDragging.current = false;
-    if (offset < -SNAP_THRESHOLD) {
-      setOffset(-MAX_REVEAL);
-    } else {
-      setOffset(0);
-    }
+  function onPointerUp() {
+    if (!isDraggingRef.current) return;
+    isDraggingRef.current = false;
+    startXRef.current     = null;
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    // Batch both state updates → single render that applies transition + final position
+    setDragging(false);
+    setOffset(prev => (prev < -SNAP_THRESHOLD ? -MAX_REVEAL : 0));
   }
-
-  // Mouse drag support for desktop
-  function onMouseDown(e) {
-    startX.current = e.clientX;
-    isDragging.current = true;
-    window.addEventListener('mousemove', onMouseMove);
-    window.addEventListener('mouseup', onMouseUpGlobal);
-  }
-
-  function onMouseMove(e) {
-    if (!isDragging.current) return;
-    const dx = e.clientX - startX.current;
-    const newOffset = Math.max(-MAX_REVEAL, Math.min(0, dx + (offset === -MAX_REVEAL ? -MAX_REVEAL : 0)));
-    setOffset(newOffset);
-  }
-
-  function onMouseUpGlobal() {
-    isDragging.current = false;
-    setOffset(prev => prev < -SNAP_THRESHOLD ? -MAX_REVEAL : 0);
-    window.removeEventListener('mousemove', onMouseMove);
-    window.removeEventListener('mouseup', onMouseUpGlobal);
-  }
-
-  const revealed = offset <= -MAX_REVEAL;
 
   return (
     <div className={`swipe-card-container ${collapsing ? 'card-collapsing' : ''}`}>
+
       {/* Action buttons behind card */}
       <div className="swipe-card-actions">
         <button
-          onClick={() => { setOffset(0); onSwapRequest(stop); }}
+          onClick={() => { setOffset(0); setDragging(false); onSwapRequest(stop); }}
           className="flex-1 flex flex-col items-center justify-center gap-1 font-bold text-white text-xs"
           style={{ background: 'var(--swap-bg)' }}
         >
@@ -80,11 +70,19 @@ export default function SwipeCard({ stop, index, onDelete, onSwapRequest, collap
       {/* Card face */}
       <div
         className="swipe-card-face bg-white rounded-2xl p-4"
-        style={{ transform: `translateX(${offset}px)`, boxShadow: 'var(--shadow-card)' }}
-        onTouchStart={onTouchStart}
-        onTouchMove={onTouchMove}
-        onTouchEnd={onTouchEnd}
-        onMouseDown={onMouseDown}
+        style={{
+          transform:               `translateX(${offset}px)`,
+          transition:              dragging ? 'none' : 'transform 0.3s ease',
+          willChange:              'transform',
+          touchAction:             'pan-y',
+          WebkitOverflowScrolling: 'touch',
+          userSelect:              'none',
+          boxShadow:               'var(--shadow-card)',
+        }}
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={onPointerUp}
+        onPointerCancel={onPointerUp}
       >
         {/* Swipe hint */}
         {offset === 0 && (
@@ -108,7 +106,7 @@ export default function SwipeCard({ stop, index, onDelete, onSwapRequest, collap
 
           {/* Content */}
           <div style={{ flex: 1, minWidth: 0 }}>
-            {/* Row 1: name + time (strictly separated columns) */}
+            {/* Row 1: name + time */}
             <div style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
               <div style={{ flex: 1, minWidth: 0 }}>
                 <p style={{
@@ -120,7 +118,7 @@ export default function SwipeCard({ stop, index, onDelete, onSwapRequest, collap
                 </p>
                 <p style={{ fontSize: 11, color: 'var(--text-muted)', margin: 0 }}>{stop.chinese}</p>
               </div>
-              {/* Time column — flexShrink:0 + whitespace-nowrap prevents any overlap */}
+              {/* Time column */}
               <div style={{ textAlign: 'right', flexShrink: 0 }}>
                 <p style={{ fontSize: 12, fontWeight: 600, color: 'var(--text-primary)', margin: '0 0 2px', whiteSpace: 'nowrap' }}>
                   {stop.startTime}–{stop.endTime}
@@ -142,7 +140,7 @@ export default function SwipeCard({ stop, index, onDelete, onSwapRequest, collap
               </span>
             </div>
 
-            {/* Row 3: price — bottom right, isolated from time column */}
+            {/* Row 3: price */}
             <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 4 }}>
               <span style={{
                 fontSize: 12, fontWeight: 600,
@@ -166,10 +164,7 @@ export default function SwipeCard({ stop, index, onDelete, onSwapRequest, collap
           {tipOpen && (
             <div
               className="mt-2 text-xs leading-relaxed pl-3"
-              style={{
-                color: 'var(--text-secondary)',
-                borderLeft: '3px solid var(--accent)',
-              }}
+              style={{ color: 'var(--text-secondary)', borderLeft: '3px solid var(--accent)' }}
             >
               {stop.tip}
             </div>

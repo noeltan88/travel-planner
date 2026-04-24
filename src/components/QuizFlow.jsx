@@ -140,40 +140,41 @@ function InlineCalendar({ dep, ret, today, onDayTap }) {
 }
 // ────────────────────────────────────────────────────────────────
 
-const FLIGHT_TIMES = [
-  { icon: '🌅', label: 'Morning',   sub: 'before 12pm', value: 'morning'   },
-  { icon: '☀️',  label: 'Afternoon', sub: '12pm–5pm',    value: 'afternoon' },
-  { icon: '🌙', label: 'Evening',   sub: 'after 5pm',   value: 'evening'   },
-];
+// Convert a "HH:MM" string to the morning/afternoon/evening period the algorithm expects
+function parseTimePeriod(timeStr) {
+  if (!timeStr) return null;
+  const hour = parseInt(timeStr.split(':')[0], 10);
+  if (isNaN(hour)) return null;
+  if (hour < 12) return 'morning';
+  if (hour < 18) return 'afternoon';
+  return 'evening';
+}
 
-function FlightTimePicker({ label, value, onChange }) {
+function FlightTimeInput({ label, value, onChange, placeholder }) {
   return (
-    <div style={{ marginBottom: 18 }}>
-      <p style={{ fontSize: 12, fontWeight: 600, color: 'rgba(255,255,255,0.55)', letterSpacing: '0.04em', marginBottom: 10 }}>
+    <div style={{ marginBottom: 16 }}>
+      <p style={{ fontSize: 12, fontWeight: 600, color: 'rgba(255,255,255,0.55)', letterSpacing: '0.04em', marginBottom: 8 }}>
         {label}
       </p>
-      <div style={{ display: 'flex', gap: 8 }}>
-        {FLIGHT_TIMES.map(t => {
-          const sel = value === t.value;
-          return (
-            <button
-              key={t.value}
-              onClick={() => onChange(t.value)}
-              style={{
-                flex: 1, padding: '10px 4px', borderRadius: 14, border: 'none', cursor: 'pointer',
-                background: sel ? 'rgba(232,71,42,0.2)' : 'rgba(255,255,255,0.07)',
-                outline: `1.5px solid ${sel ? '#E8472A' : 'rgba(255,255,255,0.12)'}`,
-                display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3,
-                transition: 'background 0.15s, outline 0.15s',
-              }}
-            >
-              <span style={{ fontSize: 18 }}>{t.icon}</span>
-              <span style={{ fontSize: 12, fontWeight: 700, color: 'white' }}>{t.label}</span>
-              <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.5)' }}>{t.sub}</span>
-            </button>
-          );
-        })}
-      </div>
+      <input
+        type="time"
+        value={value || ''}
+        onChange={e => onChange(e.target.value)}
+        placeholder={placeholder}
+        style={{
+          width: '100%',
+          padding: '12px 16px',
+          borderRadius: 14,
+          border: '1.5px solid rgba(255,255,255,0.2)',
+          background: 'rgba(255,255,255,0.08)',
+          color: 'white',
+          fontSize: 16,
+          fontWeight: 600,
+          outline: 'none',
+          boxSizing: 'border-box',
+          colorScheme: 'dark',
+        }}
+      />
     </div>
   );
 }
@@ -297,8 +298,8 @@ export default function QuizFlow({ onComplete }) {
           flat.departure_date = dep;
           flat.return_date = ret;
           flat.duration = totalDays; // keep key algorithm expects
-          flat.arrival_time = answers.arrival_time || 'afternoon';
-          flat.departure_time = answers.departure_time || 'evening';
+          flat.arrival_time   = parseTimePeriod(answers.arrival_time)   || 'afternoon';
+          flat.departure_time = parseTimePeriod(answers.departure_time) || 'evening';
         } else {
           flat[q.id] = q.multi ? (answers[q.id] || []) : answers[q.id];
         }
@@ -433,24 +434,26 @@ export default function QuizFlow({ onComplete }) {
           </div>
 
           {/* Scrollable: calendar → arrival time → departure time → holiday warnings */}
-          <div style={{ flex: 1, overflowY: 'auto' }}>
+          <div style={{ flex: 1, overflowY: 'auto', WebkitOverflowScrolling: 'touch', scrollBehavior: 'smooth' }}>
             <InlineCalendar dep={dep} ret={ret} today={today} onDayTap={handleDayTap} />
 
             {/* Divider */}
             <div style={{ height: 1, background: 'rgba(255,255,255,0.08)', margin: '4px 0 20px' }} />
 
             {/* Arrival time */}
-            <FlightTimePicker
-              label="What time do you arrive on Day 1?"
+            <FlightTimeInput
+              label="🛬 Arrival time on Day 1"
               value={answers.arrival_time}
               onChange={v => setAnswers(a => ({ ...a, arrival_time: v }))}
+              placeholder="e.g. 14:00"
             />
 
             {/* Departure time */}
-            <FlightTimePicker
-              label="What time is your flight home?"
+            <FlightTimeInput
+              label="🛫 Departure time on last day"
               value={answers.departure_time}
               onChange={v => setAnswers(a => ({ ...a, departure_time: v }))}
+              placeholder="e.g. 11:00"
             />
 
             {/* Holiday warnings */}
@@ -474,7 +477,10 @@ export default function QuizFlow({ onComplete }) {
       )}
 
       {/* Options */}
-      {!isDateRange && <div className="flex-1 px-4 pb-2 overflow-y-auto flex flex-col gap-3">
+      {!isDateRange && <div
+        className="flex-1 px-4 pb-2 overflow-y-auto flex flex-col gap-3"
+        style={{ WebkitOverflowScrolling: 'touch', scrollBehavior: 'smooth', willChange: 'scroll-position' }}
+      >
         {visibleOptions.map(opt => {
           const sel = isSelected(opt.value);
           const isTappedSoon = comingSoonTapped === opt.value;
