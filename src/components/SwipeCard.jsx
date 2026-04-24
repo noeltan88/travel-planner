@@ -1,11 +1,11 @@
 import { useState, useRef } from 'react';
 import { getKlookLink } from '../utils/affiliateLinks';
+import AttractionImage from './AttractionImage';
 
 export default function SwipeCard({ stop, index, onDelete, onSwapRequest, collapsing }) {
   const [offset, setOffset]    = useState(0);
   const [dragging, setDragging] = useState(false);
   const [tipOpen, setTipOpen]  = useState(false);
-  const [imgError, setImgError] = useState(false);
 
   const startXRef      = useRef(null);
   const startOffsetRef = useRef(0);
@@ -81,25 +81,13 @@ export default function SwipeCard({ stop, index, onDelete, onSwapRequest, collap
         onPointerCancel={onPointerUp}
       >
         {/* ── Photo (160px) ───────────────────────────────────────────────── */}
-        {/* TODO: replace with real attraction photos */}
         <div style={{ height: 160, position: 'relative', overflow: 'hidden' }}>
-          {!imgError ? (
-            <img
-              src={`https://picsum.photos/seed/${stop.id}/800/500`}
-              alt={stop.name}
-              loading="lazy"
-              onError={(e) => { e.target.style.display = 'none'; setImgError(true); }}
-              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-            />
-          ) : (
-            <div style={{
-              width: '100%', height: '100%',
-              background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 55%, #0f3460 100%)',
-              display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 44,
-            }}>
-              {getCategoryIcon(stop.category)}
-            </div>
-          )}
+          <AttractionImage
+            src={stop.photo_url || null}
+            alt={stop.name}
+            category={stop.category}
+            style={{ height: 160 }}
+          />
           {/* Subtle gradient so text above photo reads well */}
           <div style={{
             position: 'absolute', inset: 0,
@@ -220,10 +208,3 @@ export default function SwipeCard({ stop, index, onDelete, onSwapRequest, collap
   );
 }
 
-function getCategoryIcon(category) {
-  const map = {
-    attraction: '🏛️', nature: '🌿', shopping: '🛍️',
-    experience: '✨', food: '🍜', nightlife: '🌃',
-  };
-  return map[category] || '📍';
-}
