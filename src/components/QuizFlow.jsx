@@ -115,23 +115,26 @@ function parseTimePeriod(timeStr) {
   return 'evening';
 }
 
-function FlightTimeInput({ label, value, onChange, placeholder }) {
+function FlightTimeInput({ label, value, onChange }) {
   return (
-    <div style={{ marginBottom: 20 }}>
-      <p style={{ fontSize: 13, fontWeight: 600, color: 'rgba(255,255,255,0.6)', marginBottom: 10 }}>
+    <div style={{
+      display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+      minHeight: 56, padding: '0 16px', borderRadius: 12, marginBottom: 16,
+      background: 'rgba(255,255,255,0.07)', border: '1.5px solid rgba(255,255,255,0.12)',
+      boxSizing: 'border-box',
+    }}>
+      <span style={{ fontSize: 14, fontWeight: 600, color: 'rgba(255,255,255,0.7)', flexShrink: 0, marginRight: 12 }}>
         {label}
-      </p>
+      </span>
       <input
         type="time"
         value={value || ''}
         onChange={e => onChange(e.target.value)}
-        placeholder={placeholder}
         style={{
-          width: '100%', padding: '14px 16px', borderRadius: 14,
-          border: '1.5px solid rgba(255,255,255,0.18)',
-          background: 'rgba(255,255,255,0.08)',
-          color: 'white', fontSize: 18, fontWeight: 600, outline: 'none',
-          boxSizing: 'border-box', colorScheme: 'dark',
+          background: 'transparent', border: 'none', outline: 'none',
+          color: value ? 'white' : 'rgba(255,255,255,0.3)',
+          fontSize: 15, fontWeight: 700, textAlign: 'right',
+          colorScheme: 'dark', minWidth: 80,
         }}
       />
     </div>
@@ -318,15 +321,15 @@ export default function QuizFlow({ onComplete }) {
       {isDateRange && (
         <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', padding: '0 16px 8px' }}>
 
-          {/* Tab pills */}
+          {/* Tab pills — strict 50/50 width */}
           <div style={{
-            display: 'flex', flexShrink: 0, gap: 0,
+            display: 'flex', flexShrink: 0,
             background: 'rgba(255,255,255,0.07)', borderRadius: 22, padding: 4, marginBottom: 20,
           }}>
             <button
               onClick={() => setDateTab('dates')}
               style={{
-                flex: 1, padding: '9px 0', borderRadius: 18, border: 'none', cursor: 'pointer',
+                width: '50%', padding: '9px 0', borderRadius: 18, border: 'none', cursor: 'pointer',
                 background: dateTab === 'dates' ? ACC : 'transparent',
                 color: dateTab === 'dates' ? 'white' : 'rgba(255,255,255,0.5)',
                 fontWeight: 700, fontSize: 13,
@@ -338,35 +341,36 @@ export default function QuizFlow({ onComplete }) {
             <button
               onClick={() => setDateTab('times')}
               style={{
-                flex: 1, padding: '9px 0', borderRadius: 18, border: 'none', cursor: 'pointer',
+                width: '50%', padding: '9px 0', borderRadius: 18, border: 'none', cursor: 'pointer',
+                position: 'relative',
                 background: dateTab === 'times' ? ACC : 'transparent',
                 color: dateTab === 'times' ? 'white' : 'rgba(255,255,255,0.5)',
                 fontWeight: 700, fontSize: 13,
-                display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 5,
                 transition: 'background 0.15s, color 0.15s',
               }}
             >
               ✈️ Flight Times
+              {/* Superscript badge — absolutely positioned so it doesn't affect tab width */}
               <span style={{
-                fontSize: 9, padding: '2px 6px', borderRadius: 8, fontWeight: 600, letterSpacing: '0.02em',
-                background: dateTab === 'times' ? 'rgba(255,255,255,0.25)' : 'rgba(255,255,255,0.12)',
-                color:      dateTab === 'times' ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.45)',
+                position: 'absolute', top: 4, right: 8,
+                fontSize: 8, padding: '1px 4px', borderRadius: 4, fontWeight: 700,
+                background: 'rgba(255,255,255,0.2)',
+                color: 'rgba(255,255,255,0.65)',
               }}>
-                Optional
+                opt
               </span>
             </button>
           </div>
 
-          {/* TAB 1 — Dates */}
+          {/* TAB 1 — Dates (no scroll needed; content is compact) */}
           {dateTab === 'dates' && (
-            <div style={{ flex: 1, overflowY: 'auto', WebkitOverflowScrolling: 'touch' }}>
-
+            <div>
               {/* Day counter badge */}
-              <div style={{ textAlign: 'center', marginBottom: 16 }}>
+              <div style={{ textAlign: 'center', marginBottom: 14 }}>
                 {totalDays >= 1 ? (
                   <div style={{
                     display: 'inline-flex', alignItems: 'center', gap: 8,
-                    background: 'rgba(232,71,42,0.15)', border: `1.5px solid rgba(232,71,42,0.35)`,
+                    background: 'rgba(232,71,42,0.15)', border: '1.5px solid rgba(232,71,42,0.35)',
                     borderRadius: 24, padding: '7px 20px',
                   }}>
                     <span style={{ fontSize: 22, fontWeight: 900, color: 'white', lineHeight: 1 }}>{totalDays}</span>
@@ -383,17 +387,17 @@ export default function QuizFlow({ onComplete }) {
                 )}
               </div>
 
-              {/* Tappable date fields */}
-              <div style={{ display: 'flex', gap: 10, marginBottom: 20 }}>
+              {/* Tappable date fields — neutral styling, no red */}
+              <div style={{ display: 'flex', gap: 10, marginBottom: 14 }}>
                 <button
                   onClick={() => setCalendarOpen(true)}
                   style={{
                     flex: 1, padding: '14px 14px', borderRadius: 16, border: 'none', cursor: 'pointer', textAlign: 'left',
-                    background: dep ? 'rgba(232,71,42,0.1)' : 'rgba(255,255,255,0.07)',
-                    outline: dep ? `1.5px solid rgba(232,71,42,0.5)` : '1.5px solid rgba(255,255,255,0.12)',
+                    background: dep ? 'rgba(255,255,255,0.11)' : 'rgba(255,255,255,0.07)',
+                    outline: '1.5px solid rgba(255,255,255,0.15)',
                   }}
                 >
-                  <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.45)', fontWeight: 600, letterSpacing: '0.07em', marginBottom: 6, margin: '0 0 6px' }}>📅 DEPARTURE</p>
+                  <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.45)', fontWeight: 600, letterSpacing: '0.07em', margin: '0 0 6px' }}>📅 DEPARTURE</p>
                   <p style={{ fontSize: 14, fontWeight: 700, color: dep ? 'white' : 'rgba(255,255,255,0.3)', margin: 0 }}>
                     {dep ? formatDateDisplay(dep) : 'Tap to select'}
                   </p>
@@ -402,18 +406,18 @@ export default function QuizFlow({ onComplete }) {
                   onClick={() => setCalendarOpen(true)}
                   style={{
                     flex: 1, padding: '14px 14px', borderRadius: 16, border: 'none', cursor: 'pointer', textAlign: 'left',
-                    background: ret ? 'rgba(232,71,42,0.1)' : 'rgba(255,255,255,0.07)',
-                    outline: ret ? `1.5px solid rgba(232,71,42,0.5)` : '1.5px solid rgba(255,255,255,0.12)',
+                    background: ret ? 'rgba(255,255,255,0.11)' : 'rgba(255,255,255,0.07)',
+                    outline: '1.5px solid rgba(255,255,255,0.15)',
                   }}
                 >
-                  <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.45)', fontWeight: 600, letterSpacing: '0.07em', marginBottom: 6, margin: '0 0 6px' }}>📅 RETURN</p>
+                  <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.45)', fontWeight: 600, letterSpacing: '0.07em', margin: '0 0 6px' }}>📅 RETURN</p>
                   <p style={{ fontSize: 14, fontWeight: 700, color: ret ? 'white' : 'rgba(255,255,255,0.3)', margin: 0 }}>
                     {ret ? formatDateDisplay(ret) : dep ? 'Tap to select' : '—'}
                   </p>
                 </button>
               </div>
 
-              {/* Holiday warnings */}
+              {/* Holiday warnings — sit tight below the cards */}
               {overlappingHolidays.length > 0 && (
                 <div>
                   {overlappingHolidays.map(h => (
@@ -428,29 +432,25 @@ export default function QuizFlow({ onComplete }) {
                   ))}
                 </div>
               )}
-              <div style={{ height: 16 }} />
             </div>
           )}
 
           {/* TAB 2 — Flight Times */}
           {dateTab === 'times' && (
-            <div style={{ flex: 1, overflowY: 'auto', WebkitOverflowScrolling: 'touch' }}>
-              <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.45)', marginBottom: 28, lineHeight: 1.6, margin: '0 0 28px' }}>
+            <div>
+              <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.45)', lineHeight: 1.6, margin: '0 0 20px' }}>
                 Optional — helps us plan your first and last day more accurately. Leave blank and we'll use sensible defaults.
               </p>
               <FlightTimeInput
                 label="🛬 What time do you land?"
                 value={answers.arrival_time}
                 onChange={v => setAnswers(a => ({ ...a, arrival_time: v }))}
-                placeholder="e.g. 14:00"
               />
               <FlightTimeInput
                 label="🛫 What time is your flight home?"
                 value={answers.departure_time}
                 onChange={v => setAnswers(a => ({ ...a, departure_time: v }))}
-                placeholder="e.g. 11:00"
               />
-              <div style={{ height: 16 }} />
             </div>
           )}
         </div>
