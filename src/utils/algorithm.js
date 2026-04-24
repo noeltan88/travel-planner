@@ -1,14 +1,18 @@
 import masterDb from '../data/china-master-db-v1.json';
 
 // ── Constants ─────────────────────────────────────────────────────
-const PACE_HOURS        = { chill: 4, balance: 7, pack: 9 };
-const PACE_MAX_STOPS    = { chill: 2, balance: 4, pack: 6 };
-const PACE_MAX_CLUSTERS = { chill: 1, balance: 2, pack: 3 };
+//
+// PACE_HOURS is a total sightseeing window, not "activity hours minus lunch".
+// DB avg duration_hrs = 2.38.  For 4 balance stops + 3×transit that means
+// ~11 hrs of window.  Lunch is handled via food picks — not deducted here.
+//
+const PACE_HOURS        = { chill: 6, balance: 11, pack: 15 };
+const PACE_MAX_STOPS    = { chill: 2, balance: 4,  pack: 6  };
+const PACE_MAX_CLUSTERS = { chill: 1, balance: 2,  pack: 3  };
 const TRAVEL_SAME_HRS   = 1 / 3;  // 20 min — same cluster
-const TRAVEL_DIFF_HRS   = 0.75;   // 45 min — different cluster
+const TRAVEL_DIFF_HRS   = 0.5;    // 30 min — cross-cluster (subway realistic)
 const TRAVEL_SAME_MINS  = 20;
-const TRAVEL_DIFF_MINS  = 45;
-const LUNCH_HRS         = 1;
+const TRAVEL_DIFF_MINS  = 30;
 
 const EMOJI_OVERRIDES = {
   guangzhou: '🥘', shenzhen: '🤖', shanghai: '🌆', chongqing: '🌶️',
@@ -136,7 +140,7 @@ function filterAttractions(pool, { pace, group, kidsAges, isKidsTrip, travelMont
 // ── Day-hour budgets ──────────────────────────────────────────────
 
 function buildDayBudgets(totalDays, pace, arrivalTime, departureTime) {
-  const baseHours    = PACE_HOURS[pace] ?? 7;
+  const baseHours    = PACE_HOURS[pace] ?? 11;
   const baseMaxStops = PACE_MAX_STOPS[pace] ?? 4;
 
   return Array.from({ length: totalDays }, (_, i) => {
@@ -145,17 +149,16 @@ function buildDayBudgets(totalDays, pace, arrivalTime, departureTime) {
     let maxStops      = baseMaxStops;
     let preferEvening = false;
     let lowEnergyOnly = false;
-    let skipLunch     = false;
-    let noStandalone  = false; // FIX 8
-    let noHighEnergy  = false; // FIX 8
+    let noStandalone  = false;
+    let noHighEnergy  = false;
 
-    // FIX 6 — Day 1 arrival constraints
+    // Day 1 arrival constraints
     if (i === 0) {
-      noStandalone = true; // FIX 8: first day always lightest
-      noHighEnergy = true; // FIX 8
+      noStandalone = true; // first day always lightest
+      noHighEnergy = true;
       if (arrivalTime === 'afternoon') {
         startHour = 14;
-        hours     = 3;
+        hours     = 5;
         maxStops  = Math.min(maxStops, 2);
       } else if (arrivalTime === 'evening') {
         startHour     = 18;
@@ -166,24 +169,22 @@ function buildDayBudgets(totalDays, pace, arrivalTime, departureTime) {
       // morning → full hours, start 9:00
     }
 
-    // FIX 7 — Last day departure constraints
+    // Last day departure constraints
     if (i === totalDays - 1 && totalDays > 1) {
       if (departureTime === 'morning') {
         startHour     = 9;
-        hours         = 1;
+        hours         = 1.5;
         maxStops      = 1;
         lowEnergyOnly = true;
-        skipLunch     = true;
       } else if (departureTime === 'afternoon') {
         startHour = 9;
-        hours     = 2;
+        hours     = 4;
         maxStops  = Math.min(maxStops, 2);
-        skipLunch = true;
       }
       // evening → full day, no overrides
     }
 
-    return { hours, startHour, maxStops, preferEvening, lowEnergyOnly, skipLunch, noStandalone, noHighEnergy };
+    return { hours, startHour, maxStops, preferEvening, lowEnergyOnly, noStandalone, noHighEnergy };
   });
 }
 
@@ -317,7 +318,6 @@ function buildCityDays(city, scoredPool, kidsAttractions, foodPool, budgets, par
     maxStops: budgetMaxStops,
     preferEvening,
     lowEnergyOnly,
-    skipLunch,
     noStandalone,
     noHighEnergy,
   }, dayIdx) => {
@@ -325,8 +325,8 @@ function buildCityDays(city, scoredPool, kidsAttractions, foodPool, budgets, par
     const isLastDay  = dayIdx === budgets.length - 1;
     const dayStops   = [];
 
-    // FIX 1: available = hours - lunch (lunch skipped on tight departure days)
-    let available    = skipLunch ? budgetHours : budgetHours - LUNCH_HRS;
+    // Lunch is handled via food picks — not deducted from sightseeing budget
+    let available    = budgetHours;
     let prevCluster  = null;
     const clustersUsed = new Set();
 
@@ -434,11 +434,12 @@ function buildCityDays(city, scoredPool, kidsAttractions, foodPool, budgets, par
             addedFromCluster++;
           }
 
-          if (addedFromCluster > 0) {
+          if (addedFromCluster > 0 && !clusterFound) {
             clusterCursor = (clusterCursor + attempt + 1) % workClusters.length;
             clusterFound  = true;
-            break;
+            // No break — keep trying more clusters until effectiveMax reached
           }
+          if (dayStops.length >= effectiveMax) break;
         }
 
         // ── 3. Fallback: any unused stop that fits ─────────────────
@@ -473,6 +474,9 @@ function buildCityDays(city, scoredPool, kidsAttractions, foodPool, budgets, par
         usedKidsIds.add(kidPick.id);
       }
     }
+
+    // ── Debug ─────────────────────────────────────────────────────
+    console.log(`[algo] Day ${dayIdx + 1} | city=${city} pace=${pace} | budget=${budgetHours}h maxStops=${effectiveMax} | filled=${dayStops.length} stops`);
 
     // ── 5. Sequence by energy + practical tags ────────────────────
     let ordered;
