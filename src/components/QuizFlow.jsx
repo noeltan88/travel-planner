@@ -215,7 +215,7 @@ export default function QuizFlow({ onComplete }) {
   }, [dep, ret, dateError]);
 
   const canContinue = isDateRange
-    ? Boolean(dep && ret && !dateError && totalDays >= 1 && answers.arrival_time && answers.departure_time)
+    ? Boolean(dep && ret && !dateError && totalDays >= 1)
     : q.multi ? selected.length > 0 : selected !== null;
 
   const visibleOptions = isCity && citySearch.trim()
@@ -297,8 +297,8 @@ export default function QuizFlow({ onComplete }) {
           flat.departure_date = dep;
           flat.return_date = ret;
           flat.duration = totalDays; // keep key algorithm expects
-          flat.arrival_time = answers.arrival_time;
-          flat.departure_time = answers.departure_time;
+          flat.arrival_time = answers.arrival_time || 'afternoon';
+          flat.departure_time = answers.departure_time || 'evening';
         } else {
           flat[q.id] = q.multi ? (answers[q.id] || []) : answers[q.id];
         }
