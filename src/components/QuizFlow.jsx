@@ -117,11 +117,11 @@ function parseTimePeriod(timeStr) {
 
 function FlightTimeInput({ label, value, onChange }) {
   return (
-    <div style={{
+    <label style={{
       display: 'flex', alignItems: 'center', justifyContent: 'space-between',
       minHeight: 56, padding: '0 16px', borderRadius: 12, marginBottom: 16,
       background: 'rgba(255,255,255,0.07)', border: '1.5px solid rgba(255,255,255,0.12)',
-      boxSizing: 'border-box',
+      boxSizing: 'border-box', cursor: 'pointer',
     }}>
       <span style={{ fontSize: 14, fontWeight: 600, color: 'rgba(255,255,255,0.7)', flexShrink: 0, marginRight: 12 }}>
         {label}
@@ -132,12 +132,13 @@ function FlightTimeInput({ label, value, onChange }) {
         onChange={e => onChange(e.target.value)}
         style={{
           background: 'transparent', border: 'none', outline: 'none',
-          color: value ? 'white' : 'rgba(255,255,255,0.3)',
-          fontSize: 15, fontWeight: 700, textAlign: 'right',
+          color: value ? 'white' : 'rgba(255,255,255,0.35)',
+          fontSize: 16, fontWeight: 700, textAlign: 'right',
           colorScheme: 'dark', minWidth: 80,
+          WebkitAppearance: 'none',
         }}
       />
-    </div>
+    </label>
   );
 }
 
