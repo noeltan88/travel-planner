@@ -140,6 +140,44 @@ function InlineCalendar({ dep, ret, today, onDayTap }) {
 }
 // ────────────────────────────────────────────────────────────────
 
+const FLIGHT_TIMES = [
+  { icon: '🌅', label: 'Morning',   sub: 'before 12pm', value: 'morning'   },
+  { icon: '☀️',  label: 'Afternoon', sub: '12pm–5pm',    value: 'afternoon' },
+  { icon: '🌙', label: 'Evening',   sub: 'after 5pm',   value: 'evening'   },
+];
+
+function FlightTimePicker({ label, value, onChange }) {
+  return (
+    <div style={{ marginBottom: 18 }}>
+      <p style={{ fontSize: 12, fontWeight: 600, color: 'rgba(255,255,255,0.55)', letterSpacing: '0.04em', marginBottom: 10 }}>
+        {label}
+      </p>
+      <div style={{ display: 'flex', gap: 8 }}>
+        {FLIGHT_TIMES.map(t => {
+          const sel = value === t.value;
+          return (
+            <button
+              key={t.value}
+              onClick={() => onChange(t.value)}
+              style={{
+                flex: 1, padding: '10px 4px', borderRadius: 14, border: 'none', cursor: 'pointer',
+                background: sel ? 'rgba(232,71,42,0.2)' : 'rgba(255,255,255,0.07)',
+                outline: `1.5px solid ${sel ? '#E8472A' : 'rgba(255,255,255,0.12)'}`,
+                display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3,
+                transition: 'background 0.15s, outline 0.15s',
+              }}
+            >
+              <span style={{ fontSize: 18 }}>{t.icon}</span>
+              <span style={{ fontSize: 12, fontWeight: 700, color: 'white' }}>{t.label}</span>
+              <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.5)' }}>{t.sub}</span>
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 export default function QuizFlow({ onComplete }) {
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState({});
@@ -165,6 +203,14 @@ export default function QuizFlow({ onComplete }) {
     return () => { clearTimeout(t1); clearTimeout(t2); };
   }, [step]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  // Auto-select "No restrictions" when landing on dietary step for the first time
+  useEffect(() => {
+    if (QUIZ[step]?.id !== 'dietary') return;
+    if ((answers.dietary || []).length === 0) {
+      setAnswers(a => ({ ...a, dietary: ['none'] }));
+    }
+  }, [step]); // eslint-disable-line react-hooks/exhaustive-deps
+
   // Date range state
   const datesAnswer = answers.dates || {};
   const dep = datesAnswer.departure || '';
@@ -177,7 +223,7 @@ export default function QuizFlow({ onComplete }) {
   }, [dep, ret, dateError]);
 
   const canContinue = isDateRange
-    ? Boolean(dep && ret && !dateError && totalDays >= 1)
+    ? Boolean(dep && ret && !dateError && totalDays >= 1 && answers.arrival_time && answers.departure_time)
     : q.multi ? selected.length > 0 : selected !== null;
 
   const visibleOptions = isCity && citySearch.trim()
@@ -259,6 +305,8 @@ export default function QuizFlow({ onComplete }) {
           flat.departure_date = dep;
           flat.return_date = ret;
           flat.duration = totalDays; // keep key algorithm expects
+          flat.arrival_time = answers.arrival_time;
+          flat.departure_time = answers.departure_time;
         } else {
           flat[q.id] = q.multi ? (answers[q.id] || []) : answers[q.id];
         }
@@ -347,60 +395,87 @@ export default function QuizFlow({ onComplete }) {
       {isDateRange && (
         <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', padding: '0 16px 8px' }}>
 
-          {/* Summary row */}
-          <div style={{
-            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 16,
-            background: 'rgba(255,255,255,0.08)', borderRadius: 16,
-            padding: '12px 20px', marginBottom: 14, flexShrink: 0,
-          }}>
-            <div style={{ textAlign: 'center' }}>
-              <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.45)', fontWeight: 600, letterSpacing: '0.07em', marginBottom: 3 }}>DEPARTURE</p>
-              <p style={{ fontSize: 15, fontWeight: 700, color: dep ? 'white' : 'rgba(255,255,255,0.3)' }}>
-                {dep ? formatDateDisplay(dep) : 'Tap a date'}
-              </p>
+          {/* Pinned header: day counter + dep/ret row */}
+          <div style={{ flexShrink: 0, marginBottom: 12 }}>
+            {/* Day counter badge */}
+            <div style={{ textAlign: 'center', marginBottom: 10 }}>
+              {totalDays >= 1 ? (
+                <div style={{
+                  display: 'inline-flex', alignItems: 'center', gap: 8,
+                  background: 'rgba(232,71,42,0.15)', border: '1.5px solid rgba(232,71,42,0.35)',
+                  borderRadius: 24, padding: '7px 20px',
+                }}>
+                  <span style={{ fontSize: 22, fontWeight: 900, color: 'white', lineHeight: 1 }}>{totalDays}</span>
+                  <span style={{ fontSize: 14, fontWeight: 700, color: 'white' }}>days in China 🇨🇳</span>
+                </div>
+              ) : (
+                <div style={{
+                  display: 'inline-flex', alignItems: 'center',
+                  background: 'rgba(255,255,255,0.06)', border: '1.5px solid rgba(255,255,255,0.1)',
+                  borderRadius: 24, padding: '7px 20px',
+                }}>
+                  <span style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)', fontWeight: 500 }}>Select your dates</span>
+                </div>
+              )}
             </div>
-            <span style={{ fontSize: 18, color: 'rgba(255,255,255,0.3)' }}>→</span>
-            <div style={{ textAlign: 'center' }}>
-              <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.45)', fontWeight: 600, letterSpacing: '0.07em', marginBottom: 3 }}>RETURN</p>
-              <p style={{ fontSize: 15, fontWeight: 700, color: ret ? 'white' : 'rgba(255,255,255,0.3)' }}>
-                {ret ? formatDateDisplay(ret) : dep ? 'Tap return date' : '—'}
-              </p>
+
+            {/* Departure / Return date display */}
+            <div style={{
+              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 16,
+              background: 'rgba(255,255,255,0.08)', borderRadius: 14, padding: '10px 20px',
+            }}>
+              <div style={{ textAlign: 'center' }}>
+                <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.45)', fontWeight: 600, letterSpacing: '0.07em', marginBottom: 2 }}>DEPARTURE</p>
+                <p style={{ fontSize: 14, fontWeight: 700, color: dep ? 'white' : 'rgba(255,255,255,0.3)' }}>
+                  {dep ? formatDateDisplay(dep) : 'Tap a date'}
+                </p>
+              </div>
+              <span style={{ fontSize: 16, color: 'rgba(255,255,255,0.3)' }}>→</span>
+              <div style={{ textAlign: 'center' }}>
+                <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.45)', fontWeight: 600, letterSpacing: '0.07em', marginBottom: 2 }}>RETURN</p>
+                <p style={{ fontSize: 14, fontWeight: 700, color: ret ? 'white' : 'rgba(255,255,255,0.3)' }}>
+                  {ret ? formatDateDisplay(ret) : dep ? 'Tap return date' : '—'}
+                </p>
+              </div>
             </div>
           </div>
 
-          {/* Scrollable calendar + counters */}
+          {/* Scrollable: calendar → arrival time → departure time → holiday warnings */}
           <div style={{ flex: 1, overflowY: 'auto' }}>
             <InlineCalendar dep={dep} ret={ret} today={today} onDayTap={handleDayTap} />
 
-            {/* Day count */}
-            {totalDays >= 1 && (
-              <div style={{
-                display: 'flex', alignItems: 'center', gap: 12,
-                background: 'rgba(255,255,255,0.08)', border: '1.5px solid rgba(255,255,255,0.12)',
-                borderRadius: 16, padding: '14px 18px', marginBottom: 10,
-              }}>
-                <div style={{ textAlign: 'center', minWidth: 44 }}>
-                  <p style={{ fontSize: 28, fontWeight: 900, color: 'white', lineHeight: 1 }}>{totalDays}</p>
-                  <p style={{ fontSize: 11, fontWeight: 600, color: 'rgba(255,255,255,0.45)' }}>days</p>
-                </div>
-                <div style={{ width: 1, height: 32, background: 'rgba(255,255,255,0.15)' }} />
-                <p style={{ fontSize: 13, fontWeight: 600, color: 'rgba(255,255,255,0.75)' }}>
-                  That's {totalDays} days in China
-                </p>
-              </div>
-            )}
+            {/* Divider */}
+            <div style={{ height: 1, background: 'rgba(255,255,255,0.08)', margin: '4px 0 20px' }} />
+
+            {/* Arrival time */}
+            <FlightTimePicker
+              label="What time do you arrive on Day 1?"
+              value={answers.arrival_time}
+              onChange={v => setAnswers(a => ({ ...a, arrival_time: v }))}
+            />
+
+            {/* Departure time */}
+            <FlightTimePicker
+              label="What time is your flight home?"
+              value={answers.departure_time}
+              onChange={v => setAnswers(a => ({ ...a, departure_time: v }))}
+            />
 
             {/* Holiday warnings */}
-            {overlappingHolidays.map(h => (
-              <div key={h.name} style={{
-                background: 'rgba(245,158,11,0.12)', border: '1.5px solid rgba(245,158,11,0.35)',
-                borderRadius: 16, padding: '12px 16px', marginBottom: 10,
-              }}>
-                <p style={{ fontSize: 13, color: '#fde68a', lineHeight: 1.5 }}>
-                  ⚠️ Your dates overlap with <strong>{h.name}</strong> — popular attractions will be very crowded. Consider adjusting dates or booking well in advance.
-                </p>
+            {overlappingHolidays.length > 0 && (
+              <div style={{ marginTop: 4 }}>
+                {overlappingHolidays.map(h => (
+                  <div key={h.name} style={{
+                    background: 'rgba(245,158,11,0.12)', border: '1.5px solid rgba(245,158,11,0.35)',
+                    borderRadius: 14, padding: '12px 16px', marginBottom: 10,
+                  }}>
+                    <p style={{ fontSize: 13, color: '#fde68a', lineHeight: 1.5 }}>
+                      ⚠️ Your dates overlap with <strong>{h.name}</strong> — popular attractions will be very crowded. Consider adjusting dates or booking well in advance.
+                    </p>
+                  </div>
+                ))}
               </div>
-            ))}
+            )}
             <div style={{ height: 8 }} />
           </div>
         </div>

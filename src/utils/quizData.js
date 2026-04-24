@@ -139,11 +139,11 @@ export const QUIZ = [
     multi: true,
     deco: '食',
     options: [
-      { icon: '✓', name: 'No restrictions', desc: 'I eat everything — surprise me', value: 'none' },
-      { icon: '🥦', name: 'Vegetarian', desc: 'Plant-based, no meat or fish', value: 'vegetarian' },
-      { icon: '🌱', name: 'Vegan', desc: 'No animal products at all', value: 'vegan' },
+      { icon: '✅', name: 'No restrictions', desc: 'I eat everything — surprise me', value: 'none', exclusive: true },
+      { icon: '🌱', name: 'Vegan', desc: 'No meat, no fish, no dairy', value: 'vegan' },
       { icon: '🌙', name: 'Halal', desc: 'Muslim-friendly restaurants only', value: 'halal' },
-      { icon: '✏️', name: 'Others', desc: 'Type your own requirement', value: 'others' },
+      { icon: '🥜', name: 'Allergies', desc: 'Nuts, shellfish or other allergies', value: 'allergies' },
+      { icon: '🐷', name: 'No pork', desc: 'Pork-free but eat other meats', value: 'no-pork' },
     ]
   }
 ];

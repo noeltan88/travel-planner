@@ -107,35 +107,47 @@ export default function SwipeCard({ stop, index, onDelete, onSwapRequest, collap
           </div>
 
           {/* Content */}
-          <div className="flex-1 min-w-0">
-            <div className="flex items-start justify-between gap-2">
-              <div>
-                <p className="font-bold text-sm leading-tight" style={{ color: 'var(--text-primary)' }}>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            {/* Row 1: name + time (strictly separated columns) */}
+            <div style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <p style={{
+                  fontWeight: 700, fontSize: 13, lineHeight: '1.3',
+                  color: 'var(--text-primary)', margin: '0 0 2px',
+                  overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
+                }}>
                   {stop.name}
                 </p>
-                <p className="text-xs" style={{ color: 'var(--text-muted)' }}>{stop.chinese}</p>
+                <p style={{ fontSize: 11, color: 'var(--text-muted)', margin: 0 }}>{stop.chinese}</p>
               </div>
-              <div className="text-right flex-shrink-0">
-                <p className="text-xs font-semibold" style={{ color: 'var(--text-primary)' }}>
+              {/* Time column — flexShrink:0 + whitespace-nowrap prevents any overlap */}
+              <div style={{ textAlign: 'right', flexShrink: 0 }}>
+                <p style={{ fontSize: 12, fontWeight: 600, color: 'var(--text-primary)', margin: '0 0 2px', whiteSpace: 'nowrap' }}>
                   {stop.startTime}–{stop.endTime}
                 </p>
-                <p className="text-xs" style={{ color: 'var(--text-muted)' }}>{stop.duration_hrs}h</p>
+                <p style={{ fontSize: 11, color: 'var(--text-muted)', margin: 0 }}>{stop.duration_hrs}h</p>
               </div>
             </div>
 
-            {/* Tags row */}
-            <div className="flex items-center gap-2 mt-2 flex-wrap">
-              <span
-                className="text-xs px-2 py-0.5 rounded-full font-medium"
-                style={{ background: 'var(--accent-tint)', color: 'var(--accent)' }}
-              >
+            {/* Row 2: category tag + district */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 8 }}>
+              <span style={{
+                fontSize: 11, padding: '2px 8px', borderRadius: 20, fontWeight: 600, flexShrink: 0,
+                background: 'var(--accent-tint)', color: 'var(--accent)',
+              }}>
                 {stop.vibe_tags?.[0] || stop.category}
               </span>
-              <span className="text-xs" style={{ color: 'var(--text-muted)' }}>📍 {stop.district}</span>
-              <span
-                className="text-xs font-semibold ml-auto"
-                style={{ color: stop.free ? 'var(--green)' : 'var(--text-secondary)' }}
-              >
+              <span style={{ fontSize: 11, color: 'var(--text-muted)', flexShrink: 0 }}>
+                📍 {stop.district}
+              </span>
+            </div>
+
+            {/* Row 3: price — bottom right, isolated from time column */}
+            <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 4 }}>
+              <span style={{
+                fontSize: 12, fontWeight: 600,
+                color: stop.free ? 'var(--green)' : 'var(--text-secondary)',
+              }}>
                 {stop.free ? 'Free' : `¥${stop.price_rmb}`}
               </span>
             </div>
