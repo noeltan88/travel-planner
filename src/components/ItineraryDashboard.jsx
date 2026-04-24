@@ -309,6 +309,7 @@ export default function ItineraryDashboard({
             swapStop={swapStop}
             allAttractions={allAttractions}
             allAttractionsByCity={allAttractionsByCity}
+            depDate={depDate}
           />
         </div>
 
