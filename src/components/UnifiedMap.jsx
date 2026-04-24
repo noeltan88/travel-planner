@@ -692,8 +692,15 @@ export default function UnifiedMap({
 
   // ── Swap helpers ──────────────────────────────────────────────────────────
   function openSwap(stop, dayIdx) {
-    const usedIds = new Set((dayStops[dayIdx] || []).map(s => s.id));
-    const alts    = getSwapAlternatives(stop, allAttractions || [], usedIds, 3);
+    // Exclude every stop scheduled across ALL days, not just the current day
+    const allUsedIds = new Set(
+      days.flatMap((_, i) => (dayStops[i] || []).map(s => s.id)),
+    );
+    // Use the city-specific attraction pool for this day
+    const stopCityKey     = days[dayIdx]?.city || primaryCity;
+    const cityAttractions = (allAttractionsByCity?.[stopCityKey] || []);
+    const pool            = cityAttractions.length > 0 ? cityAttractions : (allAttractions || []);
+    const alts            = getSwapAlternatives(stop, pool, allUsedIds, 4);
     setSwapAlts(alts);
     setSwapState({ stop, dayIdx });
   }

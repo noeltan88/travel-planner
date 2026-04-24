@@ -73,7 +73,7 @@ function WalkingIndicator({ stop, nextStop }) {
 }
 
 // ── Main timeline ──────────────────────────────────────────────────────────────
-export default function DayTimeline({ stops, dayIdx, onDelete, onSwap, allAttractions, food = [] }) {
+export default function DayTimeline({ stops, dayIdx, onDelete, onSwap, allAttractions, allUsedIds, food = [] }) {
   const [swapStop, setSwapStop]       = useState(null);
   const [collapsingId, setCollapsingId] = useState(null);
 
@@ -85,9 +85,10 @@ export default function DayTimeline({ stops, dayIdx, onDelete, onSwap, allAttrac
     }, 350);
   }
 
-  const usedIds      = new Set(stops.map(s => s.id));
+  // Use the full cross-day usedIds set if provided; fall back to this day only
+  const usedIds      = allUsedIds ?? new Set(stops.map(s => s.id));
   const alternatives = swapStop
-    ? getSwapAlternatives(swapStop, allAttractions || [], usedIds)
+    ? getSwapAlternatives(swapStop, allAttractions || [], usedIds, 4)
     : [];
 
   if (stops.length === 0) {

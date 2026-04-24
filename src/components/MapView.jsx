@@ -460,8 +460,11 @@ export default function MapView({
 
   // ── Open swap panel ────────────────────────────────────────────────────────
   function openSwap(stop) {
-    const usedIds = new Set(stops.map(s => s.id));
-    const alts    = getSwapAlternatives(stop, allAttractions || [], usedIds, 3);
+    // Exclude every stop across ALL days
+    const allUsedIds = new Set(
+      days.flatMap((_, i) => (dayStops[i] || []).map(s => s.id)),
+    );
+    const alts = getSwapAlternatives(stop, allAttractions || [], allUsedIds, 4);
     setSwapAlts(alts);
     setSwapState({ stop, dayIdx: activeDay });
   }

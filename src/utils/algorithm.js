@@ -583,15 +583,19 @@ export function recommendHotel(allDayStops, hotels) {
 // ── Swap alternatives ─────────────────────────────────────────────
 
 export function getSwapAlternatives(currentStop, allAttractions, usedIds, count = 4) {
+  // Score each candidate: cluster_group match (3) > category match (2) > shared vibe_tag (1)
   return allAttractions
-    .filter(a =>
-      !usedIds.has(a.id) &&
-      a.id !== currentStop.id &&
-      (a.cluster_group === currentStop.cluster_group ||
-        a.category      === currentStop.category      ||
-        a.vibe_tags?.some(t => currentStop.vibe_tags?.includes(t)))
-    )
-    .slice(0, count);
+    .filter(a => !usedIds.has(a.id) && a.id !== currentStop.id)
+    .map(a => {
+      let score = 0;
+      if (a.cluster_group && a.cluster_group === currentStop.cluster_group) score += 3;
+      if (a.category === currentStop.category)                               score += 2;
+      if (a.vibe_tags?.some(t => currentStop.vibe_tags?.includes(t)))       score += 1;
+      return { a, score };
+    })
+    .sort((x, y) => y.score - x.score)
+    .slice(0, count)
+    .map(({ a }) => a);
 }
 
 // ── Legacy shims (keep the rest of the app compiling) ─────────────

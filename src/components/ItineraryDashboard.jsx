@@ -43,6 +43,12 @@ export default function ItineraryDashboard({
   const allAttractions = Object.values(allAttractionsByCity || {}).flat();
   const depDate        = quizAnswers?.departure_date || null;
 
+  // All stop IDs scheduled across every day — passed to swap helpers so they
+  // never suggest an attraction already appearing anywhere in the itinerary.
+  const allUsedIds = new Set(
+    days.flatMap((_, i) => (dayStops[i] || []).map(s => s.id)),
+  );
+
   // allFoodByCity: { cityKey: foodArray } — passed to UnifiedMap for explore markers
   const allFoodByCity = {};
   (cities || []).forEach(ck => {
@@ -401,7 +407,8 @@ export default function ItineraryDashboard({
                   dayIdx={i}
                   onDelete={deleteStop}
                   onSwap={swapStop}
-                  allAttractions={allAttractions}
+                  allAttractions={allAttractionsByCity?.[day.city || primaryCity] || allAttractions}
+                  allUsedIds={allUsedIds}
                   food={food}
                 />
 
