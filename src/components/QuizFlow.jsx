@@ -1,5 +1,18 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { QUIZ } from '../utils/quizData';
+
+const HOLIDAYS = [
+  { name: 'Chinese New Year 2026',       start: '2026-01-28', end: '2026-02-04' },
+  { name: 'Qingming Festival 2026',      start: '2026-04-04', end: '2026-04-06' },
+  { name: 'May Day Golden Week 2026',    start: '2026-05-01', end: '2026-05-05' },
+  { name: 'Dragon Boat Festival 2026',   start: '2026-05-28', end: '2026-05-30' },
+  { name: 'National Day Golden Week 2026', start: '2026-10-01', end: '2026-10-07' },
+  { name: 'Chinese New Year 2027',       start: '2027-02-15', end: '2027-02-22' },
+  { name: 'May Day Golden Week 2027',    start: '2027-05-01', end: '2027-05-05' },
+  { name: 'National Day Golden Week 2027', start: '2027-10-01', end: '2027-10-07' },
+];
+
+const today = new Date().toISOString().split('T')[0];
 
 const LAST_STEP = QUIZ.length - 1;
 
@@ -14,14 +27,33 @@ export default function QuizFlow({ onComplete }) {
   const isLastStep = step === LAST_STEP;
   const isDietary = q.id === 'dietary';
   const isCity = q.id === 'city';
+  const isDateRange = q.type === 'daterange';
   const selected = answers[q.id] || (q.multi ? [] : null);
   const othersSelected = isDietary && (answers.dietary || []).includes('others');
-  const canContinue = q.multi ? selected.length > 0 : selected !== null;
+
+  // Date range state
+  const datesAnswer = answers.dates || {};
+  const dep = datesAnswer.departure || '';
+  const ret = datesAnswer.return || '';
+  const totalDays = dep && ret ? Math.round((new Date(ret) - new Date(dep)) / 86400000) : 0;
+  const dateError = dep && ret && dep >= ret;
+  const overlappingHolidays = useMemo(() => {
+    if (!dep || !ret || dateError) return [];
+    return HOLIDAYS.filter(h => dep <= h.end && ret >= h.start);
+  }, [dep, ret, dateError]);
+
+  const canContinue = isDateRange
+    ? Boolean(dep && ret && !dateError && totalDays >= 1)
+    : q.multi ? selected.length > 0 : selected !== null;
 
   const visibleOptions = isCity && citySearch.trim()
     ? q.options.filter(opt => opt.name.toLowerCase().includes(citySearch.toLowerCase()))
     : q.options;
   const selectedCityCount = (answers.city || []).length;
+
+  function updateDate(field, value) {
+    setAnswers(prev => ({ ...prev, dates: { ...(prev.dates || {}), [field]: value } }));
+  }
 
   function toggle(value, comingSoon) {
     if (comingSoon) {
@@ -48,7 +80,13 @@ export default function QuizFlow({ onComplete }) {
     } else {
       const flat = {};
       QUIZ.forEach(q => {
-        flat[q.id] = q.multi ? (answers[q.id] || []) : answers[q.id];
+        if (q.type === 'daterange') {
+          flat.departure_date = dep;
+          flat.return_date = ret;
+          flat.duration = totalDays; // keep key algorithm expects
+        } else {
+          flat[q.id] = q.multi ? (answers[q.id] || []) : answers[q.id];
+        }
       });
       if (othersText.trim()) flat.dietaryOthers = othersText.trim();
       onComplete(flat);
@@ -127,8 +165,67 @@ export default function QuizFlow({ onComplete }) {
         </div>
       )}
 
+      {/* Date range picker */}
+      {isDateRange && (
+        <div className="flex-1 px-4 pb-2 overflow-y-auto flex flex-col gap-3">
+          {/* Departure */}
+          <div>
+            <p className="text-xs font-semibold tracking-widest mb-2" style={{ color: 'rgba(255,255,255,0.5)' }}>DEPARTURE DATE</p>
+            <input
+              type="date"
+              value={dep}
+              min={today}
+              onChange={e => updateDate('departure', e.target.value)}
+              className="w-full px-4 py-3 rounded-2xl text-sm outline-none"
+              style={{ background: 'rgba(255,255,255,0.1)', border: `1.5px solid ${dep ? 'rgba(255,255,255,0.35)' : 'rgba(255,255,255,0.15)'}`, color: dep ? 'white' : 'rgba(255,255,255,0.4)', colorScheme: 'dark' }}
+            />
+          </div>
+
+          {/* Return */}
+          <div>
+            <p className="text-xs font-semibold tracking-widest mb-2" style={{ color: 'rgba(255,255,255,0.5)' }}>RETURN DATE</p>
+            <input
+              type="date"
+              value={ret}
+              min={dep || today}
+              onChange={e => updateDate('return', e.target.value)}
+              className="w-full px-4 py-3 rounded-2xl text-sm outline-none"
+              style={{ background: 'rgba(255,255,255,0.1)', border: `1.5px solid ${ret ? 'rgba(255,255,255,0.35)' : 'rgba(255,255,255,0.15)'}`, color: ret ? 'white' : 'rgba(255,255,255,0.4)', colorScheme: 'dark' }}
+            />
+          </div>
+
+          {/* Error */}
+          {dateError && (
+            <div className="px-4 py-3 rounded-2xl" style={{ background: 'rgba(239,68,68,0.15)', border: '1.5px solid rgba(239,68,68,0.3)' }}>
+              <p className="text-sm" style={{ color: '#fca5a5' }}>Return date must be after departure date.</p>
+            </div>
+          )}
+
+          {/* Day count */}
+          {totalDays >= 1 && !dateError && (
+            <div className="px-4 py-4 rounded-2xl flex items-center gap-3" style={{ background: 'rgba(255,255,255,0.08)', border: '1.5px solid rgba(255,255,255,0.12)' }}>
+              <div className="text-center" style={{ minWidth: 48 }}>
+                <p className="text-3xl font-black text-white leading-none">{totalDays}</p>
+                <p className="text-xs font-semibold" style={{ color: 'rgba(255,255,255,0.45)' }}>days</p>
+              </div>
+              <div style={{ width: 1, height: 36, background: 'rgba(255,255,255,0.15)' }} />
+              <p className="text-sm font-semibold" style={{ color: 'rgba(255,255,255,0.75)' }}>That's {totalDays} days in China</p>
+            </div>
+          )}
+
+          {/* Holiday warnings */}
+          {overlappingHolidays.map(h => (
+            <div key={h.name} className="px-4 py-3 rounded-2xl" style={{ background: 'rgba(245,158,11,0.12)', border: '1.5px solid rgba(245,158,11,0.35)' }}>
+              <p className="text-sm leading-relaxed" style={{ color: '#fde68a' }}>
+                ⚠️ Your dates overlap with <span className="font-semibold">{h.name}</span> — popular attractions will be very crowded. Consider adjusting dates or booking everything well in advance.
+              </p>
+            </div>
+          ))}
+        </div>
+      )}
+
       {/* Options */}
-      <div className="flex-1 px-4 pb-2 overflow-y-auto flex flex-col gap-3">
+      {!isDateRange && <div className="flex-1 px-4 pb-2 overflow-y-auto flex flex-col gap-3">
         {visibleOptions.map(opt => {
           const sel = isSelected(opt.value);
           const isTappedSoon = comingSoonTapped === opt.value;
@@ -218,7 +315,7 @@ export default function QuizFlow({ onComplete }) {
             Recommendations are based on our research. Always verify with the restaurant directly as dietary information may change.
           </p>
         )}
-      </div>
+      </div>}
 
       {/* Navigation */}
       <div className="px-6 pt-2 pb-8 flex gap-3">

@@ -42,19 +42,14 @@ export const QUIZ = [
     options: cityOptions,
   },
   {
-    id: 'duration',
-    label: 'DURATION',
-    title: 'How many days?',
-    sub: "We'll pace your stops accordingly",
+    id: 'dates',
+    label: 'YOUR DATES',
+    title: 'When are you travelling?',
+    sub: 'Pick your departure and return dates',
+    type: 'daterange',
     multi: false,
     deco: '天',
-    options: [
-      { icon: '⚡', name: '2–3 days', desc: 'Weekend getaway — tight but doable', value: 2 },
-      { icon: '🗓️', name: '4–5 days', desc: 'Comfortable pace, most highlights', value: 4 },
-      { icon: '📅', name: '6–7 days', desc: 'Deep dive with breathing room', value: 6 },
-      { icon: '🌏', name: '8–10 days', desc: 'Two cities, everything worth seeing', value: 8 },
-      { icon: '🚀', name: '10–14 days', desc: 'All 3 cities, full immersion', value: 12 },
-    ]
+    options: [],
   },
   {
     id: 'group',
