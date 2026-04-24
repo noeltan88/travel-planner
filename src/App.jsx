@@ -35,6 +35,15 @@ export default function App() {
     }, 3200);
   }
 
+  function handleReset() {
+    setScreen('quiz');
+    setQuizAnswers({});
+    setItinerary(null);
+    setActiveDay(0);
+    setDayStops([]);
+    setActiveTab('itinerary');
+  }
+
   function deleteStop(dayIdx, stopId) {
     setDayStops(prev =>
       prev.map((stops, i) =>
@@ -73,6 +82,7 @@ export default function App() {
       swapStop={swapStop}
       itineraryRef={itineraryRef}
       quizAnswers={quizAnswers}
+      onReset={handleReset}
     />
   );
 }

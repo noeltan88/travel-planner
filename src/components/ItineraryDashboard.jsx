@@ -40,7 +40,7 @@ const CITY_DECOS = {
 export default function ItineraryDashboard({
   itinerary, dayStops, activeDay, setActiveDay,
   activeTab, setActiveTab, deleteStop, swapStop,
-  itineraryRef, quizAnswers,
+  itineraryRef, quizAnswers, onReset,
 }) {
   const exportRef = useRef(null);
   const printRef = useRef(null);
@@ -69,6 +69,36 @@ export default function ItineraryDashboard({
     } finally {
       setExporting(false);
     }
+  }
+
+  function handleWhatsApp() {
+    const dep = quizAnswers?.departure_date || '';
+    const ret = quizAnswers?.return_date || '';
+    const cityLine = [...new Set(days.map(d =>
+      d.cityHeader ? `${d.cityHeader.emoji} ${d.cityHeader.name}` : d.city
+    ))].join(' · ');
+
+    const dayLines = days.map((day, i) => {
+      const stops = dayStops[i] || [];
+      const header = day.cityHeader ? `${day.label} — ${day.cityHeader.name}` : day.label;
+      const stopList = stops.map(s => `  • ${s.name}`).join('\n');
+      return `*${header}*\n${stopList}`;
+    });
+
+    const lines = [
+      '✈️ My China Trip Itinerary',
+      cityLine,
+      dep && ret ? `📅 ${dep} → ${ret} (${days.length} days)` : `📅 ${days.length} days`,
+      '',
+      ...dayLines,
+      '',
+      hotel ? `🏨 Staying at: ${hotel.name}` : '',
+      '',
+      'Generated with ChinaTrip Planner 🗺️',
+    ].filter((l, i, arr) => !(l === '' && arr[i - 1] === ''));
+
+    const msg = lines.join('\n');
+    window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
   }
 
   // Show map tab
@@ -123,14 +153,36 @@ export default function ItineraryDashboard({
         <button
           onClick={handleExport}
           disabled={exporting}
-          className="w-full max-w-xs py-4 rounded-2xl font-bold text-white mb-4"
+          className="w-full max-w-xs py-4 rounded-2xl font-bold text-white mb-2"
           style={{ background: exporting ? '#94a3b8' : 'var(--accent)' }}
         >
           {exporting ? 'Generating PDF…' : '📥 Download PDF'}
         </button>
-        <p className="text-xs text-center" style={{ color: 'var(--text-muted)' }}>
+        <p className="text-xs text-center mb-6" style={{ color: 'var(--text-muted)' }}>
           Saves as {primaryCity}-{days.length}-day-itinerary.pdf
         </p>
+
+        <button
+          onClick={handleWhatsApp}
+          className="w-full max-w-xs py-4 rounded-2xl font-bold text-white mb-3"
+          style={{ background: '#25D366' }}
+        >
+          💬 Share on WhatsApp
+        </button>
+
+        {onReset && (
+          <button
+            onClick={onReset}
+            className="w-full max-w-xs py-3 rounded-2xl font-semibold"
+            style={{
+              background: 'transparent',
+              border: '1.5px solid var(--accent)',
+              color: 'var(--accent)',
+            }}
+          >
+            🔄 Plan a new trip →
+          </button>
+        )}
         <PrintView
           printRef={printRef}
           itinerary={itinerary}

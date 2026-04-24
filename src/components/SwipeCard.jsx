@@ -165,7 +165,7 @@ export default function SwipeCard({ stop, index, onDelete, onSwapRequest, collap
         </div>
 
         {/* Klook button */}
-        {klookLink && (
+        {klookLink && !stop.free && (
           <a
             href={klookLink}
             target="_blank"

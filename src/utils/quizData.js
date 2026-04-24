@@ -6,32 +6,51 @@ const CITY_ORDER = [
   'harbin','changbaishan','sanya','xiamen','huangshan','nanjing','qingdao',
 ];
 
+const EMOJI_OVERRIDES = {
+  changbaishan: '⛷️',
+  sanya:        '🏖️',
+  xiamen:       '🎹',
+  huangshan:    '🌅',
+  nanjing:      '🏯',
+  qingdao:      '🍺',
+  xian:         '🏺',
+  guilin:       '🛶',
+  changsha:     '🌶️',
+  zhangjiajie:  '🏔️',
+  yunnan:       '🌸',
+  suzhou:       '🪷',
+  jiuzhaigou:   '💎',
+  harbin:       '❄️',
+};
+
+const TAGLINE_OVERRIDES = {
+  changbaishan: 'Volcanic lakes & pristine ski slopes',
+  sanya:        "China's tropical beach paradise",
+  xiamen:       'Piano Island & colonial seaside charm',
+  huangshan:    'Misty peaks & sea of clouds',
+  nanjing:      'Ancient capital with Ming dynasty glory',
+  qingdao:      'Beer, beaches & German heritage',
+  xian:         'Terracotta warriors & the Silk Road',
+  guilin:       'Karst mountains & Li River cruises',
+  changsha:     "Spicy food capital & Mao's homeland",
+  zhangjiajie:  "Avatar's floating mountains come to life",
+  yunnan:       'Ethnic diversity & Himalayan foothills',
+  suzhou:       'Venice of the East & classical gardens',
+  jiuzhaigou:   'Rainbow lakes & magical waterfalls',
+  harbin:       'Ice sculptures & Russian architecture',
+};
+
 const cityOptions = CITY_ORDER.map(id => {
   const c = masterDb.cities[id];
   return {
-    icon: c.emoji || '🏙️',
+    icon: EMOJI_OVERRIDES[id] || c.emoji || '🏙️',
     name: c.name,
-    desc: c.tagline || c.recommended_base_reason,
+    desc: TAGLINE_OVERRIDES[id] || c.tagline || c.recommended_base_reason,
     value: id,
   };
 });
 
 export const QUIZ = [
-  {
-    id: 'country',
-    label: 'DESTINATION',
-    title: 'Where are you heading?',
-    sub: 'Select your destination country',
-    multi: false,
-    deco: '国',
-    options: [
-      { icon: '🇨🇳', name: 'China', desc: 'Guangzhou · Shanghai · Beijing & more', value: 'china' },
-      { icon: '🇹🇭', name: 'Thailand', desc: 'Bangkok, Chiang Mai, Phuket', value: 'thailand', comingSoon: true },
-      { icon: '🇯🇵', name: 'Japan', desc: 'Tokyo, Osaka, Kyoto', value: 'japan', comingSoon: true },
-      { icon: '🇻🇳', name: 'Vietnam', desc: 'Hanoi, Ho Chi Minh, Da Nang', value: 'vietnam', comingSoon: true },
-      { icon: '🇰🇷', name: 'South Korea', desc: 'Seoul, Busan, Jeju', value: 'southkorea', comingSoon: true },
-    ],
-  },
   {
     id: 'city',
     label: 'DESTINATION',

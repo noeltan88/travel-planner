@@ -206,7 +206,7 @@ export default function QuizFlow({ onComplete }) {
               value={dep}
               min={today}
               onChange={e => updateDate('departure', e.target.value)}
-              className="w-full px-4 py-3 rounded-2xl text-sm outline-none"
+              className="w-full pl-4 pr-10 py-3 rounded-2xl text-sm outline-none"
               style={{ background: 'rgba(255,255,255,0.1)', border: `1.5px solid ${dep ? 'rgba(255,255,255,0.35)' : 'rgba(255,255,255,0.15)'}`, color: dep ? 'white' : 'rgba(255,255,255,0.4)', colorScheme: 'dark' }}
             />
           </div>
@@ -219,7 +219,7 @@ export default function QuizFlow({ onComplete }) {
               value={ret}
               min={dep || today}
               onChange={e => updateDate('return', e.target.value)}
-              className="w-full px-4 py-3 rounded-2xl text-sm outline-none"
+              className="w-full pl-4 pr-10 py-3 rounded-2xl text-sm outline-none"
               style={{ background: 'rgba(255,255,255,0.1)', border: `1.5px solid ${ret ? 'rgba(255,255,255,0.35)' : 'rgba(255,255,255,0.15)'}`, color: ret ? 'white' : 'rgba(255,255,255,0.4)', colorScheme: 'dark' }}
             />
           </div>
