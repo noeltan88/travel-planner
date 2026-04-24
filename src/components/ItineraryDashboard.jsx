@@ -43,6 +43,13 @@ export default function ItineraryDashboard({
   const allAttractions = Object.values(allAttractionsByCity || {}).flat();
   const depDate        = quizAnswers?.departure_date || null;
 
+  // allFoodByCity: { cityKey: foodArray } — passed to UnifiedMap for explore markers
+  const allFoodByCity = {};
+  (cities || []).forEach(ck => {
+    const cd = loadCityData(ck);
+    if (cd?.food) allFoodByCity[ck] = cd.food;
+  });
+
   // ── Prevent body scroll when map is expanded ──────────────────────────────
   useEffect(() => {
     document.documentElement.style.overflow = expandedMap ? 'hidden' : '';
@@ -309,6 +316,7 @@ export default function ItineraryDashboard({
             swapStop={swapStop}
             allAttractions={allAttractions}
             allAttractionsByCity={allAttractionsByCity}
+            allFoodByCity={allFoodByCity}
             depDate={depDate}
           />
         </div>
