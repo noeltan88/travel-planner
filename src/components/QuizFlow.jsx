@@ -61,7 +61,7 @@ export default function QuizFlow({ onComplete }) {
   }
 
   return (
-    <div className="hero-bg min-h-screen flex flex-col relative overflow-hidden">
+    <div className="hero-bg flex flex-col relative overflow-hidden" style={{ height: '100dvh' }}>
       {/* Decorative Chinese character */}
       <div
         className="absolute top-8 right-6 text-[120px] font-black leading-none pointer-events-none select-none"
