@@ -273,9 +273,27 @@ function pickFood(foodPool, preferredCluster, dietary, usedFoodIds) {
   return picked;
 }
 
+// ── Icon spreading ────────────────────────────────────────────────
+//
+// Returns an array of { icon, dayIdx } pairs that pre-assign each
+// icon attraction to a specific day, spread as evenly as possible.
+//
+function spreadIcons(iconAttractions, numDays) {
+  const icons = numDays === 1
+    ? iconAttractions.slice(0, 2)   // 1-day trip: cap at 2
+    : iconAttractions.slice(0, 3);  // multi-day: up to 3
+
+  return icons.map((icon, i) => {
+    const targetDay = icons.length <= 1
+      ? 0
+      : Math.round(i * (numDays - 1) / (icons.length - 1));
+    return { icon, dayIdx: targetDay };
+  });
+}
+
 // ── Core city-day builder ─────────────────────────────────────────
 
-function buildCityDays(city, scoredPool, kidsAttractions, foodPool, budgets, params) {
+function buildCityDays(city, scoredPool, iconAttractions, kidsAttractions, foodPool, budgets, params) {
   const {
     pace = 'balance',
     group,
@@ -311,6 +329,9 @@ function buildCityDays(city, scoredPool, kidsAttractions, foodPool, budgets, par
   const days        = [];
   let standaloneQ   = [...standalones];
   let clusterCursor = 0;
+
+  // Pre-assign icon attractions to days (bypasses vibe/energy/cluster rules)
+  const iconSchedule = spreadIcons(iconAttractions, budgets.length);
 
   budgets.forEach(({
     hours: budgetHours,
@@ -369,6 +390,29 @@ function buildCityDays(city, scoredPool, kidsAttractions, foodPool, budgets, par
       clustersUsed.add(cluster);
       usedIds.add(a.id);
       dayStops.push(a);
+    }
+
+    // ── 0. Icon injection (guaranteed, spread evenly across days) ─
+    //    Bypasses vibe score, energy level, and cluster rules.
+    //    Still respects effectiveMax and time budget.
+    const todayIcons = iconSchedule.filter(q => q.dayIdx === dayIdx);
+    for (const { icon } of todayIcons) {
+      if (usedIds.has(icon.id)) continue;          // already placed earlier
+      if (dayStops.length >= effectiveMax) break;
+      const cluster     = icon.cluster_group || '_default';
+      const transitCost = dayStops.length === 0 ? 0
+        : (cluster === prevCluster ? TRAVEL_SAME_HRS : TRAVEL_DIFF_HRS);
+      const needed = (icon.duration_hrs ?? 2) + transitCost;
+      if (needed > available) {
+        console.log(`[algo] Day ${dayIdx + 1}: icon "${icon.name}" skipped — no time (need ${needed.toFixed(1)}h, have ${available.toFixed(1)}h)`);
+        continue;
+      }
+      available  -= needed;
+      prevCluster = cluster;
+      clustersUsed.add(cluster);
+      usedIds.add(icon.id);
+      dayStops.push(icon);
+      console.log(`[algo] Day ${dayIdx + 1}: 📍 icon "${icon.name}" injected`);
     }
 
     // ── 1. Standalone day (never on Day 1 — FIX 8) ───────────────
@@ -475,8 +519,17 @@ function buildCityDays(city, scoredPool, kidsAttractions, foodPool, budgets, par
       }
     }
 
-    // ── Debug ─────────────────────────────────────────────────────
-    console.log(`[algo] Day ${dayIdx + 1} | city=${city} pace=${pace} | budget=${budgetHours}h maxStops=${effectiveMax} | filled=${dayStops.length} stops`);
+    // ── Debug + balance/pack under-fill warning ───────────────────
+    console.log(`[algo] Day ${dayIdx + 1} | city=${city} pace=${pace} | budget=${budgetHours}h maxStops=${effectiveMax} | filled=${dayStops.length} stops (avail left=${available.toFixed(1)}h)`);
+    const isConstrainedDay = budgetHours < (PACE_HOURS[pace] ?? 11);
+    if (!isConstrainedDay && (pace === 'balance' || pace === 'pack') && dayStops.length < 3) {
+      console.warn(
+        `[algo] ⚠️  Day ${dayIdx + 1}: only ${dayStops.length} stop(s) on unconstrained ${pace} day!`,
+        `budget=${budgetHours}h, leftover=${available.toFixed(1)}h`,
+        `icons=${todayIcons.length}, clustersUsed=[${[...clustersUsed].join(',')}]`,
+        `poolSize=${scoredPool.length}`,
+      );
+    }
 
     // ── 5. Sequence by energy + practical tags ────────────────────
     let ordered;
@@ -599,6 +652,9 @@ export function buildFullItinerary(answers) {
     });
     filtered.sort((a, b) => b._score - a._score);
 
+    // Icons: from scored pool (for _score shape), bypassing filters
+    const iconAttractions = scored.filter(a => a.icon === true).slice(0, 3);
+
     const kidsAttractions = effectiveKidsTrip ? (data.kids_attractions || []) : [];
 
     allAttractionsByCity[city] = data.attractions || [];
@@ -606,6 +662,7 @@ export function buildFullItinerary(answers) {
     const cityDayObjects = buildCityDays(
       city,
       filtered,
+      iconAttractions,
       kidsAttractions,
       [...(data.food || [])],
       cityBudgets,
