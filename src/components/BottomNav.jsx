@@ -1,6 +1,5 @@
 const TABS = [
   { id: 'itinerary', icon: '🗓️', label: 'Itinerary' },
-  { id: 'map', icon: '🗺️', label: 'Map' },
   { id: 'hotels', icon: '🏨', label: 'Hotels' },
   { id: 'export', icon: '📋', label: 'Export' },
 ];

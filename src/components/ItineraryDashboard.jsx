@@ -6,10 +6,8 @@ import BottomNav from './BottomNav';
 import PrintView from './PrintView';
 import { exportToPDF } from '../utils/pdfExport';
 import { loadCityData } from '../utils/algorithm';
-// Full-screen map tab — always mounted so the Mapbox canvas is never destroyed
-import MapView, { MapErrorBoundary } from './MapView';
-// Lean 300 px map embedded at the top of the itinerary tab
-import ItineraryMap from './ItineraryMap';
+// Single map instance — handles both collapsed (300 px) and expanded states
+import UnifiedMap from './UnifiedMap';
 
 // ── Date helper ────────────────────────────────────────────────────────────────
 function formatDayDate(departureDateStr, dayIndex) {
@@ -26,7 +24,7 @@ function formatDayDate(departureDateStr, dayIndex) {
   }
 }
 
-const MAP_HEIGHT = 300; // px — must match ItineraryMap's explicit height
+const MAP_HEIGHT = 300; // px — collapsed map height
 
 export default function ItineraryDashboard({
   itinerary, dayStops, activeDay, setActiveDay,
@@ -36,7 +34,8 @@ export default function ItineraryDashboard({
   const printRef       = useRef(null);
   const daySectionRefs = useRef([]);   // one ref per day section for scroll tracking
   const stickyTabsRef  = useRef(null); // sticky day-tabs bar
-  const [exporting, setExporting] = useState(false);
+  const [exporting, setExporting]     = useState(false);
+  const [expandedMap, setExpandedMap] = useState(false);
 
   if (!itinerary) return null;
 
@@ -45,9 +44,15 @@ export default function ItineraryDashboard({
   const allAttractions = Object.values(allAttractionsByCity || {}).flat();
   const depDate        = quizAnswers?.departure_date || null;
 
+  // ── Prevent body scroll when map is expanded ──────────────────────────────
+  useEffect(() => {
+    document.documentElement.style.overflow = expandedMap ? 'hidden' : '';
+    return () => { document.documentElement.style.overflow = ''; };
+  }, [expandedMap]);
+
   // ── Scroll tracking — update active day tab as user scrolls ───────────────
   useEffect(() => {
-    if (activeTab !== 'itinerary') return;
+    if (activeTab !== 'itinerary' || expandedMap) return;
 
     function onScroll() {
       const tabsH  = stickyTabsRef.current?.offsetHeight ?? 44;
@@ -64,7 +69,7 @@ export default function ItineraryDashboard({
 
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
-  }, [activeTab, setActiveDay]);
+  }, [activeTab, expandedMap, setActiveDay]);
 
   // ── Scroll to a section when a day tab is tapped ──────────────────────────
   function scrollToDay(dayIdx) {
@@ -110,29 +115,6 @@ export default function ItineraryDashboard({
   // ──────────────────────────────────────────────────────────────────────────
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', background: 'var(--bg)' }}>
-
-      {/* ══ MAP TAB — full-screen, always mounted ════════════════════════════ */}
-      {/* height = viewport minus BottomNav so the map fills all usable space  */}
-      <div style={{
-        display:  activeTab === 'map' ? 'block' : 'none',
-        position: 'relative',
-        height:   'calc(100vh - 64px)',
-        overflow: 'hidden',
-      }}>
-        <MapErrorBoundary>
-          <MapView
-            days={days}
-            dayStops={dayStops}
-            activeDay={activeDay}
-            onDayChange={setActiveDay}
-            primaryCity={primaryCity}
-            isVisible={activeTab === 'map'}
-            deleteStop={deleteStop}
-            swapStop={swapStop}
-            allAttractions={allAttractions}
-          />
-        </MapErrorBoundary>
-      </div>
 
       {/* ══ HOTELS TAB ═══════════════════════════════════════════════════════ */}
       <div style={{ display: activeTab === 'hotels' ? 'block' : 'none', paddingBottom: 80 }}>
@@ -201,41 +183,50 @@ export default function ItineraryDashboard({
 
       {/* ══ ITINERARY TAB — continuous scroll ════════════════════════════════
            Layout (top → bottom):
-            1. ItineraryMap  — 300 px, sticky top:0
-            2. Day tabs      — sticky top:300px
-            3. Day sections  — continuous scroll
+            1. UnifiedMap    — 300 px collapsed / full-screen expanded, sticky
+            2. Day tabs      — sticky below map (hidden when expanded)
+            3. Day sections  — continuous scroll (hidden when expanded)
             4. Hotel card    — very bottom                                    */}
       <div style={{ display: activeTab === 'itinerary' ? 'block' : 'none' }}>
 
-        {/* ── 1. Embedded map — sticky at the very top ───────────────────── */}
+        {/* ── 1. Unified map — sticky at top, animates height on expand ──── */}
         <div style={{
-          position: 'sticky',
-          top:      0,
-          zIndex:   15,
-          width:    '100%',
-          height:   MAP_HEIGHT,
-          background: '#f1f5f9', // visible while map loads
-          boxShadow: '0 2px 8px rgba(0,0,0,0.12)',
+          position:   'sticky',
+          top:        0,
+          zIndex:     15,
+          width:      '100%',
+          height:     expandedMap ? 'calc(100vh - 64px)' : MAP_HEIGHT,
+          transition: 'height 300ms ease',
+          background: '#f1f5f9',
+          boxShadow:  '0 2px 8px rgba(0,0,0,0.12)',
+          overflow:   'hidden',
         }}>
-          <ItineraryMap
+          <UnifiedMap
             days={days}
             dayStops={dayStops}
             activeDay={activeDay}
+            onDayChange={setActiveDay}
             primaryCity={primaryCity}
             isVisible={activeTab === 'itinerary'}
+            expanded={expandedMap}
+            onExpand={() => setExpandedMap(true)}
+            onCollapse={() => setExpandedMap(false)}
+            deleteStop={deleteStop}
+            swapStop={swapStop}
+            allAttractions={allAttractions}
           />
         </div>
 
-        {/* ── 2. Day tabs — sticky just below the map ────────────────────── */}
+        {/* ── 2. Day tabs — sticky just below the map (hidden when expanded) */}
         <div
           ref={stickyTabsRef}
           style={{
+            display:          expandedMap ? 'none' : 'flex',
             position:         'sticky',
             top:              MAP_HEIGHT,
             zIndex:           10,
             background:       '#fff',
             borderBottom:     '1px solid #f1f5f9',
-            display:          'flex',
             overflowX:        'auto',
             gap:              8,
             padding:          '8px 12px',
@@ -270,8 +261,8 @@ export default function ItineraryDashboard({
           })}
         </div>
 
-        {/* ── 3. Continuous day sections ──────────────────────────────────── */}
-        <div style={{ paddingBottom: 80 }}>
+        {/* ── 3. Continuous day sections (hidden when map is expanded) ─────── */}
+        <div style={{ display: expandedMap ? 'none' : 'block', paddingBottom: 80 }}>
           {days.map((day, i) => {
             const stops      = dayStops[i] || [];
             const food       = day.food    || [];
@@ -325,9 +316,7 @@ export default function ItineraryDashboard({
 
       </div>
 
-      {/* ══ BOTTOM NAV — always visible ══════════════════════════════════════
-           Map tab stays: tapping it opens the full-screen MapView with
-           interactive stop list, perfect for detailed exploration.           */}
+      {/* ══ BOTTOM NAV — always visible ══════════════════════════════════════ */}
       <BottomNav activeTab={activeTab} onTabChange={setActiveTab} />
     </div>
   );
