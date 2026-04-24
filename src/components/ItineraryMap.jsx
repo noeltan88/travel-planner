@@ -2,8 +2,7 @@
  * ItineraryMap — lean 300 px map embedded at the top of the itinerary tab.
  *
  * Differences from MapView (full-screen tab):
- *  • No day-tabs, no stop list — just the canvas
- *  • Draws a dashed route line connecting stops in order
+ *  • No day-tabs, no stop list — just the canvas with numbered markers
  *  • Sized to exactly 300 px tall so the parent can use position:sticky top:0
  *  • Same single-init / never-unmount / resize-on-visible pattern
  */
@@ -37,20 +36,12 @@ const CITY_CENTERS = {
   qingdao:      { lng: 120.3826, lat: 36.0671 },
 };
 
-function routeGeoJSON(coords) {
-  return {
-    type: 'Feature',
-    geometry: { type: 'LineString', coordinates: coords },
-  };
-}
-
 export default function ItineraryMap({ days, dayStops, activeDay, primaryCity, isVisible }) {
   const containerRef   = useRef(null);
   const map            = useRef(null);
   const mapInitialized = useRef(false);
   const markersRef     = useRef([]);
   const popupRef       = useRef(null);
-  const routeReady     = useRef(false);   // true after 'load' event fires
   const resizeTimer    = useRef(null);
 
   const cityKey = days[activeDay]?.city || primaryCity;
@@ -71,27 +62,6 @@ export default function ItineraryMap({ days, dayStops, activeDay, primaryCity, i
         attributionControl: false,
       });
 
-      // Add dashed route line after style is ready
-      map.current.on('load', () => {
-        map.current.addSource('route', {
-          type: 'geojson',
-          data: routeGeoJSON([]),
-        });
-        map.current.addLayer({
-          id:     'route-line',
-          type:   'line',
-          source: 'route',
-          layout: { 'line-join': 'round', 'line-cap': 'round' },
-          paint: {
-            'line-color':     ACCENT,
-            'line-width':     2.5,
-            'line-opacity':   0.7,
-            'line-dasharray': [2, 2],
-          },
-        });
-        routeReady.current = true;
-      });
-
       mapInitialized.current = true;
     } catch (err) {
       console.error('[ItineraryMap] init failed:', err);
@@ -103,7 +73,6 @@ export default function ItineraryMap({ days, dayStops, activeDay, primaryCity, i
         map.current.remove();
         map.current            = null;
         mapInitialized.current = false;
-        routeReady.current     = false;
       }
     };
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
@@ -118,7 +87,7 @@ export default function ItineraryMap({ days, dayStops, activeDay, primaryCity, i
     }
   }, [isVisible]);
 
-  // ── Refresh markers + route whenever active day changes ───────────────────────
+  // ── Refresh markers whenever active day changes ──────────────────────────────
   useEffect(() => {
     if (!map.current) return;
 
@@ -130,15 +99,8 @@ export default function ItineraryMap({ days, dayStops, activeDay, primaryCity, i
 
     const stops = dayStops[activeDay] || [];
     const valid = stops.filter(s => s.lat && s.lng);
-    const coords = valid.map(s => [s.lng, s.lat]);
 
-    function placeMarkersAndRoute() {
-      // Update route line
-      if (map.current.getSource('route')) {
-        map.current.getSource('route').setData(routeGeoJSON(coords));
-        routeReady.current = true;
-      }
-
+    function placeMarkers() {
       // Place numbered markers
       valid.forEach((stop, i) => {
         const el = document.createElement('div');
@@ -187,9 +149,9 @@ export default function ItineraryMap({ days, dayStops, activeDay, primaryCity, i
     }
 
     if (map.current.isStyleLoaded()) {
-      placeMarkersAndRoute();
+      placeMarkers();
     } else {
-      map.current.once('load', placeMarkersAndRoute);
+      map.current.once('load', placeMarkers);
     }
   }, [activeDay]); // eslint-disable-line react-hooks/exhaustive-deps
 

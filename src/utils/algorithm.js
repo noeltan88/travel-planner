@@ -190,6 +190,24 @@ function buildDayBudgets(totalDays, pace, arrivalTime, departureTime) {
 
 // ── Energy sequencing ─────────────────────────────────────────────
 
+// ── Nearest-neighbour geographic sort ────────────────────────────
+function nearestNeighbourSort(stops) {
+  if (stops.length <= 1) return stops;
+  const remaining = [...stops];
+  const sorted = [remaining.splice(0, 1)[0]];
+  while (remaining.length > 0) {
+    const last = sorted[sorted.length - 1];
+    let nearestIdx = 0;
+    let nearestDist = Infinity;
+    remaining.forEach((s, i) => {
+      const dist = haversine(last.lat, last.lng, s.lat, s.lng);
+      if (dist < nearestDist) { nearestDist = dist; nearestIdx = i; }
+    });
+    sorted.push(remaining.splice(nearestIdx, 1)[0]);
+  }
+  return sorted;
+}
+
 function sequenceByEnergy(stops, isLastDay = false) {
   const morningFirst = stops.filter(s => s.practical_tags?.includes('morning-only'));
   const eveningLast  = stops.filter(s =>
@@ -531,23 +549,10 @@ function buildCityDays(city, scoredPool, iconAttractions, kidsAttractions, foodP
       );
     }
 
-    // ── 5. Sequence by energy + practical tags ────────────────────
-    let ordered;
-    if (isFirstDay) {
-      // Day 1 already filled in energy-ascending order; just honour morning/evening pins
-      const morningFirst = dayStops.filter(s => s.practical_tags?.includes('morning-only'));
-      const eveningLast  = dayStops.filter(s =>
-        s.practical_tags?.includes('evening-best') &&
-        !s.practical_tags?.includes('morning-only')
-      );
-      const rest = dayStops.filter(s =>
-        !s.practical_tags?.includes('morning-only') &&
-        !s.practical_tags?.includes('evening-best')
-      );
-      ordered = [...morningFirst, ...rest, ...eveningLast];
-    } else {
-      ordered = sequenceByEnergy(dayStops, isLastDay);
-    }
+    // ── 5. Sequence stops geographically (nearest-neighbour) ─────
+    // All stops (including icons) are included in the sort so the
+    // route flows in one direction with no criss-crossing.
+    const ordered = nearestNeighbourSort(dayStops);
 
     // ── 6. Assign start/end times ─────────────────────────────────
     const withTimes = assignTimeSlots(ordered, startHour);
