@@ -1,10 +1,13 @@
 import { useEffect, useRef, useState, Component } from 'react';
 import mapboxgl from 'mapbox-gl';
 
-// Token from .env.local (VITE_MAPBOX_TOKEN) — set there so it is never
-// committed to git, but is always defined for local dev and CI/CD builds.
-const TOKEN  = import.meta.env.VITE_MAPBOX_TOKEN;
-const STYLE  = 'mapbox://styles/mapbox/streets-v12';
+// ─── Token ────────────────────────────────────────────────────────────────────
+// Read from the environment so the value is never committed to git.
+// Local dev: set in .env.local (gitignored).
+// Vercel / CI: add env var VITE_MAPBOX_TOKEN in the project settings.
+// NOTE: Vite exposes env vars via import.meta.env.VITE_*, NOT process.env.
+const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN;
+
 const ACCENT = '#E8472A';
 
 const CITY_CENTERS = {
@@ -31,7 +34,7 @@ const CITY_CENTERS = {
   qingdao:      { lng: 120.3826, lat: 36.0671 },
 };
 
-// ── Error boundary ────────────────────────────────────────────────────────────
+// ─── Error boundary ───────────────────────────────────────────────────────────
 export class MapErrorBoundary extends Component {
   constructor(props) { super(props); this.state = { error: false }; }
   static getDerivedStateFromError() { return { error: true }; }
@@ -40,13 +43,17 @@ export class MapErrorBoundary extends Component {
       return (
         <div style={{
           display: 'flex', flexDirection: 'column', alignItems: 'center',
-          justifyContent: 'center', height: '100%', color: '#94a3b8', gap: 8,
+          justifyContent: 'center', height: 300, color: '#94a3b8', gap: 8,
+          background: '#f1f5f9', borderRadius: 12,
         }}>
-          <p style={{ fontSize: 32 }}>🗺️</p>
-          <p style={{ fontSize: 14 }}>Map unavailable</p>
+          <span style={{ fontSize: 36 }}>🗺️</span>
+          <p style={{ fontSize: 14, margin: 0 }}>Map unavailable</p>
           <button
             onClick={() => this.setState({ error: false })}
-            style={{ marginTop: 8, fontSize: 12, color: ACCENT, background: 'none', border: 'none', cursor: 'pointer' }}
+            style={{
+              marginTop: 4, fontSize: 12, fontWeight: 600,
+              color: ACCENT, background: 'none', border: 'none', cursor: 'pointer',
+            }}
           >
             Try again
           </button>
@@ -57,58 +64,76 @@ export class MapErrorBoundary extends Component {
   }
 }
 
-// ── MapView ───────────────────────────────────────────────────────────────────
+// ─── MapView ──────────────────────────────────────────────────────────────────
 
 export default function MapView({ days, dayStops, activeDay, onDayChange, primaryCity, isVisible }) {
-  const containerRef = useRef(null);
-  const mapRef       = useRef(null);
-  const initedRef    = useRef(false);   // guarantees init runs exactly once
-  const markersRef   = useRef([]);
-  const popupRef     = useRef(null);
+  // Rule 4: map instance lives in a ref, never in state
+  const map            = useRef(null);
+  const mapInitialized = useRef(false);   // Rule 2: single-init guard
+  const containerRef   = useRef(null);    // Rule 6: ref to the container div
+  const markersRef     = useRef([]);
+  const popupRef       = useRef(null);
+  const resizeTimer    = useRef(null);
+
   const [selectedId, setSelectedId] = useState(null);
+  const [initError,  setInitError]  = useState(false);
 
   const stops   = dayStops[activeDay] || [];
   const cityKey = days[activeDay]?.city || primaryCity;
   const center  = CITY_CENTERS[cityKey] || CITY_CENTERS.guangzhou;
 
-  // ── Initialise map exactly once ───────────────────────────────────────────
+  // ── Rule 2 + 7: initialise ONCE, clean up on true unmount ───────────────────
   useEffect(() => {
-    if (initedRef.current || !containerRef.current) return;
-    initedRef.current = true;
+    if (mapInitialized.current || !containerRef.current) return;
 
-    mapboxgl.accessToken = TOKEN;
-    mapRef.current = new mapboxgl.Map({
-      container:          containerRef.current,
-      style:              STYLE,
-      center:             [center.lng, center.lat],
-      zoom:               12,
-      attributionControl: false,
-    });
-    mapRef.current.addControl(new mapboxgl.NavigationControl({ showCompass: false }), 'top-right');
+    try {
+      mapboxgl.accessToken = MAPBOX_TOKEN;
 
+      map.current = new mapboxgl.Map({
+        container:          containerRef.current,
+        style:              'mapbox://styles/mapbox/streets-v12',
+        center:             [center.lng, center.lat],
+        zoom:               12,
+        attributionControl: false,
+      });
+
+      map.current.addControl(
+        new mapboxgl.NavigationControl({ showCompass: false }),
+        'top-right',
+      );
+
+      mapInitialized.current = true;
+    } catch (err) {
+      console.error('[MapView] init failed:', err);
+      setInitError(true);
+    }
+
+    // Rule 7: cleanup fires only when the component truly unmounts
     return () => {
-      // Only clean up if the component is truly removed from the DOM
-      mapRef.current?.remove();
-      mapRef.current  = null;
-      initedRef.current = false;
+      clearTimeout(resizeTimer.current);
+      if (map.current) {
+        map.current.remove();
+        map.current       = null;
+        mapInitialized.current = false;
+      }
     };
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // ── Resize whenever the map container becomes visible ────────────────────
+  // ── Rule 3: resize with 100 ms delay whenever the tab becomes visible ────────
   useEffect(() => {
-    if (isVisible && mapRef.current) {
-      // rAF ensures the CSS display:block has been painted before resize
-      requestAnimationFrame(() => {
-        mapRef.current?.resize();
-      });
+    if (isVisible && map.current) {
+      clearTimeout(resizeTimer.current);
+      resizeTimer.current = setTimeout(() => {
+        if (map.current) map.current.resize();
+      }, 100);
     }
   }, [isVisible]);
 
-  // ── Refresh markers whenever the active day changes ───────────────────────
+  // ── Refresh markers whenever the active day changes ──────────────────────────
   useEffect(() => {
-    const map = mapRef.current;
-    if (!map) return;
+    if (!map.current) return;
 
+    // Clear old markers and popup
     markersRef.current.forEach(m => m.remove());
     markersRef.current = [];
     popupRef.current?.remove();
@@ -128,7 +153,7 @@ export default function MapView({ days, dayStops, activeDay, onDayChange, primar
           'font-size:12px', 'font-weight:800', 'color:#fff',
           "font-family:'DM Sans',sans-serif",
           'box-shadow:0 2px 10px rgba(0,0,0,0.35)',
-          'cursor:pointer', 'transition:transform 0.15s',
+          'cursor:pointer',
         ].join(';');
         el.textContent = String(i + 1);
 
@@ -143,34 +168,57 @@ export default function MapView({ days, dayStops, activeDay, onDayChange, primar
                 <p style="font-size:11px;color:#64748b;margin:0">${stop.startTime}–${stop.endTime} · ${stop.district}</p>
               </div>
             `)
-            .addTo(map);
+            .addTo(map.current);
         });
 
         markersRef.current.push(
           new mapboxgl.Marker({ element: el })
             .setLngLat([stop.lng, stop.lat])
-            .addTo(map),
+            .addTo(map.current),
         );
       });
 
+      // Fit viewport
       if (valid.length === 1) {
-        map.flyTo({ center: [valid[0].lng, valid[0].lat], zoom: 14, duration: 700 });
+        map.current.flyTo({ center: [valid[0].lng, valid[0].lat], zoom: 14, duration: 700 });
       } else {
         const lngs = valid.map(s => s.lng);
         const lats = valid.map(s => s.lat);
-        map.fitBounds(
+        map.current.fitBounds(
           [[Math.min(...lngs), Math.min(...lats)], [Math.max(...lngs), Math.max(...lats)]],
           { padding: 60, maxZoom: 15, duration: 700 },
         );
       }
     }
 
-    if (map.isStyleLoaded()) {
+    if (map.current.isStyleLoaded()) {
       placeMarkers();
     } else {
-      map.once('load', placeMarkers);
+      map.current.once('load', placeMarkers);
     }
   }, [activeDay]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // ── Rule 8: error fallback ────────────────────────────────────────────────────
+  if (initError) {
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', height: 'calc(100vh - 64px)', overflow: 'hidden', background: '#f8fafc' }}>
+        <div style={{
+          height: 300, display: 'flex', flexDirection: 'column',
+          alignItems: 'center', justifyContent: 'center',
+          background: '#f1f5f9', gap: 8, color: '#94a3b8',
+        }}>
+          <span style={{ fontSize: 36 }}>🗺️</span>
+          <p style={{ fontSize: 14, margin: 0 }}>Map failed to load</p>
+          <button
+            onClick={() => { setInitError(false); mapInitialized.current = false; }}
+            style={{ fontSize: 12, fontWeight: 600, color: ACCENT, background: 'none', border: 'none', cursor: 'pointer' }}
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: 'calc(100vh - 64px)', overflow: 'hidden', background: '#f8fafc' }}>
@@ -190,8 +238,8 @@ export default function MapView({ days, dayStops, activeDay, onDayChange, primar
                 flexShrink: 0, padding: '6px 14px', borderRadius: 20,
                 fontSize: 12, fontWeight: 600, cursor: 'pointer', border: 'none',
                 background: active ? 'rgba(232,71,42,0.12)' : '#f1f5f9',
-                color: active ? ACCENT : '#64748b',
-                outline: active ? `1.5px solid ${ACCENT}` : 'none',
+                color:      active ? ACCENT : '#64748b',
+                outline:    active ? `1.5px solid ${ACCENT}` : 'none',
               }}
             >
               {day.label}{day.cityHeader ? ` ${day.cityHeader.emoji}` : ''}
@@ -200,17 +248,22 @@ export default function MapView({ days, dayStops, activeDay, onDayChange, primar
         })}
       </div>
 
-      {/* Map container — always in DOM, never conditionally rendered */}
-      <div style={{ height: 340, flexShrink: 0, position: 'relative' }}>
-        <div ref={containerRef} style={{ width: '100%', height: '100%' }} />
+      {/* Rule 6: map container div with EXPLICIT pixel height — never percentage */}
+      {/* Rule 1: this div is always in the DOM; visibility is controlled by the  */}
+      {/*         parent (ItineraryDashboard) with CSS display:none/block          */}
+      <div style={{ flexShrink: 0, position: 'relative' }}>
+        <div
+          ref={containerRef}
+          style={{ width: '100%', height: '300px' }}  // explicit px so Mapbox can measure
+        />
         {stops.length === 0 && (
           <div style={{
             position: 'absolute', inset: 0, pointerEvents: 'none',
             display: 'flex', flexDirection: 'column', alignItems: 'center',
             justifyContent: 'center', background: '#f1f5f9', color: '#94a3b8',
           }}>
-            <p style={{ fontSize: 32, marginBottom: 8 }}>🗺️</p>
-            <p style={{ fontSize: 14 }}>No stops for this day</p>
+            <span style={{ fontSize: 32, marginBottom: 8 }}>🗺️</span>
+            <p style={{ fontSize: 14, margin: 0 }}>No stops for this day</p>
           </div>
         )}
       </div>
@@ -227,21 +280,21 @@ export default function MapView({ days, dayStops, activeDay, onDayChange, primar
             <div
               key={stop.id}
               onClick={() => {
-                const nowSelected = !sel;
-                setSelectedId(nowSelected ? stop.id : null);
+                const nowSel = !sel;
+                setSelectedId(nowSel ? stop.id : null);
                 popupRef.current?.remove();
                 popupRef.current = null;
-                if (nowSelected && mapRef.current && stop.lng && stop.lat) {
-                  mapRef.current.flyTo({ center: [stop.lng, stop.lat], zoom: 15, duration: 500 });
+                if (nowSel && map.current && stop.lng && stop.lat) {
+                  map.current.flyTo({ center: [stop.lng, stop.lat], zoom: 15, duration: 500 });
                 }
               }}
               style={{
-                background: sel ? 'rgba(232,71,42,0.06)' : '#fff',
-                border: `1.5px solid ${sel ? ACCENT : '#f1f5f9'}`,
+                background:  sel ? 'rgba(232,71,42,0.06)' : '#fff',
+                border:      `1.5px solid ${sel ? ACCENT : '#f1f5f9'}`,
                 borderRadius: 14, padding: '10px 14px',
-                display: 'flex', alignItems: 'center', gap: 12,
-                cursor: 'pointer', transition: 'border-color 0.15s',
-                boxShadow: '0 1px 6px rgba(0,0,0,0.05)',
+                display:     'flex', alignItems: 'center', gap: 12,
+                cursor:      'pointer', transition: 'border-color 0.15s',
+                boxShadow:   '0 1px 6px rgba(0,0,0,0.05)',
               }}
             >
               <div style={{
