@@ -207,7 +207,7 @@ export default function QuizFlow({ onComplete }) {
   const datesAnswer = answers.dates || {};
   const dep = datesAnswer.departure || '';
   const ret = datesAnswer.return || '';
-  const totalDays = dep && ret ? Math.round((new Date(ret) - new Date(dep)) / 86400000) : 0;
+  const totalDays = dep && ret ? Math.round((new Date(ret) - new Date(dep)) / 86400000) + 1 : 0;
   const dateError = dep && ret && dep >= ret;
   const overlappingHolidays = useMemo(() => {
     if (!dep || !ret || dateError) return [];
