@@ -2,7 +2,6 @@ import { useRef, useState, useEffect } from 'react';
 import DayTimeline from './DayTimeline';
 import HotelCard from './HotelCard';
 import PracticalTips from './PracticalTips';
-import BottomNav from './BottomNav';
 import PrintView from './PrintView';
 import { exportToPDF } from '../utils/pdfExport';
 import { loadCityData } from '../utils/algorithm';
@@ -116,8 +115,81 @@ export default function ItineraryDashboard({
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', background: 'var(--bg)' }}>
 
+      {/* ══ FLOATING PILLS — Hotels + Export ═════════════════════════════════
+           Visible on the itinerary tab when map is collapsed.
+           position:fixed so they sit in the top-right corner of the viewport.  */}
+      {activeTab === 'itinerary' && !expandedMap && (
+        <div style={{
+          position:  'fixed',
+          top:       12,
+          right:     12,
+          zIndex:    50,
+          display:   'flex',
+          gap:       8,
+        }}>
+          <button
+            onClick={() => setActiveTab('hotels')}
+            style={{
+              padding:        '6px 14px',
+              borderRadius:   20,
+              fontSize:       12,
+              fontWeight:     700,
+              border:         'none',
+              cursor:         'pointer',
+              background:     'rgba(255,255,255,0.92)',
+              color:          '#1a1a2e',
+              boxShadow:      '0 2px 10px rgba(0,0,0,0.14)',
+              backdropFilter: 'blur(10px)',
+              whiteSpace:     'nowrap',
+            }}
+          >
+            🏨 Hotels
+          </button>
+          <button
+            onClick={() => setActiveTab('export')}
+            style={{
+              padding:        '6px 14px',
+              borderRadius:   20,
+              fontSize:       12,
+              fontWeight:     700,
+              border:         'none',
+              cursor:         'pointer',
+              background:     'rgba(255,255,255,0.92)',
+              color:          '#1a1a2e',
+              boxShadow:      '0 2px 10px rgba(0,0,0,0.14)',
+              backdropFilter: 'blur(10px)',
+              whiteSpace:     'nowrap',
+            }}
+          >
+            📋 Export
+          </button>
+        </div>
+      )}
+
       {/* ══ HOTELS TAB ═══════════════════════════════════════════════════════ */}
-      <div style={{ display: activeTab === 'hotels' ? 'block' : 'none', paddingBottom: 80 }}>
+      <div style={{ display: activeTab === 'hotels' ? 'block' : 'none', paddingBottom: 24 }}>
+        {/* Back button */}
+        <button
+          onClick={() => setActiveTab('itinerary')}
+          style={{
+            position:       'fixed',
+            top:            12,
+            left:           12,
+            zIndex:         50,
+            padding:        '6px 14px',
+            borderRadius:   20,
+            fontSize:       12,
+            fontWeight:     700,
+            border:         'none',
+            cursor:         'pointer',
+            background:     'rgba(255,255,255,0.92)',
+            color:          '#1a1a2e',
+            boxShadow:      '0 2px 10px rgba(0,0,0,0.14)',
+            backdropFilter: 'blur(10px)',
+          }}
+        >
+          ← Back
+        </button>
         <div className="hero-bg px-6 pt-14 pb-6">
           <h2 className="text-xl font-bold text-white">Hotel Recommendations</h2>
           <p className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>
@@ -136,8 +208,30 @@ export default function ItineraryDashboard({
       <div style={{
         display: activeTab === 'export' ? 'flex' : 'none',
         flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-        minHeight: '100vh', padding: '0 24px 80px',
+        minHeight: '100vh', padding: '0 24px 32px',
       }}>
+        {/* Back button */}
+        <button
+          onClick={() => setActiveTab('itinerary')}
+          style={{
+            position:       'fixed',
+            top:            12,
+            left:           12,
+            zIndex:         50,
+            padding:        '6px 14px',
+            borderRadius:   20,
+            fontSize:       12,
+            fontWeight:     700,
+            border:         'none',
+            cursor:         'pointer',
+            background:     'rgba(255,255,255,0.92)',
+            color:          '#1a1a2e',
+            boxShadow:      '0 2px 10px rgba(0,0,0,0.14)',
+            backdropFilter: 'blur(10px)',
+          }}
+        >
+          ← Back
+        </button>
         <div style={{ textAlign: 'center', marginBottom: 32 }}>
           <p style={{ fontSize: 40, marginBottom: 16 }}>📋</p>
           <h2 className="text-xl font-bold mb-2" style={{ color: 'var(--text-primary)' }}>
@@ -195,7 +289,7 @@ export default function ItineraryDashboard({
           top:        0,
           zIndex:     15,
           width:      '100%',
-          height:     expandedMap ? 'calc(100vh - 64px)' : MAP_HEIGHT,
+          height:     expandedMap ? '100vh' : MAP_HEIGHT,
           transition: 'height 300ms ease',
           background: '#f1f5f9',
           boxShadow:  '0 2px 8px rgba(0,0,0,0.12)',
@@ -214,6 +308,7 @@ export default function ItineraryDashboard({
             deleteStop={deleteStop}
             swapStop={swapStop}
             allAttractions={allAttractions}
+            allAttractionsByCity={allAttractionsByCity}
           />
         </div>
 
@@ -262,7 +357,7 @@ export default function ItineraryDashboard({
         </div>
 
         {/* ── 3. Continuous day sections (hidden when map is expanded) ─────── */}
-        <div style={{ display: expandedMap ? 'none' : 'block', paddingBottom: 80 }}>
+        <div style={{ display: expandedMap ? 'none' : 'block', paddingBottom: 24 }}>
           {days.map((day, i) => {
             const stops      = dayStops[i] || [];
             const food       = day.food    || [];
@@ -316,8 +411,6 @@ export default function ItineraryDashboard({
 
       </div>
 
-      {/* ══ BOTTOM NAV — always visible ══════════════════════════════════════ */}
-      <BottomNav activeTab={activeTab} onTabChange={setActiveTab} />
     </div>
   );
 }
