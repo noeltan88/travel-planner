@@ -62,8 +62,8 @@ export const QUIZ = [
       { icon: '🧍', name: 'Solo', desc: 'Freedom, flexibility, your pace', value: 'solo' },
       { icon: '👫', name: 'Couple', desc: 'Romantic spots & date-worthy dinners', value: 'couple' },
       { icon: '👨‍👩‍👧', name: 'Family with kids', desc: 'Kid-friendly stops, less walking', value: 'family-kids' },
+      { icon: '👫', name: 'Group of friends', desc: 'Good vibes, shared experiences', value: 'friends' },
       { icon: '👴', name: 'With elderly', desc: 'Accessible routes, no steep climbs', value: 'family-elderly' },
-      { icon: '👥', name: 'Group of friends', desc: 'Nightlife, food & hidden gems', value: 'friends' },
     ]
   },
   {

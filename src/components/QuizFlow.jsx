@@ -14,6 +14,13 @@ const HOLIDAYS = [
 
 const today = new Date().toISOString().split('T')[0];
 
+const AGE_GROUPS = [
+  { icon: '👶', label: '0–3',  value: '0-3'  },
+  { icon: '🧒', label: '4–7',  value: '4-7'  },
+  { icon: '👦', label: '8–12', value: '8-12' },
+  { icon: '🧑', label: '13+',  value: '13+'  },
+];
+
 const LAST_STEP = QUIZ.length - 1;
 
 export default function QuizFlow({ onComplete }) {
@@ -28,6 +35,8 @@ export default function QuizFlow({ onComplete }) {
   const isDietary = q.id === 'dietary';
   const isCity = q.id === 'city';
   const isDateRange = q.type === 'daterange';
+  const isGroupQ = q.id === 'group';
+  const isFamilyKids = answers.group === 'family-kids';
   const selected = answers[q.id] || (q.multi ? [] : null);
   const othersSelected = isDietary && (answers.dietary || []).includes('others');
 
@@ -55,6 +64,14 @@ export default function QuizFlow({ onComplete }) {
     setAnswers(prev => ({ ...prev, dates: { ...(prev.dates || {}), [field]: value } }));
   }
 
+  function toggleKidsAge(value) {
+    const cur = answers.kids_ages || [];
+    setAnswers(prev => ({
+      ...prev,
+      kids_ages: cur.includes(value) ? cur.filter(v => v !== value) : [...cur, value],
+    }));
+  }
+
   function toggle(value, comingSoon) {
     if (comingSoon) {
       setComingSoonTapped(value);
@@ -69,7 +86,11 @@ export default function QuizFlow({ onComplete }) {
         setAnswers({ ...answers, [q.id]: [...cur, value] });
       }
     } else {
-      setAnswers({ ...answers, [q.id]: value });
+      // When switching away from family-kids, clear family extras
+      const extra = (q.id === 'group' && value !== 'family-kids')
+        ? { grandparents: false, kids_ages: [] }
+        : {};
+      setAnswers({ ...answers, [q.id]: value, ...extra });
     }
   }
 
@@ -89,6 +110,8 @@ export default function QuizFlow({ onComplete }) {
         }
       });
       if (othersText.trim()) flat.dietaryOthers = othersText.trim();
+      flat.grandparents = flat.group === 'family-kids' ? (answers.grandparents || false) : false;
+      flat.kids_ages   = flat.group === 'family-kids' ? (answers.kids_ages   || [])    : [];
       onComplete(flat);
     }
   }
@@ -276,6 +299,62 @@ export default function QuizFlow({ onComplete }) {
                   </div>
                 )}
               </button>
+
+              {/* Family-kids extras: grandparents toggle + kids age chips */}
+              {isGroupQ && opt.value === 'family-kids' && (
+                <div style={{
+                  maxHeight: isFamilyKids ? 200 : 0,
+                  overflow: 'hidden',
+                  transition: 'max-height 0.3s ease',
+                }}>
+                  <div style={{ padding: '12px 4px 4px' }}>
+                    {/* Grandparents toggle */}
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14 }}>
+                      <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: 13, fontWeight: 600 }}>Grandparents joining too? 👴👵</p>
+                      <button
+                        onClick={e => { e.stopPropagation(); setAnswers(prev => ({ ...prev, grandparents: !prev.grandparents })); }}
+                        style={{
+                          width: 44, height: 26, borderRadius: 13, border: 'none', cursor: 'pointer', flexShrink: 0,
+                          background: answers.grandparents ? 'var(--accent)' : 'rgba(255,255,255,0.2)',
+                          position: 'relative', transition: 'background 0.2s',
+                        }}
+                      >
+                        <div style={{
+                          position: 'absolute', top: 3,
+                          left: answers.grandparents ? 21 : 3,
+                          width: 20, height: 20, borderRadius: '50%', background: 'white',
+                          transition: 'left 0.2s',
+                        }} />
+                      </button>
+                    </div>
+
+                    {/* Kids age chips */}
+                    <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: 12, fontWeight: 600, marginBottom: 8, letterSpacing: '0.04em' }}>
+                      KIDS AGES (SELECT ALL THAT APPLY)
+                    </p>
+                    <div style={{ display: 'flex', gap: 8 }}>
+                      {AGE_GROUPS.map(ag => {
+                        const agSel = (answers.kids_ages || []).includes(ag.value);
+                        return (
+                          <button
+                            key={ag.value}
+                            onClick={e => { e.stopPropagation(); toggleKidsAge(ag.value); }}
+                            style={{
+                              flex: 1, padding: '7px 0', borderRadius: 20, border: 'none', cursor: 'pointer',
+                              background: agSel ? 'var(--accent-tint)' : 'rgba(255,255,255,0.08)',
+                              outline: agSel ? '1.5px solid var(--accent)' : '1.5px solid rgba(255,255,255,0.15)',
+                              color: 'white', fontSize: 12, fontWeight: 600,
+                              transition: 'background 0.15s, outline 0.15s',
+                            }}
+                          >
+                            {ag.icon} {ag.label}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+              )}
 
               {/* Coming soon tap message */}
               {isTappedSoon && (
