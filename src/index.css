@@ -127,12 +127,15 @@ body {
 
 /* Delete collapse */
 @keyframes collapse-height {
-  from { max-height: 200px; opacity: 1; margin-bottom: 10px; }
+  from { max-height: 600px; opacity: 1; margin-bottom: 10px; }
   to { max-height: 0; opacity: 0; margin-bottom: 0; }
 }
 .card-collapsing {
   animation: collapse-height 0.35s ease forwards;
 }
+
+/* Hide scrollbar on sticky day tabs (webkit) */
+.sticky-tabs::-webkit-scrollbar { display: none; }
 
 /* Map container */
 #map-container {
