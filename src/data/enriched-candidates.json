@@ -1,5 +1,5 @@
 {
-  "enriched_at": "2026-04-24T12:01:48.197Z",
+  "enriched_at": "2026-04-24T12:23:59.233Z",
   "cities": {
     "guangzhou": {
       "pearl-river": {
@@ -18481,36 +18481,762 @@
         "cafes": []
       },
       "siming-south": {
-        "attractions": [],
+        "attractions": [
+          {
+            "name": "日光岩景区",
+            "name_en": "Sunlight Rock Scenic Area",
+            "chinese": "日光岩景区",
+            "category": "landmark",
+            "cluster_group": "siming-south",
+            "city": "xiamen",
+            "district": "Gulangyu Island",
+            "vibe_tags": [
+              "scenic",
+              "instagrammable",
+              "history"
+            ],
+            "companion_tags": [
+              "solo",
+              "couple",
+              "friends",
+              "family-kids"
+            ],
+            "practical_tags": [
+              "morning-best",
+              "book-ahead"
+            ],
+            "energy_level": "medium",
+            "duration_hrs": 2,
+            "price_rmb": 100,
+            "free": false,
+            "kids_age_range": "4+",
+            "seasonal": false,
+            "best_months": [],
+            "standalone": false,
+            "bookable": true,
+            "icon": false,
+            "klookId": null,
+            "description": "Xiamen's most iconic landmark — a massive granite boulder rising 92 metres above Gulangyu Island, reached by a short but steep climb through gardens where Koxinga once trained his troops. The 360-degree summit view takes in the entire island, the Xiamen skyline and the strait beyond.",
+            "tip": "The combined ticket includes Shuzhuang Garden next door — always buy the combo. Go before 9am on weekends or the queue for the summit rocks is 40+ minutes."
+          },
+          {
+            "name": "Hulishan Cannon Fort",
+            "name_en": "Hulishan Cannon Fort",
+            "chinese": "胡里山炮台",
+            "category": "landmark",
+            "cluster_group": "siming-south",
+            "city": "xiamen",
+            "district": "Siming",
+            "vibe_tags": [
+              "history",
+              "culture",
+              "instagrammable"
+            ],
+            "companion_tags": [
+              "solo",
+              "couple",
+              "friends",
+              "family-kids"
+            ],
+            "practical_tags": [],
+            "energy_level": "low",
+            "duration_hrs": 1.5,
+            "price_rmb": 50,
+            "free": false,
+            "kids_age_range": "all",
+            "seasonal": false,
+            "best_months": [],
+            "standalone": false,
+            "bookable": false,
+            "icon": false,
+            "klookId": null,
+            "description": "A 19th-century coastal fortress housing the world's largest preserved ancient cannon — a 50-tonne German Krupp gun that never fired a shot in anger, built to defend Xiamen harbour from naval attack. The cliffside battlements offer panoramic views across the strait.",
+            "tip": "Cannon-firing reenactments happen at 10am and 3pm daily — worth timing your visit around one. The small museum inside the gun emplacement has surprisingly good English labelling."
+          }
+        ],
         "restaurants": [],
-        "cafes": []
+        "cafes": [
+          {
+            "name": "Rendeavous",
+            "name_en": "Rendeavous Cafe",
+            "chinese": "朗岛咖啡",
+            "category": "cafe",
+            "type": "cafe",
+            "cluster_group": "siming-south",
+            "city": "xiamen",
+            "price_range": "¥35–60pp",
+            "where": "Siming district, Xiamen",
+            "dietary_tags": [
+              "veg-ok"
+            ],
+            "halal": false,
+            "tip": "The back terrace has sea views on clear days — ask for a window seat when you arrive. French press coffee is the best value on the menu.",
+            "icon": "☕"
+          },
+          {
+            "name": "CBD Cafe",
+            "name_en": "CBD Cafe",
+            "chinese": "CBD咖啡",
+            "category": "cafe",
+            "type": "cafe",
+            "cluster_group": "siming-south",
+            "city": "xiamen",
+            "price_range": "¥30–55pp",
+            "where": "Siming district, Xiamen",
+            "dietary_tags": [
+              "veg-ok"
+            ],
+            "halal": false,
+            "tip": "Quiet on weekday mornings — good for working with decent wifi. The cold brew is strong and properly made. Gets loud in the evenings.",
+            "icon": "☕"
+          }
+        ]
       },
       "tulou-day-trip": {
-        "attractions": [],
-        "restaurants": [],
-        "cafes": []
+        "attractions": [
+          {
+            "name": "Tianluokeng Tulou cluster",
+            "name_en": "Tianluokeng Tulou Cluster",
+            "chinese": "田螺坑土楼群",
+            "category": "landmark",
+            "cluster_group": "tulou-day-trip",
+            "city": "xiamen",
+            "district": "Nanjing County (2hr drive)",
+            "vibe_tags": [
+              "scenic",
+              "history",
+              "instagrammable",
+              "culture"
+            ],
+            "companion_tags": [
+              "solo",
+              "couple",
+              "friends",
+              "family-kids",
+              "elderly-friendly"
+            ],
+            "practical_tags": [
+              "book-ahead",
+              "morning-best"
+            ],
+            "energy_level": "low",
+            "duration_hrs": 3,
+            "price_rmb": 120,
+            "free": false,
+            "kids_age_range": "all",
+            "seasonal": false,
+            "best_months": [],
+            "standalone": true,
+            "bookable": false,
+            "icon": false,
+            "klookId": null,
+            "description": "The most photogenic of Fujian's UNESCO-listed earth buildings — four round tulou surrounding one square one, arranged on a hillside like a flower when seen from the famous viewpoint above. Hakka families have lived continuously in these 800-year-old communal structures, and some residents still rent rooms.",
+            "tip": "The iconic overhead view is from the hilltop lookout — get there by 7am before tour buses arrive. The square building (Buyun Lou) is less visited and more atmospheric inside than the round ones."
+          }
+        ],
+        "restaurants": [
+          {
+            "name": "Tianhe West Gate Tusundong",
+            "name_en": "Tianhe Hakka Restaurant",
+            "chinese": "天禾土笋冻",
+            "category": "restaurant",
+            "type": "restaurant",
+            "cluster_group": "tulou-day-trip",
+            "city": "xiamen",
+            "price_range": "¥50–80pp",
+            "where": "Near Tianluokeng Tulou, Nanjing County",
+            "dietary_tags": [
+              "contains-pork-optional"
+            ],
+            "halal": false,
+            "tip": "Order the Hakka salt-baked chicken (客家盐焗鸡) and braised pork belly — these are the two dishes the region is known for. Simple setting, exceptional food.",
+            "icon": "🐔"
+          },
+          {
+            "name": "Tulou Hakka Food",
+            "name_en": "Tulou Hakka Food",
+            "chinese": "土楼客家菜",
+            "category": "restaurant",
+            "type": "restaurant",
+            "cluster_group": "tulou-day-trip",
+            "city": "xiamen",
+            "price_range": "¥40–70pp",
+            "where": "Tulou scenic area, Nanjing County",
+            "dietary_tags": [
+              "contains-pork-optional"
+            ],
+            "halal": false,
+            "tip": "Communal dining style mirrors how tulou residents eat — dishes arrive as ready rather than all at once. The braised mushroom with tofu is the best vegetarian option on the menu.",
+            "icon": "🍲"
+          }
+        ],
+        "cafes": [
+          {
+            "name": "优云咖啡",
+            "name_en": "Youyun Coffee",
+            "chinese": "优云咖啡",
+            "category": "cafe",
+            "type": "cafe",
+            "cluster_group": "tulou-day-trip",
+            "city": "xiamen",
+            "price_range": "¥25–45pp",
+            "where": "Tulou area, Nanjing County",
+            "dietary_tags": [
+              "veg-ok"
+            ],
+            "halal": false,
+            "tip": "A rare proper espresso stop near the tulou villages — most food in the scenic area is tourist-grade. Worth the detour for a decent flat white before or after the tulou visit.",
+            "icon": "☕"
+          },
+          {
+            "name": "Coffee Worm",
+            "name_en": "Coffee Worm",
+            "chinese": "咖啡虫",
+            "category": "cafe",
+            "type": "cafe",
+            "cluster_group": "tulou-day-trip",
+            "city": "xiamen",
+            "price_range": "¥30–50pp",
+            "where": "Tulou area, Nanjing County",
+            "dietary_tags": [
+              "veg-ok"
+            ],
+            "halal": false,
+            "tip": "The owner lived in Shanghai before opening here — the coffee standard is notably higher than the surrounding area. Try the single-origin pour-over.",
+            "icon": "☕"
+          },
+          {
+            "name": "老厦门咖啡厅",
+            "name_en": "Old Xiamen Teahouse",
+            "chinese": "老厦门咖啡厅",
+            "category": "cafe",
+            "type": "cafe",
+            "cluster_group": "tulou-day-trip",
+            "city": "xiamen",
+            "price_range": "¥25–45pp",
+            "where": "Tulou area, Nanjing County",
+            "dietary_tags": [
+              "veg-ok"
+            ],
+            "halal": false,
+            "tip": "More teahouse than coffee shop — the locally grown Tieguanyin oolong is the real draw. The peanut candy served alongside it is made by the owner's family.",
+            "icon": "🍵"
+          }
+        ]
       },
       "jimei": {
-        "attractions": [],
-        "restaurants": [],
-        "cafes": []
+        "attractions": [
+          {
+            "name": "鳌园",
+            "name_en": "Ao Yuan Garden",
+            "chinese": "鳌园",
+            "category": "landmark",
+            "cluster_group": "jimei",
+            "city": "xiamen",
+            "district": "Jimei",
+            "vibe_tags": [
+              "history",
+              "culture",
+              "local"
+            ],
+            "companion_tags": [
+              "solo",
+              "couple",
+              "friends",
+              "elderly-friendly"
+            ],
+            "practical_tags": [],
+            "energy_level": "low",
+            "duration_hrs": 1.5,
+            "price_rmb": 30,
+            "free": false,
+            "kids_age_range": "8+",
+            "seasonal": false,
+            "best_months": [],
+            "standalone": false,
+            "bookable": false,
+            "icon": false,
+            "klookId": null,
+            "description": "A garden mausoleum built by Tan Kah Kee — the Fujian-born rubber magnate who became Southeast Asia's most famous Chinese philanthropist — combining his tomb with an outdoor gallery of stone carvings depicting Chinese history. A quiet pilgrimage site for overseas Chinese from Singapore and Malaysia.",
+            "tip": "The stone carvings along the walls tell Chinese history chronologically left to right — allow time to walk the full perimeter. The garden is in Jimei, the education village Tan Kah Kee built from scratch with his own fortune."
+          },
+          {
+            "name": "Hi Heaven",
+            "name_en": "Hi Heaven Creative Park",
+            "chinese": "嗨天堂创意园",
+            "category": "entertainment",
+            "cluster_group": "jimei",
+            "city": "xiamen",
+            "district": "Jimei",
+            "vibe_tags": [
+              "instagrammable",
+              "local",
+              "fun"
+            ],
+            "companion_tags": [
+              "solo",
+              "couple",
+              "friends"
+            ],
+            "practical_tags": [
+              "evening-best"
+            ],
+            "energy_level": "medium",
+            "duration_hrs": 2,
+            "price_rmb": 0,
+            "free": true,
+            "kids_age_range": "13+",
+            "seasonal": false,
+            "best_months": [],
+            "standalone": false,
+            "bookable": false,
+            "icon": false,
+            "klookId": null,
+            "description": "A creative lifestyle complex in Jimei's emerging arts district — converted industrial buildings housing independent boutiques, concept restaurants and live music venues that draw the Xiamen University student crowd on weekends. Street art installations change seasonally.",
+            "tip": "Best on weekend evenings when the outdoor market sets up and local bands play in the courtyard. Weekday afternoons are near-empty — go on weekends for the atmosphere."
+          }
+        ],
+        "restaurants": [
+          {
+            "name": "Musilin Noodle Restaurant",
+            "name_en": "Musilin Halal Noodle Restaurant",
+            "chinese": "穆斯林面馆",
+            "category": "restaurant",
+            "type": "restaurant",
+            "cluster_group": "jimei",
+            "city": "xiamen",
+            "price_range": "¥20–40pp",
+            "where": "Jimei district, Xiamen",
+            "dietary_tags": [
+              "halal",
+              "seafood-ok"
+            ],
+            "halal": true,
+            "tip": "One of the few reliable halal options in Xiamen — the hand-pulled beef noodle soup is the signature. Busy at lunch; go before 11:30am or after 1:30pm.",
+            "icon": "🍜"
+          }
+        ],
+        "cafes": [
+          {
+            "name": "Houhai",
+            "name_en": "Houhai Cafe",
+            "chinese": "后海咖啡",
+            "category": "cafe",
+            "type": "cafe",
+            "cluster_group": "jimei",
+            "city": "xiamen",
+            "price_range": "¥30–55pp",
+            "where": "Jimei district, Xiamen",
+            "dietary_tags": [
+              "veg-ok"
+            ],
+            "halal": false,
+            "tip": "Rooftop terrace with views across Jimei Bay — best at sunset. The matcha latte is the most ordered drink and consistently well made.",
+            "icon": "☕"
+          },
+          {
+            "name": "绿岛咖啡",
+            "name_en": "Green Island Coffee",
+            "chinese": "绿岛咖啡",
+            "category": "cafe",
+            "type": "cafe",
+            "cluster_group": "jimei",
+            "city": "xiamen",
+            "price_range": "¥25–45pp",
+            "where": "Jimei district, near Xiamen University",
+            "dietary_tags": [
+              "veg-ok"
+            ],
+            "halal": false,
+            "tip": "A neighbourhood cafe popular with Xiamen University students — prices reflect it. Good wifi, patient staff, not tourist-facing at all.",
+            "icon": "☕"
+          }
+        ]
       }
     },
     "huangshan": {
       "huangshan-front": {
-        "attractions": [],
+        "attractions": [
+          {
+            "name": "Huangshan Mountain",
+            "name_en": "Huangshan (Yellow Mountain)",
+            "chinese": "黄山",
+            "category": "nature",
+            "cluster_group": "huangshan-front",
+            "city": "huangshan",
+            "district": "Huangshan Scenic Area",
+            "vibe_tags": [
+              "scenic",
+              "nature",
+              "instagrammable",
+              "adventure"
+            ],
+            "companion_tags": [
+              "solo",
+              "couple",
+              "friends"
+            ],
+            "practical_tags": [
+              "book-ahead",
+              "morning-best"
+            ],
+            "energy_level": "high",
+            "duration_hrs": 8,
+            "price_rmb": 190,
+            "free": false,
+            "kids_age_range": "8+",
+            "seasonal": false,
+            "best_months": [
+              3,
+              4,
+              5,
+              9,
+              10,
+              11
+            ],
+            "standalone": true,
+            "bookable": true,
+            "icon": false,
+            "klookId": null,
+            "description": "China's most mythologised mountain — twisted pine trees clinging to granite peaks wreathed in cloud, the landscape that inspired a thousand ink paintings and the floating mountains of Avatar. The summit experience changes completely hour by hour as cloud formations roll through the valleys below.",
+            "tip": "Stay overnight on the mountain to catch sunrise — the light at 5:30am turns the sea of clouds gold. Book mountaintop guesthouses 3–4 months ahead for peak season."
+          },
+          {
+            "name": "天都峰",
+            "name_en": "Tiandu Peak",
+            "chinese": "天都峰",
+            "category": "nature",
+            "cluster_group": "huangshan-front",
+            "city": "huangshan",
+            "district": "Huangshan Scenic Area",
+            "vibe_tags": [
+              "scenic",
+              "adventure",
+              "nature"
+            ],
+            "companion_tags": [
+              "solo",
+              "couple",
+              "friends"
+            ],
+            "practical_tags": [
+              "morning-best"
+            ],
+            "energy_level": "high",
+            "duration_hrs": 3,
+            "price_rmb": 0,
+            "free": false,
+            "kids_age_range": "13+",
+            "seasonal": true,
+            "best_months": [
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10
+            ],
+            "standalone": false,
+            "bookable": false,
+            "icon": false,
+            "klookId": null,
+            "description": "One of Huangshan's three main peaks and the most challenging to climb — a near-vertical granite staircase with chain handrails cut directly into the rock face, rewarding summit-seekers with views that make the burning thighs worthwhile. Closed in winter due to ice.",
+            "tip": "The climb takes 90 minutes up, 60 down. Go early — the trail is single-file in places and becomes a human traffic jam by 10am. Bring gloves; the chains are cold even in summer."
+          }
+        ],
         "restaurants": [],
-        "cafes": []
+        "cafes": [
+          {
+            "name": "Yuan'an Coffee",
+            "name_en": "Yuan'an Coffee",
+            "chinese": "源安咖啡",
+            "category": "cafe",
+            "type": "cafe",
+            "cluster_group": "huangshan-front",
+            "city": "huangshan",
+            "price_range": "¥30–55pp",
+            "where": "Huangshan city, near scenic area entrance",
+            "dietary_tags": [
+              "veg-ok"
+            ],
+            "halal": false,
+            "tip": "Opens at 6am for early hikers — the only decent coffee option before catching the first cable car up. The condensed milk coffee is worth trying once.",
+            "icon": "☕"
+          },
+          {
+            "name": "Lanren Cafe",
+            "name_en": "Lanren (Lazy Man) Cafe",
+            "chinese": "懒人咖啡",
+            "category": "cafe",
+            "type": "cafe",
+            "cluster_group": "huangshan-front",
+            "city": "huangshan",
+            "price_range": "¥25–50pp",
+            "where": "Huangshan city, near scenic area",
+            "dietary_tags": [
+              "veg-ok"
+            ],
+            "halal": false,
+            "tip": "Popular with hikers returning from the mountain — the iced coffee and hot spring egg combo is the unofficial post-hike recovery meal. Relaxed atmosphere, no time pressure.",
+            "icon": "☕"
+          }
+        ]
       },
       "hongcun-xidi": {
-        "attractions": [],
-        "restaurants": [],
-        "cafes": []
+        "attractions": [
+          {
+            "name": "Hongcun",
+            "name_en": "Hongcun Ancient Village",
+            "chinese": "宏村",
+            "category": "landmark",
+            "cluster_group": "hongcun-xidi",
+            "city": "huangshan",
+            "district": "Yi County",
+            "vibe_tags": [
+              "scenic",
+              "instagrammable",
+              "history",
+              "culture"
+            ],
+            "companion_tags": [
+              "solo",
+              "couple",
+              "friends",
+              "elderly-friendly",
+              "all"
+            ],
+            "practical_tags": [
+              "morning-best",
+              "book-ahead"
+            ],
+            "energy_level": "low",
+            "duration_hrs": 3,
+            "price_rmb": 104,
+            "free": false,
+            "kids_age_range": "all",
+            "seasonal": false,
+            "best_months": [
+              3,
+              4,
+              5,
+              9,
+              10,
+              11
+            ],
+            "standalone": true,
+            "bookable": false,
+            "icon": false,
+            "klookId": null,
+            "description": "A 900-year-old Huizhou village where whitewashed houses with upturned black-tiled roofs reflect perfectly in a central moon-shaped pond — the backdrop for Ang Lee's Crouching Tiger, Hidden Dragon and one of China's most photographed village scenes. The intricate wood carvings inside the ancestral halls are the hidden highlight.",
+            "tip": "The famous moon pond reflection photo requires arriving before 7am when the water is completely still. The south gate entrance is less crowded than the main gate — same ticket, much calmer experience."
+          }
+        ],
+        "restaurants": [
+          {
+            "name": "Linjiang Yilou",
+            "name_en": "Linjiang Yilou Huizhou Restaurant",
+            "chinese": "临江一楼",
+            "category": "restaurant",
+            "type": "restaurant",
+            "cluster_group": "hongcun-xidi",
+            "city": "huangshan",
+            "price_range": "¥60–100pp",
+            "where": "Hongcun village, Yi County",
+            "dietary_tags": [
+              "contains-pork-optional",
+              "seafood-ok"
+            ],
+            "halal": false,
+            "tip": "Order the Huizhou signature dishes — hairy tofu (毛豆腐), stinky mandarin fish (臭鳜鱼), and braised pork with dried vegetables (梅干菜扣肉). The stinky fish smells alarming but tastes exceptional.",
+            "icon": "🐟"
+          }
+        ],
+        "cafes": [
+          {
+            "name": "Yuezhao",
+            "name_en": "Yuezhao Courtyard Cafe",
+            "chinese": "月照",
+            "category": "cafe",
+            "type": "cafe",
+            "cluster_group": "hongcun-xidi",
+            "city": "huangshan",
+            "price_range": "¥35–60pp",
+            "where": "Hongcun village, Yi County",
+            "dietary_tags": [
+              "veg-ok"
+            ],
+            "halal": false,
+            "tip": "A converted Huizhou courtyard house — sit in the inner courtyard under the open roof for the classic sky-well (天井) architectural experience alongside decent pour-over coffee.",
+            "icon": "☕"
+          },
+          {
+            "name": "Old Street Cafe Bar",
+            "name_en": "Old Street Cafe Bar",
+            "chinese": "老街咖啡吧",
+            "category": "cafe",
+            "type": "cafe",
+            "cluster_group": "hongcun-xidi",
+            "city": "huangshan",
+            "price_range": "¥30–55pp",
+            "where": "Hongcun village area",
+            "dietary_tags": [
+              "veg-ok"
+            ],
+            "halal": false,
+            "tip": "The rooftop terrace has the best views over the Hongcun roofscape — arrive at opening before other tourists claim the seats. The osmanthus latte is the seasonal specialty.",
+            "icon": "☕"
+          },
+          {
+            "name": "Bantang Coffee",
+            "name_en": "Bantang Coffee",
+            "chinese": "半塘咖啡",
+            "category": "cafe",
+            "type": "cafe",
+            "cluster_group": "hongcun-xidi",
+            "city": "huangshan",
+            "price_range": "¥30–50pp",
+            "where": "Side lane off main Hongcun tourist path",
+            "dietary_tags": [
+              "veg-ok"
+            ],
+            "halal": false,
+            "tip": "Hidden in a side lane — quieter than cafes on the main street. The owner hand-roasts the beans; worth asking to see the roaster in the back room.",
+            "icon": "☕"
+          }
+        ]
       },
       "tunxi-oldstreet": {
-        "attractions": [],
-        "restaurants": [],
-        "cafes": []
+        "attractions": [
+          {
+            "name": "Tunxi Old Street",
+            "name_en": "Tunxi Old Street",
+            "chinese": "屯溪老街",
+            "category": "landmark",
+            "cluster_group": "tunxi-oldstreet",
+            "city": "huangshan",
+            "district": "Tunxi",
+            "vibe_tags": [
+              "local",
+              "history",
+              "shopping",
+              "culture"
+            ],
+            "companion_tags": [
+              "solo",
+              "couple",
+              "friends",
+              "elderly-friendly",
+              "all"
+            ],
+            "practical_tags": [
+              "evening-best"
+            ],
+            "energy_level": "low",
+            "duration_hrs": 2,
+            "price_rmb": 0,
+            "free": true,
+            "kids_age_range": "all",
+            "seasonal": false,
+            "best_months": [],
+            "standalone": false,
+            "bookable": false,
+            "icon": false,
+            "klookId": null,
+            "description": "A kilometre-long Ming and Qing dynasty street in Huangshan city lined with traditional Huizhou architecture — ink stone shops, tea merchants, preserved egg sellers and antique dealers in buildings unchanged for 400 years. The evening lantern glow turns it genuinely cinematic.",
+            "tip": "The Huizhou ink stones sold here are among China's four famous ink stones — a genuine cultural souvenir, not tourist kitsch. First prices are 40–50% above realistic, so bargain firmly."
+          },
+          {
+            "name": "黄山猴子观海",
+            "name_en": "Monkey Watching the Sea Viewpoint",
+            "chinese": "黄山猴子观海",
+            "category": "nature",
+            "cluster_group": "tunxi-oldstreet",
+            "city": "huangshan",
+            "district": "Huangshan Scenic Area",
+            "vibe_tags": [
+              "scenic",
+              "instagrammable",
+              "nature"
+            ],
+            "companion_tags": [
+              "solo",
+              "couple",
+              "friends"
+            ],
+            "practical_tags": [
+              "morning-best"
+            ],
+            "energy_level": "medium",
+            "duration_hrs": 1,
+            "price_rmb": 0,
+            "free": false,
+            "kids_age_range": "8+",
+            "seasonal": false,
+            "best_months": [],
+            "standalone": false,
+            "bookable": false,
+            "icon": false,
+            "klookId": null,
+            "description": "One of Huangshan's most celebrated rock formations — a naturally sculpted granite outcrop on the northern slope bearing an uncanny resemblance to a monkey gazing out over the cloud sea below. It is the single most photographed viewpoint on the mountain and the image on every Huangshan postcard.",
+            "tip": "The best photography angle is from the path below, not from standing beside it. Cloud conditions are everything — check the Huangshan weather forecast the night before your hike."
+          }
+        ],
+        "restaurants": [
+          {
+            "name": "黄山土菜",
+            "name_en": "Huangshan Local Cuisine",
+            "chinese": "黄山土菜",
+            "category": "restaurant",
+            "type": "restaurant",
+            "cluster_group": "tunxi-oldstreet",
+            "city": "huangshan",
+            "price_range": "¥40–70pp",
+            "where": "Tunxi Old Street area",
+            "dietary_tags": [
+              "contains-pork-optional"
+            ],
+            "halal": false,
+            "tip": "A no-frills local restaurant serving Huizhou home cooking — the stone pot chicken (石锅鸡) and bamboo shoot stir-fry are the must-orders. Cash only, arrives fast.",
+            "icon": "🍳"
+          }
+        ],
+        "cafes": [
+          {
+            "name": "好时",
+            "name_en": "Haoshi Cafe",
+            "chinese": "好时咖啡",
+            "category": "cafe",
+            "type": "cafe",
+            "cluster_group": "tunxi-oldstreet",
+            "city": "huangshan",
+            "price_range": "¥25–45pp",
+            "where": "Tunxi Old Street",
+            "dietary_tags": [
+              "veg-ok"
+            ],
+            "halal": false,
+            "tip": "A tiny cafe in a restored Ming dynasty building — the low wooden beams and stone floor are the real attraction alongside reasonable coffee. Very local crowd, no tourist markup.",
+            "icon": "☕"
+          },
+          {
+            "name": "Mai Coffee",
+            "name_en": "Mai Coffee",
+            "chinese": "麦咖啡",
+            "category": "cafe",
+            "type": "cafe",
+            "cluster_group": "tunxi-oldstreet",
+            "city": "huangshan",
+            "price_range": "¥25–45pp",
+            "where": "Tunxi Old Street",
+            "dietary_tags": [
+              "veg-ok"
+            ],
+            "halal": false,
+            "tip": "Americano made with locally sourced spring water — makes a genuine difference to the taste. One of the few cafes on Old Street with outdoor seating.",
+            "icon": "☕"
+          }
+        ]
       },
       "huangshan-back": {
         "attractions": [],
@@ -18520,49 +19246,1188 @@
     },
     "nanjing": {
       "zhongshan-scenic": {
-        "attractions": [],
+        "attractions": [
+          {
+            "name": "Dr. Sun Yat-sen's Mausoleum",
+            "name_en": "Sun Yat-sen Mausoleum",
+            "chinese": "中山陵",
+            "category": "landmark",
+            "cluster_group": "zhongshan-scenic",
+            "city": "nanjing",
+            "district": "Xuanwu",
+            "vibe_tags": [
+              "history",
+              "culture",
+              "scenic"
+            ],
+            "companion_tags": [
+              "solo",
+              "couple",
+              "friends",
+              "elderly-friendly",
+              "all"
+            ],
+            "practical_tags": [
+              "morning-best"
+            ],
+            "energy_level": "medium",
+            "duration_hrs": 2,
+            "price_rmb": 0,
+            "free": true,
+            "kids_age_range": "all",
+            "seasonal": false,
+            "best_months": [
+              3,
+              4,
+              10,
+              11
+            ],
+            "standalone": false,
+            "bookable": false,
+            "icon": false,
+            "klookId": null,
+            "description": "The grand mausoleum of Sun Yat-sen, father of modern China — 392 marble steps climb through forested hillside to a blue-tiled ceremonial hall where the founding revolutionary rests beneath a white marble statue. The scale of the staircase is designed to humble every visitor before they reach the top.",
+            "tip": "The 392 steps represent China's population at the time of construction — a deliberate symbolic choice. Go early on weekdays; the site is free but very popular with domestic tourists on weekends."
+          },
+          {
+            "name": "Niushoushan Cultural Tourism Zone",
+            "name_en": "Niushoushan Buddhist Cultural Zone",
+            "chinese": "牛首山文化旅游区",
+            "category": "landmark",
+            "cluster_group": "zhongshan-scenic",
+            "city": "nanjing",
+            "district": "Jiangning",
+            "vibe_tags": [
+              "culture",
+              "instagrammable",
+              "history"
+            ],
+            "companion_tags": [
+              "solo",
+              "couple",
+              "friends",
+              "family-kids",
+              "elderly-friendly"
+            ],
+            "practical_tags": [
+              "book-ahead"
+            ],
+            "energy_level": "low",
+            "duration_hrs": 3,
+            "price_rmb": 120,
+            "free": false,
+            "kids_age_range": "all",
+            "seasonal": false,
+            "best_months": [],
+            "standalone": false,
+            "bookable": true,
+            "icon": false,
+            "klookId": null,
+            "description": "A vast Buddhist cultural complex built into a twin-peaked mountain south of Nanjing, centred on a monumental underground palace said to house a relic of the Buddha enshrined by Emperor Qianlong. The domed palace emerging from the mountain peak looks more like science fiction than religion — deliberately so.",
+            "tip": "The underground Buddha relic palace is the main draw — allow 90 minutes inside. The cable car saves 45 minutes of walking and the views of the twin peaks from the gondola are worth it."
+          },
+          {
+            "name": "Nanjing Confucius Temple-The Qinhuai River Scenic Area",
+            "name_en": "Confucius Temple & Qinhuai River",
+            "chinese": "夫子庙秦淮风光带",
+            "category": "landmark",
+            "cluster_group": "zhongshan-scenic",
+            "city": "nanjing",
+            "district": "Qinhuai",
+            "vibe_tags": [
+              "history",
+              "culture",
+              "instagrammable",
+              "local"
+            ],
+            "companion_tags": [
+              "solo",
+              "couple",
+              "friends",
+              "family-kids",
+              "elderly-friendly",
+              "all"
+            ],
+            "practical_tags": [
+              "evening-best"
+            ],
+            "energy_level": "low",
+            "duration_hrs": 2.5,
+            "price_rmb": 30,
+            "free": false,
+            "kids_age_range": "all",
+            "seasonal": false,
+            "best_months": [],
+            "standalone": false,
+            "bookable": false,
+            "icon": false,
+            "klookId": null,
+            "description": "A riverside complex of temples, imperial examination halls and traditional teahouses lining the Qinhuai River — Nanjing's most atmospheric historic district, where lantern-lit pleasure boats have drifted past for a thousand years. The evening light reflecting on the river is one of the city's defining images.",
+            "tip": "The Qinhuai River boat ride (¥80pp) is worth doing once, especially at night. The snack street nearby serves authentic Nanjing street food — try the duck blood vermicelli soup (鸭血粉丝汤)."
+          },
+          {
+            "name": "City Wall of Nanjing",
+            "name_en": "Ming City Wall of Nanjing",
+            "chinese": "南京明城墙",
+            "category": "landmark",
+            "cluster_group": "zhongshan-scenic",
+            "city": "nanjing",
+            "district": "Multiple districts",
+            "vibe_tags": [
+              "history",
+              "scenic",
+              "instagrammable"
+            ],
+            "companion_tags": [
+              "solo",
+              "couple",
+              "friends",
+              "elderly-friendly"
+            ],
+            "practical_tags": [],
+            "energy_level": "medium",
+            "duration_hrs": 2,
+            "price_rmb": 50,
+            "free": false,
+            "kids_age_range": "8+",
+            "seasonal": false,
+            "best_months": [
+              3,
+              4,
+              5,
+              9,
+              10,
+              11
+            ],
+            "standalone": false,
+            "bookable": false,
+            "icon": false,
+            "klookId": null,
+            "description": "The longest preserved city wall in the world — 35 kilometres of Ming dynasty brick encircling central Nanjing, built by a million conscripted labourers over 21 years with each brick stamped with the maker's name for quality control. The walkable sections offer elevated views over the old city.",
+            "tip": "The Zhonghua Gate section is the most dramatic — a fortress within a fortress with 27 hidden soldier caves. The Xuanwu Lake section is the most scenic for a leisurely walk."
+          },
+          {
+            "name": "瞻园",
+            "name_en": "Zhan Garden",
+            "chinese": "瞻园",
+            "category": "park",
+            "cluster_group": "zhongshan-scenic",
+            "city": "nanjing",
+            "district": "Qinhuai",
+            "vibe_tags": [
+              "scenic",
+              "history",
+              "instagrammable",
+              "hidden-gem"
+            ],
+            "companion_tags": [
+              "solo",
+              "couple",
+              "friends",
+              "elderly-friendly"
+            ],
+            "practical_tags": [],
+            "energy_level": "low",
+            "duration_hrs": 1.5,
+            "price_rmb": 70,
+            "free": false,
+            "kids_age_range": "all",
+            "seasonal": false,
+            "best_months": [],
+            "standalone": false,
+            "bookable": false,
+            "icon": false,
+            "klookId": null,
+            "description": "Nanjing's finest surviving classical garden, built during the early Ming dynasty as a royal residence and later home to the Taiping Heavenly Kingdom — a series of pavilions, covered walkways and ornamental rocks reflected in still ponds that look unchanged from the paintings of the 14th century.",
+            "tip": "Far less crowded than the Confucius Temple next door despite being steps away. The north garden has more authentic Ming stonework than the south; explore both and compare."
+          }
+        ],
         "restaurants": [],
-        "cafes": []
+        "cafes": [
+          {
+            "name": "Sculpting in Time Cafe",
+            "name_en": "Sculpting in Time Cafe",
+            "chinese": "雕刻时光咖啡馆",
+            "category": "cafe",
+            "type": "cafe",
+            "cluster_group": "zhongshan-scenic",
+            "city": "nanjing",
+            "price_range": "¥35–65pp",
+            "where": "Xuanwu district, Nanjing",
+            "dietary_tags": [
+              "veg-ok"
+            ],
+            "halal": false,
+            "tip": "A beloved Chinese indie cafe chain named after Tarkovsky's book — bookshelf walls, slow music, no time pressure. The waffles and hot chocolate are the food menu highlights.",
+            "icon": "☕"
+          },
+          {
+            "name": "Atmospace Coffee & Eatery (BSD)",
+            "name_en": "Atmospace Coffee",
+            "chinese": "大气层咖啡",
+            "category": "cafe",
+            "type": "cafe",
+            "cluster_group": "zhongshan-scenic",
+            "city": "nanjing",
+            "price_range": "¥35–60pp",
+            "where": "Xuanwu district, Nanjing",
+            "dietary_tags": [
+              "veg-ok"
+            ],
+            "halal": false,
+            "tip": "The iced series here is well thought out — the brown sugar cold brew with oat milk is the signature. Decent food menu for a proper lunch stop between sightseeing.",
+            "icon": "☕"
+          }
+        ]
       },
       "qinhuai-district": {
-        "attractions": [],
-        "restaurants": [],
-        "cafes": []
+        "attractions": [
+          {
+            "name": "Guqinhuai",
+            "name_en": "Old Qinhuai Riverfront",
+            "chinese": "古秦淮",
+            "category": "landmark",
+            "cluster_group": "qinhuai-district",
+            "city": "nanjing",
+            "district": "Qinhuai",
+            "vibe_tags": [
+              "history",
+              "local",
+              "scenic"
+            ],
+            "companion_tags": [
+              "solo",
+              "couple",
+              "friends",
+              "elderly-friendly"
+            ],
+            "practical_tags": [
+              "evening-best"
+            ],
+            "energy_level": "low",
+            "duration_hrs": 1.5,
+            "price_rmb": 0,
+            "free": true,
+            "kids_age_range": "all",
+            "seasonal": false,
+            "best_months": [],
+            "standalone": false,
+            "bookable": false,
+            "icon": false,
+            "klookId": null,
+            "description": "The quieter stretch of the Qinhuai River away from the main tourist complex — traditional whitewashed houses lean over the water, old men fish from stone steps, and the lantern reflections at dusk are the most authentic slice of old Nanjing life remaining. No ticket, no queue.",
+            "tip": "Walk east from the main Confucius Temple area for 10 minutes to reach the less-visited stretch. Best at dusk when the lanterns come on and locals set up their evening stalls."
+          }
+        ],
+        "restaurants": [
+          {
+            "name": "Sichuan Restaurant",
+            "name_en": "Qinhuai Sichuan Restaurant",
+            "chinese": "四川菜馆",
+            "category": "restaurant",
+            "type": "restaurant",
+            "cluster_group": "qinhuai-district",
+            "city": "nanjing",
+            "price_range": "¥60–100pp",
+            "where": "Qinhuai district, Nanjing",
+            "dietary_tags": [
+              "spicy",
+              "contains-pork"
+            ],
+            "halal": false,
+            "tip": "Order the twice-cooked pork (回锅肉) and the mapo tofu — the Nanjing versions are slightly less numbing than authentic Chengdu but the flavour is there. Good value in an otherwise pricey tourist district.",
+            "icon": "🌶️"
+          },
+          {
+            "name": "云南味道",
+            "name_en": "Yunnan Flavours",
+            "chinese": "云南味道",
+            "category": "restaurant",
+            "type": "restaurant",
+            "cluster_group": "qinhuai-district",
+            "city": "nanjing",
+            "price_range": "¥50–90pp",
+            "where": "Qinhuai district, Nanjing",
+            "dietary_tags": [
+              "contains-pork-optional",
+              "veg-ok"
+            ],
+            "halal": false,
+            "tip": "Order the crossing-the-bridge rice noodles (过桥米线) and the wild mushroom hot pot — the Yunnan specialty ingredients are noticeably fresher here than at similar restaurants in the city.",
+            "icon": "🍄"
+          }
+        ],
+        "cafes": [
+          {
+            "name": "Jianshe Coffee",
+            "name_en": "Jianshe Coffee",
+            "chinese": "建设咖啡",
+            "category": "cafe",
+            "type": "cafe",
+            "cluster_group": "qinhuai-district",
+            "city": "nanjing",
+            "price_range": "¥30–55pp",
+            "where": "Qinhuai district, Nanjing",
+            "dietary_tags": [
+              "veg-ok"
+            ],
+            "halal": false,
+            "tip": "A specialty coffee shop in a converted 1950s building — the industrial aesthetic is genuine, not designed. The espresso tonic is the barista's recommendation for first-time visitors.",
+            "icon": "☕"
+          },
+          {
+            "name": "Real Bread Cafe",
+            "name_en": "Real Bread Cafe",
+            "chinese": "真面包咖啡",
+            "category": "cafe",
+            "type": "cafe",
+            "cluster_group": "qinhuai-district",
+            "city": "nanjing",
+            "price_range": "¥35–60pp",
+            "where": "Qinhuai district, Nanjing",
+            "dietary_tags": [
+              "veg-ok"
+            ],
+            "halal": false,
+            "tip": "The sourdough bread is baked in-house daily — arrive before noon when it's fresh. The avocado toast is a reliable lunch option in an area otherwise dominated by Chinese snack food.",
+            "icon": "🍞"
+          }
+        ]
       },
       "daxinggong": {
-        "attractions": [],
+        "attractions": [
+          {
+            "name": "Daming Mansion",
+            "name_en": "Daming Palace Site",
+            "chinese": "大明宫遗址",
+            "category": "landmark",
+            "cluster_group": "daxinggong",
+            "city": "nanjing",
+            "district": "Xuanwu",
+            "vibe_tags": [
+              "history",
+              "culture"
+            ],
+            "companion_tags": [
+              "solo",
+              "couple",
+              "friends",
+              "elderly-friendly"
+            ],
+            "practical_tags": [],
+            "energy_level": "low",
+            "duration_hrs": 1,
+            "price_rmb": 30,
+            "free": false,
+            "kids_age_range": "8+",
+            "seasonal": false,
+            "best_months": [],
+            "standalone": false,
+            "bookable": false,
+            "icon": false,
+            "klookId": null,
+            "description": "The excavated remains of one of the Ming dynasty's earliest palatial complexes — stone foundations and restored gateway arches mark the footprint of the grand structure built before the capital moved to Beijing. Smaller and quieter than the major sites, it rewards those who want history without the crowds.",
+            "tip": "The interpretation panels are better than average for a secondary Nanjing site. Combine with Zhan Garden and the city wall for a quiet Ming-dynasty half-day away from the tourist trail."
+          }
+        ],
         "restaurants": [],
-        "cafes": []
+        "cafes": [
+          {
+            "name": "Third Realm Cafe",
+            "name_en": "Third Realm Cafe",
+            "chinese": "第三空间咖啡",
+            "category": "cafe",
+            "type": "cafe",
+            "cluster_group": "daxinggong",
+            "city": "nanjing",
+            "price_range": "¥35–60pp",
+            "where": "Daxinggong area, Nanjing",
+            "dietary_tags": [
+              "veg-ok"
+            ],
+            "halal": false,
+            "tip": "The concept is a third space between home and office — the furniture arrangement reflects it, with working desks and sofas mixed together. Good wifi, long opening hours.",
+            "icon": "☕"
+          },
+          {
+            "name": "Saerdna Coffee",
+            "name_en": "Saerdna Coffee",
+            "chinese": "萨尔德纳咖啡",
+            "category": "cafe",
+            "type": "cafe",
+            "cluster_group": "daxinggong",
+            "city": "nanjing",
+            "price_range": "¥35–65pp",
+            "where": "Daxinggong area, Nanjing",
+            "dietary_tags": [
+              "veg-ok"
+            ],
+            "halal": false,
+            "tip": "Specialty single-origin focus — the barista rotates the featured bean monthly and writes up the tasting notes on a blackboard. Ask for a recommendation rather than ordering blind.",
+            "icon": "☕"
+          },
+          {
+            "name": "Hug Coffee",
+            "name_en": "Hug Coffee",
+            "chinese": "拥抱咖啡",
+            "category": "cafe",
+            "type": "cafe",
+            "cluster_group": "daxinggong",
+            "city": "nanjing",
+            "price_range": "¥30–55pp",
+            "where": "Daxinggong area, Nanjing",
+            "dietary_tags": [
+              "veg-ok"
+            ],
+            "halal": false,
+            "tip": "Neighbourhood cafe popular with young professionals — the flat white is well-made and the sesame latte is the house specialty worth trying once.",
+            "icon": "☕"
+          }
+        ]
       },
       "city-north": {
-        "attractions": [],
+        "attractions": [
+          {
+            "name": "Nanjing Municipal Museum",
+            "name_en": "Nanjing Museum",
+            "chinese": "南京博物院",
+            "category": "museum",
+            "cluster_group": "city-north",
+            "city": "nanjing",
+            "district": "Xuanwu",
+            "vibe_tags": [
+              "history",
+              "culture"
+            ],
+            "companion_tags": [
+              "solo",
+              "couple",
+              "friends",
+              "elderly-friendly",
+              "all"
+            ],
+            "practical_tags": [
+              "book-ahead"
+            ],
+            "energy_level": "low",
+            "duration_hrs": 2.5,
+            "price_rmb": 0,
+            "free": true,
+            "kids_age_range": "8+",
+            "seasonal": false,
+            "best_months": [],
+            "standalone": false,
+            "bookable": false,
+            "icon": false,
+            "klookId": null,
+            "description": "One of China's top three museums with over 430,000 artefacts spanning 7,000 years of Chinese civilisation — the jade burial suits, Ming dynasty imperial porcelain and a life-size recreation of a 1930s Nanjing street are the unmissable highlights. The building itself is a magnificent blend of traditional palace architecture and modern design.",
+            "tip": "Free but requires advance booking on the WeChat mini-program — you cannot walk in without a reservation. The Republican-era street exhibition in the basement is the most unusual and least crowded section."
+          }
+        ],
         "restaurants": [],
         "cafes": []
       }
     },
     "qingdao": {
       "zhongshan-road": {
-        "attractions": [],
-        "restaurants": [],
-        "cafes": []
+        "attractions": [
+          {
+            "name": "Qingdao Zhongshan Park",
+            "name_en": "Zhongshan Park",
+            "chinese": "中山公园",
+            "category": "park",
+            "cluster_group": "zhongshan-road",
+            "city": "qingdao",
+            "district": "Shinan",
+            "vibe_tags": [
+              "scenic",
+              "nature",
+              "local"
+            ],
+            "companion_tags": [
+              "solo",
+              "couple",
+              "family-kids",
+              "elderly-friendly",
+              "all"
+            ],
+            "practical_tags": [
+              "morning-best"
+            ],
+            "energy_level": "low",
+            "duration_hrs": 1.5,
+            "price_rmb": 0,
+            "free": true,
+            "kids_age_range": "all",
+            "seasonal": true,
+            "best_months": [
+              3,
+              4,
+              5
+            ],
+            "standalone": false,
+            "bookable": false,
+            "icon": false,
+            "klookId": null,
+            "description": "Qingdao's largest public park, famous for its spectacular cherry blossom season when thousands of Japanese cherry trees bloom simultaneously across the hillside — a spectacle that rivals Kyoto for sheer volume of pink. Outside blossom season it's a quiet neighbourhood park with teahouses and tai chi groups.",
+            "tip": "Peak cherry blossom is typically the last week of March to first week of April — exact timing varies by 2–3 weeks depending on the year. Come on a weekday; weekend crowds are enormous."
+          },
+          {
+            "name": "Zhanqiao Pier",
+            "name_en": "Zhanqiao Pier",
+            "chinese": "栈桥",
+            "category": "landmark",
+            "cluster_group": "zhongshan-road",
+            "city": "qingdao",
+            "district": "Shinan",
+            "vibe_tags": [
+              "scenic",
+              "instagrammable",
+              "history"
+            ],
+            "companion_tags": [
+              "solo",
+              "couple",
+              "friends",
+              "elderly-friendly",
+              "all"
+            ],
+            "practical_tags": [
+              "morning-best",
+              "evening-best"
+            ],
+            "energy_level": "low",
+            "duration_hrs": 1,
+            "price_rmb": 0,
+            "free": true,
+            "kids_age_range": "all",
+            "seasonal": false,
+            "best_months": [],
+            "standalone": false,
+            "bookable": false,
+            "icon": false,
+            "klookId": null,
+            "description": "Qingdao's most iconic landmark — an 1891 pier stretching 440 metres into the Yellow Sea, ending at the two-storey Huilan Pavilion that appears on every bottle of Tsingtao beer. The view back to shore reveals the full sweep of the German-colonial red-roof coastline.",
+            "tip": "The sunrise from the pavilion is exceptional and the pier is empty before 7am. The Tsingtao bottle label view is from directly in front of the pier entrance looking toward the pavilion — that's the photo."
+          },
+          {
+            "name": "五四广场",
+            "name_en": "May Fourth Square",
+            "chinese": "五四广场",
+            "category": "landmark",
+            "cluster_group": "zhongshan-road",
+            "city": "qingdao",
+            "district": "Shinan",
+            "vibe_tags": [
+              "scenic",
+              "instagrammable",
+              "local"
+            ],
+            "companion_tags": [
+              "solo",
+              "couple",
+              "friends",
+              "elderly-friendly",
+              "all"
+            ],
+            "practical_tags": [
+              "evening-best"
+            ],
+            "energy_level": "low",
+            "duration_hrs": 1,
+            "price_rmb": 0,
+            "free": true,
+            "kids_age_range": "all",
+            "seasonal": false,
+            "best_months": [],
+            "standalone": false,
+            "bookable": false,
+            "icon": false,
+            "klookId": null,
+            "description": "A sweeping coastal public plaza anchored by a monumental red steel sculpture called 'The May Wind' — a spiral form symbolising the 1919 student movement that began in Qingdao. The plaza faces the sea with the city skyline behind, making it Qingdao's most photographed modern landmark.",
+            "tip": "The plaza is spectacular at night when the sculpture is lit and the Olympic Sailing Centre across the water glows. The seafront promenade extending east from here is the best evening walk in Qingdao."
+          },
+          {
+            "name": "Xiaoyushan Park",
+            "name_en": "Xiaoyushan Park",
+            "chinese": "小鱼山公园",
+            "category": "park",
+            "cluster_group": "zhongshan-road",
+            "city": "qingdao",
+            "district": "Shinan",
+            "vibe_tags": [
+              "scenic",
+              "instagrammable",
+              "hidden-gem"
+            ],
+            "companion_tags": [
+              "solo",
+              "couple",
+              "friends",
+              "elderly-friendly"
+            ],
+            "practical_tags": [
+              "morning-best"
+            ],
+            "energy_level": "low",
+            "duration_hrs": 1,
+            "price_rmb": 10,
+            "free": false,
+            "kids_age_range": "all",
+            "seasonal": false,
+            "best_months": [],
+            "standalone": false,
+            "bookable": false,
+            "icon": false,
+            "klookId": null,
+            "description": "A small hilltop park with a traditional Chinese pavilion offering the best panoramic view of Qingdao's old German colonial district — a sea of rust-red tile rooftops stretching to the harbour with the Zhanqiao pier in the foreground. One of those viewpoints that justifies the whole trip.",
+            "tip": "The viewing pavilion is free once inside the park (¥10 entry). Come in the morning before haze sets in over the sea. The surrounding Badaguan neighbourhood is worth a wander afterward."
+          }
+        ],
+        "restaurants": [
+          {
+            "name": "Xianggong",
+            "name_en": "Xianggong Seafood Restaurant",
+            "chinese": "鲜公海鲜",
+            "category": "restaurant",
+            "type": "restaurant",
+            "cluster_group": "zhongshan-road",
+            "city": "qingdao",
+            "price_range": "¥80–150pp",
+            "where": "Zhongshan Road area, Shinan",
+            "dietary_tags": [
+              "seafood-ok"
+            ],
+            "halal": false,
+            "tip": "Order the steamed clams with garlic, the chilli crab, and a Tsingtao draft — the classic Qingdao seafood combination. Market-price items are priced per jin (500g); ask to see the weight before cooking.",
+            "icon": "🦀"
+          }
+        ],
+        "cafes": [
+          {
+            "name": "Vanilla Specialty Coffee",
+            "name_en": "Vanilla Specialty Coffee",
+            "chinese": "香草精品咖啡",
+            "category": "cafe",
+            "type": "cafe",
+            "cluster_group": "zhongshan-road",
+            "city": "qingdao",
+            "price_range": "¥35–60pp",
+            "where": "Zhongshan Road area, Qingdao",
+            "dietary_tags": [
+              "veg-ok"
+            ],
+            "halal": false,
+            "tip": "One of Qingdao's better specialty coffee shops — the Ethiopian natural process pour-over is the house specialty. Good place to regroup between the pier and Badaguan.",
+            "icon": "☕"
+          },
+          {
+            "name": "Halo Soul Coffee",
+            "name_en": "Halo Soul Coffee",
+            "chinese": "光晕咖啡",
+            "category": "cafe",
+            "type": "cafe",
+            "cluster_group": "zhongshan-road",
+            "city": "qingdao",
+            "price_range": "¥30–55pp",
+            "where": "Zhongshan Road area, Qingdao",
+            "dietary_tags": [
+              "veg-ok"
+            ],
+            "halal": false,
+            "tip": "The sea view window seats fill fast — arrive early or be prepared to wait. The sea salt latte is the signature drink and pairs well with the almond cake.",
+            "icon": "☕"
+          },
+          {
+            "name": "The Tree Nearby Me Sea",
+            "name_en": "The Tree Nearby Me Sea Cafe",
+            "chinese": "海边的树咖啡",
+            "category": "cafe",
+            "type": "cafe",
+            "cluster_group": "zhongshan-road",
+            "city": "qingdao",
+            "price_range": "¥35–60pp",
+            "where": "Coastal area, Shinan, Qingdao",
+            "dietary_tags": [
+              "veg-ok"
+            ],
+            "halal": false,
+            "tip": "Terrace seating directly facing the sea — rare in Qingdao where most seafront buildings are restaurants. The cold brew is made in small batches and sells out by afternoon.",
+            "icon": "☕"
+          },
+          {
+            "name": "Angelinas",
+            "name_en": "Angelinas Cafe",
+            "chinese": "安吉丽娜咖啡",
+            "category": "cafe",
+            "type": "cafe",
+            "cluster_group": "zhongshan-road",
+            "city": "qingdao",
+            "price_range": "¥35–65pp",
+            "where": "Zhongshan Road area, Qingdao",
+            "dietary_tags": [
+              "veg-ok"
+            ],
+            "halal": false,
+            "tip": "European-style patisserie alongside espresso — the croissants are baked fresh and the pain au chocolat is the best in Qingdao. Popular with the expat community for a reason.",
+            "icon": "🥐"
+          },
+          {
+            "name": "Qingdao Coffee Chayi Street",
+            "name_en": "Chayi Street Coffee",
+            "chinese": "茶艺街咖啡",
+            "category": "cafe",
+            "type": "cafe",
+            "cluster_group": "zhongshan-road",
+            "city": "qingdao",
+            "price_range": "¥25–50pp",
+            "where": "Chayi Street, Qingdao",
+            "dietary_tags": [
+              "veg-ok"
+            ],
+            "halal": false,
+            "tip": "An old tea-culture street that now mixes traditional teahouses with specialty coffee shops — walk the whole street and pick based on vibe. The traditional oolong houses on the north end are more interesting than the coffee shops.",
+            "icon": "🍵"
+          }
+        ]
       },
       "eight-passes": {
-        "attractions": [],
-        "restaurants": [],
+        "attractions": [
+          {
+            "name": "Badaguan",
+            "name_en": "Badaguan Scenic Area",
+            "chinese": "八大关",
+            "category": "landmark",
+            "cluster_group": "eight-passes",
+            "city": "qingdao",
+            "district": "Shinan",
+            "vibe_tags": [
+              "scenic",
+              "instagrammable",
+              "history",
+              "hidden-gem"
+            ],
+            "companion_tags": [
+              "solo",
+              "couple",
+              "friends",
+              "elderly-friendly"
+            ],
+            "practical_tags": [
+              "morning-best"
+            ],
+            "energy_level": "low",
+            "duration_hrs": 2,
+            "price_rmb": 0,
+            "free": true,
+            "kids_age_range": "all",
+            "seasonal": true,
+            "best_months": [
+              3,
+              4,
+              5,
+              10,
+              11
+            ],
+            "standalone": false,
+            "bookable": false,
+            "icon": false,
+            "klookId": null,
+            "description": "Eight tree-lined streets named after famous mountain passes, each planted with a different tree species — the combined effect is a neighbourhood that looks like a European resort town dropped onto the Chinese coast, with 200 villas representing 20 different architectural styles from Gothic to Moorish. Free to walk, impossible to photograph badly.",
+            "tip": "The best single street is Shanhaiguan Road (山海关路) for its dense canopy and mix of villa styles. Spring (March–April) when cherry and magnolia bloom simultaneously turns it into something genuinely magical."
+          },
+          {
+            "name": "Signal Mountain Park",
+            "name_en": "Signal Mountain Park",
+            "chinese": "信号山公园",
+            "category": "park",
+            "cluster_group": "eight-passes",
+            "city": "qingdao",
+            "district": "Shinan",
+            "vibe_tags": [
+              "scenic",
+              "instagrammable",
+              "history"
+            ],
+            "companion_tags": [
+              "solo",
+              "couple",
+              "friends",
+              "elderly-friendly"
+            ],
+            "practical_tags": [
+              "morning-best"
+            ],
+            "energy_level": "medium",
+            "duration_hrs": 1,
+            "price_rmb": 15,
+            "free": false,
+            "kids_age_range": "all",
+            "seasonal": false,
+            "best_months": [],
+            "standalone": false,
+            "bookable": false,
+            "icon": false,
+            "klookId": null,
+            "description": "The hilltop from which German colonial administrators once controlled Qingdao's harbour communications — three distinctive mushroom-shaped observation towers crown the summit, offering the most elevated view of the red-roof colonial district and the bay below.",
+            "tip": "The rotating observation tower (additional ¥10) gives a 360-degree view but moves slowly — just walk around the fixed upper deck instead for the same view free. Combine with Badaguan below for a morning half-day."
+          },
+          {
+            "name": "小鱼山",
+            "name_en": "Xiaoyushan Viewpoint",
+            "chinese": "小鱼山",
+            "category": "park",
+            "cluster_group": "eight-passes",
+            "city": "qingdao",
+            "district": "Shinan",
+            "vibe_tags": [
+              "scenic",
+              "instagrammable"
+            ],
+            "companion_tags": [
+              "solo",
+              "couple",
+              "friends",
+              "elderly-friendly"
+            ],
+            "practical_tags": [
+              "morning-best"
+            ],
+            "energy_level": "low",
+            "duration_hrs": 0.5,
+            "price_rmb": 10,
+            "free": false,
+            "kids_age_range": "all",
+            "seasonal": false,
+            "best_months": [],
+            "standalone": false,
+            "bookable": false,
+            "icon": false,
+            "klookId": null,
+            "description": "A compact hilltop viewpoint with a traditional pavilion overlooking Qingdao's most photogenic stretch of colonial rooftops and the harbour beyond — the view is better than Signal Mountain for pure composition, and the crowds are smaller.",
+            "tip": "Very quick visit — 20-30 minutes is enough. The pavilion is most photogenic from the path below it rather than from inside. Combine with the Badaguan neighbourhood walk immediately surrounding it."
+          },
+          {
+            "name": "Huashi Building",
+            "name_en": "Huashi Lou (Flower Stone Villa)",
+            "chinese": "花石楼",
+            "category": "landmark",
+            "cluster_group": "eight-passes",
+            "city": "qingdao",
+            "district": "Shinan",
+            "vibe_tags": [
+              "history",
+              "instagrammable",
+              "hidden-gem"
+            ],
+            "companion_tags": [
+              "solo",
+              "couple",
+              "friends"
+            ],
+            "practical_tags": [],
+            "energy_level": "low",
+            "duration_hrs": 0.5,
+            "price_rmb": 15,
+            "free": false,
+            "kids_age_range": "all",
+            "seasonal": false,
+            "best_months": [],
+            "standalone": false,
+            "bookable": false,
+            "icon": false,
+            "klookId": null,
+            "description": "A 1930s Gothic-Baroque villa built from local granite and flower-shaped stones on a rocky promontory above the sea — said to have been a residence of Chiang Kai-shek, though historians dispute the claim. The building is strikingly beautiful regardless of its political history.",
+            "tip": "The interior is open and worth the ¥15 for the original Art Deco fixtures and the upstairs sea view. The rocky promontory below the villa is accessible at low tide and makes for excellent photos of the building from the water's edge."
+          }
+        ],
+        "restaurants": [
+          {
+            "name": "Shuxiangyuan",
+            "name_en": "Shuxiangyuan Shandong Restaurant",
+            "chinese": "书香苑",
+            "category": "restaurant",
+            "type": "restaurant",
+            "cluster_group": "eight-passes",
+            "city": "qingdao",
+            "price_range": "¥70–120pp",
+            "where": "Badaguan area, Shinan, Qingdao",
+            "dietary_tags": [
+              "seafood-ok",
+              "contains-pork-optional"
+            ],
+            "halal": false,
+            "tip": "Order the braised sea cucumber (红烧海参) if budget allows — it's the signature Shandong luxury dish and this kitchen does it well. The deep-fried scallion pancake (葱油饼) is the must-order side.",
+            "icon": "🐚"
+          }
+        ],
         "cafes": []
       },
       "signal-hill": {
-        "attractions": [],
+        "attractions": [
+          {
+            "name": "Tsingtao Brewery Museum",
+            "name_en": "Tsingtao Beer Museum",
+            "chinese": "青岛啤酒博物馆",
+            "category": "museum",
+            "cluster_group": "signal-hill",
+            "city": "qingdao",
+            "district": "Shibei",
+            "vibe_tags": [
+              "culture",
+              "local",
+              "fun",
+              "instagrammable"
+            ],
+            "companion_tags": [
+              "solo",
+              "couple",
+              "friends"
+            ],
+            "practical_tags": [],
+            "energy_level": "low",
+            "duration_hrs": 1.5,
+            "price_rmb": 80,
+            "free": false,
+            "kids_age_range": "13+",
+            "seasonal": false,
+            "best_months": [],
+            "standalone": false,
+            "bookable": false,
+            "icon": false,
+            "klookId": null,
+            "description": "The 1903 German-built brewery where Tsingtao beer has been made for over a century, now a museum tracing the brand's history from colonial curiosity to China's most exported beer. The tour ends in a tasting room where you drink fresh unfiltered beer directly from the production line.",
+            "tip": "The unfiltered draft beer at the end is genuinely different from bottled Tsingtao — richer and less carbonated. Buy the souvenir can of fresh beer to take away; it stays good for 7 days refrigerated."
+          }
+        ],
         "restaurants": [],
-        "cafes": []
+        "cafes": [
+          {
+            "name": "77 Coffee",
+            "name_en": "77 Coffee",
+            "chinese": "77咖啡",
+            "category": "cafe",
+            "type": "cafe",
+            "cluster_group": "signal-hill",
+            "city": "qingdao",
+            "price_range": "¥30–55pp",
+            "where": "Shibei district, near Tsingtao Brewery",
+            "dietary_tags": [
+              "veg-ok"
+            ],
+            "halal": false,
+            "tip": "A neighbourhood specialty cafe near the brewery — good for a coffee before or after the museum tour. The cold brew is the house specialty and a nice counterpoint to the warm beer tasting.",
+            "icon": "☕"
+          }
+        ]
       },
       "laoshan": {
-        "attractions": [],
-        "restaurants": [],
-        "cafes": []
+        "attractions": [
+          {
+            "name": "Qingdao Laoshan Mountain Scenic Resort",
+            "name_en": "Laoshan Mountain",
+            "chinese": "崂山",
+            "category": "nature",
+            "cluster_group": "laoshan",
+            "city": "qingdao",
+            "district": "Laoshan (40min drive)",
+            "vibe_tags": [
+              "scenic",
+              "nature",
+              "adventure",
+              "culture"
+            ],
+            "companion_tags": [
+              "solo",
+              "couple",
+              "friends"
+            ],
+            "practical_tags": [
+              "morning-best",
+              "book-ahead"
+            ],
+            "energy_level": "high",
+            "duration_hrs": 6,
+            "price_rmb": 130,
+            "free": false,
+            "kids_age_range": "8+",
+            "seasonal": false,
+            "best_months": [
+              4,
+              5,
+              9,
+              10
+            ],
+            "standalone": true,
+            "bookable": true,
+            "icon": false,
+            "klookId": null,
+            "description": "China's only coastal mountain range — granite peaks rising directly from the Yellow Sea, topped with ancient Taoist temples and cut through by waterfalls and cedar forests. The combination of sacred mountain scenery and ocean backdrop is unique in northern China.",
+            "tip": "Take the scenic bus from Qingdao and enter at Jufeng — the eastern face. The Taiqing Palace at the base is the most important Taoist temple; allow an hour there before the main climb."
+          }
+        ],
+        "restaurants": [
+          {
+            "name": "Hanbaba Restaurant",
+            "name_en": "Hanbaba Laoshan Restaurant",
+            "chinese": "汉巴巴",
+            "category": "restaurant",
+            "type": "restaurant",
+            "cluster_group": "laoshan",
+            "city": "qingdao",
+            "price_range": "¥50–80pp",
+            "where": "Laoshan scenic area, Qingdao",
+            "dietary_tags": [
+              "seafood-ok",
+              "contains-pork-optional"
+            ],
+            "halal": false,
+            "tip": "A reliable stop near the Laoshan entrance for local Shandong dishes before or after the mountain. The Laoshan mineral water tofu (崂山豆腐) is a regional specialty worth trying.",
+            "icon": "🥢"
+          },
+          {
+            "name": "Haihali",
+            "name_en": "Haihali Seafood",
+            "chinese": "海哈里海鲜",
+            "category": "restaurant",
+            "type": "restaurant",
+            "cluster_group": "laoshan",
+            "city": "qingdao",
+            "price_range": "¥80–140pp",
+            "where": "Laoshan coastal area, Qingdao",
+            "dietary_tags": [
+              "seafood-ok"
+            ],
+            "halal": false,
+            "tip": "Directly on the coast with tank-to-table seafood — point at what you want alive in the tank and they cook it. The abalone and sea urchin are the premium items worth splurging on if budget allows.",
+            "icon": "🦑"
+          }
+        ],
+        "cafes": [
+          {
+            "name": "Marina Coffee",
+            "name_en": "Marina Coffee",
+            "chinese": "码头咖啡",
+            "category": "cafe",
+            "type": "cafe",
+            "cluster_group": "laoshan",
+            "city": "qingdao",
+            "price_range": "¥30–55pp",
+            "where": "Laoshan marina area, Qingdao",
+            "dietary_tags": [
+              "veg-ok"
+            ],
+            "halal": false,
+            "tip": "Overlooks the small fishing marina — the terrace seating with boats bobbing in the foreground is the most relaxing coffee spot in the Laoshan area. Good for decompressing after the mountain hike.",
+            "icon": "☕"
+          },
+          {
+            "name": "Doulu Cafe",
+            "name_en": "Doulu Cafe",
+            "chinese": "豆露咖啡",
+            "category": "cafe",
+            "type": "cafe",
+            "cluster_group": "laoshan",
+            "city": "qingdao",
+            "price_range": "¥25–50pp",
+            "where": "Laoshan area, Qingdao",
+            "dietary_tags": [
+              "veg-ok"
+            ],
+            "halal": false,
+            "tip": "A small cafe using locally sourced Laoshan spring water for brewing — the difference in taste is noticeable. The owner is an avid hiker and has good trail recommendations for Laoshan.",
+            "icon": "☕"
+          },
+          {
+            "name": "Lang Coffee",
+            "name_en": "Lang Coffee",
+            "chinese": "浪咖啡",
+            "category": "cafe",
+            "type": "cafe",
+            "cluster_group": "laoshan",
+            "city": "qingdao",
+            "price_range": "¥30–55pp",
+            "where": "Laoshan coastal area, Qingdao",
+            "dietary_tags": [
+              "veg-ok"
+            ],
+            "halal": false,
+            "tip": "The name means 'wave' and the cafe sits close enough to the water to hear the sea. The iced americano with Laoshan spring water is the signature — refreshing after a hot mountain hike.",
+            "icon": "☕"
+          }
+        ]
       },
       "wusi-square": {
-        "attractions": [],
+        "attractions": [
+          {
+            "name": "Qingdao Aquarium",
+            "name_en": "Qingdao Aquarium",
+            "chinese": "青岛水族馆",
+            "category": "nature",
+            "cluster_group": "wusi-square",
+            "city": "qingdao",
+            "district": "Shinan",
+            "vibe_tags": [
+              "fun",
+              "nature"
+            ],
+            "companion_tags": [
+              "family-kids",
+              "couple",
+              "friends"
+            ],
+            "practical_tags": [],
+            "energy_level": "low",
+            "duration_hrs": 2,
+            "price_rmb": 80,
+            "free": false,
+            "kids_age_range": "all",
+            "seasonal": false,
+            "best_months": [],
+            "standalone": false,
+            "bookable": false,
+            "icon": false,
+            "klookId": null,
+            "description": "China's oldest aquarium, established in 1932 in a distinctive colonial-era building on the waterfront — the shark tank and the sea turtle rehabilitation centre are the headline exhibits. Compact by modern standards but with genuine historical character the newer mega-aquariums lack.",
+            "tip": "The feeding sessions are timed — check the board at the entrance for the day's schedule and plan your visit around the shark feeding (usually 10am and 3pm). The outdoor sea lion enclosure is free to view from the promenade."
+          },
+          {
+            "name": "Qingdao Music Square",
+            "name_en": "Qingdao Music Square",
+            "chinese": "青岛音乐广场",
+            "category": "landmark",
+            "cluster_group": "wusi-square",
+            "city": "qingdao",
+            "district": "Shinan",
+            "vibe_tags": [
+              "local",
+              "scenic"
+            ],
+            "companion_tags": [
+              "solo",
+              "couple",
+              "friends",
+              "elderly-friendly",
+              "all"
+            ],
+            "practical_tags": [
+              "evening-best"
+            ],
+            "energy_level": "low",
+            "duration_hrs": 1,
+            "price_rmb": 0,
+            "free": true,
+            "kids_age_range": "all",
+            "seasonal": false,
+            "best_months": [],
+            "standalone": false,
+            "bookable": false,
+            "icon": false,
+            "klookId": null,
+            "description": "An open-air waterfront plaza adjacent to the Olympic Sailing Centre, designed around a large musical fountain that performs nightly with light and sound shows. The surrounding promenade connects to May Fourth Square and offers unbroken views across Qingdao Bay.",
+            "tip": "The fountain show runs at 8pm and 9pm nightly in summer — check seasonal schedules. The plaza connects directly to May Fourth Square via the coastal walkway, making it a natural extension of an evening stroll."
+          }
+        ],
         "restaurants": [],
         "cafes": []
       }
