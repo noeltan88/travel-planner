@@ -1,6 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, Component } from 'react';
 import mapboxgl from 'mapbox-gl';
 
+// Token from .env.local (VITE_MAPBOX_TOKEN) — set there so it is never
+// committed to git, but is always defined for local dev and CI/CD builds.
 const TOKEN  = import.meta.env.VITE_MAPBOX_TOKEN;
 const STYLE  = 'mapbox://styles/mapbox/streets-v12';
 const ACCENT = '#E8472A';
@@ -29,9 +31,38 @@ const CITY_CENTERS = {
   qingdao:      { lng: 120.3826, lat: 36.0671 },
 };
 
-export default function MapView({ days, dayStops, activeDay, onDayChange, primaryCity }) {
+// ── Error boundary ────────────────────────────────────────────────────────────
+export class MapErrorBoundary extends Component {
+  constructor(props) { super(props); this.state = { error: false }; }
+  static getDerivedStateFromError() { return { error: true }; }
+  render() {
+    if (this.state.error) {
+      return (
+        <div style={{
+          display: 'flex', flexDirection: 'column', alignItems: 'center',
+          justifyContent: 'center', height: '100%', color: '#94a3b8', gap: 8,
+        }}>
+          <p style={{ fontSize: 32 }}>🗺️</p>
+          <p style={{ fontSize: 14 }}>Map unavailable</p>
+          <button
+            onClick={() => this.setState({ error: false })}
+            style={{ marginTop: 8, fontSize: 12, color: ACCENT, background: 'none', border: 'none', cursor: 'pointer' }}
+          >
+            Try again
+          </button>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
+// ── MapView ───────────────────────────────────────────────────────────────────
+
+export default function MapView({ days, dayStops, activeDay, onDayChange, primaryCity, isVisible }) {
   const containerRef = useRef(null);
   const mapRef       = useRef(null);
+  const initedRef    = useRef(false);   // guarantees init runs exactly once
   const markersRef   = useRef([]);
   const popupRef     = useRef(null);
   const [selectedId, setSelectedId] = useState(null);
@@ -40,12 +71,12 @@ export default function MapView({ days, dayStops, activeDay, onDayChange, primar
   const cityKey = days[activeDay]?.city || primaryCity;
   const center  = CITY_CENTERS[cityKey] || CITY_CENTERS.guangzhou;
 
-  // ── Initialise map once, after the container DOM node exists ────
+  // ── Initialise map exactly once ───────────────────────────────────────────
   useEffect(() => {
-    if (!containerRef.current || mapRef.current) return;
+    if (initedRef.current || !containerRef.current) return;
+    initedRef.current = true;
 
     mapboxgl.accessToken = TOKEN;
-
     mapRef.current = new mapboxgl.Map({
       container:          containerRef.current,
       style:              STYLE,
@@ -53,21 +84,31 @@ export default function MapView({ days, dayStops, activeDay, onDayChange, primar
       zoom:               12,
       attributionControl: false,
     });
-
     mapRef.current.addControl(new mapboxgl.NavigationControl({ showCompass: false }), 'top-right');
 
     return () => {
+      // Only clean up if the component is truly removed from the DOM
       mapRef.current?.remove();
-      mapRef.current = null;
+      mapRef.current  = null;
+      initedRef.current = false;
     };
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // ── Refresh markers whenever the active day changes ─────────────
+  // ── Resize whenever the map container becomes visible ────────────────────
+  useEffect(() => {
+    if (isVisible && mapRef.current) {
+      // rAF ensures the CSS display:block has been painted before resize
+      requestAnimationFrame(() => {
+        mapRef.current?.resize();
+      });
+    }
+  }, [isVisible]);
+
+  // ── Refresh markers whenever the active day changes ───────────────────────
   useEffect(() => {
     const map = mapRef.current;
     if (!map) return;
 
-    // Clear previous markers and popup
     markersRef.current.forEach(m => m.remove());
     markersRef.current = [];
     popupRef.current?.remove();
@@ -79,7 +120,6 @@ export default function MapView({ days, dayStops, activeDay, onDayChange, primar
 
     function placeMarkers() {
       valid.forEach((stop, i) => {
-        // Numbered pin element
         const el = document.createElement('div');
         el.style.cssText = [
           'width:30px', 'height:30px', 'border-radius:50%',
@@ -113,7 +153,6 @@ export default function MapView({ days, dayStops, activeDay, onDayChange, primar
         );
       });
 
-      // Fit viewport to markers
       if (valid.length === 1) {
         map.flyTo({ center: [valid[0].lng, valid[0].lat], zoom: 14, duration: 700 });
       } else {
@@ -126,7 +165,6 @@ export default function MapView({ days, dayStops, activeDay, onDayChange, primar
       }
     }
 
-    // Wait for style to be ready before placing markers
     if (map.isStyleLoaded()) {
       placeMarkers();
     } else {
@@ -162,8 +200,7 @@ export default function MapView({ days, dayStops, activeDay, onDayChange, primar
         })}
       </div>
 
-      {/* Map container — always in DOM so mapboxgl keeps a stable node.
-          The "no stops" overlay is absolutely positioned on top. */}
+      {/* Map container — always in DOM, never conditionally rendered */}
       <div style={{ height: 340, flexShrink: 0, position: 'relative' }}>
         <div ref={containerRef} style={{ width: '100%', height: '100%' }} />
         {stops.length === 0 && (
