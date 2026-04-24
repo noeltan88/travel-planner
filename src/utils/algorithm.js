@@ -1,8 +1,14 @@
 import masterDb from '../data/china-master-db-v1.json';
 
 // ── Constants ─────────────────────────────────────────────────────
-const PACE_HOURS   = { chill: 5, balance: 7, pack: 9 };
-const TRANSIT_MINS = 20; // walking / taxi time between stops
+const PACE_HOURS        = { chill: 4, balance: 7, pack: 9 };
+const PACE_MAX_STOPS    = { chill: 2, balance: 4, pack: 6 };
+const PACE_MAX_CLUSTERS = { chill: 1, balance: 2, pack: 3 };
+const TRAVEL_SAME_HRS   = 1 / 3;  // 20 min — same cluster
+const TRAVEL_DIFF_HRS   = 0.75;   // 45 min — different cluster
+const TRAVEL_SAME_MINS  = 20;
+const TRAVEL_DIFF_MINS  = 45;
+const LUNCH_HRS         = 1;
 
 const EMOJI_OVERRIDES = {
   guangzhou: '🥘', shenzhen: '🤖', shanghai: '🌆', chongqing: '🌶️',
@@ -12,16 +18,15 @@ const EMOJI_OVERRIDES = {
   xiamen: '🎹', huangshan: '🌅', nanjing: '🏯', qingdao: '🍺',
 };
 
-// companion_tags group mapping
 const COMPANION_MAP = {
-  solo:            'solo',
-  couple:          'couple',
-  'family-kids':   'family-kids',
-  friends:         'friends',
-  'family-elderly':'elderly-friendly',
+  solo:             'solo',
+  couple:           'couple',
+  'family-kids':    'family-kids',
+  friends:          'friends',
+  'family-elderly': 'elderly-friendly',
 };
 
-// ── Public helpers ────────────────────────────────────────────────
+// ── Public helpers ─────────────────────────────────────────────────
 
 export function loadCityData(city) {
   return masterDb.cities[city] || null;
@@ -38,7 +43,6 @@ export function allocateDaysPerCity(cities, totalDays) {
   const sumMin = info.reduce((s, c) => s + c.min, 0);
 
   if (totalDays <= sumMin) {
-    // Not enough days — share what we have, minimum 1 each
     const result = {};
     let rem = totalDays;
     info.forEach((c, i) => {
@@ -49,7 +53,6 @@ export function allocateDaysPerCity(cities, totalDays) {
     return result;
   }
 
-  // Distribute surplus proportionally by min_days weight
   const surplus = totalDays - sumMin;
   const result  = {};
   let usedSurplus = 0;
@@ -82,7 +85,6 @@ function haversine(lat1, lng1, lat2, lng2) {
 function scoreAttraction(a, { vibes, group, grandparents, isKidsTrip }) {
   let score = 0;
 
-  // Vibe match (+15 per matching tag; 'surprise' = baseline for everything)
   if (vibes.includes('surprise')) {
     score += 5;
   } else {
@@ -91,19 +93,16 @@ function scoreAttraction(a, { vibes, group, grandparents, isKidsTrip }) {
     }
   }
 
-  // Companion group match
   const cTag = COMPANION_MAP[group];
   if (cTag && a.companion_tags?.includes(cTag)) score += 10;
   if (a.companion_tags?.includes('all'))         score += 3;
 
-  // Elderly and kids boosts
-  if (grandparents  && a.companion_tags?.includes('elderly-friendly')) score += 8;
-  if (isKidsTrip    && (
+  if (grandparents && a.companion_tags?.includes('elderly-friendly')) score += 8;
+  if (isKidsTrip && (
     a.companion_tags?.includes('family-kids') ||
     a.companion_tags?.includes('kid-friendly')
   )) score += 10;
 
-  // Quality signals
   if (a.vibe_tags?.includes('trending'))   score += 3;
   if (a.vibe_tags?.includes('hidden-gem')) score += 2;
   if (a.free)                              score += 2;
@@ -113,18 +112,23 @@ function scoreAttraction(a, { vibes, group, grandparents, isKidsTrip }) {
 
 // ── Filtering ─────────────────────────────────────────────────────
 
-function filterAttractions(pool, { pace, group, kidsAges, isKidsTrip, travelMonth }) {
+function filterAttractions(pool, { pace, group, kidsAges, isKidsTrip, travelMonth, effectivelyAdults }) {
   return pool.filter(a => {
-    // Seasonal: exclude if travel month not in best_months
+    // Seasonal exclusion
     if (a.seasonal && Array.isArray(a.best_months) && a.best_months.length && travelMonth) {
       if (!a.best_months.includes(travelMonth)) return false;
     }
     // Chill pace: no high energy
-    if (pace === 'chill'          && a.energy_level === 'high') return false;
-    // Elderly travel: no high energy
+    if (pace === 'chill' && a.energy_level === 'high') return false;
+    // Elderly: no high energy
     if (group === 'family-elderly' && a.energy_level === 'high') return false;
-    // Very young kids (0–3): no high energy
-    if (isKidsTrip && kidsAges.includes('0-3') && a.energy_level === 'high') return false;
+    // FIX 4/5: kids 0-3 — low energy + family-friendly companion tag required
+    if (!effectivelyAdults && isKidsTrip && kidsAges.includes('0-3')) {
+      if (a.energy_level !== 'low') return false;
+      if (!a.companion_tags?.includes('family-kids') &&
+          !a.companion_tags?.includes('kid-friendly') &&
+          !a.companion_tags?.includes('all')) return false;
+    }
     return true;
   });
 }
@@ -132,21 +136,54 @@ function filterAttractions(pool, { pace, group, kidsAges, isKidsTrip, travelMont
 // ── Day-hour budgets ──────────────────────────────────────────────
 
 function buildDayBudgets(totalDays, pace, arrivalTime, departureTime) {
-  const base = PACE_HOURS[pace] ?? 7;
-  return Array.from({ length: totalDays }, (_, i) => {
-    let hours     = base;
-    let startHour = 9;
+  const baseHours    = PACE_HOURS[pace] ?? 7;
+  const baseMaxStops = PACE_MAX_STOPS[pace] ?? 4;
 
+  return Array.from({ length: totalDays }, (_, i) => {
+    let hours         = baseHours;
+    let startHour     = 9;
+    let maxStops      = baseMaxStops;
+    let preferEvening = false;
+    let lowEnergyOnly = false;
+    let skipLunch     = false;
+    let noStandalone  = false; // FIX 8
+    let noHighEnergy  = false; // FIX 8
+
+    // FIX 6 — Day 1 arrival constraints
     if (i === 0) {
-      if (arrivalTime === 'afternoon') { hours = Math.max(2, base - 3); startHour = 13; }
-      if (arrivalTime === 'evening')   { hours = 2;                     startHour = 18; }
+      noStandalone = true; // FIX 8: first day always lightest
+      noHighEnergy = true; // FIX 8
+      if (arrivalTime === 'afternoon') {
+        startHour = 14;
+        hours     = 3;
+        maxStops  = Math.min(maxStops, 2);
+      } else if (arrivalTime === 'evening') {
+        startHour     = 18;
+        hours         = 2;
+        maxStops      = 1;
+        preferEvening = true;
+      }
+      // morning → full hours, start 9:00
     }
-    if (i === totalDays - 1) {
-      if (departureTime === 'morning')   hours = 2;
-      if (departureTime === 'afternoon') hours = Math.max(2, base - 3);
-      // evening → full hours
+
+    // FIX 7 — Last day departure constraints
+    if (i === totalDays - 1 && totalDays > 1) {
+      if (departureTime === 'morning') {
+        startHour     = 9;
+        hours         = 1;
+        maxStops      = 1;
+        lowEnergyOnly = true;
+        skipLunch     = true;
+      } else if (departureTime === 'afternoon') {
+        startHour = 9;
+        hours     = 2;
+        maxStops  = Math.min(maxStops, 2);
+        skipLunch = true;
+      }
+      // evening → full day, no overrides
     }
-    return { hours, startHour };
+
+    return { hours, startHour, maxStops, preferEvening, lowEnergyOnly, skipLunch, noStandalone, noHighEnergy };
   });
 }
 
@@ -163,14 +200,12 @@ function sequenceByEnergy(stops, isLastDay = false) {
     !s.practical_tags?.includes('evening-best')
   );
 
-  // Last day: ascending energy (most relaxed first)
   if (isLastDay) {
     const rank = { low: 0, medium: 1, high: 2 };
     rest.sort((a, b) => (rank[a.energy_level] ?? 1) - (rank[b.energy_level] ?? 1));
     return [...morningFirst, ...rest, ...eveningLast];
   }
 
-  // Normal days: interleave low/med before high — no two highs adjacent
   const lowMed = rest.filter(s => s.energy_level !== 'high');
   const high   = rest.filter(s => s.energy_level === 'high');
   const mixed  = [];
@@ -186,10 +221,15 @@ function sequenceByEnergy(stops, isLastDay = false) {
 
 function assignTimeSlots(stops, startHour = 9) {
   let cur = startHour * 60;
-  return stops.map(s => {
+  return stops.map((s, i) => {
     const start = formatTime(cur);
     const end   = formatTime(cur + (s.duration_hrs ?? 1) * 60);
-    cur += (s.duration_hrs ?? 1) * 60 + TRANSIT_MINS;
+    if (i < stops.length - 1) {
+      const thisCluster = s.cluster_group          || '_default';
+      const nextCluster = stops[i + 1]?.cluster_group || '_default';
+      const transitMins = thisCluster === nextCluster ? TRAVEL_SAME_MINS : TRAVEL_DIFF_MINS;
+      cur += (s.duration_hrs ?? 1) * 60 + transitMins;
+    }
     return { ...s, startTime: start, endTime: end };
   });
 }
@@ -218,15 +258,12 @@ function pickFood(foodPool, preferredCluster, dietary, usedFoodIds) {
 
   const picked = [];
 
-  // 1. Prefer same-cluster food
   const clusterPick = eligible.find(f => f.cluster_group === preferredCluster);
   if (clusterPick) { picked.push(clusterPick); usedFoodIds.add(clusterPick.id); }
 
-  // 2. Include a cafe if present
   const cafe = eligible.find(f => !usedFoodIds.has(f.id) && f.type === 'cafe');
   if (cafe) { picked.push(cafe); usedFoodIds.add(cafe.id); }
 
-  // 3. Fill to 2 with anything eligible
   for (const f of eligible) {
     if (picked.length >= 2) break;
     if (!usedFoodIds.has(f.id)) { picked.push(f); usedFoodIds.add(f.id); }
@@ -238,10 +275,22 @@ function pickFood(foodPool, preferredCluster, dietary, usedFoodIds) {
 // ── Core city-day builder ─────────────────────────────────────────
 
 function buildCityDays(city, scoredPool, kidsAttractions, foodPool, budgets, params) {
-  const { group, dietary = ['none'], kids_ages: kidsAges = [] } = params;
-  const isKidsTrip = group === 'family-kids';
+  const {
+    pace = 'balance',
+    group,
+    dietary = ['none'],
+    kids_ages: kidsAges = [],
+    effectivelyAdults = false,
+  } = params;
 
-  // Standalones (Great Wall, Disneyland, etc.) get their own day
+  const isKidsTrip   = group === 'family-kids';
+  const realKidsTrip = isKidsTrip && !effectivelyAdults;
+  const has03        = realKidsTrip && kidsAges.includes('0-3');
+  const has47        = realKidsTrip && kidsAges.includes('4-7');
+
+  const maxClusters  = PACE_MAX_CLUSTERS[pace] ?? 2;
+
+  // Standalones never on Day 1 (FIX 8)
   const standalones = scoredPool.filter(a => a.standalone === true);
   const regular     = scoredPool.filter(a => !a.standalone);
 
@@ -262,79 +311,186 @@ function buildCityDays(city, scoredPool, kidsAttractions, foodPool, budgets, par
   let standaloneQ   = [...standalones];
   let clusterCursor = 0;
 
-  budgets.forEach(({ hours: budget, startHour }, dayIdx) => {
+  budgets.forEach(({
+    hours: budgetHours,
+    startHour,
+    maxStops: budgetMaxStops,
+    preferEvening,
+    lowEnergyOnly,
+    skipLunch,
+    noStandalone,
+    noHighEnergy,
+  }, dayIdx) => {
     const isFirstDay = dayIdx === 0;
     const isLastDay  = dayIdx === budgets.length - 1;
     const dayStops   = [];
-    let   hoursLeft  = budget;
 
-    // ── 1. Try a standalone day ───────────────────────────────────
-    const sa = standaloneQ.find(a => !usedIds.has(a.id) && a.duration_hrs <= hoursLeft);
-    if (sa) {
-      standaloneQ = standaloneQ.filter(a => a.id !== sa.id);
-      dayStops.push(sa);
-      usedIds.add(sa.id);
-      hoursLeft -= sa.duration_hrs;
+    // FIX 1: available = hours - lunch (lunch skipped on tight departure days)
+    let available    = skipLunch ? budgetHours : budgetHours - LUNCH_HRS;
+    let prevCluster  = null;
+    const clustersUsed = new Set();
 
-    } else {
-      // ── 2. Cluster-based fill ─────────────────────────────────────
-      // Find the next cluster that still has unused stops, fill the whole day from it
-      let clusterFound = false;
-      for (let attempt = 0; attempt < clusters.length; attempt++) {
-        const cluster = clusters[(clusterCursor + attempt) % clusters.length];
-        let addedFromCluster = 0;
+    // FIX 2 + FIX 5: effective stop limit
+    let effectiveMax = budgetMaxStops;
+    if (has03)                          effectiveMax = Math.min(effectiveMax, 1);
+    else if (has47 && pace === 'chill') effectiveMax = Math.min(effectiveMax, 2);
 
-        for (const a of cluster) {
-          if (usedIds.has(a.id)) continue;
-          if ((a.duration_hrs ?? 1) > hoursLeft) continue;
-          // Rule 14: first stop on first day must not be high energy
-          if (isFirstDay && dayStops.length === 0 && a.energy_level === 'high') continue;
-          // Last day: ease in with low/medium first stop
-          if (isLastDay  && dayStops.length === 0 && a.energy_level === 'high') continue;
+    // Can we add this attraction right now?
+    function canAdd(a, { mustEveningBest = false } = {}) {
+      if (dayStops.length >= effectiveMax)                              return false;
+      if (usedIds.has(a.id))                                            return false;
+      if (lowEnergyOnly && a.energy_level !== 'low')                   return false;
+      if ((noHighEnergy || isFirstDay) && a.energy_level === 'high')   return false;
+      // FIX 5: kids 0-3 — low energy + family-friendly required at slot level too
+      if (has03 && a.energy_level !== 'low')                           return false;
+      if (has03 && !a.companion_tags?.includes('family-kids') &&
+          !a.companion_tags?.includes('kid-friendly') &&
+          !a.companion_tags?.includes('all'))                           return false;
+      // Soft evening preference (FIX 6)
+      if (mustEveningBest && !a.practical_tags?.includes('evening-best')) return false;
+      // FIX 3: cluster proximity
+      const cluster    = a.cluster_group || '_default';
+      const isNewClust = !clustersUsed.has(cluster);
+      if (isNewClust && clustersUsed.size >= maxClusters)              return false;
+      // FIX 1: time budget with transit
+      const transitCost = dayStops.length === 0 ? 0
+        : (cluster === prevCluster ? TRAVEL_SAME_HRS : TRAVEL_DIFF_HRS);
+      if ((a.duration_hrs ?? 1) + transitCost > available)            return false;
+      return true;
+    }
 
-          dayStops.push(a);
-          usedIds.add(a.id);
-          hoursLeft -= a.duration_hrs ?? 1;
-          addedFromCluster++;
-        }
+    // Add a stop and update running state
+    function addStop(a) {
+      const cluster     = a.cluster_group || '_default';
+      const transitCost = dayStops.length === 0 ? 0
+        : (cluster === prevCluster ? TRAVEL_SAME_HRS : TRAVEL_DIFF_HRS);
+      available   -= (a.duration_hrs ?? 1) + transitCost;
+      prevCluster  = cluster;
+      clustersUsed.add(cluster);
+      usedIds.add(a.id);
+      dayStops.push(a);
+    }
 
-        if (addedFromCluster > 0) {
-          clusterCursor = (clusterCursor + attempt + 1) % clusters.length;
-          clusterFound = true;
-          break;
-        }
+    // ── 1. Standalone day (never on Day 1 — FIX 8) ───────────────
+    let usedStandalone = false;
+    if (!noStandalone) {
+      const sa = standaloneQ.find(a => canAdd(a));
+      if (sa) {
+        standaloneQ  = standaloneQ.filter(a => a.id !== sa.id);
+        addStop(sa);
+        usedStandalone = true;
       }
+    }
 
-      // ── 3. Fallback: any unused stop that fits (avoids empty days) ──
-      if (!clusterFound || dayStops.length === 0) {
-        const fallback = scoredPool
-          .filter(a => !usedIds.has(a.id) && (a.duration_hrs ?? 1) <= hoursLeft)
-          .sort((a, b) => a.duration_hrs - b.duration_hrs)[0]; // shortest-first
-        if (fallback) {
-          dayStops.push(fallback);
-          usedIds.add(fallback.id);
-          hoursLeft -= fallback.duration_hrs ?? 1;
+    // ── 2. Cluster-based fill ─────────────────────────────────────
+    if (!usedStandalone) {
+
+      if (isFirstDay) {
+        // FIX 8: Day 1 — fill from energy-ascending pool (low first, no high energy)
+        const energyRank = { low: 0, medium: 1, high: 2 };
+        const day1Pool   = [...scoredPool]
+          .filter(a => !a.standalone)
+          .sort((a, b) => (energyRank[a.energy_level] ?? 1) - (energyRank[b.energy_level] ?? 1));
+
+        for (const a of day1Pool) {
+          if (dayStops.length >= effectiveMax) break;
+          if (canAdd(a)) addStop(a);
+        }
+        // Advance cursor past any cluster used on Day 1
+        if (clusters.length > 0) {
+          let next = 0;
+          for (let i = 0; i < clusters.length; i++) {
+            const key = clusters[i][0]?.cluster_group || '_default';
+            if (!clustersUsed.has(key)) { next = i; break; }
+          }
+          clusterCursor = next;
+        }
+
+      } else {
+        // Normal days: cluster-first fill
+        // For evening arrival: sort stops within each cluster with evening-best first
+        const workClusters = preferEvening
+          ? clusters.map(c => [...c].sort((a, b) => {
+              const aE = a.practical_tags?.includes('evening-best') ? 0 : 1;
+              const bE = b.practical_tags?.includes('evening-best') ? 0 : 1;
+              return aE - bE;
+            }))
+          : clusters;
+
+        let clusterFound = false;
+        for (let attempt = 0; attempt < workClusters.length; attempt++) {
+          const cluster        = workClusters[(clusterCursor + attempt) % workClusters.length];
+          let addedFromCluster = 0;
+
+          for (const a of cluster) {
+            // For evening day: prefer evening-best on first pick; fall back on same pass
+            const mustEvening = preferEvening && dayStops.length === 0;
+            if (!canAdd(a, { mustEveningBest: mustEvening })) {
+              // soft fall-through: if only failed on mustEveningBest, allow on second check
+              if (mustEvening && canAdd(a)) { addStop(a); addedFromCluster++; continue; }
+              continue;
+            }
+            addStop(a);
+            addedFromCluster++;
+          }
+
+          if (addedFromCluster > 0) {
+            clusterCursor = (clusterCursor + attempt + 1) % workClusters.length;
+            clusterFound  = true;
+            break;
+          }
+        }
+
+        // ── 3. Fallback: any unused stop that fits ─────────────────
+        if (!clusterFound || dayStops.length === 0) {
+          for (const a of scoredPool) {
+            if (dayStops.length >= effectiveMax) break;
+            if (canAdd(a)) addStop(a);
+          }
         }
       }
     }
 
     // ── 4. Kids-attraction injection (one per day) ────────────────
-    if (isKidsTrip && kidsAttractions.length > 0) {
+    if (realKidsTrip && kidsAttractions.length > 0 && dayStops.length < effectiveMax) {
       const kidPick = kidsAttractions.find(ka => {
         if (usedKidsIds.has(ka.id)) return false;
-        if ((ka.duration_hrs ?? 2) > hoursLeft) return false;
-        if (kidsAges.includes('0-3') && ka.energy_level === 'high') return false;
+        const cluster     = ka.cluster_group || '_default';
+        const transitCost = dayStops.length === 0 ? 0
+          : (cluster === prevCluster ? TRAVEL_SAME_HRS : TRAVEL_DIFF_HRS);
+        if ((ka.duration_hrs ?? 2) + transitCost > available)  return false;
+        if (has03 && ka.energy_level === 'high')               return false;
         return true;
       });
       if (kidPick) {
+        const cluster     = kidPick.cluster_group || '_default';
+        const transitCost = dayStops.length === 0 ? 0
+          : (cluster === prevCluster ? TRAVEL_SAME_HRS : TRAVEL_DIFF_HRS);
+        available  -= (kidPick.duration_hrs ?? 2) + transitCost;
+        prevCluster = cluster;
+        clustersUsed.add(cluster);
         dayStops.push({ ...kidPick, _score: 0, category: kidPick.category || 'attraction' });
         usedKidsIds.add(kidPick.id);
-        hoursLeft -= kidPick.duration_hrs ?? 2;
       }
     }
 
     // ── 5. Sequence by energy + practical tags ────────────────────
-    const ordered = sequenceByEnergy(dayStops, isLastDay);
+    let ordered;
+    if (isFirstDay) {
+      // Day 1 already filled in energy-ascending order; just honour morning/evening pins
+      const morningFirst = dayStops.filter(s => s.practical_tags?.includes('morning-only'));
+      const eveningLast  = dayStops.filter(s =>
+        s.practical_tags?.includes('evening-best') &&
+        !s.practical_tags?.includes('morning-only')
+      );
+      const rest = dayStops.filter(s =>
+        !s.practical_tags?.includes('morning-only') &&
+        !s.practical_tags?.includes('evening-best')
+      );
+      ordered = [...morningFirst, ...rest, ...eveningLast];
+    } else {
+      ordered = sequenceByEnergy(dayStops, isLastDay);
+    }
 
     // ── 6. Assign start/end times ─────────────────────────────────
     const withTimes = assignTimeSlots(ordered, startHour);
@@ -392,31 +548,33 @@ export function buildFullItinerary(answers) {
   const cities = (Array.isArray(answers.city) ? answers.city : [answers.city]).filter(Boolean);
   if (!cities.length) return { days: [], allAttractionsByCity: {}, cities: [] };
 
-  const totalDays    = answers.duration      || 4;
-  const pace         = answers.pace          || 'balance';
-  const group        = answers.group         || 'solo';
-  const vibes        = Array.isArray(answers.vibe)    ? answers.vibe    : [];
-  const dietary      = Array.isArray(answers.dietary) ? answers.dietary : ['none'];
-  const kidsAges     = answers.kids_ages     || [];
-  const grandparents = answers.grandparents  || false;
-  const arrivalTime  = answers.arrival_time  || 'afternoon';
-  const departureTime= answers.departure_time|| 'evening';
-  const isKidsTrip   = group === 'family-kids';
-  const travelMonth  = answers.departure_date
+  const totalDays     = answers.duration       || 4;
+  const pace          = answers.pace           || 'balance';
+  const group         = answers.group          || 'solo';
+  const vibes         = Array.isArray(answers.vibe)    ? answers.vibe    : [];
+  const dietary       = Array.isArray(answers.dietary) ? answers.dietary : ['none'];
+  const kidsAges      = answers.kids_ages      || [];
+  const grandparents  = answers.grandparents   || false;
+  const arrivalTime   = answers.arrival_time   || 'afternoon';
+  const departureTime = answers.departure_time || 'evening';
+  const isKidsTrip    = group === 'family-kids';
+  const travelMonth   = answers.departure_date
     ? parseInt(answers.departure_date.split('-')[1], 10)
     : null;
 
-  // Pre-compute per-day hour budgets across the whole trip
-  const allBudgets = buildDayBudgets(totalDays, pace, arrivalTime, departureTime);
+  // FIX 4: kids 13+ only → skip all kids logic, treat as adults
+  const effectivelyAdults = isKidsTrip &&
+    kidsAges.length > 0 &&
+    kidsAges.every(k => k === '13+');
 
-  // Allocate days per city
+  const allBudgets = buildDayBudgets(totalDays, pace, arrivalTime, departureTime);
   const allocation = allocateDaysPerCity(cities, totalDays);
 
   const allDays              = [];
   const allAttractionsByCity = {};
   let   globalBudgetOffset   = 0;
 
-  cities.forEach((city, cityIdx) => {
+  cities.forEach(city => {
     const data = loadCityData(city);
     if (!data) return;
 
@@ -424,28 +582,32 @@ export function buildFullItinerary(answers) {
     const cityBudgets = allBudgets.slice(globalBudgetOffset, globalBudgetOffset + cityDays);
     globalBudgetOffset += cityDays;
 
-    // Score & filter
+    const effectiveKidsTrip = isKidsTrip && !effectivelyAdults;
+
     const scored   = (data.attractions || []).map(a =>
-      scoreAttraction(a, { vibes, group, grandparents, isKidsTrip })
+      scoreAttraction(a, { vibes, group, grandparents, isKidsTrip: effectiveKidsTrip })
     );
-    const filtered = filterAttractions(scored, { pace, group, kidsAges, isKidsTrip, travelMonth });
+    const filtered = filterAttractions(scored, {
+      pace, group, kidsAges,
+      isKidsTrip: effectiveKidsTrip,
+      travelMonth,
+      effectivelyAdults,
+    });
     filtered.sort((a, b) => b._score - a._score);
 
-    const kidsAttractions = isKidsTrip ? (data.kids_attractions || []) : [];
+    const kidsAttractions = effectiveKidsTrip ? (data.kids_attractions || []) : [];
 
     allAttractionsByCity[city] = data.attractions || [];
 
-    // Build this city's days
     const cityDayObjects = buildCityDays(
       city,
       filtered,
       kidsAttractions,
       [...(data.food || [])],
       cityBudgets,
-      { group, dietary, kids_ages: kidsAges, grandparents },
+      { pace, group, dietary, kids_ages: kidsAges, grandparents, effectivelyAdults },
     );
 
-    // City header on first day of each city block
     if (cityDayObjects.length > 0) {
       cityDayObjects[0].cityHeader = {
         name:    data.name,
@@ -458,7 +620,6 @@ export function buildFullItinerary(answers) {
     allDays.push(...cityDayObjects);
   });
 
-  // Global day numbers
   allDays.forEach((d, i) => { d.day = i + 1; d.label = `Day ${i + 1}`; });
 
   return { days: allDays, allAttractionsByCity, cities };
