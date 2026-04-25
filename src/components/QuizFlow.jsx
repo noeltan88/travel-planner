@@ -233,6 +233,7 @@ export default function QuizFlow({ onComplete }) {
   const [calYear,  setCalYear]  = useState(todayD.getFullYear());
   const [calMonth, setCalMonth] = useState(todayD.getMonth());
   const calSwipeStartX = useRef(null);
+  const calendarRef    = useRef(null);  // FIX 3: for non-passive touchmove
 
   // Family-kids extras scroll ref
   const familyExtrasRef = useRef(null);
@@ -292,11 +293,20 @@ export default function QuizFlow({ onComplete }) {
   useEffect(() => {
     if (!dep || !ret || dateError) return;
     setShowFlightTimes(true);
-    const t = setTimeout(() => {
-      flightTimesRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }, 400);
-    return () => clearTimeout(t);
   }, [dep, ret]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // FIX 3 — prevent page scroll while swiping calendar horizontally
+  useEffect(() => {
+    const el = calendarRef.current;
+    if (!el) return;
+    const handler = (e) => {
+      if (calSwipeStartX.current === null) return;
+      const dx = Math.abs(e.touches[0].clientX - calSwipeStartX.current);
+      if (dx > 8) e.preventDefault(); // horizontal swipe → block vertical scroll
+    };
+    el.addEventListener('touchmove', handler, { passive: false });
+    return () => el.removeEventListener('touchmove', handler);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const canContinue = isDateRange
     ? Boolean(dep && ret && !dateError && totalDays >= 1)
@@ -568,13 +578,12 @@ export default function QuizFlow({ onComplete }) {
 
       {/* ── DATES ────────────────────────────────────────────────────────── */}
       {isDateRange && (
-        <div style={{ flex: 1, overflowY: 'auto', padding: '0 16px 120px' }}>
-          {/* Month navigation — sticky so arrows stay accessible while scrolling */}
+        <div style={{ flex: 1, overflow: 'hidden', overscrollBehavior: 'none', padding: '0 16px 8px', display: 'flex', flexDirection: 'column' }}>
+          {/* Month navigation */}
           <div style={{
-            position: 'sticky', top: 0, zIndex: 2,
             background: BG,
             display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-            padding: '8px 2px 10px',
+            padding: '8px 2px 10px', flexShrink: 0,
           }}>
             <button
               onClick={prevCal}
@@ -595,9 +604,10 @@ export default function QuizFlow({ onComplete }) {
 
           {/* Animated calendar card — swipe left/right to change month */}
           <div
+            ref={calendarRef}
             onTouchStart={onCalTouchStart}
             onTouchEnd={onCalTouchEnd}
-            style={{ background: '#fff', borderRadius: 18, padding: '14px 10px', marginBottom: 14, touchAction: 'pan-y' }}
+            style={{ background: '#fff', borderRadius: 18, padding: '14px 10px', marginBottom: 10, touchAction: 'pan-y', flexShrink: 0 }}
           >
             <AnimatedCalendar year={calYear} month={calMonth} dep={dep} ret={ret} onDayClick={handleDayTap} />
           </div>

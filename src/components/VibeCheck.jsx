@@ -94,7 +94,7 @@ function buildVibeCards(selectedCities) {
 }
 
 // ── VibeCard ───────────────────────────────────────────────────────────────────
-function VibeCard({ card, cardIdx, cardTotal, style = {}, dragX = 0, isActive = false }) {
+function VibeCard({ card, cardIdx, cardTotal, style = {}, dragX = 0, isActive = false, dimAmount = 0 }) {
   const absDx = Math.abs(dragX);
 
   return (
@@ -115,11 +115,19 @@ function VibeCard({ card, cardIdx, cardTotal, style = {}, dragX = 0, isActive = 
         background: 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 50%, transparent 100%)',
       }} />
 
-      {/* FIX 2: single centred LIKE/NAH indicator, no rotation, 42px/800 */}
+      {/* FIX 4: depth overlay on background cards — dims at rest, clears as drag progresses */}
+      {dimAmount > 0 && (
+        <div style={{
+          position: 'absolute', inset: 0, zIndex: 6, pointerEvents: 'none',
+          background: `rgba(0,0,0,${(dimAmount * 0.4).toFixed(3)})`,
+        }} />
+      )}
+
+      {/* FIX 1: LIKE/NAH at top-centre of card */}
       {isActive && absDx > 15 && (
         <div style={{
-          position: 'absolute', top: '50%', left: '50%',
-          transform: 'translate(-50%, -50%)',
+          position: 'absolute', top: 24, left: '50%',
+          transform: 'translateX(-50%)',
           zIndex: 10, pointerEvents: 'none',
           opacity: Math.min(1, absDx / 80),
         }}>
@@ -294,7 +302,7 @@ export default function VibeCheck({ selectedCities, onComplete }) {
       setFlyOff(null);
       setDragX(0);
       dragXRef.current = 0;
-    }, 350);
+    }, 400);
   }
 
   // ── Touch handlers ─────────────────────────────────────────────────────────
@@ -344,15 +352,17 @@ export default function VibeCheck({ selectedCities, onComplete }) {
     const shouldSwipe = Math.abs(finalDragX) > 100 || velocity > 0.4;
 
     if (shouldSwipe && !isSwipingRef.current) {
+      const dir = finalDragX > 0 ? 'right' : 'left';
       isSwipingRef.current    = true;
-      flyDirectionRef.current = finalDragX > 0 ? 'right' : 'left';
-      // DO NOT reset dragX — card continues in its current direction into the fly-off
+      flyDirectionRef.current = dir;
+      setFlyOff(dir); // triggers re-render → CSS transition carries card off-screen
+      // DO NOT reset dragX — the CSS transition starts from the current rendered position
       const capturedIdx    = idx;
       const capturedScores = scores;
       setTimeout(() => {
         const capturedCard = rawCards[capturedIdx];
         if (capturedCard) {
-          const isLove    = flyDirectionRef.current === 'right';
+          const isLove    = dir === 'right'; // use captured dir — not the cleared ref
           const newScores = { ...capturedScores, [capturedCard.vibeCategory]: (capturedScores[capturedCard.vibeCategory] || 0) + (isLove ? 2 : -1) };
           setScores(newScores);
           const next = capturedIdx + 1;
@@ -364,7 +374,7 @@ export default function VibeCheck({ selectedCities, onComplete }) {
         setFlyOff(null);
         dragXRef.current = 0;
         setDragX(0);
-      }, 350);
+      }, 400);
     } else if (!isSwipingRef.current) {
       dragXRef.current = 0;
       setDragX(0); // snap back — failed swipe
@@ -673,19 +683,20 @@ export default function VibeCheck({ selectedCities, onComplete }) {
   const card2 = rawCards[idx + 2];
   if (!card0) return null;
 
-  // Card 2 & 3 scale proportionally to drag distance, snap to full when flying
+  // Card 2 & 3 scale proportionally to drag distance, spring to full when flying
   const progress = flyOff ? 1 : Math.min(1, Math.abs(dragX) / 120);
-  const c1Scale  = 0.95 + 0.05 * progress;
-  const c1TY     = 8   - 8  * progress;
-  const c2Scale  = 0.90 + 0.05 * progress;
-  const c2TY     = 16  - 8  * progress;
+  const c1Scale  = 0.92 + 0.08 * progress;  // rest: 0.92 → full: 1.00
+  const c1TY     = 12  - 12  * progress;    // rest: 12px → full: 0px
+  const c2Scale  = 0.85 + 0.07 * progress;  // rest: 0.85 → full: 0.92
+  const c2TY     = 24  - 12  * progress;    // rest: 24px → full: 12px
 
-  // Active card: fly off to ±150vw when flyOff is set, otherwise follow drag
-  const flyX     = flyOff === 'right' ? '150vw' : '-150vw';
-  const flyRot   = flyOff === 'right' ? 30 : -30;
+  // Active card: fly off to ±120vw when flyOff is set, otherwise follow drag
+  const flyX      = flyOff === 'right' ? '120vw' : '-120vw';
+  const flyRot    = flyOff === 'right' ? 25 : -25;
   const activeTx  = flyOff ? flyX : `${dragX}px`;
   const activeRot = flyOff ? flyRot : dragX * 0.05;
-  const activeOp  = flyOff ? 0 : 1;
+  // Opacity: fades slightly while dragging, goes to 0 when flying
+  const activeOp  = flyOff ? 0 : isDragging ? Math.max(0.6, 1 - Math.abs(dragX) / 300) : 1;
 
   const isLast = idx === rawCards.length - 1;
 
@@ -743,10 +754,14 @@ export default function VibeCheck({ selectedCities, onComplete }) {
         {card2 && (
           <VibeCard
             card={card2} cardIdx={idx + 2} cardTotal={total}
+            dimAmount={Math.max(0, 0.35 * (1 - progress))}
             style={{
               transform: `scale(${c2Scale}) translateY(${c2TY}px)`,
-              transition: isDragging || flyOff ? 'none' : 'transform 0.3s ease-out',
+              transition: isDragging ? 'none'
+                : flyOff ? 'transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1) 50ms'
+                : 'transform 0.3s ease-out',
               zIndex: 1,
+              boxShadow: '0 2px 8px rgba(0,0,0,0.07)',
             }}
           />
         )}
@@ -755,10 +770,14 @@ export default function VibeCheck({ selectedCities, onComplete }) {
         {card1 && (
           <VibeCard
             card={card1} cardIdx={idx + 1} cardTotal={total}
+            dimAmount={Math.max(0, 0.2 * (1 - progress))}
             style={{
               transform: `scale(${c1Scale}) translateY(${c1TY}px)`,
-              transition: isDragging ? 'none' : 'transform 0.3s ease-out',
+              transition: isDragging ? 'none'
+                : flyOff ? 'transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1)'
+                : 'transform 0.3s ease-out',
               zIndex: 2,
+              boxShadow: '0 4px 16px rgba(0,0,0,0.10)',
             }}
           />
         )}
@@ -771,9 +790,10 @@ export default function VibeCheck({ selectedCities, onComplete }) {
           style={{
             transform: `translateX(${activeTx}) rotate(${activeRot}deg)`,
             transition: flyOff
-              ? 'transform 350ms ease-out, opacity 350ms ease-out'
-              : isDragging ? 'none' : 'transform 0.2s ease-out',
+              ? 'transform 400ms ease-out, opacity 400ms ease-out'
+              : isDragging ? 'none' : 'transform 200ms ease-out',
             opacity: activeOp,
+            pointerEvents: flyOff ? 'none' : 'auto',
             zIndex: 3,
             cursor: isDragging ? 'grabbing' : 'grab',
             boxShadow: '0 8px 40px rgba(0,0,0,0.18)',
