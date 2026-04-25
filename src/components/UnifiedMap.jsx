@@ -437,6 +437,7 @@ export default function UnifiedMap({
   const markersRef          = useRef([]);
   const resizeTimer         = useRef(null);
   const scrollRef           = useRef(null);
+  const toastTimerRef       = useRef(null);
 
   // Stale-closure-safe refs
   const allAttractionsByCity_ = useRef(allAttractionsByCity);
@@ -462,6 +463,7 @@ export default function UnifiedMap({
   const [exploreSelected, setExploreSelected] = useState(null);  // item from explore marker tap
   const [swapState,       setSwapState]       = useState(null);
   const [swapAlts,        setSwapAlts]        = useState([]);
+  const [addToast,        setAddToast]        = useState(null);  // { dayNum } | null
 
   // Keep setter ref in sync (allows marker click closures to call current setter)
   setExploreSelectedRef.current = setExploreSelected;
@@ -785,6 +787,17 @@ export default function UnifiedMap({
     setExploreFilter(prev => (prev === cat ? null : cat));
   }
 
+  // ── Add-to-day handler — calls parent, shows success toast ───────────────
+  function handleAddToDay(item, dayIdx) {
+    onAddToDay?.(item, dayIdx);
+    clearTimeout(toastTimerRef.current);
+    setAddToast({ dayNum: dayIdx + 1 });
+    toastTimerRef.current = setTimeout(() => setAddToast(null), 2200);
+  }
+
+  // Cleanup toast timer on unmount
+  useEffect(() => () => clearTimeout(toastTimerRef.current), []);
+
   // ── Render ────────────────────────────────────────────────────────────────
   return (
     <div style={{
@@ -1045,9 +1058,34 @@ export default function UnifiedMap({
         <ExploreSheet
           item={exploreSelected}
           days={days}
-          onAddToDay={onAddToDay}
+          onAddToDay={handleAddToDay}
           onClose={() => setExploreSelected(null)}
         />
+      )}
+
+      {/* ── Add-to-day success toast ─────────────────────────────────────── */}
+      {addToast && (
+        <div style={{
+          position:      'absolute',
+          top:           60,
+          left:          '50%',
+          transform:     'translateX(-50%)',
+          zIndex:        60,
+          pointerEvents: 'none',
+        }}>
+          <div className="explore-toast" style={{
+            background:  '#10B981',
+            color:       '#fff',
+            borderRadius: 20,
+            padding:     '9px 20px',
+            fontSize:    13,
+            fontWeight:  700,
+            boxShadow:   '0 3px 14px rgba(16,185,129,0.38)',
+            whiteSpace:  'nowrap',
+          }}>
+            ✓ Added to Day {addToast.dayNum}
+          </div>
+        </div>
       )}
     </div>
   );

@@ -62,6 +62,17 @@ export default function App() {
     );
   }
 
+  function addStopToDay(attraction, dayIdx) {
+    setDayStops(prev => {
+      const next  = [...prev];
+      const stops = [...(next[dayIdx] || [])];
+      // Avoid duplicates
+      if (stops.find(s => s.id === attraction.id)) return prev;
+      next[dayIdx] = [...stops, { ...attraction, startTime: 'Added', endTime: '' }];
+      return next;
+    });
+  }
+
   if (screen === 'quiz') {
     return <QuizFlow onComplete={handleQuizComplete} />;
   }
@@ -80,6 +91,7 @@ export default function App() {
       setActiveTab={setActiveTab}
       deleteStop={deleteStop}
       swapStop={swapStop}
+      addStopToDay={addStopToDay}
       itineraryRef={itineraryRef}
       quizAnswers={quizAnswers}
       onReset={handleReset}

@@ -188,7 +188,7 @@ function MapFAB({ onClick }) {
 export default function ItineraryDashboard({
   itinerary, dayStops, activeDay, setActiveDay,
   activeTab, setActiveTab,   // kept for API compat
-  deleteStop, swapStop,
+  deleteStop, swapStop, addStopToDay,
   itineraryRef, quizAnswers, onReset,
 }) {
   const printRef       = useRef(null);
@@ -521,6 +521,7 @@ export default function ItineraryDashboard({
             allAttractionsByCity={allAttractionsByCity}
             allFoodByCity={allFoodByCity}
             depDate={depDate}
+            onAddToDay={addStopToDay}
           />
         </div>
       )}
