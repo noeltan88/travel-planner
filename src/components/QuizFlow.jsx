@@ -644,6 +644,7 @@ export default function QuizFlow({ onComplete }) {
           >
             <p style={{ fontSize: 13, color: '#999', fontWeight: 600, margin: '0 0 10px' }}>
               ✈️ Add flight times
+              <span style={{ fontSize: 11, fontWeight: 400, color: '#C0BDB9', marginLeft: 6 }}>optional</span>
             </p>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
               <FlightInput
