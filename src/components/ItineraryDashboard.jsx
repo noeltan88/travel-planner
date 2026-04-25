@@ -123,30 +123,30 @@ function MapFAB({ onClick }) {
       style={{
         position:       'fixed',
         bottom:         24,
-        right:          20,
+        right:          16,
         zIndex:         40,
-        height:         48,
-        borderRadius:   28,
+        width:          52,
+        height:         52,
+        borderRadius:   '50%',
         background:     ACCENT,
         border:         'none',
         cursor:         'pointer',
         display:        'flex',
         alignItems:     'center',
-        gap:            8,
-        padding:        '0 20px 0 16px',
-        boxShadow:      `0 4px 20px rgba(232,71,42,0.45)`,
+        justifyContent: 'center',
+        boxShadow:      '0 4px 16px rgba(232,71,42,0.4)',
         transition:     'transform 0.15s ease, box-shadow 0.15s ease',
       }}
       onMouseEnter={e => {
-        e.currentTarget.style.transform = 'scale(1.05)';
-        e.currentTarget.style.boxShadow = `0 6px 28px rgba(232,71,42,0.55)`;
+        e.currentTarget.style.transform = 'scale(1.08)';
+        e.currentTarget.style.boxShadow = '0 6px 24px rgba(232,71,42,0.55)';
       }}
       onMouseLeave={e => {
         e.currentTarget.style.transform = 'scale(1)';
-        e.currentTarget.style.boxShadow = `0 4px 20px rgba(232,71,42,0.45)`;
+        e.currentTarget.style.boxShadow = '0 4px 16px rgba(232,71,42,0.4)';
       }}
     >
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg width="22" height="22" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
         <circle cx="5"  cy="3.5"  r="2"   fill="white"/>
         <circle cx="15" cy="16.5" r="2"   fill="white"/>
         <circle cx="10" cy="10"   r="1.5" fill="white"/>
@@ -158,9 +158,6 @@ function MapFAB({ onClick }) {
           fill="none"
         />
       </svg>
-      <span style={{ fontSize: 13, fontWeight: 700, color: '#fff', letterSpacing: 0.1 }}>
-        Show on map
-      </span>
     </button>
   );
 }

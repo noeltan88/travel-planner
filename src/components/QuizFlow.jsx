@@ -126,20 +126,96 @@ function MonthGrid({ year, month, dep, ret, onDayClick }) {
   );
 }
 
-// ── FlightTimeInput ────────────────────────────────────────────────────────────
-function FlightTimeInput({ label, value, onChange }) {
+// ── Animated calendar — slide transition on month change ─────────────────────
+const CAL_ANIM_MS = 280;
+
+function AnimatedCalendar({ year, month, dep, ret, onDayClick }) {
+  const [current,  setCurrent]  = useState({ year, month });
+  const [pending,  setPending]  = useState(null); // { year, month, direction }
+  const animating  = useRef(false);
+  const prevYM     = useRef({ year, month });
+  const latestYM   = useRef({ year, month });
+
+  useEffect(() => {
+    latestYM.current = { year, month };
+    if (year === prevYM.current.year && month === prevYM.current.month) return;
+    if (animating.current) return;
+
+    const fwd = year > prevYM.current.year ||
+      (year === prevYM.current.year && month > prevYM.current.month);
+
+    prevYM.current   = { year, month };
+    animating.current = true;
+
+    setPending({ year, month, direction: fwd ? 'next' : 'prev' });
+
+    setTimeout(() => {
+      const target = latestYM.current;
+      setCurrent(target);
+      setPending(null);
+      animating.current  = false;
+      prevYM.current     = target;
+    }, CAL_ANIM_MS + 20);
+  }, [year, month]); // eslint-disable-line react-hooks/exhaustive-deps
+
   return (
-    <label style={{
-      display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-      minHeight: 52, padding: '0 16px', borderRadius: 12, marginBottom: 10,
-      background: '#fff', border: '1.5px solid #E8E8E8', boxSizing: 'border-box', cursor: 'pointer',
-    }}>
-      <span style={{ fontSize: 13, fontWeight: 500, color: '#666', flexShrink: 0, marginRight: 12 }}>{label}</span>
-      <input
-        type="time" value={value || ''} onChange={e => onChange(e.target.value)}
-        style={{ background: 'transparent', border: 'none', outline: 'none', color: value ? '#1A1A1A' : '#CCC', fontSize: 15, fontWeight: 700, textAlign: 'right', colorScheme: 'light', minWidth: 80 }}
-      />
-    </label>
+    <>
+      <style>{`
+        @keyframes cal-in-right  { from { transform: translateX(100%);  } to { transform: translateX(0); } }
+        @keyframes cal-in-left   { from { transform: translateX(-100%); } to { transform: translateX(0); } }
+        @keyframes cal-out-left  { from { transform: translateX(0); } to { transform: translateX(-100%); } }
+        @keyframes cal-out-right { from { transform: translateX(0); } to { transform: translateX(100%);  } }
+      `}</style>
+      <div style={{ position: 'relative', overflow: 'hidden' }}>
+        {/* Invisible height holder — keeps wrapper height correct during animation */}
+        <div style={{ visibility: 'hidden', pointerEvents: 'none', userSelect: 'none' }}>
+          <MonthGrid year={year} month={month} dep={dep} ret={ret} onDayClick={() => {}} />
+        </div>
+        {/* Outgoing (or static) month */}
+        <div style={{
+          position: 'absolute', top: 0, left: 0, right: 0,
+          animation: pending
+            ? `cal-out-${pending.direction === 'next' ? 'left' : 'right'} ${CAL_ANIM_MS}ms cubic-bezier(0.25,0.46,0.45,0.94) forwards`
+            : 'none',
+        }}>
+          <MonthGrid year={current.year} month={current.month} dep={dep} ret={ret} onDayClick={onDayClick} />
+        </div>
+        {/* Incoming month */}
+        {pending && (
+          <div style={{
+            position: 'absolute', top: 0, left: 0, right: 0,
+            animation: `cal-in-${pending.direction === 'next' ? 'right' : 'left'} ${CAL_ANIM_MS}ms cubic-bezier(0.25,0.46,0.45,0.94) forwards`,
+          }}>
+            <MonthGrid year={pending.year} month={pending.month} dep={dep} ret={ret} onDayClick={onDayClick} />
+          </div>
+        )}
+      </div>
+    </>
+  );
+}
+
+// ── FlightInput — compact 2-col style ────────────────────────────────────────
+function FlightInput({ label, value, onChange }) {
+  return (
+    <div>
+      <p style={{ fontSize: 10, color: '#999', fontWeight: 700, margin: '0 0 5px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+        {label}
+      </p>
+      <label style={{ display: 'block', background: '#fff', borderRadius: 12, border: '0.5px solid #E0E0E0', padding: 12, cursor: 'pointer' }}>
+        <input
+          type="time"
+          value={value || ''}
+          onChange={e => onChange(e.target.value)}
+          style={{
+            display: 'block', width: '100%',
+            background: 'transparent', border: 'none', outline: 'none',
+            color: value ? '#1A1A1A' : '#C0BDB9',
+            fontSize: 14, fontWeight: value ? 600 : 400,
+            colorScheme: 'light',
+          }}
+        />
+      </label>
+    </div>
   );
 }
 
@@ -160,6 +236,10 @@ export default function QuizFlow({ onComplete }) {
 
   // Family-kids extras scroll ref
   const familyExtrasRef = useRef(null);
+
+  // Flight times slide-up
+  const [showFlightTimes, setShowFlightTimes] = useState(false);
+  const flightTimesRef = useRef(null);
 
   const q           = QUIZ[step];
   const isVibe      = q.id === 'vibe';
@@ -207,6 +287,16 @@ export default function QuizFlow({ onComplete }) {
     if (!dep || !ret || dateError) return [];
     return HOLIDAYS.filter(h => dep <= h.end && ret >= h.start);
   }, [dep, ret, dateError]);
+
+  // FIX 2 — reveal flight times when both dates are picked
+  useEffect(() => {
+    if (!dep || !ret || dateError) return;
+    setShowFlightTimes(true);
+    const t = setTimeout(() => {
+      flightTimesRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 150);
+    return () => clearTimeout(t);
+  }, [dep, ret]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const canContinue = isDateRange
     ? Boolean(dep && ret && !dateError && totalDays >= 1)
@@ -486,13 +576,13 @@ export default function QuizFlow({ onComplete }) {
             <button onClick={nextCal} style={{ width: 36, height: 36, borderRadius: '50%', background: '#fff', border: 'none', cursor: 'pointer', fontSize: 18, color: '#1A1A1A', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>→</button>
           </div>
 
-          {/* Calendar card — swipe left/right to change month */}
+          {/* Animated calendar card — swipe left/right to change month */}
           <div
             onTouchStart={onCalTouchStart}
             onTouchEnd={onCalTouchEnd}
             style={{ background: '#fff', borderRadius: 18, padding: '14px 10px', marginBottom: 14, touchAction: 'pan-y' }}
           >
-            <MonthGrid year={calYear} month={calMonth} dep={dep} ret={ret} onDayClick={handleDayTap} />
+            <AnimatedCalendar year={calYear} month={calMonth} dep={dep} ret={ret} onDayClick={handleDayTap} />
           </div>
 
           {/* Range summary pill */}
@@ -524,27 +614,36 @@ export default function QuizFlow({ onComplete }) {
             </div>
           ))}
 
-          {/* Flight times collapsible */}
-          <details style={{ marginTop: 4 }}>
-            <summary style={{ fontSize: 13, color: '#999', cursor: 'pointer', fontWeight: 600, padding: '8px 0', listStyle: 'none' }}>
-              ✈️ Add flight times (optional)
-            </summary>
-            <div style={{ paddingTop: 10 }}>
-              <p style={{ fontSize: 12, color: '#CCC', margin: '0 0 10px', lineHeight: 1.5 }}>
-                Helps plan your first and last day more accurately.
-              </p>
-              <FlightTimeInput
-                label="🛬 Land time"
+          {/* Flight times — slides up once both dates are selected */}
+          <div
+            ref={flightTimesRef}
+            style={{
+              maxHeight:  showFlightTimes ? '300px' : '0',
+              opacity:    showFlightTimes ? 1 : 0,
+              overflow:   'hidden',
+              transition: 'max-height 400ms ease-in-out, opacity 300ms ease-in-out',
+              marginTop:  showFlightTimes ? 4 : 0,
+            }}
+          >
+            <p style={{ fontSize: 13, color: '#999', fontWeight: 600, margin: '0 0 10px' }}>
+              ✈️ Add flight times
+            </p>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+              <FlightInput
+                label="Arrival"
                 value={answers.arrival_time}
                 onChange={v => setAnswers(a => ({ ...a, arrival_time: v }))}
               />
-              <FlightTimeInput
-                label="🛫 Departure time"
+              <FlightInput
+                label="Departure"
                 value={answers.departure_time}
                 onChange={v => setAnswers(a => ({ ...a, departure_time: v }))}
               />
             </div>
-          </details>
+            <p style={{ fontSize: 11, color: '#BBB', textAlign: 'center', margin: '8px 0 0' }}>
+              Helps us plan your first and last day
+            </p>
+          </div>
         </div>
       )}
 
