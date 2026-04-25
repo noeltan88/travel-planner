@@ -32,6 +32,12 @@ const VIBE_CATEGORIES = [
 const VIBE_EMOJIS    = VIBE_CATEGORIES.map(c => c.emoji);
 const CATEGORY_LABEL = Object.fromEntries(VIBE_CATEGORIES.map(c => [c.key, c.label]));
 
+// Classic mode options — same 6 categories + Surprise me (exclusive)
+const CLASSIC_OPTIONS = [
+  ...VIBE_CATEGORIES,
+  { key: 'surprise', label: 'Surprise me', emoji: '🎲', exclusive: true },
+];
+
 const PERSONALITY = {
   scenic:         "You're a Nature Seeker 🌿",
   culture:        "You're a Culture Explorer 🏯",
@@ -121,6 +127,10 @@ export default function VibeCheck({ selectedCities, onComplete }) {
   // Swipe hint overlay — always shows on every VibeCheck load (FIX 3)
   const [showHint, setShowHint] = useState(true);
 
+  // Classic mode
+  const [classicMode,  setClassicMode]  = useState(false);
+  const [classicVibes, setClassicVibes] = useState([]);
+
   // Touch swipe
   const touchRef  = useRef(null);
   const [swipeX,  setSwipeX]  = useState(0);
@@ -141,6 +151,24 @@ export default function VibeCheck({ selectedCities, onComplete }) {
 
   function dismissHint() {
     setShowHint(false);
+  }
+
+  // ── Classic mode vibe toggle (handles exclusive "Surprise me") ─────────────
+  function toggleClassicVibe(key, exclusive) {
+    setClassicVibes(prev => {
+      if (exclusive) {
+        return prev.includes(key) ? [] : [key];
+      }
+      // Deselect any exclusive option when selecting a regular one
+      const withoutExclusive = prev.filter(k => {
+        const opt = CLASSIC_OPTIONS.find(o => o.key === k);
+        return !opt?.exclusive;
+      });
+      if (withoutExclusive.includes(key)) {
+        return withoutExclusive.filter(k => k !== key);
+      }
+      return [...withoutExclusive, key];
+    });
   }
 
   // ── Loading screen orchestration ───────────────────────────────────────────
@@ -234,6 +262,76 @@ export default function VibeCheck({ selectedCities, onComplete }) {
     touchRef.current = null;
     if (Math.abs(dx) > 80) advance(dx > 0);
     else { setSwipeX(0); setSwiping(false); }
+  }
+
+  // ══ CLASSIC MODE ════════════════════════════════════════════════════════════
+  if (classicMode) {
+    return (
+      <div style={{
+        flex: 1, display: 'flex', flexDirection: 'column',
+        padding: '16px 16px 24px', background: '#F5F4F2',
+        overflowY: 'auto',
+      }}>
+        {/* Title + "Try Vibe Check instead" link */}
+        <div style={{ marginBottom: 4 }}>
+          <p style={{ fontSize: 22, fontWeight: 500, color: '#1A1A1A', margin: '0 0 8px' }}>
+            What kind of experiences do you love?
+          </p>
+          <button
+            onClick={() => setClassicMode(false)}
+            style={{
+              fontSize: 12, color: ACC, background: 'none', border: 'none',
+              cursor: 'pointer', padding: 0, fontWeight: 500,
+            }}
+          >
+            Try Vibe Check instead →
+          </button>
+        </div>
+
+        {/* Selectable chips */}
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, marginTop: 18 }}>
+          {CLASSIC_OPTIONS.map(opt => {
+            const selected = classicVibes.includes(opt.key);
+            return (
+              <button
+                key={opt.key}
+                onClick={() => toggleClassicVibe(opt.key, opt.exclusive)}
+                style={{
+                  padding: '10px 16px', borderRadius: 20,
+                  background: selected ? ACC : '#fff',
+                  color: selected ? '#fff' : '#1A1A1A',
+                  border: selected ? 'none' : '1px solid #E0E0E0',
+                  fontSize: 14, fontWeight: 500,
+                  cursor: 'pointer',
+                  display: 'flex', alignItems: 'center', gap: 6,
+                  transition: 'background 0.15s ease, color 0.15s ease',
+                }}
+              >
+                <span>{opt.emoji}</span>
+                <span>{opt.label}</span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Push continue button to bottom */}
+        <div style={{ flex: 1 }} />
+
+        {/* Continue */}
+        <button
+          onClick={() => onComplete(classicVibes.length > 0 ? classicVibes : ['surprise'])}
+          style={{
+            width: '100%', height: 52, borderRadius: 28,
+            background: ACC, color: '#fff',
+            border: 'none', cursor: 'pointer',
+            fontSize: 14, fontWeight: 500,
+            marginTop: 24,
+          }}
+        >
+          Continue →
+        </button>
+      </div>
+    );
   }
 
   // ══ PHASE: LOADING ══════════════════════════════════════════════════════════
@@ -393,6 +491,32 @@ export default function VibeCheck({ selectedCities, onComplete }) {
       alignItems: 'center', padding: '4px 16px 0',
       overflow: 'hidden', minHeight: 0,
     }}>
+
+      {/* ── Header: title + "Prefer classic?" link ──────────────────────── */}
+      <div style={{
+        width: '100%', maxWidth: 400, flexShrink: 0,
+        display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between',
+        marginBottom: 10,
+      }}>
+        <div>
+          <p style={{ fontSize: 22, fontWeight: 500, color: '#1A1A1A', margin: '0 0 2px' }}>
+            Vibe Check ✨
+          </p>
+          <p style={{ fontSize: 13, color: '#999', margin: 0 }}>
+            Swipe through to find your travel style
+          </p>
+        </div>
+        <button
+          onClick={() => setClassicMode(true)}
+          style={{
+            fontSize: 12, color: ACC, background: 'none', border: 'none',
+            cursor: 'pointer', padding: '4px 0', fontWeight: 500,
+            whiteSpace: 'nowrap', marginTop: 4, flexShrink: 0,
+          }}
+        >
+          Prefer classic? →
+        </button>
+      </div>
 
       {/* ── Attraction card ─────────────────────────────────────────────── */}
       <div
