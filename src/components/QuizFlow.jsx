@@ -293,8 +293,8 @@ export default function QuizFlow({ onComplete }) {
     if (!dep || !ret || dateError) return;
     setShowFlightTimes(true);
     const t = setTimeout(() => {
-      flightTimesRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }, 150);
+      flightTimesRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 400);
     return () => clearTimeout(t);
   }, [dep, ret]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -568,12 +568,29 @@ export default function QuizFlow({ onComplete }) {
 
       {/* ── DATES ────────────────────────────────────────────────────────── */}
       {isDateRange && (
-        <div style={{ flex: 1, overflowY: 'auto', padding: '0 16px 8px' }}>
-          {/* Month navigation */}
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10, padding: '0 2px' }}>
-            <button onClick={prevCal} style={{ width: 36, height: 36, borderRadius: '50%', background: '#fff', border: 'none', cursor: 'pointer', fontSize: 18, color: '#1A1A1A', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>←</button>
-            <p style={{ margin: 0, fontSize: 15, fontWeight: 700, color: '#1A1A1A' }}>{MONTH_NAMES[calMonth]} {calYear}</p>
-            <button onClick={nextCal} style={{ width: 36, height: 36, borderRadius: '50%', background: '#fff', border: 'none', cursor: 'pointer', fontSize: 18, color: '#1A1A1A', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>→</button>
+        <div style={{ flex: 1, overflowY: 'auto', padding: '0 16px 120px' }}>
+          {/* Month navigation — sticky so arrows stay accessible while scrolling */}
+          <div style={{
+            position: 'sticky', top: 0, zIndex: 2,
+            background: BG,
+            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+            padding: '8px 2px 10px',
+          }}>
+            <button
+              onClick={prevCal}
+              style={{ width: 36, height: 36, borderRadius: '50%', background: '#fff', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 1px 4px rgba(0,0,0,0.08)' }}
+            >
+              <svg width="8" height="14" viewBox="0 0 8 14" fill="none"><path d="M7 1L1 7L7 13" stroke="#1A1A1A" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            </button>
+            <p style={{ margin: 0, fontSize: 15, fontWeight: 700, color: '#1A1A1A' }}>
+              {MONTH_NAMES[calMonth]} {calYear}
+            </p>
+            <button
+              onClick={nextCal}
+              style={{ width: 36, height: 36, borderRadius: '50%', background: '#fff', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 1px 4px rgba(0,0,0,0.08)' }}
+            >
+              <svg width="8" height="14" viewBox="0 0 8 14" fill="none"><path d="M1 1L7 7L1 13" stroke="#1A1A1A" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            </button>
           </div>
 
           {/* Animated calendar card — swipe left/right to change month */}
@@ -618,7 +635,7 @@ export default function QuizFlow({ onComplete }) {
           <div
             ref={flightTimesRef}
             style={{
-              maxHeight:  showFlightTimes ? '300px' : '0',
+              maxHeight:  showFlightTimes ? '400px' : '0',
               opacity:    showFlightTimes ? 1 : 0,
               overflow:   'hidden',
               transition: 'max-height 400ms ease-in-out, opacity 300ms ease-in-out',
