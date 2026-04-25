@@ -121,6 +121,20 @@ export const QUIZ = [
     ],
   },
   {
+    id: 'dietary',
+    label: 'DIETARY NEEDS',
+    title: 'Any dietary requirements?',
+    sub: "We'll filter your food picks",
+    multi: true,
+    deco: '食',
+    options: [
+      { icon: '✅', name: 'No restrictions', desc: 'I eat everything — surprise me', value: 'none', exclusive: true },
+      { icon: '🥦', name: 'Vegetarian', desc: 'No meat or fish', value: 'vegetarian' },
+      { icon: '🌙', name: 'Halal', desc: 'Muslim-friendly restaurants only', value: 'halal' },
+      { icon: '🐟', name: 'Pescatarian', desc: 'Fish and seafood only, no other meat', value: 'pescatarian' },
+    ]
+  },
+  {
     id: 'vibe',
     label: 'YOUR VIBE',
     title: 'What kind of trip do you want?',
@@ -137,19 +151,5 @@ export const QUIZ = [
       { icon: '🎢', name: 'Fun & adventure',      desc: 'Theme parks, cable cars, hot springs, skiing',       value: 'adventure' },
       { icon: '🎲', name: 'Surprise me',          desc: 'No preference — show me the best of everything',     value: 'surprise', exclusive: true },
     ],
-  },
-  {
-    id: 'dietary',
-    label: 'DIETARY NEEDS',
-    title: 'Any dietary requirements?',
-    sub: "We'll filter your food picks",
-    multi: true,
-    deco: '食',
-    options: [
-      { icon: '✅', name: 'No restrictions', desc: 'I eat everything — surprise me', value: 'none', exclusive: true },
-      { icon: '🥦', name: 'Vegetarian', desc: 'No meat or fish', value: 'vegetarian' },
-      { icon: '🌙', name: 'Halal', desc: 'Muslim-friendly restaurants only', value: 'halal' },
-      { icon: '🐟', name: 'Pescatarian', desc: 'Fish and seafood only, no other meat', value: 'pescatarian' },
-    ]
   }
 ];
