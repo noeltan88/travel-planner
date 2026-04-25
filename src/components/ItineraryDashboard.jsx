@@ -1,12 +1,17 @@
 /**
- * ItineraryDashboard — Variation C
+ * ItineraryDashboard — vertical timeline variant
  *
- * Design:
- *   • White background, coral (#E8472A) accents throughout
- *   • Day tabs sticky at the very top (no persistent map above them)
- *   • Floating coral 🗺️ FAB (bottom-right) → opens full-screen UnifiedMap overlay
- *   • Hotel card + export/share buttons are inline at the bottom of the scroll
- *   • No separate Hotels or Export tabs — everything lives in one continuous scroll
+ * Design tokens:
+ *   bg      #F5F4F2   cards  #FFFFFF   accent #E8472A
+ *   text-1  #1A1A1A   text-2 #999      border 0.5px #EEEBE6
+ *   shadow  0 2px 12px rgba(0,0,0,0.06)
+ *
+ * Structure:
+ *   • Sticky header — city name + trip summary + Share pill, then scrollable day tabs
+ *   • Continuous scroll — day sections (DaySectionHeader + DayTimeline)
+ *   • Hotel card + export/share inline at the bottom
+ *   • Floating coral map FAB (fixed, bottom-right)
+ *   • Full-screen UnifiedMap overlay when FAB tapped
  */
 import { useRef, useState, useEffect } from 'react';
 import DayTimeline from './DayTimeline';
@@ -17,7 +22,12 @@ import { exportToPDF } from '../utils/pdfExport';
 import { loadCityData } from '../utils/algorithm';
 import UnifiedMap from './UnifiedMap';
 
-// ── Date helper ────────────────────────────────────────────────────────────────
+// ── Design tokens ─────────────────────────────────────────────────────────────
+const ACCENT   = '#E8472A';
+const PAGE_BG  = '#F5F4F2';
+const LINE_COL = '#EEEBE6';
+
+// ── Date helper ───────────────────────────────────────────────────────────────
 function formatDayDate(departureDateStr, dayIndex) {
   if (!departureDateStr) return null;
   try {
@@ -27,50 +37,55 @@ function formatDayDate(departureDateStr, dayIndex) {
     const mn = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
                 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     return `${dn[base.getUTCDay()]} ${base.getUTCDate()} ${mn[base.getUTCMonth()]}`;
-  } catch {
-    return null;
-  }
+  } catch { return null; }
 }
 
-const ACCENT = '#E8472A';
-
-// ── Section divider — coral left-bar + day label ───────────────────────────────
-function DaySectionHeader({ dayNum, dateStr, stopCount, cityName, cityEmoji }) {
+// ── Day section header — "DAY 01", date, stops, estimated spend ───────────────
+function DaySectionHeader({ dayNum, dateStr, stopCount, cityName, cityEmoji, estimatedSpend }) {
+  const label = `DAY ${String(dayNum).padStart(2, '0')}`;
   return (
-    <div style={{ padding: '28px 16px 10px' }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 3 }}>
-        <div style={{
-          width: 4, height: 20, borderRadius: 2,
-          background: ACCENT, flexShrink: 0,
-        }} />
+    <div style={{
+      padding: '20px 16px 10px',
+      display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between',
+    }}>
+      <div>
         <p style={{
-          fontSize: 15, fontWeight: 800, color: '#1a1a2e',
-          margin: 0, letterSpacing: -0.2,
+          fontSize: 11, fontWeight: 800, color: ACCENT,
+          letterSpacing: 1.5, margin: 0, textTransform: 'uppercase',
         }}>
-          Day {dayNum}{dateStr ? ` · ${dateStr}` : ''}
+          {label}
+        </p>
+        {dateStr && (
+          <p style={{ fontSize: 17, fontWeight: 700, color: '#1A1A1A', margin: '2px 0 0', lineHeight: 1.2 }}>
+            {dateStr}
+          </p>
+        )}
+        <p style={{ fontSize: 11, color: '#999', margin: '3px 0 0', fontWeight: 500 }}>
+          {stopCount} stop{stopCount !== 1 ? 's' : ''}
+          {cityName ? ` · ${cityName}` : ''}
+          {cityEmoji ? ` ${cityEmoji}` : ''}
         </p>
       </div>
-      <p style={{
-        fontSize: 11, color: '#94a3b8', margin: '0 0 0 14px',
-        fontWeight: 500,
-      }}>
-        {stopCount} stop{stopCount !== 1 ? 's' : ''}
-        {cityName ? ` · ${cityName}` : ''}
-        {cityEmoji ? ` ${cityEmoji}` : ''}
-      </p>
+      {estimatedSpend > 0 && (
+        <div style={{ textAlign: 'right', flexShrink: 0 }}>
+          <p style={{ fontSize: 10, color: '#999', margin: 0, fontWeight: 500 }}>Est. spend</p>
+          <p style={{ fontSize: 15, fontWeight: 700, color: '#1A1A1A', margin: '2px 0 0' }}>
+            ¥{estimatedSpend}
+          </p>
+        </div>
+      )}
     </div>
   );
 }
 
-// ── Inline export section at the bottom of the scroll ─────────────────────────
+// ── Inline export / share section ─────────────────────────────────────────────
 function ExportSection({ onExport, exporting, onWhatsApp, onReset }) {
   return (
     <div style={{ padding: '8px 16px 40px', display: 'flex', flexDirection: 'column', gap: 10 }}>
-      {/* Divider */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 4 }}>
-        <div style={{ flex: 1, height: 1, background: '#f1f5f9' }} />
+        <div style={{ flex: 1, height: 1, background: LINE_COL }} />
         <span style={{ fontSize: 11, color: '#cbd5e1', fontWeight: 600 }}>SAVE &amp; SHARE</span>
-        <div style={{ flex: 1, height: 1, background: '#f1f5f9' }} />
+        <div style={{ flex: 1, height: 1, background: LINE_COL }} />
       </div>
 
       <button
@@ -114,66 +129,55 @@ function ExportSection({ onExport, exporting, onWhatsApp, onReset }) {
   );
 }
 
-// ── Floating Map button ────────────────────────────────────────────────────────
+// ── Floating map FAB ──────────────────────────────────────────────────────────
 function MapFAB({ onClick }) {
   return (
     <button
       onClick={onClick}
       aria-label="Show on map"
       style={{
-        position:       'fixed',
-        bottom:         24,
-        right:          16,
-        zIndex:         40,
-        width:          52,
-        height:         52,
-        borderRadius:   '50%',
-        background:     ACCENT,
-        border:         'none',
-        cursor:         'pointer',
-        display:        'flex',
-        alignItems:     'center',
-        justifyContent: 'center',
-        boxShadow:      '0 4px 16px rgba(232,71,42,0.4)',
-        transition:     'transform 0.15s ease, box-shadow 0.15s ease',
+        position: 'fixed', bottom: 24, right: 16, zIndex: 40,
+        width: 52, height: 52, borderRadius: '50%',
+        background: ACCENT, border: 'none', cursor: 'pointer',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        boxShadow: '0 4px 16px rgba(232,71,42,0.4)',
+        transition: 'transform 0.15s ease, box-shadow 0.15s ease',
       }}
       onMouseEnter={e => {
-        e.currentTarget.style.transform = 'scale(1.08)';
-        e.currentTarget.style.boxShadow = '0 6px 24px rgba(232,71,42,0.55)';
+        e.currentTarget.style.transform  = 'scale(1.08)';
+        e.currentTarget.style.boxShadow  = '0 6px 24px rgba(232,71,42,0.55)';
       }}
       onMouseLeave={e => {
-        e.currentTarget.style.transform = 'scale(1)';
-        e.currentTarget.style.boxShadow = '0 4px 16px rgba(232,71,42,0.4)';
+        e.currentTarget.style.transform  = 'scale(1)';
+        e.currentTarget.style.boxShadow  = '0 4px 16px rgba(232,71,42,0.4)';
       }}
     >
+      {/* S-curve map SVG */}
       <svg width="22" height="22" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
         <circle cx="5"  cy="3.5"  r="2"   fill="white"/>
         <circle cx="15" cy="16.5" r="2"   fill="white"/>
         <circle cx="10" cy="10"   r="1.5" fill="white"/>
         <path
           d="M5 5.5 C5 7.5 10 7.5 10 10 C10 12.5 15 12.5 15 14.5"
-          stroke="white"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          fill="none"
+          stroke="white" strokeWidth="1.5" strokeLinecap="round" fill="none"
         />
       </svg>
     </button>
   );
 }
 
-// ── Main component ─────────────────────────────────────────────────────────────
+// ── Main component ────────────────────────────────────────────────────────────
 export default function ItineraryDashboard({
   itinerary, dayStops, activeDay, setActiveDay,
-  activeTab, setActiveTab,   // kept for API compat; Hotels/Export are now inline
+  activeTab, setActiveTab,   // kept for API compat
   deleteStop, swapStop,
   itineraryRef, quizAnswers, onReset,
 }) {
   const printRef       = useRef(null);
   const daySectionRefs = useRef([]);
   const stickyTabsRef  = useRef(null);
-  const [exporting, setExporting]     = useState(false);
-  const [mapOpen,   setMapOpen]       = useState(false);   // full-screen map overlay
+  const [exporting, setExporting] = useState(false);
+  const [mapOpen,   setMapOpen]   = useState(false);
 
   if (!itinerary) return null;
 
@@ -181,8 +185,9 @@ export default function ItineraryDashboard({
   const primaryCity    = cities?.[0] || 'guangzhou';
   const allAttractions = Object.values(allAttractionsByCity || {}).flat();
   const depDate        = quizAnswers?.departure_date || null;
+  const retDate        = quizAnswers?.return_date    || null;
 
-  // All stop IDs across every day (for swap deduplication)
+  // All used stop IDs across every day (for swap deduplication)
   const allUsedIds = new Set(
     days.flatMap((_, i) => (dayStops[i] || []).map(s => s.id)),
   );
@@ -194,36 +199,49 @@ export default function ItineraryDashboard({
     if (cd?.food) allFoodByCity[ck] = cd.food;
   });
 
-  // ── Block body scroll when map is open ────────────────────────────────────
+  // ── Sticky header content ─────────────────────────────────────────────────
+  const headerTitle = [...new Set(days.map(d =>
+    d.cityHeader ? `${d.cityHeader.emoji} ${d.cityHeader.name}` : (d.city || primaryCity),
+  ))].join(' · ');
+
+  const summaryLine = [
+    depDate && retDate ? `${depDate} → ${retDate}` : '',
+    `${days.length} day${days.length !== 1 ? 's' : ''}`,
+    cities.length > 1 ? `${cities.length} cities` : '',
+  ].filter(Boolean).join(' · ');
+
+  // ── Block body scroll when map is open ───────────────────────────────────
   useEffect(() => {
     document.documentElement.style.overflow = mapOpen ? 'hidden' : '';
     return () => { document.documentElement.style.overflow = ''; };
   }, [mapOpen]);
 
-  // ── Scroll tracking — update active day tab as user scrolls ──────────────
+  // ── IntersectionObserver — update active day tab as user scrolls ──────────
   useEffect(() => {
     if (mapOpen) return;
-    function onScroll() {
-      const tabsH  = stickyTabsRef.current?.offsetHeight ?? 48;
-      const offset = tabsH + 16;
-      let current  = 0;
-      for (let i = 0; i < daySectionRefs.current.length; i++) {
-        const el = daySectionRefs.current[i];
-        if (!el) continue;
-        if (el.getBoundingClientRect().top <= offset) current = i;
-        else break;
-      }
-      setActiveDay(current);
-    }
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, [mapOpen, setActiveDay]);
+    const stickyH = stickyTabsRef.current?.offsetHeight ?? 88;
 
-  // ── Scroll to a section when a day tab is tapped ─────────────────────────
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const idx = daySectionRefs.current.findIndex(el => el === entry.target);
+            if (idx >= 0) setActiveDay(idx);
+          }
+        });
+      },
+      { rootMargin: `-${stickyH + 4}px 0px -55% 0px`, threshold: 0 },
+    );
+
+    daySectionRefs.current.forEach(el => { if (el) observer.observe(el); });
+    return () => observer.disconnect();
+  }, [mapOpen, days.length, setActiveDay]);
+
+  // ── Scroll to a section when day tab is tapped ────────────────────────────
   function scrollToDay(dayIdx) {
     const el    = daySectionRefs.current[dayIdx];
     if (!el) return;
-    const tabsH = stickyTabsRef.current?.offsetHeight ?? 48;
+    const tabsH = stickyTabsRef.current?.offsetHeight ?? 88;
     const top   = el.getBoundingClientRect().top + window.scrollY - tabsH - 4;
     window.scrollTo({ top, behavior: 'smooth' });
   }
@@ -259,60 +277,85 @@ export default function ItineraryDashboard({
       '',
       'Generated with ChinaTrip Planner 🗺️',
     ].filter((l, i, arr) => !(l === '' && arr[i - 1] === ''));
-    window.open(
-      `https://wa.me/?text=${encodeURIComponent(lines.join('\n'))}`,
-      '_blank',
-    );
+    window.open(`https://wa.me/?text=${encodeURIComponent(lines.join('\n'))}`, '_blank');
   }
 
-  // ──────────────────────────────────────────────────────────────────────────
+  // ─────────────────────────────────────────────────────────────────────────
   return (
-    <div style={{ minHeight: '100vh', background: '#fff' }}>
+    <div style={{ minHeight: '100vh', background: PAGE_BG }}>
 
-      {/* ══ STICKY DAY TABS ══════════════════════════════════════════════════
-           Sits right at the top — no map pushing it down.                    */}
+      {/* ══ STICKY HEADER ════════════════════════════════════════════════════ */}
       <div
         ref={stickyTabsRef}
         style={{
-          display:         mapOpen ? 'none' : 'flex',
-          position:        'sticky',
-          top:             0,
-          zIndex:          20,
-          background:      '#fff',
-          borderBottom:    '1px solid #f1f5f9',
-          overflowX:       'auto',
-          gap:             8,
-          padding:         '10px 14px',
-          scrollbarWidth:  'none',
-          msOverflowStyle: 'none',
-          boxShadow:       '0 1px 6px rgba(0,0,0,0.06)',
+          display:      mapOpen ? 'none' : 'block',
+          position:     'sticky',
+          top:          0,
+          zIndex:       20,
+          background:   '#fff',
+          borderBottom: `0.5px solid ${LINE_COL}`,
+          boxShadow:    '0 1px 6px rgba(0,0,0,0.06)',
         }}
       >
-        {days.map((day, i) => {
-          const dateStr = formatDayDate(depDate, i);
-          const active  = i === activeDay;
-          return (
-            <button
-              key={i}
-              onClick={() => scrollToDay(i)}
-              style={{
-                flexShrink:   0,
-                padding:      '6px 16px',
-                borderRadius: 20,
-                fontSize:     12,
-                fontWeight:   700,
-                cursor:       'pointer',
-                border:       'none',
-                whiteSpace:   'nowrap',
-                background:   active ? ACCENT : '#f8f9fb',
-                color:        active ? '#fff' : '#64748b',
-                transition:   'background 0.15s, color 0.15s',
-              }}
-            >
-              Day {i + 1}{dateStr ? ` · ${dateStr}` : ''}
-            </button>
-          );
-        })}
+        {/* City name + trip summary + Share button */}
+        <div style={{
+          display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between',
+          padding: '12px 16px 8px', gap: 12,
+        }}>
+          <div style={{ minWidth: 0 }}>
+            <h1 style={{
+              fontSize: 20, fontWeight: 800, color: '#1A1A1A',
+              margin: 0, lineHeight: 1.15,
+              overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
+            }}>
+              {headerTitle}
+            </h1>
+            {summaryLine && (
+              <p style={{ fontSize: 11, color: '#999', margin: '2px 0 0', fontWeight: 500 }}>
+                {summaryLine}
+              </p>
+            )}
+          </div>
+          <button
+            onClick={handleWhatsApp}
+            style={{
+              flexShrink: 0, background: ACCENT, color: '#fff',
+              border: 'none', cursor: 'pointer',
+              borderRadius: 20, padding: '7px 14px',
+              fontSize: 12, fontWeight: 700,
+            }}
+          >
+            Share ↗
+          </button>
+        </div>
+
+        {/* Scrollable day tabs */}
+        <div style={{
+          display: 'flex', overflowX: 'auto', gap: 8,
+          padding: '0 14px 10px',
+          scrollbarWidth: 'none', msOverflowStyle: 'none',
+        }}>
+          {days.map((day, i) => {
+            const dateStr = formatDayDate(depDate, i);
+            const active  = i === activeDay;
+            return (
+              <button
+                key={i}
+                onClick={() => scrollToDay(i)}
+                style={{
+                  flexShrink: 0, padding: '6px 16px', borderRadius: 20,
+                  fontSize: 12, fontWeight: 700, cursor: 'pointer',
+                  border: 'none', whiteSpace: 'nowrap',
+                  background: active ? ACCENT : PAGE_BG,
+                  color:      active ? '#fff' : '#94a3b8',
+                  transition: 'background 0.15s, color 0.15s',
+                }}
+              >
+                Day {i + 1}{dateStr ? ` · ${dateStr}` : ''}
+              </button>
+            );
+          })}
+        </div>
       </div>
 
       {/* ══ CONTINUOUS SCROLL — days → hotel → export ════════════════════════ */}
@@ -321,12 +364,15 @@ export default function ItineraryDashboard({
         paddingBottom: 88,   // room for the FAB
       }}>
         {days.map((day, i) => {
-          const stops      = dayStops[i] || [];
-          const food       = day.food    || [];
-          const dateStr    = formatDayDate(depDate, i);
-          const cityName   = day.cityHeader?.name || day.city || '';
-          const cityEmoji  = day.cityHeader?.emoji || '';
-          const cityData_i = loadCityData(day.city || primaryCity);
+          const stops         = dayStops[i] || [];
+          const food          = day.food    || [];
+          const dateStr       = formatDayDate(depDate, i);
+          const cityName      = day.cityHeader?.name  || day.city  || '';
+          const cityEmoji     = day.cityHeader?.emoji || '';
+          const cityData_i    = loadCityData(day.city || primaryCity);
+          const estimatedSpend = stops
+            .filter(s => !s.free && s.price_rmb)
+            .reduce((sum, s) => sum + (Number(s.price_rmb) || 0), 0);
 
           return (
             <div
@@ -339,6 +385,7 @@ export default function ItineraryDashboard({
                 stopCount={stops.length}
                 cityName={cityName}
                 cityEmoji={cityEmoji}
+                estimatedSpend={estimatedSpend}
               />
 
               <DayTimeline
@@ -362,7 +409,7 @@ export default function ItineraryDashboard({
           );
         })}
 
-        {/* ── Hotel card inline ─────────────────────────────────────────── */}
+        {/* ── Hotel card ───────────────────────────────────────────────── */}
         <div style={{ padding: '12px 0 0' }}>
           <HotelCard
             hotel={hotel}
@@ -373,7 +420,7 @@ export default function ItineraryDashboard({
           />
         </div>
 
-        {/* ── Export / share inline ─────────────────────────────────────── */}
+        {/* ── Export / share ───────────────────────────────────────────── */}
         <ExportSection
           onExport={handleExport}
           exporting={exporting}
@@ -385,16 +432,9 @@ export default function ItineraryDashboard({
       {/* ══ FLOATING MAP FAB ═════════════════════════════════════════════════ */}
       {!mapOpen && <MapFAB onClick={() => setMapOpen(true)} />}
 
-      {/* ══ FULL-SCREEN MAP OVERLAY ══════════════════════════════════════════
-           UnifiedMap already has its own expand/collapse controls;
-           we pass expanded=true so it renders in full-screen card-rail mode. */}
+      {/* ══ FULL-SCREEN MAP OVERLAY ══════════════════════════════════════════ */}
       {mapOpen && (
-        <div style={{
-          position:   'fixed',
-          inset:      0,
-          zIndex:     50,
-          background: '#e8eaf0',
-        }}>
+        <div style={{ position: 'fixed', inset: 0, zIndex: 50, background: '#e8eaf0' }}>
           <UnifiedMap
             days={days}
             dayStops={dayStops}
@@ -415,14 +455,13 @@ export default function ItineraryDashboard({
         </div>
       )}
 
-      {/* ══ HIDDEN PRINT VIEW (for PDF export) ══════════════════════════════ */}
+      {/* ══ HIDDEN PRINT VIEW (PDF export) ══════════════════════════════════ */}
       <PrintView
         printRef={printRef}
         itinerary={itinerary}
         dayStops={dayStops}
         quizAnswers={quizAnswers}
       />
-
     </div>
   );
 }
