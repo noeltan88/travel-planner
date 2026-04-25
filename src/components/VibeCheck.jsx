@@ -742,6 +742,12 @@ export default function VibeCheck({ selectedCities, onComplete }) {
       )}
 
       {/* ── Card stack ──────────────────────────────────────────────────── */}
+      <style>{`
+        @keyframes vibeCardFadeIn {
+          from { opacity: 0; }
+          to   { opacity: 1; }
+        }
+      `}</style>
       <div
         ref={cardContainerRef}
         style={{ position: 'relative', flex: 1, minHeight: 0, overflow: 'visible' }}
@@ -750,23 +756,27 @@ export default function VibeCheck({ selectedCities, onComplete }) {
         onTouchEnd={onTouchEnd}
         onMouseDown={onMouseDown}
       >
-        {/* Card 3 — back */}
+        {/* Card 3 — back. Keyed by card id so a new card entering gets a fresh
+            mount and fades in rather than popping in. No size animation on
+            entry — just opacity 0→1 over 150ms (80ms delay). */}
         {card2 && (
           <VibeCard
+            key={card2.id}
             card={card2} cardIdx={idx + 2} cardTotal={total}
             dimAmount={Math.max(0, 0.35 * (1 - progress))}
             style={{
               transform: `scale(${c2Scale}) translateY(${c2TY}px)`,
               transition: isDragging ? 'none'
-                : flyOff ? 'transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1) 50ms'
+                : flyOff ? 'transform 250ms ease-out 30ms'
                 : 'transform 0.3s ease-out',
+              animation: 'vibeCardFadeIn 150ms ease-out 80ms both',
               zIndex: 1,
               boxShadow: '0 2px 8px rgba(0,0,0,0.07)',
             }}
           />
         )}
 
-        {/* Card 2 — middle */}
+        {/* Card 2 — middle. Smooth ease-out advance, no spring overshoot. */}
         {card1 && (
           <VibeCard
             card={card1} cardIdx={idx + 1} cardTotal={total}
@@ -774,7 +784,7 @@ export default function VibeCheck({ selectedCities, onComplete }) {
             style={{
               transform: `scale(${c1Scale}) translateY(${c1TY}px)`,
               transition: isDragging ? 'none'
-                : flyOff ? 'transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1)'
+                : flyOff ? 'transform 250ms ease-out'
                 : 'transform 0.3s ease-out',
               zIndex: 2,
               boxShadow: '0 4px 16px rgba(0,0,0,0.10)',
