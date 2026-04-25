@@ -94,30 +94,15 @@ function buildVibeCards(selectedCities) {
 }
 
 // ── VibeCard ───────────────────────────────────────────────────────────────────
-// FIX 2: labels always in DOM (opacity-based), 36px/700, show at 15px, edge glow
 function VibeCard({ card, cardIdx, cardTotal, style = {}, dragX = 0, isActive = false }) {
-  const absDx     = Math.abs(dragX);
-  const loveAlpha = isActive && dragX > 15  ? Math.min(1, absDx / 80) : 0;
-  const nahAlpha  = isActive && dragX < -15 ? Math.min(1, absDx / 80) : 0;
-
-  // Edge glow — injected into boxShadow
-  const { boxShadow: baseShadow, ...restStyle } = style;
-  let edgeShadow = baseShadow || '';
-  if (isActive && absDx > 15) {
-    const glowA = Math.min(1, absDx / 80);
-    const glow  = dragX > 0
-      ? `inset -4px 0 0 rgba(232,71,42,${glowA})`
-      : `inset 4px 0 0 rgba(150,150,150,${glowA})`;
-    edgeShadow  = baseShadow ? `${glow}, ${baseShadow}` : glow;
-  }
+  const absDx = Math.abs(dragX);
 
   return (
     <div style={{
       position: 'absolute', inset: 0,
       borderRadius: 20, overflow: 'hidden',
-      touchAction: 'none',  /* FIX 1 */
-      boxShadow: edgeShadow,
-      ...restStyle,
+      touchAction: 'none',
+      ...style,
     }}>
       {/* Full-bleed photo */}
       <div style={{ position: 'absolute', inset: 0 }}>
@@ -130,29 +115,23 @@ function VibeCard({ card, cardIdx, cardTotal, style = {}, dragX = 0, isActive = 
         background: 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 50%, transparent 100%)',
       }} />
 
-      {/* LIKE label — always in DOM, opacity-driven */}
-      <div style={{
-        position: 'absolute', top: 20, right: 20, zIndex: 10,
-        transform: 'rotate(-15deg)', opacity: loveAlpha,
-        transition: 'opacity 0.05s linear',
-        pointerEvents: 'none',
-      }}>
-        <span style={{ fontSize: 36, fontWeight: 700, color: ACC, textShadow: '0 2px 8px rgba(0,0,0,0.3)' }}>
-          LIKE ❤️
-        </span>
-      </div>
-
-      {/* NAH label — always in DOM, opacity-driven */}
-      <div style={{
-        position: 'absolute', top: 20, left: 20, zIndex: 10,
-        transform: 'rotate(15deg)', opacity: nahAlpha,
-        transition: 'opacity 0.05s linear',
-        pointerEvents: 'none',
-      }}>
-        <span style={{ fontSize: 36, fontWeight: 700, color: '#FFFFFF', textShadow: '0 2px 8px rgba(0,0,0,0.3)' }}>
-          NAH ✕
-        </span>
-      </div>
+      {/* FIX 2: single centred LIKE/NAH indicator, no rotation, 42px/800 */}
+      {isActive && absDx > 15 && (
+        <div style={{
+          position: 'absolute', top: '50%', left: '50%',
+          transform: 'translate(-50%, -50%)',
+          zIndex: 10, pointerEvents: 'none',
+          opacity: Math.min(1, absDx / 80),
+        }}>
+          <span style={{
+            fontSize: 42, fontWeight: 800,
+            color: dragX > 0 ? ACC : '#FFFFFF',
+            textShadow: '0 3px 12px rgba(0,0,0,0.4)',
+          }}>
+            {dragX > 0 ? 'LIKE ❤️' : 'NAH ✕'}
+          </span>
+        </div>
+      )}
 
       {/* Progress — top-right */}
       <div style={{ position: 'absolute', top: 14, right: 16, zIndex: 5, pointerEvents: 'none' }}>
@@ -203,22 +182,23 @@ export default function VibeCheck({ selectedCities, onComplete }) {
   const [classicVibes, setClassicVibes] = useState([]);
   const [showHint,     setShowHint]     = useState(true);
 
-  // FIX 3: drag state — dragX in both state (for render) and ref (for handlers)
+  // Drag state
   const [dragX,      setDragX]      = useState(0);
   const [isDragging, setIsDragging] = useState(false);
-  const [flyOff,     setFlyOff]     = useState(null); // null | 1 | -1
+  const [flyOff,     setFlyOff]     = useState(null); // null | 'right' | 'left' — triggers re-render
 
   // Refs
-  const cardContainerRef = useRef(null);
-  const isDraggingRef    = useRef(false);  // FIX 1: ref for non-passive handler
-  const isSwipingRef     = useRef(false);  // FIX 3: guard against double-advance
-  const startXRef        = useRef(null);
-  const startYRef        = useRef(null);   // FIX 1: for horizontal detection
-  const prevXRef         = useRef(null);
-  const prevTRef         = useRef(null);
-  const velRef           = useRef(0);
-  const rafRef           = useRef(null);
-  const dragXRef         = useRef(0);      // FIX 3: stale-closure-safe dragX
+  const cardContainerRef  = useRef(null);
+  const isDraggingRef     = useRef(false);  // for non-passive touchmove handler
+  const isSwipingRef      = useRef(false);  // guard: ignore events while card is flying
+  const flyDirectionRef   = useRef(null);   // 'right' | 'left' | null — stale-closure-safe
+  const startXRef         = useRef(null);
+  const startYRef         = useRef(null);   // for horizontal vs vertical detection
+  const touchStartTimeRef = useRef(null);   // for velocity = totalDist / totalTime
+  const prevXRef          = useRef(null);
+  const prevTRef          = useRef(null);
+  const rafRef            = useRef(null);
+  const dragXRef          = useRef(0);      // mirrors dragX state — stale-closure-safe
 
   // Loading animation state
   const [waveIdx,        setWaveIdx]        = useState(-1);
@@ -277,48 +257,56 @@ export default function VibeCheck({ selectedCities, onComplete }) {
     setPhase('loading');
   }
 
-  // ── FIX 3: advance after fly-off ──────────────────────────────────────────
-  // advanceCard updates score + idx; must be called INSIDE the setTimeout closure
-  // so it captures the correct idx/scores from the render that triggered the swipe.
-  function makeAdvancer(capturedIdx, capturedScores) {
-    return function advanceCard(direction) {
-      const love      = direction > 0;
-      const card      = rawCards[capturedIdx];
-      if (!card) return;
-      const newScores = { ...capturedScores, [card.vibeCategory]: (capturedScores[card.vibeCategory] || 0) + (love ? 2 : -1) };
-      setScores(newScores);
-      const next = capturedIdx + 1;
-      if (next >= rawCards.length) computeResults(newScores);
-      else setIdx(next);
-    };
+  // ── advanceCard: updates score + idx (captures idx/scores at call time) ──────
+  function advanceCard(direction) {
+    const love      = direction === 'right';
+    const card      = rawCards[idx];
+    if (!card) return;
+    const newScores = { ...scores, [card.vibeCategory]: (scores[card.vibeCategory] || 0) + (love ? 2 : -1) };
+    setScores(newScores);
+    const next = idx + 1;
+    if (next >= rawCards.length) computeResults(newScores);
+    else setIdx(next);
   }
 
-  function triggerFlyOff(dir) {
+  // ── Button taps: trigger fly-off immediately ───────────────────────────────
+  function advance(love) {
     if (isSwipingRef.current) return;
-    isSwipingRef.current = true;
-    setFlyOff(dir);
-    const advancer = makeAdvancer(idx, scores);
+    const dir = love ? 'right' : 'left';
+    isSwipingRef.current  = true;
+    flyDirectionRef.current = dir;
+    setFlyOff(dir); // state update → re-render shows fly-off transform
+    const capturedIdx    = idx;
+    const capturedScores = scores;
     setTimeout(() => {
-      advancer(dir);
-      isSwipingRef.current = false;
+      // Use captured values — avoid stale closure from re-renders during timeout
+      const capturedCard = rawCards[capturedIdx];
+      if (capturedCard) {
+        const isLove    = dir === 'right';
+        const newScores = { ...capturedScores, [capturedCard.vibeCategory]: (capturedScores[capturedCard.vibeCategory] || 0) + (isLove ? 2 : -1) };
+        setScores(newScores);
+        const next = capturedIdx + 1;
+        if (next >= rawCards.length) computeResults(newScores);
+        else setIdx(next);
+      }
+      isSwipingRef.current    = false;
+      flyDirectionRef.current = null;
       setFlyOff(null);
       setDragX(0);
       dragXRef.current = 0;
-    }, 300);
+    }, 350);
   }
 
-  // Button taps call this
-  function advance(love) { triggerFlyOff(love ? 1 : -1); }
-
-  // ── Drag handlers ──────────────────────────────────────────────────────────
+  // ── Touch handlers ─────────────────────────────────────────────────────────
   const onTouchStart = (e) => {
     if (isSwipingRef.current) return;
     const t = e.touches[0];
-    startXRef.current = t.clientX;
-    startYRef.current = t.clientY;
-    prevXRef.current  = t.clientX;
-    prevTRef.current  = Date.now();
-    velRef.current    = 0;
+    startXRef.current        = t.clientX;
+    startYRef.current        = t.clientY;
+    touchStartTimeRef.current = Date.now();
+    prevXRef.current         = t.clientX;
+    prevTRef.current         = Date.now();
+    dragXRef.current         = 0;
   };
 
   const onTouchMove = (e) => {
@@ -326,15 +314,13 @@ export default function VibeCheck({ selectedCities, onComplete }) {
     const t  = e.touches[0];
     const dx = Math.abs(t.clientX - startXRef.current);
     const dy = Math.abs(t.clientY - (startYRef.current || 0));
-    if (dx <= dy) return; // vertical — let scroll handle it
+    if (dx <= dy) return; // vertical gesture — let scroll handle it
     isDraggingRef.current = true;
     if (!isDragging) setIsDragging(true);
-    const now = Date.now();
-    velRef.current   = (t.clientX - prevXRef.current) / Math.max(1, now - (prevTRef.current || now));
-    prevXRef.current = t.clientX;
-    prevTRef.current = now;
     const newDx = t.clientX - startXRef.current;
     dragXRef.current = newDx;
+    prevXRef.current = t.clientX;
+    prevTRef.current = Date.now();
     if (rafRef.current) cancelAnimationFrame(rafRef.current);
     rafRef.current = requestAnimationFrame(() => setDragX(newDx));
   };
@@ -342,55 +328,68 @@ export default function VibeCheck({ selectedCities, onComplete }) {
   const onTouchEnd = () => {
     if (startXRef.current === null) return;
     const wasDragging = isDraggingRef.current;
-    startXRef.current    = null;
-    startYRef.current    = null;
+    startXRef.current     = null;
+    startYRef.current     = null;
     isDraggingRef.current = false;
-    setIsDragging(false);
+    setIsDragging(false); // triggers re-render; flyDirectionRef set below is seen by that render
 
     if (!wasDragging || isSwipingRef.current) {
       if (!isSwipingRef.current) { setDragX(0); dragXRef.current = 0; }
       return;
     }
 
-    const dx  = dragXRef.current; // FIX 3: use ref, not stale state
-    const vel = velRef.current;
-    if (Math.abs(dx) > 120 || Math.abs(vel) > 0.5) {
-      const dir = dx > 0 ? 1 : -1;
-      isSwipingRef.current = true;
-      setFlyOff(dir);
-      const advancer = makeAdvancer(idx, scores);
+    const finalDragX = dragXRef.current; // use ref — not stale state
+    const elapsed    = Math.max(1, Date.now() - (touchStartTimeRef.current || Date.now()));
+    const velocity   = Math.abs(finalDragX) / elapsed; // total dist / total time
+    const shouldSwipe = Math.abs(finalDragX) > 100 || velocity > 0.4;
+
+    if (shouldSwipe && !isSwipingRef.current) {
+      isSwipingRef.current    = true;
+      flyDirectionRef.current = finalDragX > 0 ? 'right' : 'left';
+      // DO NOT reset dragX — card continues in its current direction into the fly-off
+      const capturedIdx    = idx;
+      const capturedScores = scores;
       setTimeout(() => {
-        advancer(dir);
-        isSwipingRef.current = false;
+        const capturedCard = rawCards[capturedIdx];
+        if (capturedCard) {
+          const isLove    = flyDirectionRef.current === 'right';
+          const newScores = { ...capturedScores, [capturedCard.vibeCategory]: (capturedScores[capturedCard.vibeCategory] || 0) + (isLove ? 2 : -1) };
+          setScores(newScores);
+          const next = capturedIdx + 1;
+          if (next >= rawCards.length) computeResults(newScores);
+          else setIdx(next);
+        }
+        isSwipingRef.current    = false;
+        flyDirectionRef.current = null;
         setFlyOff(null);
-        setDragX(0);
         dragXRef.current = 0;
-      }, 300);
-    } else {
-      setDragX(0);
+        setDragX(0);
+      }, 350);
+    } else if (!isSwipingRef.current) {
       dragXRef.current = 0;
+      setDragX(0); // snap back — failed swipe
     }
   };
 
+  // ── Mouse handlers (desktop) ───────────────────────────────────────────────
   const onMouseDown = (e) => {
     if (isSwipingRef.current) return;
     e.preventDefault();
-    startXRef.current    = e.clientX;
-    startYRef.current    = e.clientY;
-    prevXRef.current     = e.clientX;
-    prevTRef.current     = Date.now();
-    velRef.current       = 0;
-    isDraggingRef.current = true;
+    startXRef.current        = e.clientX;
+    startYRef.current        = e.clientY;
+    touchStartTimeRef.current = Date.now();
+    prevXRef.current         = e.clientX;
+    prevTRef.current         = Date.now();
+    isDraggingRef.current    = true;
+    dragXRef.current         = 0;
     setIsDragging(true);
   };
   const onMouseMove = (e) => {
     if (!isDraggingRef.current || startXRef.current === null || isSwipingRef.current) return;
-    const now = Date.now();
-    velRef.current   = (e.clientX - prevXRef.current) / Math.max(1, now - (prevTRef.current || now));
-    prevXRef.current = e.clientX;
-    prevTRef.current = now;
     const newDx = e.clientX - startXRef.current;
     dragXRef.current = newDx;
+    prevXRef.current = e.clientX;
+    prevTRef.current = Date.now();
     if (rafRef.current) cancelAnimationFrame(rafRef.current);
     rafRef.current = requestAnimationFrame(() => setDragX(newDx));
   };
@@ -398,7 +397,7 @@ export default function VibeCheck({ selectedCities, onComplete }) {
     if (!isDraggingRef.current) return;
     isDraggingRef.current = false;
     setIsDragging(false);
-    onTouchEnd(); // reuse same logic
+    onTouchEnd();
   };
 
   // ── Classic mode toggle ────────────────────────────────────────────────────
@@ -413,8 +412,10 @@ export default function VibeCheck({ selectedCities, onComplete }) {
   // ── Reset ──────────────────────────────────────────────────────────────────
   function resetSwipe() {
     setIdx(0); setScores({ scenic:0, culture:0, instagrammable:0, shopping:0, local:0, adventure:0 });
-    setPhase('swiping'); setFinalData(null); setDragX(0); dragXRef.current = 0;
-    setFlyOff(null); isSwipingRef.current = false; isDraggingRef.current = false;
+    setPhase('swiping'); setFinalData(null);
+    setDragX(0); dragXRef.current = 0;
+    setFlyOff(null); flyDirectionRef.current = null;
+    isSwipingRef.current = false; isDraggingRef.current = false;
   }
 
   // ══ CLASSIC MODE ════════════════════════════════════════════════════════════
@@ -672,16 +673,18 @@ export default function VibeCheck({ selectedCities, onComplete }) {
   const card2 = rawCards[idx + 2];
   if (!card0) return null;
 
-  // FIX 4: progress ratio capped at 1, card 2 & 3 scale in real-time
+  // Card 2 & 3 scale proportionally to drag distance, snap to full when flying
   const progress = flyOff ? 1 : Math.min(1, Math.abs(dragX) / 120);
   const c1Scale  = 0.95 + 0.05 * progress;
   const c1TY     = 8   - 8  * progress;
   const c2Scale  = 0.90 + 0.05 * progress;
   const c2TY     = 16  - 8  * progress;
 
-  // FIX 3: fly-off transform (150vw) vs drag
-  const activeTx  = flyOff ? `${flyOff * 150}vw` : `${dragX}px`;
-  const activeRot = flyOff ? flyOff * 30 : dragX * 0.05;
+  // Active card: fly off to ±150vw when flyOff is set, otherwise follow drag
+  const flyX     = flyOff === 'right' ? '150vw' : '-150vw';
+  const flyRot   = flyOff === 'right' ? 30 : -30;
+  const activeTx  = flyOff ? flyX : `${dragX}px`;
+  const activeRot = flyOff ? flyRot : dragX * 0.05;
   const activeOp  = flyOff ? 0 : 1;
 
   const isLast = idx === rawCards.length - 1;
@@ -768,7 +771,7 @@ export default function VibeCheck({ selectedCities, onComplete }) {
           style={{
             transform: `translateX(${activeTx}) rotate(${activeRot}deg)`,
             transition: flyOff
-              ? 'transform 0.3s ease-out, opacity 0.3s ease-out'
+              ? 'transform 350ms ease-out, opacity 350ms ease-out'
               : isDragging ? 'none' : 'transform 0.2s ease-out',
             opacity: activeOp,
             zIndex: 3,
