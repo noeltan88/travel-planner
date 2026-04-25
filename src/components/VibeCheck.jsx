@@ -1,30 +1,50 @@
 /**
- * VibeCheck — Instagram-style attraction card swiper for the quiz Vibe step.
+ * VibeCheck — Instagram-style attraction card swiper (quiz step 6)
  *
- * Shows 12 cards (2 per category × 6 categories), sourced from the selected
- * cities' attraction pool. User taps ❤️ Love it / ✕ Nah — or swipes — on each.
+ * Changes in this version:
+ *   Change 2 — Swipe instruction row (← Nah / 👆 / Love it →) below card;
+ *              first-time overlay on card 0 with localStorage dismissal.
+ *   Change 3 — Cards show ONLY photo + category pill (bottom-left) +
+ *              progress "N of 12" (top-right, inside card); no name/city.
+ *              Dedup enforced via usedIds Set across all categories.
+ *              Results screen: personality label, top-3 coral pills, CTA.
+ *   Change 4 — Animated 1.8s loading screen: wave emojis, cycling subtext,
+ *              coral progress bar; auto-advances to results.
  *
- * Scoring:
- *   Love it → +2 to that category
- *   Nah     → −1 to that category
- *
- * After all 12: shows a 1-second "Finding your vibe…" pulse,
- * then calls onComplete(vibeArray) where vibeArray is every category with score > 0
- * (or ['surprise'] if all scores are 0 or negative).
+ * Phase flow: 'swiping' → 'loading' (1.8s) → 'results' → onComplete()
  */
-import { useState, useRef, useMemo } from 'react';
+import { useState, useRef, useMemo, useEffect } from 'react';
 import masterDb from '../data/china-master-db-v1.json';
 import AttractionImage from './AttractionImage';
 
-// ── Category definitions ───────────────────────────────────────────────────────
+// ── Constants ──────────────────────────────────────────────────────────────────
+const ACC = '#E8472A';
+
 const VIBE_CATEGORIES = [
-  { key: 'scenic',         label: 'Scenic & nature',     tags: ['scenic', 'nature'] },
-  { key: 'culture',        label: 'History & culture',   tags: ['culture', 'history'] },
-  { key: 'instagrammable', label: 'Instagrammable',      tags: ['instagrammable'] },
-  { key: 'shopping',       label: 'Shopping & food',     tags: ['shopping', 'food'] },
-  { key: 'local',          label: 'Local & hidden gems', tags: ['local', 'hidden-gem'] },
-  { key: 'adventure',      label: 'Fun & adventure',     tags: ['fun', 'adventure'] },
+  { key: 'scenic',         label: 'Scenic & nature',     tags: ['scenic', 'nature'],    emoji: '🌿' },
+  { key: 'culture',        label: 'History & culture',   tags: ['culture', 'history'],  emoji: '🏯' },
+  { key: 'instagrammable', label: 'Instagrammable',      tags: ['instagrammable'],      emoji: '📸' },
+  { key: 'shopping',       label: 'Shopping & food',     tags: ['shopping', 'food'],    emoji: '🍜' },
+  { key: 'local',          label: 'Local & hidden gems', tags: ['local', 'hidden-gem'], emoji: '🗺️' },
+  { key: 'adventure',      label: 'Fun & adventure',     tags: ['fun', 'adventure'],    emoji: '⚡' },
 ];
+
+const VIBE_EMOJIS    = VIBE_CATEGORIES.map(c => c.emoji);
+const CATEGORY_LABEL = Object.fromEntries(VIBE_CATEGORIES.map(c => [c.key, c.label]));
+
+const PERSONALITY = {
+  scenic:         "You're a Nature Seeker 🌿",
+  culture:        "You're a Culture Explorer 🏯",
+  instagrammable: "You're a Visual Hunter 📸",
+  shopping:       "You're a Food & Finds Lover 🍜",
+  local:          "You're a Local at Heart 🗺️",
+  adventure:      "You're a Thrill Chaser ⚡",
+};
+const DEFAULT_PERSONALITY = "You're full of Surprises 🎲";
+
+const HINT_KEY    = 'vibecheck_hint_seen';
+const LOAD_TEXTS  = ['Crunching your swipes…', 'Reading between the lines…', 'Almost there…'];
+const LOAD_MS     = 1800;
 
 // ── Helpers ────────────────────────────────────────────────────────────────────
 function shuffle(arr) {
@@ -48,19 +68,19 @@ function buildVibeCards(selectedCities) {
     return out;
   }
 
-  const allCityKeys    = Object.keys(masterDb.cities || {});
-  const primaryKeys    = selectedCities.length > 0 ? selectedCities : allCityKeys;
-  const primaryPool    = getAttractions(primaryKeys);
-  const fallbackPool   = getAttractions(allCityKeys);
+  const allCityKeys  = Object.keys(masterDb.cities || {});
+  const primaryKeys  = selectedCities.length > 0 ? selectedCities : allCityKeys;
+  const primaryPool  = getAttractions(primaryKeys);
+  const fallbackPool = getAttractions(allCityKeys);
 
-  const cards  = [];
-  const usedIds = new Set();
+  const cards   = [];
+  const usedIds = new Set(); // dedup across all categories
 
   VIBE_CATEGORIES.forEach(cat => {
-    // Score: prefer photo + high rating
     function quality(a) {
       return (a.photo_url ? 10 : 0) + (a.google_rating > 4.0 ? a.google_rating : 0);
     }
+    // Always filter usedIds to enforce global dedup
     function findMatches(pool) {
       return pool
         .filter(a => !usedIds.has(a.id) && a.vibe_tags?.some(t => cat.tags.includes(t)))
@@ -73,10 +93,10 @@ function buildVibeCards(selectedCities) {
       matches = [...matches, ...extra];
     }
 
-    // Take top-2, shuffle within the pair so order varies each run
+    // Take top-2, shuffle within pair for variety
     const pair = shuffle(matches.slice(0, 2));
     pair.forEach(a => {
-      usedIds.add(a.id);
+      usedIds.add(a.id); // mark used immediately
       cards.push({ ...a, vibeCategory: cat.key, vibeCategoryLabel: cat.label });
     });
   });
@@ -84,9 +104,8 @@ function buildVibeCards(selectedCities) {
   return cards;
 }
 
-// ── Component ──────────────────────────────────────────────────────────────────
+// ── Main component ─────────────────────────────────────────────────────────────
 export default function VibeCheck({ selectedCities, onComplete }) {
-  // Build card deck once (stable across re-renders)
   const cards = useMemo(
     () => buildVibeCards(selectedCities),
     [], // eslint-disable-line react-hooks/exhaustive-deps
@@ -97,20 +116,88 @@ export default function VibeCheck({ selectedCities, onComplete }) {
     scenic: 0, culture: 0, instagrammable: 0, shopping: 0, local: 0, adventure: 0,
   });
   const [fading,  setFading]  = useState(false);
-  const [done,    setDone]    = useState(false);
+  const [phase,   setPhase]   = useState('swiping'); // 'swiping' | 'loading' | 'results'
+  const [finalData, setFinalData] = useState(null);  // { vibeArr, topCat, top3 }
 
-  // Touch-swipe tracking
+  // First-time swipe hint overlay
+  const [showHint, setShowHint] = useState(() => !localStorage.getItem(HINT_KEY));
+
+  // Touch swipe
   const touchRef  = useRef(null);
   const [swipeX,  setSwipeX]  = useState(0);
   const [swiping, setSwiping] = useState(false);
 
-  // ── Core action ─────────────────────────────────────────────────────────────
+  // Loading screen animation state
+  const [waveIdx,        setWaveIdx]        = useState(-1);
+  const [waveDone,       setWaveDone]       = useState(false);
+  const [loadTextIdx,    setLoadTextIdx]    = useState(0);
+  const [loadTextFadeIn, setLoadTextFadeIn] = useState(true);
+
+  // ── Hint auto-dismiss after 3s ─────────────────────────────────────────────
+  useEffect(() => {
+    if (!showHint) return;
+    const t = setTimeout(dismissHint, 3000);
+    return () => clearTimeout(t);
+  }, [showHint]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  function dismissHint() {
+    localStorage.setItem(HINT_KEY, '1');
+    setShowHint(false);
+  }
+
+  // ── Loading screen orchestration ───────────────────────────────────────────
+  useEffect(() => {
+    if (phase !== 'loading') return;
+
+    // Wave: advance every 200ms through all 6 emojis
+    setWaveIdx(0);
+    setWaveDone(false);
+    let wi = 0;
+    const waveTimer = setInterval(() => {
+      wi++;
+      if (wi >= VIBE_EMOJIS.length) {
+        clearInterval(waveTimer);
+        setWaveDone(true);
+      } else {
+        setWaveIdx(wi);
+      }
+    }, 200);
+
+    // Cycling subtext: fade out → change → fade in every 600ms
+    let ti = 0;
+    const textTimer = setInterval(() => {
+      setLoadTextFadeIn(false);
+      setTimeout(() => {
+        ti = (ti + 1) % LOAD_TEXTS.length;
+        setLoadTextIdx(ti);
+        setLoadTextFadeIn(true);
+      }, 150);
+    }, 600);
+
+    // Advance to results after LOAD_MS
+    const doneTimer = setTimeout(() => {
+      clearInterval(waveTimer);
+      clearInterval(textTimer);
+      setPhase('results');
+    }, LOAD_MS);
+
+    return () => {
+      clearInterval(waveTimer);
+      clearInterval(textTimer);
+      clearTimeout(doneTimer);
+    };
+  }, [phase]);
+
+  // ── Core swipe action ──────────────────────────────────────────────────────
   function advance(love) {
     const card = cards[idx];
     if (!card || fading) return;
 
     const delta     = love ? 2 : -1;
-    const newScores = { ...scores, [card.vibeCategory]: (scores[card.vibeCategory] || 0) + delta };
+    const newScores = {
+      ...scores,
+      [card.vibeCategory]: (scores[card.vibeCategory] || 0) + delta,
+    };
     setScores(newScores);
     setSwipeX(0);
     setSwiping(false);
@@ -119,14 +206,13 @@ export default function VibeCheck({ selectedCities, onComplete }) {
     setTimeout(() => {
       const next = idx + 1;
       if (next >= cards.length) {
-        setDone(true);
-        // 1-second "Finding your vibe…" then fire onComplete
-        setTimeout(() => {
-          const vibeArr = Object.entries(newScores)
-            .filter(([, s]) => s > 0)
-            .map(([k]) => k);
-          onComplete(vibeArr.length > 0 ? vibeArr : ['surprise']);
-        }, 1200);
+        // Compute final results
+        const sorted = Object.entries(newScores).sort((a, b) => b[1] - a[1]);
+        const topCat = sorted[0][1] > 0 ? sorted[0][0] : null;
+        const top3   = sorted.filter(([, s]) => s > 0).slice(0, 3).map(([k]) => k);
+        const vibeArr = top3.length > 0 ? top3 : ['surprise'];
+        setFinalData({ vibeArr, topCat, top3 });
+        setPhase('loading');
       } else {
         setIdx(next);
         setFading(false);
@@ -134,7 +220,7 @@ export default function VibeCheck({ selectedCities, onComplete }) {
     }, 150);
   }
 
-  // ── Touch handlers ───────────────────────────────────────────────────────────
+  // ── Touch handlers ─────────────────────────────────────────────────────────
   function onTouchStart(e) {
     touchRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
   }
@@ -142,58 +228,163 @@ export default function VibeCheck({ selectedCities, onComplete }) {
     if (!touchRef.current) return;
     const dx = e.touches[0].clientX - touchRef.current.x;
     const dy = Math.abs(e.touches[0].clientY - touchRef.current.y);
-    if (Math.abs(dx) > dy) {
-      setSwiping(true);
-      setSwipeX(dx);
-    }
+    if (Math.abs(dx) > dy) { setSwiping(true); setSwipeX(dx); }
   }
   function onTouchEnd(e) {
     if (!touchRef.current) return;
     const dx = e.changedTouches[0].clientX - touchRef.current.x;
     touchRef.current = null;
-    if (Math.abs(dx) > 80) {
-      advance(dx > 0); // swipe right = Love it, swipe left = Nah
-    } else {
-      setSwipeX(0);
-      setSwiping(false);
-    }
+    if (Math.abs(dx) > 80) advance(dx > 0);
+    else { setSwipeX(0); setSwiping(false); }
   }
 
-  // ── "Finding your vibe…" completion screen ──────────────────────────────────
-  if (done) {
+  // ══ PHASE: LOADING ══════════════════════════════════════════════════════════
+  if (phase === 'loading') {
+    const topCatIdx = finalData?.topCat
+      ? VIBE_CATEGORIES.findIndex(c => c.key === finalData.topCat)
+      : -1;
+
     return (
       <div style={{
         flex: 1, display: 'flex', flexDirection: 'column',
-        alignItems: 'center', justifyContent: 'center', gap: 16,
+        alignItems: 'center', justifyContent: 'center',
+        background: '#fff', gap: 0,
       }}>
         <style>{`
-          @keyframes vibePulse {
-            0%, 100% { transform: scale(1);   opacity: 0.18; }
-            50%       { transform: scale(1.6); opacity: 0.08; }
-          }
+          @keyframes vibeLoadBar { from { width: 0px; } to { width: 120px; } }
         `}</style>
-        <div style={{ position: 'relative', width: 52, height: 52 }}>
-          <div style={{
-            position: 'absolute', inset: 0, borderRadius: '50%',
-            background: '#E8472A',
-            animation: 'vibePulse 1.1s ease-in-out infinite',
-          }} />
-          <div style={{
-            position: 'absolute', inset: 10, borderRadius: '50%',
-            background: '#E8472A',
-          }} />
+
+        {/* 6 vibe emojis — wave then settle on top category */}
+        <div style={{ display: 'flex', gap: 16, marginBottom: 24 }}>
+          {VIBE_EMOJIS.map((em, i) => {
+            const isActive = waveDone ? topCatIdx === i : waveIdx === i;
+            const isDimmed = waveDone && topCatIdx !== i;
+            return (
+              <span
+                key={i}
+                style={{
+                  fontSize:   32,
+                  display:    'inline-block',
+                  transform:  isActive ? 'scale(1.3)' : 'scale(1)',
+                  transition: 'transform 0.2s ease, opacity 0.3s ease, filter 0.3s ease',
+                  opacity:    isDimmed ? 0.4 : 1,
+                  filter:     isDimmed ? 'grayscale(0.5)' : 'none',
+                }}
+              >
+                {em}
+              </span>
+            );
+          })}
         </div>
-        <p style={{ fontSize: 16, fontWeight: 600, color: '#1A1A1A', margin: 0 }}>
+
+        {/* "Finding your vibe..." */}
+        <p style={{
+          fontSize: 16, fontWeight: 500, color: '#1A1A1A',
+          margin: '0 0 8px',
+        }}>
           Finding your vibe…
         </p>
+
+        {/* Cycling subtext with fade */}
+        <p style={{
+          fontSize: 12, color: '#999',
+          margin: '0 0 20px',
+          opacity:    loadTextFadeIn ? 1 : 0,
+          transition: 'opacity 0.15s ease',
+          minHeight: 18, textAlign: 'center',
+        }}>
+          {LOAD_TEXTS[loadTextIdx]}
+        </p>
+
+        {/* Coral progress bar — 0→120px over LOAD_MS */}
+        <div style={{
+          width: 120, height: 3, background: '#F0F0F0', overflow: 'hidden',
+        }}>
+          <div style={{
+            height:     '100%',
+            background: ACC,
+            width:      0,
+            animation:  `vibeLoadBar ${LOAD_MS}ms ease-in-out forwards`,
+          }} />
+        </div>
       </div>
     );
   }
 
-  const card = cards[idx];
+  // ══ PHASE: RESULTS ══════════════════════════════════════════════════════════
+  if (phase === 'results') {
+    const { vibeArr, topCat, top3 } = finalData;
+    const label    = topCat ? (PERSONALITY[topCat] || DEFAULT_PERSONALITY) : DEFAULT_PERSONALITY;
+    const topEmoji = topCat ? (VIBE_CATEGORIES.find(c => c.key === topCat)?.emoji ?? '🎲') : '🎲';
+
+    return (
+      <div style={{
+        flex: 1, display: 'flex', flexDirection: 'column',
+        alignItems: 'center', justifyContent: 'center',
+        padding: '0 24px 16px', background: '#fff',
+      }}>
+        {/* Big emoji */}
+        <div style={{ fontSize: 64, lineHeight: 1, marginBottom: 18 }}>
+          {topEmoji}
+        </div>
+
+        {/* Personality label */}
+        <p style={{
+          fontSize: 22, fontWeight: 500, color: '#1A1A1A',
+          margin: '0 0 8px', textAlign: 'center', lineHeight: 1.3,
+        }}>
+          {label}
+        </p>
+
+        {/* Subtext */}
+        <p style={{
+          fontSize: 14, color: '#999',
+          margin: '0 0 24px', textAlign: 'center',
+        }}>
+          We'll build your itinerary around this
+        </p>
+
+        {/* Top-3 coral category pills */}
+        {top3.length > 0 && (
+          <div style={{
+            display: 'flex', flexWrap: 'wrap', gap: 8,
+            justifyContent: 'center', marginBottom: 32,
+          }}>
+            {top3.map(cat => (
+              <span
+                key={cat}
+                style={{
+                  padding: '7px 18px', borderRadius: 20,
+                  background: ACC, color: '#fff',
+                  fontSize: 13, fontWeight: 500,
+                }}
+              >
+                {CATEGORY_LABEL[cat] || cat}
+              </span>
+            ))}
+          </div>
+        )}
+
+        {/* CTA */}
+        <button
+          onClick={() => onComplete(vibeArr)}
+          style={{
+            width: '100%', height: 52, borderRadius: 28,
+            background: ACC, color: '#fff',
+            border: 'none', cursor: 'pointer',
+            fontSize: 14, fontWeight: 500,
+          }}
+        >
+          Build my itinerary →
+        </button>
+      </div>
+    );
+  }
+
+  // ══ PHASE: SWIPING ══════════════════════════════════════════════════════════
+  const card      = cards[idx];
   if (!card) return null;
 
-  // Derived animation values
   const rot       = swipeX * 0.03;
   const loveAlpha = Math.max(0, Math.min(1, swipeX / 80));
   const nahAlpha  = Math.max(0, Math.min(1, -swipeX / 80));
@@ -205,109 +396,153 @@ export default function VibeCheck({ selectedCities, onComplete }) {
       overflow: 'hidden', minHeight: 0,
     }}>
 
-      {/* ── Card progress indicator ─────────────────────────────────────── */}
-      <div style={{
-        width: '100%', display: 'flex', justifyContent: 'flex-end',
-        marginBottom: 8, flexShrink: 0,
-      }}>
-        <span style={{ fontSize: 12, color: '#999', fontWeight: 500 }}>
-          {idx + 1} of {cards.length}
-        </span>
-      </div>
-
       {/* ── Attraction card ─────────────────────────────────────────────── */}
       <div
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
         style={{
-          width:           '100%',
-          maxWidth:        400,
-          height:          420,
-          borderRadius:    20,
-          overflow:        'hidden',
-          flexShrink:      0,
-          position:        'relative',
-          transform:       `translateX(${swipeX}px) rotate(${rot}deg)`,
-          transition:      swiping ? 'none'
-                           : fading ? 'opacity 0.15s ease'
-                           : 'transform 0.3s cubic-bezier(0.34,1.56,0.64,1)',
-          opacity:         fading ? 0 : 1,
-          cursor:          'grab',
-          userSelect:      'none',
-          touchAction:     'pan-y',
-          boxShadow:       '0 8px 32px rgba(0,0,0,0.13)',
+          width:        '100%',
+          maxWidth:     400,
+          height:       420,
+          borderRadius: 20,
+          overflow:     'hidden',
+          flexShrink:   0,
+          position:     'relative',
+          transform:    `translateX(${swipeX}px) rotate(${rot}deg)`,
+          transition:   swiping ? 'none'
+                        : fading  ? 'opacity 0.15s ease'
+                        : 'transform 0.3s cubic-bezier(0.34,1.56,0.64,1)',
+          opacity:      fading ? 0 : 1,
+          cursor:       'grab',
+          userSelect:   'none',
+          touchAction:  'pan-y',
+          boxShadow:    '0 8px 32px rgba(0,0,0,0.13)',
         }}
       >
-        {/* Photo */}
+        {/* Full-bleed photo */}
         <div style={{ position: 'absolute', inset: 0 }}>
           <AttractionImage
             src={card.photo_url || null}
-            alt={card.name}
+            alt={card.vibeCategoryLabel}
             category={card.category}
           />
         </div>
 
-        {/* Dark gradient overlay */}
+        {/* Subtle gradient for readability of overlaid elements */}
         <div style={{
           position:   'absolute', inset: 0,
-          background: 'linear-gradient(to bottom, transparent 48%, rgba(0,0,0,0.72) 100%)',
+          background: 'linear-gradient(to bottom, rgba(0,0,0,0.18) 0%, transparent 35%, rgba(0,0,0,0.35) 100%)',
         }} />
 
-        {/* Love-it swipe overlay */}
+        {/* Love-it swipe feedback */}
         {loveAlpha > 0 && (
           <div style={{
             position: 'absolute', inset: 0,
             background: `rgba(232,71,42,${loveAlpha * 0.22})`,
             display: 'flex', alignItems: 'center', justifyContent: 'center',
           }}>
-            <span style={{ fontSize: 64, opacity: loveAlpha, filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.3))' }}>❤️</span>
+            <span style={{ fontSize: 64, opacity: loveAlpha, filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.3))' }}>
+              ❤️
+            </span>
           </div>
         )}
 
-        {/* Nah swipe overlay */}
+        {/* Nah swipe feedback */}
         {nahAlpha > 0 && (
           <div style={{
             position: 'absolute', inset: 0,
-            background: `rgba(0,0,0,${nahAlpha * 0.25})`,
+            background: `rgba(0,0,0,${nahAlpha * 0.28})`,
             display: 'flex', alignItems: 'center', justifyContent: 'center',
           }}>
-            <span style={{ fontSize: 64, opacity: nahAlpha, color: '#fff', fontWeight: 700, textShadow: '0 2px 8px rgba(0,0,0,0.5)' }}>✕</span>
+            <span style={{
+              fontSize: 64, opacity: nahAlpha, color: '#fff',
+              fontWeight: 700, textShadow: '0 2px 8px rgba(0,0,0,0.5)',
+            }}>
+              ✕
+            </span>
           </div>
         )}
 
-        {/* Bottom content */}
-        <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '0 16px 18px' }}>
-          {/* Category pill */}
+        {/* Progress indicator — top-right inside card (Change 3) */}
+        <div style={{ position: 'absolute', top: 12, right: 14, zIndex: 5 }}>
+          <span style={{
+            fontSize: 12, color: '#fff', fontWeight: 500,
+            textShadow: '0 1px 4px rgba(0,0,0,0.6)',
+          }}>
+            {idx + 1} of {cards.length}
+          </span>
+        </div>
+
+        {/* Category pill — bottom-left only, no name/city (Change 3) */}
+        <div style={{ position: 'absolute', bottom: 16, left: 16, zIndex: 5 }}>
           <div style={{
             display: 'inline-flex',
             background: 'rgba(255,255,255,0.92)',
             borderRadius: 20, padding: '3px 10px',
-            marginBottom: 8,
           }}>
             <span style={{ fontSize: 11, color: '#1A1A1A', fontWeight: 500 }}>
               {card.vibeCategoryLabel}
             </span>
           </div>
-          {/* Name */}
-          <p style={{
-            fontSize: 20, fontWeight: 500, color: '#fff',
-            margin: '0 0 3px', lineHeight: 1.25,
-            textShadow: '0 1px 6px rgba(0,0,0,0.35)',
-          }}>
-            {card.name}
-          </p>
-          {/* City */}
-          <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.72)', margin: 0 }}>
-            {card.cityName}
-          </p>
         </div>
+
+        {/* ── First-time hint overlay (card 0 only, localStorage-gated) ─── */}
+        {showHint && idx === 0 && (
+          <div style={{
+            position:   'absolute', inset: 0, zIndex: 20,
+            background: 'rgba(0,0,0,0.5)',
+            display:    'flex', flexDirection: 'column',
+            alignItems: 'center', justifyContent: 'center', gap: 8,
+          }}>
+            <p style={{ fontSize: 16, fontWeight: 600, color: '#fff', margin: 0 }}>
+              Swipe right to keep →
+            </p>
+            <p style={{ fontSize: 16, fontWeight: 600, color: '#fff', margin: 0 }}>
+              ← Swipe left to skip
+            </p>
+            <button
+              onClick={dismissHint}
+              style={{
+                marginTop:    16,
+                padding:      '10px 32px',
+                borderRadius: 28,
+                background:   ACC,
+                color:        '#fff',
+                border:       'none',
+                cursor:       'pointer',
+                fontSize:     14,
+                fontWeight:   500,
+              }}
+            >
+              Got it
+            </button>
+          </div>
+        )}
+      </div>
+
+      {/* ── Instruction row — "← Nah / 👆 / Love it →" (Change 2) ────── */}
+      <div style={{
+        width:          '100%',
+        maxWidth:       400,
+        display:        'flex',
+        alignItems:     'center',
+        justifyContent: 'space-between',
+        padding:        '10px 6px 0',
+        flexShrink:     0,
+      }}>
+        <span style={{ fontSize: 12, color: '#999', fontWeight: 500 }}>← Nah</span>
+        <span style={{ fontSize: 16, color: '#CCC' }}>👆</span>
+        <span style={{ fontSize: 12, color: ACC, fontWeight: 500 }}>Love it →</span>
       </div>
 
       {/* ── Action buttons ──────────────────────────────────────────────── */}
       <div style={{
-        display: 'flex', gap: 40, alignItems: 'center',
-        marginTop: 22, flexShrink: 0,
+        display:    'flex',
+        gap:        40,
+        alignItems: 'center',
+        marginTop:  14,
+        flexShrink: 0,
       }}>
         {/* Nah */}
         <button
@@ -333,7 +568,7 @@ export default function VibeCheck({ selectedCities, onComplete }) {
           onClick={() => advance(true)}
           style={{
             width: 56, height: 56, borderRadius: '50%',
-            background: '#E8472A', border: 'none',
+            background: ACC, border: 'none',
             cursor: 'pointer', fontSize: 20,
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             color: '#fff',
@@ -348,13 +583,6 @@ export default function VibeCheck({ selectedCities, onComplete }) {
         </button>
       </div>
 
-      {/* Hint */}
-      <p style={{
-        fontSize: 12, color: '#CCC', marginTop: 10,
-        textAlign: 'center', flexShrink: 0,
-      }}>
-        Swipe or tap to choose
-      </p>
     </div>
   );
 }

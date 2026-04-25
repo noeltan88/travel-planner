@@ -207,12 +207,13 @@ function OptionCard({ opt, sel, multi, isGroupQ, isFamilyKids, answers, onToggle
 
   const isTappedSoon = comingSoonTapped === opt.value;
 
-  const cardBg     = opt.comingSoon ? '#FAFAFA'
-                   : sel            ? ACC
-                   :                  (hovered ? ACC_TINT : '#fff');
-  const cardBorder = opt.comingSoon ? '1px solid #F0F0F0'
-                   : sel            ? `1px solid ${ACC}`
-                   :                  '1px solid #E0E0E0';
+  const cardBg        = opt.comingSoon ? '#FAFAFA'
+                      : sel            ? ACC
+                      :                  (hovered ? ACC_TINT : '#fff');
+  const cardBorder    = opt.comingSoon ? '1px solid #F0F0F0'
+                      : sel            ? `1px solid ${ACC}`
+                      :                  '1px solid #E0E0E0';
+  const cardBorderLeft = !sel && !opt.comingSoon ? '3px solid #F0C4BA' : cardBorder;
   const nameColor  = sel && !opt.comingSoon ? '#fff' : '#1A1A1A';
   const descColor  = sel && !opt.comingSoon ? 'rgba(255,255,255,0.75)' : '#999';
 
@@ -227,7 +228,7 @@ function OptionCard({ opt, sel, multi, isGroupQ, isFamilyKids, answers, onToggle
           display: 'flex', alignItems: 'center', gap: 12,
           padding: '14px 16px', borderRadius: 16,
           textAlign: 'left', cursor: opt.comingSoon ? 'default' : 'pointer',
-          background: cardBg, border: cardBorder,
+          background: cardBg, border: cardBorder, borderLeft: cardBorderLeft,
           opacity: opt.comingSoon ? 0.55 : 1,
           transition: 'background 0.15s ease, border-color 0.15s ease',
         }}
@@ -384,6 +385,7 @@ export default function QuizFlow({ onComplete }) {
   const [citySearch,       setCitySearch]       = useState('');
   const [dateTab,          setDateTab]          = useState('dates');
   const [calendarOpen,     setCalendarOpen]     = useState(false);
+  const [citySearchFocused,setCitySearchFocused]= useState(false);
 
   const q          = QUIZ[step];
   const isLastStep = step === LAST_STEP;
@@ -526,10 +528,10 @@ export default function QuizFlow({ onComplete }) {
       overflow:       'hidden',
     }}>
 
-      {/* ── 3px progress bar — flush to top edge, no rounding ────────────── */}
+      {/* ── 4px progress bar — flush to top edge, no rounding ────────────── */}
       <div style={{
         position:   'absolute', top: 0, left: 0, right: 0,
-        height:     3,
+        height:     4,
         background: '#F0F0F0',
         zIndex:     10,
         flexShrink: 0,
@@ -563,7 +565,7 @@ export default function QuizFlow({ onComplete }) {
       <div style={{ padding: '28px 20px 0', flexShrink: 0, zIndex: 1 }}>
         <p style={{
           fontSize: 11, fontWeight: 700, letterSpacing: '0.08em',
-          color: '#CCC', margin: 0,
+          color: ACC, margin: 0,
         }}>
           {q.label} · {step + 1}/{QUIZ.length}
         </p>
@@ -595,11 +597,15 @@ export default function QuizFlow({ onComplete }) {
               type="text"
               value={citySearch}
               onChange={e => setCitySearch(e.target.value)}
+              onFocus={() => setCitySearchFocused(true)}
+              onBlur={() => setCitySearchFocused(false)}
               placeholder="Search cities…"
               style={{
                 width: '100%', padding: '12px 40px 12px 16px', borderRadius: 16,
                 fontSize: 14, outline: 'none', boxSizing: 'border-box',
-                background: '#F8F8F8', border: '1.5px solid #E8E8E8', color: '#1A1A1A',
+                background: '#F8F8F8', color: '#1A1A1A',
+                border: `1.5px solid ${citySearchFocused ? ACC : '#E8E8E8'}`,
+                transition: 'border-color 0.15s ease',
               }}
             />
             {citySearch && (
@@ -823,7 +829,7 @@ export default function QuizFlow({ onComplete }) {
             onClick={() => { setStep(step - 1); setCitySearch(''); }}
             style={{
               background: 'none', border: 'none', cursor: 'pointer',
-              color: '#999', fontSize: 14, fontWeight: 500,
+              color: ACC, fontSize: 14, fontWeight: 500,
               padding: '0 4px', flexShrink: 0,
             }}
           >
