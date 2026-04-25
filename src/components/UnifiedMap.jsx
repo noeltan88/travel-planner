@@ -1,44 +1,35 @@
 /**
- * UnifiedMap — single Mapbox instance powering the full-screen itinerary map.
+ * UnifiedMap — full-screen map + explore, Screen 4 redesign.
  *
- * Changes in this version:
- *   Change 1: Dark floating day tabs (with date labels) directly above card rail
- *   Change 2: Continuous card flow across all days with day-divider pills
- *   Change 3: Enriched card info — Chinese name, rating, duration, description
- *   Change 4: Category-coded explore markers (attraction/food/hotel)
- *   Change 5: Expand/collapse white-circle button always at top-right corner
- *   Change 6: Explore filter pills with Mountain/Utensils/Bed icons + counts
+ * Day view:
+ *   - 110 px horizontal snap card rail (bottom 0), photo 110 px wide on left
+ *   - Number badge bottom-left of photo, always coral
+ *   - Dark floating day tabs directly above card rail
+ *   - Floating "Explore" pill button above the day tabs (bottom-right)
+ *   - Swipe up on card → swap modal | swipe down → delete
  *
- * Gestures (unchanged):
- *   Swipe DOWN on drag-handle → Explore mode
- *   Swipe UP   on drag-handle → collapse map (onCollapse)
- *   Swipe UP   on Explore strip → exit Explore, return to Day view
+ * Explore mode:
+ *   - White filter pills at top-16px (Attractions / Food / Hotels)
+ *   - Teal / amber / slate category markers; tap → 220 px bottom sheet
+ *   - Bottom sheet: photo + info + Add to Day X picker
+ *   - "← Back to plan" dark pill at bottom centre
  */
 import { useEffect, useRef, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
 import AttractionImage from './AttractionImage';
 import { getSwapAlternatives } from '../utils/algorithm';
-import {
-  ChevronRight, X, ArrowUp, ArrowDown,
-  Mountain, Utensils, Bed,
-  Maximize2, Minimize2,
-} from 'lucide-react';
+import { ChevronRight, X, Mountain, Utensils, Bed, Minimize2, Maximize2 } from 'lucide-react';
 
 const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN;
 const ACCENT       = '#E8472A';
+const TINT         = '#FEF0EC';
 
-// Layout constants (bottom-up stack in expanded mode):
-//   CARD_BOTTOM: whole overlay sits this far from bottom
-//   DAY_TABS_H:  dark floating day tabs row (top of overlay)
-//   HANDLE_H:    drag handle strip (below tabs)
-//   CARD_H:      each stop card
-const CARD_H      = 160;
-const CARD_BOTTOM = 12;
-const DAY_TABS_H  = 44;
-const SCROLL_PAD  = 30;
-const SWIPE_THRESH = 80;
+// Layout constants
+const CARD_H     = 110;   // card rail height
+const DAY_TABS_H = 44;    // dark day tabs strip
+const SCROLL_PAD = 20;    // left/right padding in the scroll rail
 
-// Explore marker colours (Change 4)
+// Explore marker colours
 const EXPLORE_COLORS = {
   attraction: '#1D9E75',
   food:       '#BA7517',
@@ -81,23 +72,13 @@ function formatDayDate(departureDateStr, dayIndex) {
   } catch { return null; }
 }
 
-function formatDuration(hrs) {
-  if (hrs == null) return '';
-  if (hrs < 1) return `${Math.round(hrs * 60)} min`;
-  if (hrs === Math.floor(hrs)) return `${hrs} hr${hrs !== 1 ? 's' : ''}`;
-  const h = Math.floor(hrs);
-  const m = Math.round((hrs - h) * 60);
-  return m > 0 ? `${h}h ${m}m` : `${h} hrs`;
-}
-
-// ─── DayDivider ─── slim dark pill between days, NOT a scroll-snap target ─────
+// ─── DayDivider — slim dark pill, NOT a scroll-snap target ───────────────────
 function DayDivider({ label }) {
   return (
     <div style={{
       flexShrink: 0, height: CARD_H,
       display: 'flex', alignItems: 'center', justifyContent: 'center',
-      padding: '0 2px',
-      // deliberately no scrollSnapAlign
+      padding: '0 4px',
     }}>
       <div style={{
         background: 'rgba(20,20,38,0.82)', backdropFilter: 'blur(10px)',
@@ -111,9 +92,9 @@ function DayDivider({ label }) {
   );
 }
 
-// ─── StopCard ─────────────────────────────────────────────────────────────────
-// Change 3: added Chinese name, rating, duration, description preview;
-//           time badge moved onto photo so text panel gains a row.
+// ─── StopCard — Screen 4 redesign ────────────────────────────────────────────
+// Photo 110 px wide on left; number badge bottom-left coral;
+// info: name 14/500, Chinese 11px, time + clock, district + pin, vibe tag, hints.
 function StopCard({ stop, index, active, onSwipeUp, onSwipeDown }) {
   const dragRef = useRef(null);
   const [dragY, setDragY] = useState(0);
@@ -127,22 +108,18 @@ function StopCard({ stop, index, active, onSwipeUp, onSwipeDown }) {
     const dx = e.clientX - d.startX, dy = e.clientY - d.startY;
     if (!d.locked && (Math.abs(dx) > 8 || Math.abs(dy) > 8))
       d.locked = Math.abs(dy) > Math.abs(dx) ? 'y' : 'x';
-    if (d.locked === 'y') setDragY(Math.max(-110, Math.min(80, dy)));
+    if (d.locked === 'y') setDragY(Math.max(-80, Math.min(60, dy)));
   }
   function onPointerUp(e) {
     const d = dragRef.current;
     if (!d) return;
     const dy = e.clientY - d.startY, dx = e.clientX - d.startX;
-    if (d.locked === 'y' && Math.abs(dy) > 60 && Math.abs(dy) > Math.abs(dx)) {
+    if (d.locked === 'y' && Math.abs(dy) > 50 && Math.abs(dy) > Math.abs(dx)) {
       if (dy < 0) onSwipeUp(); else onSwipeDown();
     }
     setDragY(0);
     dragRef.current = null;
   }
-
-  const rating      = stop.google_rating;
-  const reviewCount = stop.google_review_count;
-  const durStr      = formatDuration(stop.duration_hrs);
 
   return (
     <div
@@ -153,12 +130,14 @@ function StopCard({ stop, index, active, onSwipeUp, onSwipeDown }) {
       onPointerCancel={() => { setDragY(0); dragRef.current = null; }}
       style={{
         flexShrink:      0,
-        width:           'calc(100vw - 60px)',
-        maxWidth:        370,
+        width:           'calc(100vw - 80px)',
+        maxWidth:        360,
         height:          CARD_H,
-        borderRadius:    16,
+        borderRadius:    14,
         background:      '#fff',
-        boxShadow:       active ? '0 8px 28px rgba(0,0,0,0.18)' : '0 3px 12px rgba(0,0,0,0.10)',
+        boxShadow:       active
+          ? '0 8px 28px rgba(232,71,42,0.20)'
+          : '0 3px 12px rgba(0,0,0,0.10)',
         display:         'flex',
         overflow:        'hidden',
         scrollSnapAlign: 'center',
@@ -166,49 +145,42 @@ function StopCard({ stop, index, active, onSwipeUp, onSwipeDown }) {
         transition:      dragY === 0
           ? 'transform 0.25s ease, box-shadow 0.2s ease, border-color 0.15s'
           : 'none',
-        cursor:      'grab',
-        userSelect:  'none',
-        touchAction: 'pan-x',
-        border:      `2px solid ${active ? ACCENT : 'transparent'}`,
+        cursor:          'grab',
+        userSelect:      'none',
+        touchAction:     'pan-x',
+        border:          `2px solid ${active ? ACCENT : 'transparent'}`,
       }}
     >
-      {/* ── Photo (96px) with overlaid badges ── */}
-      <div style={{ width: 96, height: '100%', flexShrink: 0, overflow: 'hidden', position: 'relative' }}>
-        <AttractionImage src={stop.photo_url || null} alt={stop.name} category={stop.category} />
-
-        {/* Number badge */}
+      {/* ── Photo — 110 px wide, full card height ── */}
+      <div style={{ width: 110, height: '100%', flexShrink: 0, overflow: 'hidden', position: 'relative' }}>
+        <AttractionImage
+          src={stop.photo_url || null}
+          alt={stop.name}
+          category={stop.category}
+          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+        />
+        {/* Number badge — bottom-left, always coral */}
         <div style={{
-          position: 'absolute', top: 7, left: 7,
+          position: 'absolute', bottom: 7, left: 7,
           width: 22, height: 22, borderRadius: '50%',
-          background: active ? ACCENT : 'rgba(0,0,0,0.55)',
+          background: ACCENT, border: '1.5px solid #fff',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          fontSize: 11, fontWeight: 800, color: '#fff', zIndex: 1,
+          fontSize: 11, fontWeight: 800, color: '#fff',
         }}>
           {index + 1}
         </div>
-
-        {/* Time badge pinned to photo bottom */}
-        <div style={{
-          position: 'absolute', bottom: 5, left: 4, right: 4,
-          background: 'rgba(0,0,0,0.62)', borderRadius: 6,
-          padding: '2px 4px', textAlign: 'center',
-        }}>
-          <span style={{ fontSize: 9, fontWeight: 700, color: '#fff', whiteSpace: 'nowrap' }}>
-            {stop.startTime}–{stop.endTime}
-          </span>
-        </div>
       </div>
 
-      {/* ── Text panel ── */}
+      {/* ── Info panel ── */}
       <div style={{
-        flex: 1, padding: '10px 10px 10px 11px',
+        flex: 1, padding: '9px 10px 8px 10px',
         display: 'flex', flexDirection: 'column', minWidth: 0,
       }}>
-        {/* Name — bold 15px, up to 2 lines */}
+        {/* Name — 14px / weight 500 */}
         <p style={{
-          fontWeight: 700, fontSize: 14, color: '#1a1a2e', margin: '0 0 1px',
+          fontWeight: 500, fontSize: 14, color: '#1a1a2e', margin: '0 0 2px',
           overflow: 'hidden', display: '-webkit-box',
-          WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', lineHeight: 1.2,
+          WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', lineHeight: 1.25,
         }}>
           {stop.name}
         </p>
@@ -216,60 +188,56 @@ function StopCard({ stop, index, active, onSwipeUp, onSwipeDown }) {
         {/* Chinese name */}
         {stop.chinese && (
           <p style={{
-            fontSize: 11, color: '#94a3b8', margin: '0 0 3px', fontWeight: 500,
+            fontSize: 11, color: '#94a3b8', margin: '0 0 2px',
             overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
           }}>
             {stop.chinese}
           </p>
         )}
 
-        {/* Rating + review count */}
-        {rating != null && (
+        {/* Time with clock icon */}
+        {stop.startTime && (
           <p style={{ fontSize: 11, color: '#64748b', margin: '0 0 2px' }}>
-            ⭐ {rating}
-            {reviewCount ? ` · ${Number(reviewCount).toLocaleString()} reviews` : ''}
+            🕐 {stop.startTime}
           </p>
         )}
 
-        {/* Duration */}
-        {durStr && (
-          <p style={{ fontSize: 11, color: '#94a3b8', margin: '0 0 2px' }}>
-            {durStr}
-          </p>
-        )}
-
-        {/* Description preview — 1 line truncated */}
-        {stop.description && (
+        {/* District with pin */}
+        {stop.district && (
           <p style={{
-            fontSize: 11, color: '#94a3b8', margin: '0 0 2px',
+            fontSize: 11, color: '#64748b', margin: '0 0 2px',
             overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
           }}>
-            {stop.description}
+            📍 {stop.district}
           </p>
+        )}
+
+        {/* Vibe tag */}
+        {stop.vibe_tags?.[0] && (
+          <span style={{
+            fontSize: 10, padding: '2px 8px', borderRadius: 20,
+            background: TINT, color: ACCENT, fontWeight: 600,
+            alignSelf: 'flex-start', marginTop: 2,
+          }}>
+            {stop.vibe_tags[0]}
+          </span>
         )}
 
         {/* Swap / remove hints pushed to bottom */}
         <div style={{ marginTop: 'auto', display: 'flex', gap: 8, alignItems: 'center' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 2, color: '#94a3b8' }}>
-            <ArrowUp size={9} />
-            <span style={{ fontSize: 9, fontWeight: 600 }}>swap</span>
-          </div>
-          <div style={{ width: 1, height: 9, background: '#e2e8f0' }} />
-          <div style={{ display: 'flex', alignItems: 'center', gap: 2, color: '#94a3b8' }}>
-            <ArrowDown size={9} />
-            <span style={{ fontSize: 9, fontWeight: 600 }}>remove</span>
-          </div>
+          <span style={{ fontSize: 9, color: '#cbd5e1', fontWeight: 600 }}>↑ swap</span>
+          <div style={{ width: 1, height: 8, background: '#e2e8f0' }} />
+          <span style={{ fontSize: 9, color: '#cbd5e1', fontWeight: 600 }}>↓ remove</span>
         </div>
       </div>
     </div>
   );
 }
 
-// ─── SwapPanel ────────────────────────────────────────────────────────────────
+// ─── SwapPanel — bottom sheet for choosing a replacement stop ─────────────────
 function SwapPanel({ stop, alternatives, onSwap, onClose }) {
   const [visible, setVisible] = useState(false);
   useEffect(() => { requestAnimationFrame(() => setVisible(true)); }, []);
-
   function animatedClose() { setVisible(false); setTimeout(onClose, 320); }
 
   return (
@@ -289,26 +257,28 @@ function SwapPanel({ stop, alternatives, onSwap, onClose }) {
         <div style={{ display: 'flex', justifyContent: 'center', padding: '12px 0 4px', flexShrink: 0 }}>
           <div style={{ width: 40, height: 4, borderRadius: 2, background: '#e2e8f0' }} />
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-          padding: '8px 20px 12px', flexShrink: 0 }}>
+        <div style={{
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          padding: '8px 20px 12px', flexShrink: 0,
+        }}>
           <div>
             <p style={{ fontWeight: 700, fontSize: 16, margin: '0 0 2px', color: '#1a1a2e' }}>Swap stop</p>
             <p style={{ fontSize: 11, color: '#64748b', margin: 0 }}>Replace "{stop.name}"</p>
           </div>
           <button onClick={animatedClose}
-            style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 6,
-              color: '#94a3b8', display: 'flex', borderRadius: 8 }}>
+            style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 6, color: '#94a3b8' }}>
             <X size={18} />
           </button>
         </div>
-        <div style={{ overflowY: 'auto', padding: '0 16px 32px',
-          display: 'flex', flexDirection: 'column', gap: 10 }}>
+        <div style={{ overflowY: 'auto', padding: '0 16px 32px', display: 'flex', flexDirection: 'column', gap: 10 }}>
           {alternatives.length === 0 ? (
             <p style={{ color: '#94a3b8', fontSize: 13, textAlign: 'center', padding: '24px 0' }}>
               No nearby alternatives available.
             </p>
           ) : alternatives.map(alt => (
-            <div key={alt.id} onClick={() => { onSwap(alt); onClose(); }}
+            <div
+              key={alt.id}
+              onClick={() => { onSwap(alt); onClose(); }}
               style={{
                 display: 'flex', alignItems: 'center', gap: 12,
                 padding: '10px 12px', borderRadius: 14,
@@ -322,12 +292,15 @@ function SwapPanel({ stop, alternatives, onSwap, onClose }) {
                 <AttractionImage src={alt.photo_url || null} alt={alt.name} category={alt.category} />
               </div>
               <div style={{ flex: 1, minWidth: 0 }}>
-                <p style={{ fontWeight: 600, fontSize: 13, margin: '0 0 3px',
-                  overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', color: '#1a1a2e' }}>
+                <p style={{
+                  fontWeight: 600, fontSize: 13, margin: '0 0 3px',
+                  overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', color: '#1a1a2e',
+                }}>
                   {alt.name}
                 </p>
                 <p style={{ fontSize: 11, color: '#64748b', margin: 0 }}>
-                  {alt.duration_hrs ? `${alt.duration_hrs}h` : ''}{alt.vibe_tags?.[0] ? ` · ${alt.vibe_tags[0]}` : ''}
+                  {alt.duration_hrs ? `${alt.duration_hrs}h` : ''}
+                  {alt.vibe_tags?.[0] ? ` · ${alt.vibe_tags[0]}` : ''}
                 </p>
               </div>
               <ChevronRight size={16} color="#cbd5e1" style={{ flexShrink: 0 }} />
@@ -339,48 +312,158 @@ function SwapPanel({ stop, alternatives, onSwap, onClose }) {
   );
 }
 
+// ─── ExploreSheet — 220 px bottom sheet when a marker is tapped ──────────────
+function ExploreSheet({ item, days, onAddToDay, onClose }) {
+  const [visible, setVisible] = useState(false);
+  const [dayPick, setDayPick] = useState(0);
+  useEffect(() => { requestAnimationFrame(() => setVisible(true)); }, []);
+
+  function close() { setVisible(false); setTimeout(onClose, 320); }
+
+  return (
+    <div style={{ position: 'absolute', inset: 0, zIndex: 25 }}>
+      {/* Dim backdrop */}
+      <div onClick={close} style={{
+        position: 'absolute', inset: 0,
+        background: `rgba(0,0,0,${visible ? 0.35 : 0})`,
+        transition: 'background 0.3s ease',
+      }} />
+
+      {/* Sheet */}
+      <div style={{
+        position: 'absolute', bottom: 0, left: 0, right: 0,
+        background: '#fff', borderRadius: '20px 20px 0 0',
+        transform: `translateY(${visible ? '0%' : '100%'})`,
+        transition: 'transform 0.32s cubic-bezier(0.32, 0.72, 0, 1)',
+        display: 'flex', flexDirection: 'column',
+        maxHeight: '50%', overflow: 'hidden',
+      }}>
+        {/* Drag handle */}
+        <div style={{ display: 'flex', justifyContent: 'center', padding: '10px 0 6px', flexShrink: 0 }}>
+          <div style={{ width: 36, height: 4, borderRadius: 2, background: '#e2e8f0' }} />
+        </div>
+
+        {/* Content row: photo + info + close */}
+        <div style={{ display: 'flex', alignItems: 'flex-start', padding: '0 16px 12px', flexShrink: 0 }}>
+          {/* Photo */}
+          <div style={{ width: 88, height: 88, borderRadius: 12, overflow: 'hidden', flexShrink: 0 }}>
+            <AttractionImage src={item.photo_url || null} alt={item.name} category={item._cat} />
+          </div>
+
+          {/* Info + day picker */}
+          <div style={{
+            flex: 1, paddingLeft: 12, display: 'flex', flexDirection: 'column',
+            justifyContent: 'flex-start', minWidth: 0,
+          }}>
+            <p style={{
+              fontWeight: 700, fontSize: 14, margin: '0 0 2px', color: '#1a1a2e',
+              overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
+            }}>
+              {item.name}
+            </p>
+            {item.chinese && (
+              <p style={{ fontSize: 11, color: '#94a3b8', margin: '0 0 4px' }}>{item.chinese}</p>
+            )}
+            {item.google_rating && (
+              <p style={{ fontSize: 11, color: '#64748b', margin: '0 0 8px' }}>⭐ {item.google_rating}</p>
+            )}
+            {!item.google_rating && item.vibe_tags?.[0] && (
+              <p style={{ fontSize: 11, color: '#64748b', margin: '0 0 8px' }}>{item.vibe_tags[0]}</p>
+            )}
+
+            {/* Day picker */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: 5, flexWrap: 'wrap' }}>
+              <span style={{ fontSize: 11, color: '#64748b', fontWeight: 500 }}>Day:</span>
+              {days.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setDayPick(i)}
+                  style={{
+                    padding: '3px 9px', borderRadius: 10, fontSize: 10, fontWeight: 700,
+                    border: `1.5px solid ${dayPick === i ? ACCENT : '#e2e8f0'}`,
+                    background: dayPick === i ? TINT : '#fff',
+                    color: dayPick === i ? ACCENT : '#94a3b8',
+                    cursor: 'pointer',
+                  }}
+                >
+                  {i + 1}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Close */}
+          <button
+            onClick={close}
+            style={{
+              background: 'none', border: 'none', cursor: 'pointer',
+              padding: '0 0 0 8px', color: '#94a3b8', flexShrink: 0, alignSelf: 'flex-start',
+            }}
+          >
+            <X size={16} />
+          </button>
+        </div>
+
+        {/* Add button */}
+        <div style={{ padding: '0 16px 20px', flexShrink: 0 }}>
+          <button
+            onClick={() => { onAddToDay?.(item, dayPick); close(); }}
+            style={{
+              width: '100%', padding: '12px 0', borderRadius: 14,
+              background: ACCENT, border: 'none', color: '#fff',
+              fontSize: 13, fontWeight: 700, cursor: 'pointer',
+            }}
+          >
+            + Add to Day {dayPick + 1}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ─── UnifiedMap ───────────────────────────────────────────────────────────────
 export default function UnifiedMap({
   days, dayStops, activeDay, onDayChange, primaryCity, isVisible,
   expanded, onExpand, onCollapse,
   deleteStop, swapStop, allAttractions, allAttractionsByCity,
-  allFoodByCity,   // { cityKey: foodArray } — for explore food markers
+  allFoodByCity,
   depDate,
+  onAddToDay,       // optional: (item, dayIdx) => void — wire up in parent to add an explore item
 }) {
   // ── Map refs ─────────────────────────────────────────────────────────────
   const containerRef        = useRef(null);
   const mapRef              = useRef(null);
   const mapInitialized      = useRef(false);
   const markersRef          = useRef([]);
-  const popupRef            = useRef(null);
   const resizeTimer         = useRef(null);
   const scrollRef           = useRef(null);
 
-  // Stale-closure-safe copies for async map callbacks
+  // Stale-closure-safe refs
   const allAttractionsByCity_ = useRef(allAttractionsByCity);
   const allFoodByCity_        = useRef(allFoodByCity || {});
   const activeFlatIdxRef      = useRef(0);
+  const setExploreSelectedRef = useRef(null);   // kept in sync each render
 
-  // Jump-to-day guards (suppress handleScroll during programmatic scroll)
+  // Jump-to-day guards
   const isJumpingRef  = useRef(false);
   const jumpTimerRef  = useRef(null);
 
   // Prevent re-entrant onDayChange calls
   const notifiedDayRef = useRef(activeDay);
 
-  // Gesture refs
-  const dragHandleRef = useRef(null);
-  const exploreGstRef = useRef(null);
-
   // ── State ─────────────────────────────────────────────────────────────────
-  const [activeFlatIdx, setActiveFlatIdx] = useState(0);
-  const [explore,       setExplore]       = useState(false);
-  const [exploreFilter, setExploreFilter] = useState(null); // 'attraction'|'food'|null
-  const [swapState,     setSwapState]     = useState(null);
-  const [swapAlts,      setSwapAlts]      = useState([]);
+  const [activeFlatIdx,   setActiveFlatIdx]   = useState(0);
+  const [explore,         setExplore]         = useState(false);
+  const [exploreFilter,   setExploreFilter]   = useState(null);  // 'attraction'|'food'|null
+  const [exploreSelected, setExploreSelected] = useState(null);  // item from explore marker tap
+  const [swapState,       setSwapState]       = useState(null);
+  const [swapAlts,        setSwapAlts]        = useState([]);
+
+  // Keep setter ref in sync (allows marker click closures to call current setter)
+  setExploreSelectedRef.current = setExploreSelected;
 
   // ── Build flat card list ──────────────────────────────────────────────────
-  // Dividers before days 1…N (not before day 0).
   const cardList = [];
   days.forEach((day, dayIdx) => {
     if (dayIdx > 0) {
@@ -408,7 +491,7 @@ export default function UnifiedMap({
   const stopsKey       = displayStops.map(s => s.id).join(',');
   const totalStops     = cardList.filter(item => item.type === 'stop').length;
 
-  // Counts for explore filter pills (render-time, read straight from props)
+  // Counts for explore filter pills
   const attrCount = (allAttractionsByCity?.[cityKey] || []).filter(a => a.lat && a.lng).length;
   const foodCount = (allFoodByCity?.[cityKey]         || []).filter(f => f.lat && f.lng).length;
 
@@ -417,7 +500,7 @@ export default function UnifiedMap({
   useEffect(() => { allAttractionsByCity_.current = allAttractionsByCity; }, [allAttractionsByCity]);
   useEffect(() => { allFoodByCity_.current        = allFoodByCity || {}; }, [allFoodByCity]);
 
-  // ── Notify parent when displayed day changes (expanded only) ─────────────
+  // ── Notify parent when displayed day changes ──────────────────────────────
   useEffect(() => {
     if (!expanded) return;
     if (activeFlatDay === notifiedDayRef.current) return;
@@ -425,16 +508,17 @@ export default function UnifiedMap({
     onDayChange(activeFlatDay);
   }, [activeFlatDay, expanded]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Keep notifiedDayRef in sync when parent pushes a new activeDay
   useEffect(() => { notifiedDayRef.current = activeDay; }, [activeDay]);
 
-  // Reset explore + filter when map collapses
+  // Reset explore state when map collapses
   useEffect(() => {
-    if (!expanded) { setExplore(false); setExploreFilter(null); }
+    if (!expanded) { setExplore(false); setExploreFilter(null); setExploreSelected(null); }
   }, [expanded]);
 
-  // Reset filter when leaving explore mode
-  useEffect(() => { if (!explore) setExploreFilter(null); }, [explore]);
+  // Reset filter + selected when leaving explore mode
+  useEffect(() => {
+    if (!explore) { setExploreFilter(null); setExploreSelected(null); }
+  }, [explore]);
 
   // Clamp activeFlatIdx if cardList shrinks (stop deleted)
   useEffect(() => {
@@ -487,11 +571,9 @@ export default function UnifiedMap({
     if (!mapRef.current) return;
     markersRef.current.forEach(m => m.remove());
     markersRef.current = [];
-    popupRef.current?.remove();
-    popupRef.current = null;
 
     if (explore) {
-      // ── Explore mode ─────────────────────────────────────────────────────
+      // ── Explore mode — category markers, tap opens ExploreSheet ──────────
       const attrItems = (allAttractionsByCity_.current?.[cityKey] || [])
         .filter(a => a.lat && a.lng)
         .map(a => ({ ...a, _cat: 'attraction' }));
@@ -506,21 +588,7 @@ export default function UnifiedMap({
         items.forEach(item => {
           const el = buildExploreMarkerEl(item);
           el.addEventListener('click', () => {
-            popupRef.current?.remove();
-            popupRef.current = new mapboxgl.Popup({ offset: 12, closeButton: false })
-              .setLngLat([item.lng, item.lat])
-              .setHTML(`
-                <div style="font-family:'DM Sans',sans-serif;padding:2px 4px;min-width:110px;max-width:170px">
-                  <p style="font-weight:700;font-size:12px;margin:0 0 1px;color:#1a1a2e">${item.name}</p>
-                  ${item.chinese ? `<p style="font-size:10px;color:#94a3b8;margin:0 0 1px">${item.chinese}</p>` : ''}
-                  ${item.google_rating
-                    ? `<p style="font-size:10px;color:#64748b;margin:0">⭐ ${item.google_rating}</p>`
-                    : item.vibe_tags?.[0]
-                    ? `<p style="font-size:10px;color:#64748b;margin:0">${item.vibe_tags[0]}</p>`
-                    : ''}
-                </div>
-              `)
-              .addTo(mapRef.current);
+            setExploreSelectedRef.current?.(item);
           });
           markersRef.current.push(
             new mapboxgl.Marker({ element: el })
@@ -535,7 +603,7 @@ export default function UnifiedMap({
       else mapRef.current.once('load', placeExplore);
 
     } else {
-      // ── Day view — itinerary stops ────────────────────────────────────────
+      // ── Day view — numbered itinerary stop markers ────────────────────────
       const items = displayStops.filter(s => s.lat && s.lng);
       if (!items.length) return;
 
@@ -545,20 +613,6 @@ export default function UnifiedMap({
           const curStopIdx  = curFlatItem?.type === 'stop' ? curFlatItem.stopIdx : 0;
           const isActive    = expanded && i === curStopIdx;
           const el = buildMarkerEl(i + 1, isActive, expanded);
-          if (!expanded) {
-            el.addEventListener('click', () => {
-              popupRef.current?.remove();
-              popupRef.current = new mapboxgl.Popup({ offset: 18, closeButton: false })
-                .setLngLat([item.lng, item.lat])
-                .setHTML(`
-                  <div style="font-family:'DM Sans',sans-serif;padding:2px 4px;min-width:120px;max-width:180px">
-                    <p style="font-weight:700;font-size:12px;margin:0 0 2px;color:#1a1a2e">${item.name}</p>
-                    <p style="font-size:10px;color:#64748b;margin:0">${item.startTime}–${item.endTime}</p>
-                  </div>
-                `)
-                .addTo(mapRef.current);
-            });
-          }
           markersRef.current.push(
             new mapboxgl.Marker({ element: el })
               .setLngLat([item.lng, item.lat])
@@ -573,7 +627,7 @@ export default function UnifiedMap({
     }
   }, [stopsKey, displayDay, expanded, explore, cityKey, exploreFilter]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Update active marker highlight + pan when active card scrolls
+  // ── Update active marker highlight + pan when active card changes ─────────
   useEffect(() => {
     if (!expanded || explore) return;
     markersRef.current.forEach((marker, i) => {
@@ -592,9 +646,8 @@ export default function UnifiedMap({
       mapRef.current.flyTo({ center: [items[0].lng, items[0].lat], zoom: 14, duration: 700 });
       return;
     }
-    const lngs = items.map(s => s.lng), lats = items.map(s => s.lat);
-    // bottomPad accounts for the card overlay height
-    const bottomPad = isExplore ? 100 : (expanded ? 260 : 48);
+    const lngs     = items.map(s => s.lng), lats = items.map(s => s.lat);
+    const bottomPad = isExplore ? 80 : (expanded ? CARD_H + DAY_TABS_H + 20 : 48);
     mapRef.current.fitBounds(
       [[Math.min(...lngs), Math.min(...lats)], [Math.max(...lngs), Math.max(...lats)]],
       { padding: { top: 70, bottom: bottomPad, left: 60, right: 60 },
@@ -602,26 +655,30 @@ export default function UnifiedMap({
     );
   }
 
-  // Itinerary stop markers — numbered circles (Change 5 keeps these red)
+  // Numbered itinerary marker: active = white circle coral border 3px 36 px;
+  //                             inactive = solid coral 26 px
   function buildMarkerEl(num, active, isExpanded) {
     const el = document.createElement('div');
     const sz = (isExpanded && active) ? 36 : 26;
     Object.assign(el.style, {
-      width: `${sz}px`, height: `${sz}px`, borderRadius: '50%',
+      width:      `${sz}px`,
+      height:     `${sz}px`,
+      borderRadius: '50%',
       background: (isExpanded && active) ? '#fff' : ACCENT,
-      border:     (isExpanded && active) ? `2.5px solid ${ACCENT}` : '2.5px solid rgba(255,255,255,0.9)',
-      display: 'flex', alignItems: 'center', justifyContent: 'center',
-      fontSize: '12px', fontWeight: '800',
-      color:     (isExpanded && active) ? ACCENT : '#fff',
+      border:     (isExpanded && active) ? `3px solid ${ACCENT}` : '2.5px solid rgba(255,255,255,0.9)',
+      display:    'flex', alignItems: 'center', justifyContent: 'center',
+      fontSize:   '12px', fontWeight: '800',
+      color:      (isExpanded && active) ? ACCENT : '#fff',
       fontFamily: "'DM Sans', sans-serif",
-      boxShadow: (isExpanded && active) ? `0 4px 16px rgba(232,71,42,0.45)` : '0 2px 8px rgba(0,0,0,0.28)',
-      cursor: 'pointer', transition: 'all 0.25s ease',
+      boxShadow:  (isExpanded && active) ? `0 4px 16px rgba(232,71,42,0.45)` : '0 2px 8px rgba(0,0,0,0.28)',
+      cursor:     'pointer',
+      transition: 'all 0.25s ease',
     });
     el.textContent = String(num);
     return el;
   }
 
-  // Explore markers — category-coded colour + SVG shape (Change 4)
+  // Explore marker: teal / amber / slate dot with icon
   function buildExploreMarkerEl(item) {
     const cat   = item._cat || 'attraction';
     const color = EXPLORE_COLORS[cat] || '#94a3b8';
@@ -648,16 +705,18 @@ export default function UnifiedMap({
     if (!el) return;
     const sz = (isExpanded && active) ? 36 : 26;
     Object.assign(el.style, {
-      width: `${sz}px`, height: `${sz}px`,
+      width:      `${sz}px`,
+      height:     `${sz}px`,
       background: (isExpanded && active) ? '#fff' : ACCENT,
-      border:     (isExpanded && active) ? `2.5px solid ${ACCENT}` : '2.5px solid rgba(255,255,255,0.9)',
+      border:     (isExpanded && active) ? `3px solid ${ACCENT}` : '2.5px solid rgba(255,255,255,0.9)',
       color:      (isExpanded && active) ? ACCENT : '#fff',
       boxShadow:  (isExpanded && active) ? `0 4px 16px rgba(232,71,42,0.45)` : '0 2px 8px rgba(0,0,0,0.28)',
     });
     void num;
   }
 
-  // ── Scroll handler — skips dividers, only counts stop-cards ──────────────
+  // ── Scroll handler — maps DOM child index → cardList index ────────────────
+  // (1:1 correspondence: each cardList item renders exactly one child)
   function handleScroll() {
     if (isJumpingRef.current) return;
     const container = scrollRef.current;
@@ -672,7 +731,7 @@ export default function UnifiedMap({
     if (bestIdx !== activeFlatIdxRef.current) setActiveFlatIdx(bestIdx);
   }
 
-  // ── Jump to first stop of a given day (called by day tabs) ───────────────
+  // ── Jump to first stop of a given day (called from day tab click) ─────────
   function jumpToDay(dayIdx) {
     const container = scrollRef.current;
     if (!container) return;
@@ -692,11 +751,9 @@ export default function UnifiedMap({
 
   // ── Swap helpers ──────────────────────────────────────────────────────────
   function openSwap(stop, dayIdx) {
-    // Exclude every stop scheduled across ALL days, not just the current day
     const allUsedIds = new Set(
       days.flatMap((_, i) => (dayStops[i] || []).map(s => s.id)),
     );
-    // Use the city-specific attraction pool for this day
     const stopCityKey     = days[dayIdx]?.city || primaryCity;
     const cityAttractions = (allAttractionsByCity?.[stopCityKey] || []);
     const pool            = cityAttractions.length > 0 ? cityAttractions : (allAttractions || []);
@@ -711,39 +768,6 @@ export default function UnifiedMap({
     setSwapState(null);
   }
 
-  // ── Drag handle gestures ─────────────────────────────────────────────────
-  // Swipe DOWN → Explore  |  Swipe UP → collapse
-  function onDragHandleTouchStart(e) {
-    const t = e.touches[0];
-    dragHandleRef.current = { startX: t.clientX, startY: t.clientY, locked: null };
-  }
-  function onDragHandleTouchMove(e) {
-    const d = dragHandleRef.current;
-    if (!d) return;
-    const dx = e.touches[0].clientX - d.startX, dy = e.touches[0].clientY - d.startY;
-    if (!d.locked && (Math.abs(dx) > 8 || Math.abs(dy) > 8))
-      d.locked = Math.abs(dy) > Math.abs(dx) ? 'y' : 'x';
-  }
-  function onDragHandleTouchEnd(e) {
-    const d = dragHandleRef.current;
-    if (!d) return;
-    dragHandleRef.current = null;
-    if (d.locked !== 'y') return;
-    const dy = e.changedTouches[0].clientY - d.startY;
-    if (dy > SWIPE_THRESH) setExplore(true);
-    else if (dy < -SWIPE_THRESH && onCollapse) onCollapse();
-  }
-
-  // ── Explore strip gesture — Swipe UP → exit Explore ──────────────────────
-  function onExploreTouchStart(e) { exploreGstRef.current = { startY: e.touches[0].clientY }; }
-  function onExploreTouchEnd(e) {
-    const d = exploreGstRef.current;
-    exploreGstRef.current = null;
-    if (!d) return;
-    if (e.changedTouches[0].clientY - d.startY < -SWIPE_THRESH) setExplore(false);
-  }
-
-  // ── Filter toggle ─────────────────────────────────────────────────────────
   function toggleFilter(cat) {
     setExploreFilter(prev => (prev === cat ? null : cat));
   }
@@ -755,13 +779,13 @@ export default function UnifiedMap({
       overflow: 'hidden', background: '#e8eaf0',
     }}>
 
-      {/* Map canvas — always fills container */}
+      {/* Map canvas — always fills the container */}
       <div ref={containerRef} style={{ position: 'absolute', inset: 0 }} />
 
-      {/* ── Expand / Collapse button — always top-right (Change 5) ─────────── */}
+      {/* ── Expand / Collapse button — always top-right ───────────────────── */}
       <button
         onClick={expanded ? onCollapse : onExpand}
-        aria-label={expanded ? 'Collapse map' : 'Expand map'}
+        aria-label={expanded ? 'Close map' : 'Expand map'}
         style={{
           position: 'absolute', top: 12, right: 12, zIndex: 30,
           width: 36, height: 36, borderRadius: '50%',
@@ -780,7 +804,7 @@ export default function UnifiedMap({
       {/* ══ EXPANDED UI ══════════════════════════════════════════════════════ */}
       {expanded && (
         <>
-          {/* Empty state */}
+          {/* Empty-state overlay */}
           {totalStops === 0 && !explore && (
             <div style={{
               position: 'absolute', inset: 0,
@@ -799,147 +823,141 @@ export default function UnifiedMap({
             </div>
           )}
 
-          {/* ══ DAY VIEW — card rail + floating day tabs ═════════════════════ */}
+          {/* ══ DAY VIEW — card rail + day tabs + Explore pill ═════════════ */}
           {!explore && (
-            <div style={{ position: 'absolute', bottom: CARD_BOTTOM, left: 0, right: 0 }}>
-
-              {/* ── Floating day tabs — dark strip, directly above rail (Change 1) */}
-              <div style={{
-                background:      'rgba(0,0,0,0.60)',
-                backdropFilter:  'blur(12px)',
-                height:          DAY_TABS_H,
-                display:         'flex',
-                alignItems:      'center',
-                gap:             6,
-                padding:         '0 10px',
-                overflowX:       'auto',
-                scrollbarWidth:  'none',
-                msOverflowStyle: 'none',
-                flexShrink:      0,
-              }}>
-                {days.map((day, i) => {
-                  const active  = i === activeFlatDay;
-                  const dateStr = formatDayDate(depDate, i);
-                  const label   = `Day ${i + 1}${dateStr ? ` · ${dateStr}` : ''}${day.cityHeader?.emoji ? ` ${day.cityHeader.emoji}` : ''}`;
-                  return (
-                    <button
-                      key={i}
-                      onClick={() => jumpToDay(i)}
-                      style={{
-                        flexShrink:   0,
-                        padding:      '5px 12px',
-                        borderRadius: 20,
-                        fontSize:     11,
-                        fontWeight:   600,
-                        cursor:       'pointer',
-                        border:       'none',
-                        whiteSpace:   'nowrap',
-                        background:   active ? '#fff' : 'transparent',
-                        color:        active ? '#1a1a2e' : 'rgba(255,255,255,0.62)',
-                        transition:   'background 0.18s, color 0.18s',
-                      }}
-                    >
-                      {label}
-                    </button>
-                  );
-                })}
-              </div>
-
-              {/* ── Drag handle — Swipe ↓ Explore | ↑ Collapse ─────────────── */}
-              <div
-                onTouchStart={onDragHandleTouchStart}
-                onTouchMove={onDragHandleTouchMove}
-                onTouchEnd={onDragHandleTouchEnd}
+            <>
+              {/* "Explore" floating pill — bottom-right above day tabs */}
+              <button
+                onClick={() => setExplore(true)}
                 style={{
-                  display: 'flex', justifyContent: 'center',
-                  padding: '8px 0 4px',
-                  cursor: 'ns-resize', touchAction: 'none',
-                  background: 'rgba(0,0,0,0.12)',
+                  position:       'absolute',
+                  bottom:         CARD_H + DAY_TABS_H + 12,
+                  right:          16,
+                  zIndex:         20,
+                  background:     'rgba(255,255,255,0.95)',
+                  border:         'none',
+                  borderRadius:   20,
+                  padding:        '8px 16px',
+                  fontSize:       13,
+                  fontWeight:     700,
+                  color:          '#1a1a2e',
+                  cursor:         'pointer',
+                  display:        'flex',
+                  alignItems:     'center',
+                  gap:            6,
+                  boxShadow:      '0 2px 12px rgba(0,0,0,0.20)',
+                  backdropFilter: 'blur(8px)',
                 }}
               >
-                <div style={{
-                  width: 36, height: 3, borderRadius: 2,
-                  background: 'rgba(255,255,255,0.45)',
-                }} />
-              </div>
+                🔍 Explore
+              </button>
 
-              {/* ── Continuous scroll rail — all days (Change 2) ─────────────── */}
-              {totalStops > 0 && (
-                <div
-                  ref={scrollRef}
-                  onScroll={handleScroll}
-                  style={{
-                    display:                 'flex',
-                    overflowX:               'auto',
-                    scrollSnapType:          'x mandatory',
-                    WebkitOverflowScrolling: 'touch',
-                    gap:                     10,
-                    paddingLeft:             SCROLL_PAD,
-                    paddingRight:            SCROLL_PAD,
-                    paddingTop:              4,
-                    paddingBottom:           10,
-                    scrollbarWidth:          'none',
-                    msOverflowStyle:         'none',
-                    alignItems:              'center',
-                  }}
-                >
-                  {cardList.map((item, flatIdx) =>
-                    item.type === 'divider' ? (
-                      <DayDivider key={item.key} label={item.label} />
-                    ) : (
-                      <StopCard
-                        key={item.key}
-                        stop={item.stop}
-                        index={item.stopIdx}
-                        active={flatIdx === activeFlatIdx}
-                        onSwipeUp={() => openSwap(item.stop, item.dayIdx)}
-                        onSwipeDown={() => deleteStop && deleteStop(item.dayIdx, item.stop.id)}
-                      />
-                    )
-                  )}
+              {/* Dark day tabs + snap card rail (pinned to bottom: 0) */}
+              <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0 }}>
+
+                {/* Dark floating day tabs */}
+                <div style={{
+                  background:      'rgba(0,0,0,0.60)',
+                  backdropFilter:  'blur(12px)',
+                  height:          DAY_TABS_H,
+                  display:         'flex',
+                  alignItems:      'center',
+                  gap:             6,
+                  padding:         '0 10px',
+                  overflowX:       'auto',
+                  scrollbarWidth:  'none',
+                  msOverflowStyle: 'none',
+                  flexShrink:      0,
+                }}>
+                  {days.map((day, i) => {
+                    const active  = i === activeFlatDay;
+                    const dateStr = formatDayDate(depDate, i);
+                    const label   = `Day ${i + 1}${dateStr ? ` · ${dateStr}` : ''}${day.cityHeader?.emoji ? ` ${day.cityHeader.emoji}` : ''}`;
+                    return (
+                      <button
+                        key={i}
+                        onClick={() => jumpToDay(i)}
+                        style={{
+                          flexShrink:   0,
+                          padding:      '5px 12px',
+                          borderRadius: 20,
+                          fontSize:     11,
+                          fontWeight:   600,
+                          cursor:       'pointer',
+                          border:       'none',
+                          whiteSpace:   'nowrap',
+                          background:   active ? '#fff' : 'transparent',
+                          color:        active ? '#1a1a2e' : 'rgba(255,255,255,0.70)',
+                          transition:   'background 0.18s, color 0.18s',
+                        }}
+                      >
+                        {label}
+                      </button>
+                    );
+                  })}
                 </div>
-              )}
-            </div>
+
+                {/* Continuous horizontal snap card rail */}
+                {totalStops > 0 && (
+                  <div
+                    ref={scrollRef}
+                    onScroll={handleScroll}
+                    style={{
+                      display:                 'flex',
+                      overflowX:               'auto',
+                      scrollSnapType:          'x mandatory',
+                      WebkitOverflowScrolling: 'touch',
+                      gap:                     10,
+                      paddingLeft:             SCROLL_PAD,
+                      paddingRight:            SCROLL_PAD,
+                      paddingTop:              8,
+                      paddingBottom:           12,
+                      scrollbarWidth:          'none',
+                      msOverflowStyle:         'none',
+                      alignItems:              'center',
+                    }}
+                  >
+                    {cardList.map((item, flatIdx) =>
+                      item.type === 'divider' ? (
+                        <DayDivider key={item.key} label={item.label} />
+                      ) : (
+                        <StopCard
+                          key={item.key}
+                          stop={item.stop}
+                          index={item.stopIdx}
+                          active={flatIdx === activeFlatIdx}
+                          onSwipeUp={() => openSwap(item.stop, item.dayIdx)}
+                          onSwipeDown={() => deleteStop?.(item.dayIdx, item.stop.id)}
+                        />
+                      )
+                    )}
+                  </div>
+                )}
+              </div>
+            </>
           )}
 
-          {/* ══ EXPLORE MODE — filter strip + swipe hint ═════════════════════ */}
+          {/* ══ EXPLORE MODE ═════════════════════════════════════════════════ */}
           {explore && (
-            <div
-              onTouchStart={onExploreTouchStart}
-              onTouchEnd={onExploreTouchEnd}
-              style={{
+            <>
+              {/* White filter pills — absolute top-16px */}
+              <div style={{
                 position:       'absolute',
-                bottom:         CARD_BOTTOM,
-                left:           0, right: 0,
-                background:     'rgba(20,20,38,0.78)',
-                backdropFilter: 'blur(14px)',
-                touchAction:    'none',
-              }}
-            >
-              {/* Swipe-up hint */}
-              <div style={{
-                display: 'flex', flexDirection: 'column', alignItems: 'center',
-                padding: '8px 0 4px', cursor: 'ns-resize',
-              }}>
-                <div style={{
-                  width: 36, height: 3, borderRadius: 2,
-                  background: 'rgba(255,255,255,0.35)', marginBottom: 4,
-                }} />
-                <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.45)', fontWeight: 600, margin: 0 }}>
-                  Swipe up for day view
-                </p>
-              </div>
-
-              {/* Filter pills (Change 6) */}
-              <div style={{
-                display: 'flex', gap: 8,
-                padding: '6px 12px 14px',
-                overflowX: 'auto', scrollbarWidth: 'none',
+                top:            16,
+                left:           0,
+                right:          0,
+                zIndex:         20,
+                display:        'flex',
+                alignItems:     'center',
+                gap:            8,
+                padding:        '0 16px',
+                overflowX:      'auto',
+                scrollbarWidth: 'none',
               }}>
                 {[
                   { cat: 'attraction', Icon: Mountain, label: 'Attractions', count: attrCount },
                   { cat: 'food',       Icon: Utensils, label: 'Food',        count: foodCount },
-                  { cat: 'hotel',      Icon: Bed,      label: 'Hotels',      count: 0 },
+                  { cat: 'hotel',      Icon: Bed,      label: 'Hotels',      count: 0         },
                 ].map(({ cat, Icon, label, count }) => {
                   const active = exploreFilter === cat;
                   return (
@@ -947,15 +965,17 @@ export default function UnifiedMap({
                       key={cat}
                       onClick={() => toggleFilter(cat)}
                       style={{
-                        flexShrink: 0,
-                        display: 'flex', alignItems: 'center', gap: 5,
-                        padding: '6px 13px', borderRadius: 20,
-                        fontSize: 12, fontWeight: 600, cursor: 'pointer',
-                        border: active ? 'none' : '1.5px solid rgba(255,255,255,0.28)',
-                        background: active ? '#fff' : 'transparent',
-                        color:      active ? '#1a1a2e' : '#fff',
-                        whiteSpace: 'nowrap',
-                        transition: 'all 0.18s ease',
+                        flexShrink:     0,
+                        display:        'flex', alignItems: 'center', gap: 5,
+                        padding:        '7px 14px', borderRadius: 20,
+                        fontSize:       12, fontWeight: 600, cursor: 'pointer',
+                        border:         `1.5px solid ${active ? ACCENT : 'rgba(0,0,0,0.12)'}`,
+                        background:     active ? ACCENT : 'rgba(255,255,255,0.96)',
+                        color:          active ? '#fff' : '#1a1a2e',
+                        boxShadow:      '0 2px 8px rgba(0,0,0,0.12)',
+                        backdropFilter: 'blur(8px)',
+                        whiteSpace:     'nowrap',
+                        transition:     'all 0.18s ease',
                       }}
                     >
                       <Icon size={13} />
@@ -964,18 +984,53 @@ export default function UnifiedMap({
                   );
                 })}
               </div>
-            </div>
+
+              {/* "← Back to plan" pill — bottom centre */}
+              <button
+                onClick={() => setExplore(false)}
+                style={{
+                  position:       'absolute',
+                  bottom:         24,
+                  left:           '50%',
+                  transform:      'translateX(-50%)',
+                  zIndex:         20,
+                  background:     'rgba(20,20,38,0.88)',
+                  backdropFilter: 'blur(10px)',
+                  border:         'none',
+                  borderRadius:   24,
+                  padding:        '11px 20px',
+                  fontSize:       13,
+                  fontWeight:     700,
+                  color:          '#fff',
+                  cursor:         'pointer',
+                  boxShadow:      '0 4px 16px rgba(0,0,0,0.28)',
+                  whiteSpace:     'nowrap',
+                }}
+              >
+                ← Back to plan
+              </button>
+            </>
           )}
         </>
       )}
 
-      {/* Swap panel */}
+      {/* ── Swap panel (bottom sheet) ─────────────────────────────────────── */}
       {swapState && (
         <SwapPanel
           stop={swapState.stop}
           alternatives={swapAlts}
           onSwap={handleSwap}
           onClose={() => setSwapState(null)}
+        />
+      )}
+
+      {/* ── Explore bottom sheet — shown when a marker is tapped ─────────── */}
+      {exploreSelected && (
+        <ExploreSheet
+          item={exploreSelected}
+          days={days}
+          onAddToDay={onAddToDay}
+          onClose={() => setExploreSelected(null)}
         />
       )}
     </div>
