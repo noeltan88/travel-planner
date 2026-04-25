@@ -25,7 +25,7 @@ const ACCENT       = '#E8472A';
 const TINT         = '#FEF0EC';
 
 // Layout constants
-const CARD_H     = 110;   // card rail height
+const CARD_H     = 120;   // card rail height
 const DAY_TABS_H = 44;    // dark day tabs strip
 const SCROLL_PAD = 20;    // left/right padding in the scroll rail
 
@@ -176,11 +176,10 @@ function StopCard({ stop, index, active, onSwipeUp, onSwipeDown }) {
         flex: 1, padding: '9px 10px 8px 10px',
         display: 'flex', flexDirection: 'column', minWidth: 0,
       }}>
-        {/* Name — 14px / weight 500 */}
+        {/* Name — 14px / weight 500, single-line ellipsis to prevent cutoff */}
         <p style={{
           fontWeight: 500, fontSize: 14, color: '#1a1a2e', margin: '0 0 2px',
-          overflow: 'hidden', display: '-webkit-box',
-          WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', lineHeight: 1.25,
+          overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
         }}>
           {stop.name}
         </p>

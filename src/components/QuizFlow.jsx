@@ -295,6 +295,15 @@ export default function QuizFlow({ onComplete }) {
     setShowFlightTimes(true);
   }, [dep, ret]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  // Scroll flight times into view once they slide up
+  useEffect(() => {
+    if (!showFlightTimes) return;
+    const t = setTimeout(() => {
+      flightTimesRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 150);
+    return () => clearTimeout(t);
+  }, [showFlightTimes]); // eslint-disable-line react-hooks/exhaustive-deps
+
   // FIX 3 — prevent page scroll while swiping calendar horizontally
   useEffect(() => {
     const el = calendarRef.current;
@@ -578,7 +587,7 @@ export default function QuizFlow({ onComplete }) {
 
       {/* ── DATES ────────────────────────────────────────────────────────── */}
       {isDateRange && (
-        <div style={{ flex: 1, overflow: 'hidden', overscrollBehavior: 'none', padding: '0 16px 8px', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ flex: 1, overflowY: 'auto', overscrollBehavior: 'none', padding: '0 16px 8px', display: 'flex', flexDirection: 'column' }}>
           {/* Month navigation */}
           <div style={{
             background: BG,
