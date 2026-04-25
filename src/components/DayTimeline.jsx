@@ -208,17 +208,32 @@ function StopCard({ stop, index, onDelete, onSwapRequest }) {
         {/* Content */}
         <div style={{ padding: '12px 14px 14px', position: 'relative' }}>
 
-          {/* FIX 4: Pulsing hint dot — top-right of content area */}
+          {/* FIX 4: Pulsing ripple hint dot — top-right of content area */}
           {!hintDismissed && (
-            <button
-              className="hint-dot"
+            <div
               onClick={e => { e.stopPropagation(); setHintTipOpen(t => !t); }}
               style={{
-                position: 'absolute', top: 8, right: 8, zIndex: 3,
-                width: 8, height: 8, borderRadius: '50%',
-                background: ACCENT, border: 'none', padding: 0, cursor: 'pointer',
+                position: 'absolute', top: 10, right: 10,
+                width: 14, height: 14, cursor: 'pointer', zIndex: 3,
               }}
-            />
+            >
+              {/* Ripple rings */}
+              <div style={{
+                position: 'absolute', inset: 0, borderRadius: '50%',
+                background: ACCENT,
+                animation: 'ripple 1.5s ease-out infinite',
+              }} />
+              <div style={{
+                position: 'absolute', inset: 0, borderRadius: '50%',
+                background: ACCENT,
+                animation: 'ripple 1.5s ease-out infinite 0.5s',
+              }} />
+              {/* Solid core dot */}
+              <div style={{
+                position: 'absolute', inset: 0, borderRadius: '50%',
+                background: ACCENT, zIndex: 1,
+              }} />
+            </div>
           )}
 
           {/* Name + price */}
@@ -330,12 +345,12 @@ function FoodCard({ foodItem, mealLabel = 'Lunch' }) {
       gap: 10,
       padding: '10px 12px',
     }}>
-      {/* Photo — 80×80 square */}
+      {/* Photo — 80×80 square; enriched items have photo_url, others use gradient fallback */}
       <div style={{ width: 80, height: 80, borderRadius: 10, overflow: 'hidden', flexShrink: 0 }}>
         <AttractionImage
           src={foodItem.photo_url || null}
           alt={foodItem.name}
-          category="food"
+          category={foodItem.type === 'cafe' ? 'market' : 'food_street'}
           style={{ width: '100%', height: '100%', objectFit: 'cover' }}
         />
       </div>

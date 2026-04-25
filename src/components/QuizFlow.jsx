@@ -289,20 +289,15 @@ export default function QuizFlow({ onComplete }) {
     return HOLIDAYS.filter(h => dep <= h.end && ret >= h.start);
   }, [dep, ret, dateError]);
 
-  // FIX 2 — reveal flight times when both dates are picked
+  // Reveal + scroll flight times when both dates are picked
   useEffect(() => {
-    if (!dep || !ret || dateError) return;
-    setShowFlightTimes(true);
+    if (dep && ret && !dateError) {
+      setShowFlightTimes(true);
+      setTimeout(() => {
+        flightTimesRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }, 450);
+    }
   }, [dep, ret]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  // Scroll flight times into view once they slide up
-  useEffect(() => {
-    if (!showFlightTimes) return;
-    const t = setTimeout(() => {
-      flightTimesRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }, 150);
-    return () => clearTimeout(t);
-  }, [showFlightTimes]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // FIX 3 — prevent page scroll while swiping calendar horizontally
   useEffect(() => {
@@ -654,11 +649,11 @@ export default function QuizFlow({ onComplete }) {
           <div
             ref={flightTimesRef}
             style={{
-              maxHeight:  showFlightTimes ? '400px' : '0',
+              maxHeight:  showFlightTimes ? '300px' : '0px',
               opacity:    showFlightTimes ? 1 : 0,
               overflow:   'hidden',
               transition: 'max-height 400ms ease-in-out, opacity 300ms ease-in-out',
-              marginTop:  showFlightTimes ? 4 : 0,
+              marginTop:  showFlightTimes ? '12px' : '0',
             }}
           >
             <p style={{ fontSize: 13, color: '#999', fontWeight: 600, margin: '0 0 10px' }}>

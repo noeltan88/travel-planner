@@ -156,13 +156,10 @@ body {
 /* Hide scrollbar on sticky day tabs (webkit) */
 .sticky-tabs::-webkit-scrollbar { display: none; }
 
-/* FIX 4: Pulsing swipe hint dot */
-@keyframes hint-pulse {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50%       { transform: scale(1.5); opacity: 0.6; }
-}
-.hint-dot {
-  animation: hint-pulse 1.5s ease-in-out infinite;
+/* FIX 4: Ripple animation for swipe hint dot */
+@keyframes ripple {
+  0%   { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(2.5); opacity: 0; }
 }
 
 /* Map container */
