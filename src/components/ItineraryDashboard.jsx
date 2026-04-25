@@ -27,16 +27,32 @@ const ACCENT   = '#E8472A';
 const PAGE_BG  = '#F5F4F2';
 const LINE_COL = '#EEEBE6';
 
-// ── Date helper ───────────────────────────────────────────────────────────────
+// ── Date helpers ──────────────────────────────────────────────────────────────
+const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const DAYS   = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+
 function formatDayDate(departureDateStr, dayIndex) {
   if (!departureDateStr) return null;
   try {
     const base = new Date(departureDateStr + 'T12:00:00Z');
     base.setUTCDate(base.getUTCDate() + dayIndex);
-    const dn = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-    const mn = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-                'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    return `${dn[base.getUTCDay()]} ${base.getUTCDate()} ${mn[base.getUTCMonth()]}`;
+    return `${DAYS[base.getUTCDay()]} ${base.getUTCDate()} ${MONTHS[base.getUTCMonth()]}`;
+  } catch { return null; }
+}
+
+// FIX 2: "17–21 Jun 2026"  or  "17 Jun – 3 Jul 2026"  (en-dash, no ISO strings)
+function formatTripDates(dep, ret) {
+  if (!dep) return null;
+  try {
+    const d1 = new Date(dep + 'T12:00:00Z');
+    if (!ret) return `${d1.getUTCDate()} ${MONTHS[d1.getUTCMonth()]} ${d1.getUTCFullYear()}`;
+    const d2 = new Date(ret + 'T12:00:00Z');
+    if (d1.getUTCMonth() === d2.getUTCMonth() && d1.getUTCFullYear() === d2.getUTCFullYear()) {
+      // Same month: "17–21 Jun 2026"
+      return `${d1.getUTCDate()}–${d2.getUTCDate()} ${MONTHS[d1.getUTCMonth()]} ${d1.getUTCFullYear()}`;
+    }
+    // Different months: "17 Jun – 3 Jul 2026"
+    return `${d1.getUTCDate()} ${MONTHS[d1.getUTCMonth()]} – ${d2.getUTCDate()} ${MONTHS[d2.getUTCMonth()]} ${d2.getUTCFullYear()}`;
   } catch { return null; }
 }
 
@@ -200,14 +216,37 @@ export default function ItineraryDashboard({
   });
 
   // ── Sticky header content ─────────────────────────────────────────────────
-  const headerTitle = [...new Set(days.map(d =>
-    d.cityHeader ? `${d.cityHeader.emoji} ${d.cityHeader.name}` : (d.city || primaryCity),
-  ))].join(' · ');
+  // FIX 1: De-duplicate by city KEY, then look up display name + emoji.
+  // cityHeader is only set on the first day of each city group; later days of
+  // the same city have cityHeader=null but d.city=key — so we must dedup by key,
+  // not by the display string (which caused "🥘 Guangzhou · guangzhou" bug).
+  const seenCityKeys  = new Set();
+  const cityDisplays  = [];
+  days.forEach(d => {
+    const key = d.city || primaryCity;
+    if (seenCityKeys.has(key)) return;
+    seenCityKeys.add(key);
+    // Prefer cityHeader (set by algorithm with correct emoji+name)
+    if (d.cityHeader?.name) {
+      const e = d.cityHeader.emoji ? `${d.cityHeader.emoji} ` : '';
+      cityDisplays.push(`${e}${d.cityHeader.name}`);
+    } else {
+      // Fall back to master DB lookup
+      const cd = loadCityData(key);
+      if (cd?.name) cityDisplays.push(cd.emoji ? `${cd.emoji} ${cd.name}` : cd.name);
+      else          cityDisplays.push(key);
+    }
+  });
+  const headerTitle = cityDisplays.join(' · ');
 
+  // FIX 2: Human-readable date range + pace label (no raw ISO dates)
+  const PACE_LABELS = { chill: 'Chill', balance: 'Balance', pack: 'Pack it in' };
+  const tripDates   = formatTripDates(depDate, retDate);
+  const paceLabel   = PACE_LABELS[quizAnswers?.pace] || '';
   const summaryLine = [
-    depDate && retDate ? `${depDate} → ${retDate}` : '',
+    tripDates,
     `${days.length} day${days.length !== 1 ? 's' : ''}`,
-    cities.length > 1 ? `${cities.length} cities` : '',
+    paceLabel,
   ].filter(Boolean).join(' · ');
 
   // ── Block body scroll when map is open ───────────────────────────────────
@@ -230,7 +269,9 @@ export default function ItineraryDashboard({
           }
         });
       },
-      { rootMargin: `-${stickyH + 4}px 0px -55% 0px`, threshold: 0 },
+      // FIX 6: threshold 0.3 → fires when 30% of section header enters the root,
+      // giving more reliable active-tab sync while scrolling between day sections.
+      { rootMargin: `-${stickyH + 4}px 0px -55% 0px`, threshold: 0.3 },
     );
 
     daySectionRefs.current.forEach(el => { if (el) observer.observe(el); });

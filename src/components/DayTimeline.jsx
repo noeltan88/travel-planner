@@ -24,9 +24,9 @@ const RADIUS     = 14;
 // ── Timeline geometry ─────────────────────────────────────────────────────────
 const OUTER_PADL             = 16;   // outer div left padding
 const LINE_LEFT              = 34;   // line left from outer div left (absolute)
-const BADGE_LEFT_IN_ROW      = 4;    // badge left within stop row (position:absolute)
 const DIAMOND_LEFT_IN_ROW    = 11;   // food diamond left within food row
 const STOP_PADL              = 44;   // paddingLeft on each stop / food row
+// Note: no numbered badge on the line — badge lives inside the photo (bottom-left)
 
 // ── StopCard with swipe-to-reveal delete / swap ───────────────────────────────
 function StopCard({ stop, index, onDelete, onSwapRequest }) {
@@ -135,15 +135,16 @@ function StopCard({ stop, index, onDelete, onSwapRequest }) {
             background: 'linear-gradient(to top, rgba(0,0,0,0.38) 0%, transparent 56%)',
           }} />
 
-          {/* Top-left: vibe tag badge */}
-          {(stop.vibe_tags?.[0] || stop.category) && (
+          {/* FIX 4: vibe tags live only in the content area below — not on the photo.
+               "Iconic" badge top-left is shown only for explicitly iconic stops. */}
+          {(stop.must_see || stop.iconic) && (
             <div style={{
               position: 'absolute', top: 10, left: 10,
               background: 'rgba(0,0,0,0.48)', backdropFilter: 'blur(4px)',
               borderRadius: 20, padding: '3px 10px',
               fontSize: 10, fontWeight: 700, color: '#fff',
             }}>
-              {stop.vibe_tags?.[0] || stop.category}
+              Iconic
             </div>
           )}
 
@@ -198,7 +199,7 @@ function StopCard({ stop, index, onDelete, onSwapRequest }) {
             </p>
           )}
 
-          {/* Tags: vibe + district */}
+          {/* Tags: vibe + district (FIX 5: only render district when it exists) */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap', marginBottom: 10 }}>
             {stop.vibe_tags?.[0] && (
               <span style={{
@@ -208,7 +209,9 @@ function StopCard({ stop, index, onDelete, onSwapRequest }) {
                 {stop.vibe_tags[0]}
               </span>
             )}
-            <span style={{ fontSize: 11, color: '#999' }}>📍 {stop.district}</span>
+            {stop.district && (
+              <span style={{ fontSize: 11, color: '#999' }}>📍 {stop.district}</span>
+            )}
           </div>
 
           {/* Description */}
@@ -370,27 +373,12 @@ export default function DayTimeline({ stops, dayIdx, onDelete, onSwap, allAttrac
       {stops.map((stop, i) => (
         <div key={stop.id}>
 
-          {/* ── Stop row ── */}
+          {/* ── Stop row — FIX 3: badge lives only inside photo (bottom-left),
+               not duplicated on the timeline line ── */}
           <div
             className={collapsingId === stop.id ? 'card-collapsing' : ''}
             style={{ position: 'relative', paddingLeft: STOP_PADL, paddingBottom: 12 }}
           >
-            {/* Numbered badge on the line */}
-            <div style={{
-              position: 'absolute',
-              left: BADGE_LEFT_IN_ROW,   // 4px → badge centre = 16+4+14 = 34px ✓
-              top: 14,
-              width: 28, height: 28, borderRadius: '50%',
-              background: ACCENT,
-              border: `2.5px solid ${PAGE_BG}`,
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: 11, fontWeight: 800, color: '#fff',
-              zIndex: 2,
-              boxShadow: `0 2px 8px rgba(232,71,42,0.28)`,
-            }}>
-              {i + 1}
-            </div>
-
             <StopCard
               stop={stop}
               index={i}
