@@ -288,6 +288,13 @@ export default function VibeCheck({ selectedCities, onComplete }) {
     const capturedScores = scores;
     setTimeout(() => {
       // Use captured values — avoid stale closure from re-renders during timeout
+      // Debug (step 5): card2/card3 never carry translateX — only scale + translateY.
+      console.log(
+        '[VibeCheck] advance—before idx update:',
+        `card2 transform = scale(1.00) translateY(0px) [identity, no translateX]`,
+        `| card3 transform = scale(0.92) translateY(12px) [no translateX]`,
+        `| old active UNMOUNTS via key change, middle DOM reused as new active`,
+      );
       const capturedCard = rawCards[capturedIdx];
       if (capturedCard) {
         const isLove    = dir === 'right';
@@ -360,6 +367,17 @@ export default function VibeCheck({ selectedCities, onComplete }) {
       const capturedIdx    = idx;
       const capturedScores = scores;
       setTimeout(() => {
+        // Debug (step 5): confirm card2/card3 have no translateX before advance.
+        // card2 (middle) transform is always `scale(${c1Scale}) translateY(${c1TY}px)`.
+        // During flyOff progress=1 → scale(1.00) translateY(0px) = identity matrix.
+        // card3 (back)   transform is always `scale(${c2Scale}) translateY(${c2TY}px)`.
+        // During flyOff progress=1 → scale(0.92) translateY(12px). No translateX on either.
+        console.log(
+          '[VibeCheck] onEnd—before advance:',
+          `card2 transform = scale(1.00) translateY(0px) [identity, no translateX]`,
+          `| card3 transform = scale(0.92) translateY(12px) [no translateX]`,
+          `| old active will UNMOUNT (key change), middle DOM promoted to active slot`,
+        );
         const capturedCard = rawCards[capturedIdx];
         if (capturedCard) {
           const isLove    = dir === 'right'; // use captured dir — not the cleared ref
@@ -761,10 +779,11 @@ export default function VibeCheck({ selectedCities, onComplete }) {
         onTouchEnd={onTouchEnd}
         onMouseDown={onMouseDown}
       >
-        {/* Card 3 — back. Keyed by card id: when idx advances the new back card
-            mounts fresh (no prior transform → appears instantly at rest position,
-            no entrance animation). transition:none during flyOff so the card
-            jumps to its promoted slot while the eye follows the flying card. */}
+        {/* Card 3 — back.
+            key={card2.id}: new back card mounts fresh → no prior transform →
+            appears instantly at rest position, no entrance animation.
+            transition:none during flyOff/drag (card jumps to promoted slot
+            while the eye follows the flying card).                         */}
         {card2 && (
           <VibeCard
             key={card2.id}
@@ -779,10 +798,15 @@ export default function VibeCheck({ selectedCities, onComplete }) {
           />
         )}
 
-        {/* Card 2 — middle. transition:none during flyOff so it jumps instantly
-            to the promoted (active) slot rather than visibly scaling into it. */}
+        {/* Card 2 — middle.
+            key={card1.id}: React matches this DOM element by key across renders.
+            After a swipe, the back card's DOM (scale(0.92) translateY(12px))
+            is reused as the new middle card — same transform value → no animation.
+            No translateX ever applied to card2; only scale + translateY.
+            transition:none during flyOff/drag.                              */}
         {card1 && (
           <VibeCard
+            key={card1.id}
             card={card1} cardIdx={idx + 1} cardTotal={total}
             dimAmount={Math.max(0, 0.2 * (1 - progress))}
             style={{
@@ -794,8 +818,14 @@ export default function VibeCheck({ selectedCities, onComplete }) {
           />
         )}
 
-        {/* Card 1 — active */}
+        {/* Card 1 — active.
+            key={card0.id}: when idx advances, the old active card's DOM (sitting
+            at translateX(120vw) from the fly-off) is UNMOUNTED because the key
+            changes. The middle card's DOM (scale(1.0) translateY(0px) = identity)
+            is reused for the new active slot (translateX(0) rotate(0) = identity).
+            Identical computed matrix → no visible transition → no slide-in.   */}
         <VibeCard
+          key={card0.id}
           card={card0} cardIdx={idx} cardTotal={total}
           dragX={flyOff ? 0 : dragX}
           isActive={true}
