@@ -5,10 +5,14 @@
  *   outer padding-left : 16px
  *   timeline line      : left 34px  (width 2px → centre at 35px)
  *   stop badge centre  : 16 + 4 + 14 = 34px  (4px from stop-row left, 28px badge)
- *   food diamond centre: 16 + 11 + 7 = 34px  (11px from food-row left, 14px diamond)
  *   card left edge     : 16 + 44 = 60px  (STOP_PADL = 44)
+ *
+ * Food sections: horizontal scroll row of 3-5 cards per meal slot.
+ *   Lunch shown between stop 0 and stop 1.
+ *   Dinner shown after the last stop.
+ *   Tapping a food card opens a full-detail bottom sheet.
  */
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect, useMemo } from 'react';
 import SwapModal from './SwapModal';
 import AttractionImage from './AttractionImage';
 import { getKlookLink } from '../utils/affiliateLinks';
@@ -22,19 +26,51 @@ const PAGE_BG    = '#F5F4F2';
 const RADIUS     = 14;
 
 // ── Timeline geometry ─────────────────────────────────────────────────────────
-const OUTER_PADL             = 16;   // outer div left padding
-const LINE_LEFT              = 34;   // line left from outer div left (absolute)
-const DIAMOND_LEFT_IN_ROW    = 11;   // food diamond left within food row
-const STOP_PADL              = 44;   // paddingLeft on each stop / food row
-// Note: no numbered badge on the line — badge lives inside the photo (bottom-left)
+const OUTER_PADL = 16;   // outer div left padding
+const LINE_LEFT  = 34;   // line left from outer div left (absolute)
+const STOP_PADL  = 44;   // paddingLeft on each stop row
+
+// ── Food selection ────────────────────────────────────────────────────────────
+function pickMealFoods(stops, slotIndex, allFood, dietary, count = 5) {
+  if (!allFood || !allFood.length) return [];
+
+  const stopA    = stops[slotIndex];
+  const stopB    = stops[slotIndex + 1]; // undefined for dinner (last slot)
+  const clusters = new Set(
+    [stopA?.cluster_group, stopB?.cluster_group].filter(Boolean),
+  );
+
+  const noRestrictions = !dietary?.length || dietary.includes('none');
+  const eligible = allFood.filter(f => {
+    if (noRestrictions) return true;
+    if (dietary.includes('halal')       && !f.halal && !f.dietary_tags?.includes('halal-ok')) return false;
+    if (dietary.includes('vegetarian')  && !f.dietary_tags?.includes('veg-ok'))               return false;
+    if (dietary.includes('pescatarian') &&
+        !f.dietary_tags?.includes('seafood-ok') &&
+        !f.dietary_tags?.includes('veg-ok'))                                                   return false;
+    return true;
+  });
+
+  // Shuffle for variety
+  const shuffled = [...eligible].sort(() => Math.random() - 0.5);
+
+  // Cluster matches first, then supplement from remaining
+  const clusterItems = clusters.size > 0
+    ? shuffled.filter(f => f.cluster_group && clusters.has(f.cluster_group))
+    : [];
+  const clusterIds = new Set(clusterItems.map(f => f.id));
+  const others     = shuffled.filter(f => !clusterIds.has(f.id));
+
+  return [...clusterItems, ...others].slice(0, count);
+}
 
 // ── StopCard with swipe-to-reveal delete / swap ───────────────────────────────
 function StopCard({ stop, index, onDelete, onSwapRequest }) {
   const [offset,        setOffset]        = useState(0);
   const [isDrag,        setIsDrag]        = useState(false);
   const [tipOpen,       setTipOpen]       = useState(false);
-  const [hintDismissed, setHintDismissed] = useState(false); // FIX 4: pulsing hint dot
-  const [hintTipOpen,   setHintTipOpen]   = useState(false); // FIX 4: tooltip visibility
+  const [hintDismissed, setHintDismissed] = useState(false);
+  const [hintTipOpen,   setHintTipOpen]   = useState(false);
 
   const startXRef   = useRef(null);
   const startOffRef = useRef(0);
@@ -131,14 +167,11 @@ function StopCard({ stop, index, onDelete, onSwapRequest }) {
             category={stop.category}
             style={{ height: 165 }}
           />
-          {/* Gradient */}
           <div style={{
             position: 'absolute', inset: 0,
             background: 'linear-gradient(to top, rgba(0,0,0,0.38) 0%, transparent 56%)',
           }} />
 
-          {/* FIX 4: vibe tags live only in the content area below — not on the photo.
-               "Iconic" badge top-left is shown only for explicitly iconic stops. */}
           {(stop.must_see || stop.iconic) && (
             <div style={{
               position: 'absolute', top: 10, left: 10,
@@ -150,7 +183,6 @@ function StopCard({ stop, index, onDelete, onSwapRequest }) {
             </div>
           )}
 
-          {/* Top-right: time badge */}
           <div style={{
             position: 'absolute', top: 10, right: 10,
             background: 'rgba(0,0,0,0.48)', backdropFilter: 'blur(4px)',
@@ -160,7 +192,6 @@ function StopCard({ stop, index, onDelete, onSwapRequest }) {
             {stop.startTime}
           </div>
 
-          {/* Bottom-left: stop number badge */}
           <div style={{
             position: 'absolute', bottom: 10, left: 10,
             width: 26, height: 26, borderRadius: '50%',
@@ -172,7 +203,7 @@ function StopCard({ stop, index, onDelete, onSwapRequest }) {
           </div>
         </div>
 
-        {/* FIX 4: Swipe hint tooltip overlay (covers whole card face) */}
+        {/* Swipe hint tooltip overlay */}
         {!hintDismissed && hintTipOpen && (
           <div
             onPointerDown={e => e.stopPropagation()}
@@ -208,7 +239,7 @@ function StopCard({ stop, index, onDelete, onSwapRequest }) {
         {/* Content */}
         <div style={{ padding: '12px 14px 14px', position: 'relative' }}>
 
-          {/* FIX 4: Pulsing ripple hint dot — top-right of content area */}
+          {/* Pulsing ripple hint dot */}
           {!hintDismissed && (
             <div
               onClick={e => { e.stopPropagation(); setHintTipOpen(t => !t); }}
@@ -217,22 +248,15 @@ function StopCard({ stop, index, onDelete, onSwapRequest }) {
                 width: 14, height: 14, cursor: 'pointer', zIndex: 3,
               }}
             >
-              {/* Ripple rings */}
               <div style={{
                 position: 'absolute', inset: 0, borderRadius: '50%',
-                background: ACCENT,
-                animation: 'ripple 1.5s ease-out infinite',
+                background: ACCENT, animation: 'ripple 1.5s ease-out infinite',
               }} />
               <div style={{
                 position: 'absolute', inset: 0, borderRadius: '50%',
-                background: ACCENT,
-                animation: 'ripple 1.5s ease-out infinite 0.5s',
+                background: ACCENT, animation: 'ripple 1.5s ease-out infinite 0.5s',
               }} />
-              {/* Solid core dot */}
-              <div style={{
-                position: 'absolute', inset: 0, borderRadius: '50%',
-                background: ACCENT, zIndex: 1,
-              }} />
+              <div style={{ position: 'absolute', inset: 0, borderRadius: '50%', background: ACCENT, zIndex: 1 }} />
             </div>
           )}
 
@@ -248,21 +272,16 @@ function StopCard({ stop, index, onDelete, onSwapRequest }) {
             </p>
             <span style={{
               fontSize: 13, fontWeight: 700, flexShrink: 0,
-              color: stop.free ? '#16a34a' : '#999',
-              marginTop: 1,
+              color: stop.free ? '#16a34a' : '#999', marginTop: 1,
             }}>
               {stop.free ? 'Free' : `¥${stop.price_rmb}`}
             </span>
           </div>
 
-          {/* Chinese name */}
           {stop.chinese && (
-            <p style={{ fontSize: 11, color: '#999', margin: '0 0 8px' }}>
-              {stop.chinese}
-            </p>
+            <p style={{ fontSize: 11, color: '#999', margin: '0 0 8px' }}>{stop.chinese}</p>
           )}
 
-          {/* Tags: vibe + district (FIX 5: only render district when it exists) */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap', marginBottom: 10 }}>
             {stop.vibe_tags?.[0] && (
               <span style={{
@@ -277,14 +296,12 @@ function StopCard({ stop, index, onDelete, onSwapRequest }) {
             )}
           </div>
 
-          {/* Description */}
           {stop.description && (
             <p style={{ fontSize: 12, color: '#999', lineHeight: 1.55, margin: '0 0 10px' }}>
               {stop.description}
             </p>
           )}
 
-          {/* Insider tip */}
           {stop.tip && (
             <div style={{ marginBottom: klookLink && !stop.free ? 12 : 0 }}>
               <button
@@ -308,7 +325,6 @@ function StopCard({ stop, index, onDelete, onSwapRequest }) {
             </div>
           )}
 
-          {/* Klook booking button */}
           {klookLink && !stop.free && (
             <a
               href={klookLink}
@@ -331,62 +347,234 @@ function StopCard({ stop, index, onDelete, onSwapRequest }) {
   );
 }
 
-// ── FoodCard — FIX 5: photo card, non-collapsible ────────────────────────────
-function FoodCard({ foodItem, mealLabel = 'Lunch' }) {
+// ── FoodMiniCard — compact card in the horizontal scroll row ──────────────────
+function FoodMiniCard({ food, onClick }) {
+  const category = food.type === 'cafe' ? 'market' : 'food_street';
   return (
-    <div style={{
-      background: '#FFF8F2',
-      border: '1px solid #FFCFBF',
-      borderLeft: `3px solid ${ACCENT}`,
-      borderRadius: RADIUS,
-      overflow: 'hidden',
-      display: 'flex',
-      alignItems: 'center',
-      gap: 10,
-      padding: '10px 12px',
-    }}>
-      {/* Photo — 80×80 square; enriched items have photo_url, others use gradient fallback */}
-      <div style={{ width: 80, height: 80, borderRadius: 10, overflow: 'hidden', flexShrink: 0 }}>
+    <div
+      onClick={onClick}
+      style={{
+        width: 200, height: 160, flexShrink: 0, scrollSnapAlign: 'start',
+        borderRadius: 14,
+        background: '#FFF8F2',
+        border: '1px solid #FFCFBF',
+        borderLeft: `3px solid ${ACCENT}`,
+        boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+        overflow: 'hidden',
+        cursor: 'pointer',
+        display: 'flex', flexDirection: 'column',
+      }}
+    >
+      {/* Photo — 80px tall, full width */}
+      <div style={{ height: 80, flexShrink: 0, overflow: 'hidden' }}>
         <AttractionImage
-          src={foodItem.photo_url || null}
-          alt={foodItem.name}
-          category={foodItem.type === 'cafe' ? 'market' : 'food_street'}
+          src={food.photo_url || null}
+          alt={food.name}
+          category={category}
           style={{ width: '100%', height: '100%', objectFit: 'cover' }}
         />
       </div>
 
       {/* Content */}
-      <div style={{ flex: 1, minWidth: 0 }}>
-        {/* Meal label */}
-        <p style={{ fontSize: 10, color: ACCENT, fontWeight: 500, margin: '0 0 3px' }}>
-          {mealLabel} recommendation
-        </p>
-        {/* Name */}
+      <div style={{ padding: 8, flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column' }}>
         <p style={{
-          fontSize: 14, fontWeight: 500, color: '#1A1A1A', margin: '0 0 2px',
+          fontSize: 13, fontWeight: 500, color: '#1A1A1A', margin: '0 0 2px',
           overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
         }}>
-          {foodItem.name}
+          {food.name}
         </p>
-        {/* Chinese name */}
-        {foodItem.chinese && (
-          <p style={{ fontSize: 11, color: '#999', margin: '0 0 2px' }}>{foodItem.chinese}</p>
+        {food.price_range && (
+          <p style={{ fontSize: 11, color: '#999', margin: '0 0 1px' }}>{food.price_range}</p>
         )}
-        {/* Price range */}
-        {foodItem.price_range && (
-          <p style={{ fontSize: 12, color: '#999', margin: '0 0 2px' }}>{foodItem.price_range}</p>
-        )}
-        {/* Tip / description */}
-        {foodItem.tip && (
-          <p style={{
-            fontSize: 12, color: '#666', margin: 0,
-            overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
-          }}>
-            {foodItem.tip}
+        {(food.type || food.category) && (
+          <p style={{ fontSize: 10, color: '#bbb', margin: 0 }}>
+            {food.type || food.category}
           </p>
         )}
       </div>
     </div>
+  );
+}
+
+// ── FoodSheet — fixed bottom sheet for full food detail ───────────────────────
+function FoodSheet({ food, onClose }) {
+  const [visible, setVisible] = useState(false);
+  useEffect(() => { requestAnimationFrame(() => setVisible(true)); }, []);
+
+  function close() { setVisible(false); setTimeout(onClose, 320); }
+
+  const category = food.type === 'cafe' ? 'market' : 'food_street';
+
+  return (
+    <>
+      {/* Overlay */}
+      <div
+        onClick={close}
+        style={{
+          position: 'fixed', inset: 0, zIndex: 100,
+          background: `rgba(0,0,0,${visible ? 0.4 : 0})`,
+          transition: 'background 0.3s ease',
+        }}
+      />
+
+      {/* Sheet */}
+      <div style={{
+        position: 'fixed',
+        bottom: 0,
+        left: '50%',
+        width: '100%',
+        maxWidth: 430,
+        zIndex: 101,
+        background: '#fff',
+        borderRadius: '24px 24px 0 0',
+        transform: `translateX(-50%) translateY(${visible ? '0%' : '100%'})`,
+        transition: 'transform 0.35s cubic-bezier(0.32, 0.72, 0, 1)',
+        maxHeight: '85vh',
+        overflowY: 'auto',
+      }}>
+        {/* Drag handle */}
+        <div style={{ display: 'flex', justifyContent: 'center', padding: '12px 0 8px', flexShrink: 0 }}>
+          <div style={{ width: 40, height: 4, borderRadius: 2, background: '#e2e8f0' }} />
+        </div>
+
+        <div style={{ padding: '0 20px 40px' }}>
+          {/* Photo — 180px */}
+          <div style={{ height: 180, borderRadius: 14, overflow: 'hidden' }}>
+            <AttractionImage
+              src={food.photo_url || null}
+              alt={food.name}
+              category={category}
+              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            />
+          </div>
+
+          {/* Name */}
+          <p style={{ fontSize: 18, fontWeight: 500, color: '#1A1A1A', margin: '12px 0 0' }}>
+            {food.name}
+          </p>
+
+          {/* Chinese name */}
+          {food.chinese && (
+            <p style={{ fontSize: 13, color: '#999', margin: '2px 0 0' }}>{food.chinese}</p>
+          )}
+
+          {/* Price range */}
+          {food.price_range && (
+            <p style={{ fontSize: 13, color: '#999', margin: '4px 0 0' }}>{food.price_range}</p>
+          )}
+
+          {/* Rating */}
+          {food.google_rating && (
+            <p style={{ fontSize: 12, color: '#999', margin: '4px 0 0' }}>
+              ⭐ {food.google_rating}
+              {food.google_review_count
+                ? ` · ${Number(food.google_review_count).toLocaleString()} reviews`
+                : ''}
+            </p>
+          )}
+
+          {/* Tip — coral box matching stop cards */}
+          {food.tip && (
+            <div style={{
+              marginTop: 10, background: TINT, borderRadius: 10,
+              padding: '10px 12px', fontSize: 13, color: '#1A1A1A', lineHeight: 1.6,
+            }}>
+              {food.tip}
+            </div>
+          )}
+
+          {/* Where / description (if no tip) */}
+          {!food.tip && food.where && (
+            <p style={{ fontSize: 13, color: '#666', lineHeight: 1.6, margin: '10px 0 0' }}>
+              {food.where}
+            </p>
+          )}
+
+          {/* Must order */}
+          {food.must_order && (
+            <p style={{ fontSize: 12, color: '#666', lineHeight: 1.6, margin: '8px 0 0' }}>
+              🍽️ <strong>Must order:</strong> {food.must_order}
+            </p>
+          )}
+
+          {/* Get directions */}
+          {food.lat && food.lng ? (
+            <a
+              href={`https://www.google.com/maps/dir/?api=1&destination=${food.lat},${food.lng}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: 'block',
+                marginTop: 16,
+                padding: '11px 0',
+                textAlign: 'center',
+                borderRadius: 10,
+                border: `1px solid ${ACCENT}`,
+                color: ACCENT,
+                fontSize: 14,
+                fontWeight: 600,
+                textDecoration: 'none',
+              }}
+            >
+              Get directions
+            </a>
+          ) : null}
+        </div>
+      </div>
+    </>
+  );
+}
+
+// ── FoodRow — meal pill + horizontal scrollable card strip ────────────────────
+function FoodRow({ foods, mealLabel }) {
+  const [selectedFood, setSelectedFood] = useState(null);
+
+  if (!foods.length) return null;
+
+  return (
+    <>
+      {/* Meal pill */}
+      <div style={{ display: 'flex', justifyContent: 'center', padding: '4px 0 6px' }}>
+        <div style={{
+          background: TINT,
+          border: `1px solid rgba(232,71,42,0.2)`,
+          borderRadius: 20,
+          padding: '3px 12px',
+          fontSize: 11,
+          color: ACCENT,
+          fontWeight: 600,
+        }}>
+          🍽️ {mealLabel}
+        </div>
+      </div>
+
+      {/* Horizontal scroll row */}
+      <div style={{
+        display: 'flex',
+        overflowX: 'auto',
+        scrollSnapType: 'x mandatory',
+        WebkitOverflowScrolling: 'touch',
+        gap: 10,
+        paddingLeft: STOP_PADL,
+        paddingRight: 16,
+        paddingBottom: 10,
+        scrollbarWidth: 'none',
+        msOverflowStyle: 'none',
+      }}>
+        {foods.map(food => (
+          <FoodMiniCard
+            key={food.id}
+            food={food}
+            onClick={() => setSelectedFood(food)}
+          />
+        ))}
+      </div>
+
+      {/* Full-detail bottom sheet */}
+      {selectedFood && (
+        <FoodSheet food={selectedFood} onClose={() => setSelectedFood(null)} />
+      )}
+    </>
   );
 }
 
@@ -410,7 +598,12 @@ function WalkingPill({ stop, nextStop }) {
 }
 
 // ── Main export ───────────────────────────────────────────────────────────────
-export default function DayTimeline({ stops, dayIdx, onDelete, onSwap, allAttractions, allUsedIds, food = [] }) {
+export default function DayTimeline({
+  stops, dayIdx, onDelete, onSwap,
+  allAttractions, allUsedIds,
+  allFoodItems = [],   // full city food pool for meal recommendations
+  dietary = [],        // dietary prefs from quiz answers
+}) {
   const [swapStop,     setSwapStop]     = useState(null);
   const [collapsingId, setCollapsingId] = useState(null);
 
@@ -426,6 +619,18 @@ export default function DayTimeline({ stops, dayIdx, onDelete, onSwap, allAttrac
   const alternatives = swapStop
     ? getSwapAlternatives(swapStop, allAttractions || [], usedIds, 4)
     : [];
+
+  // Compute meal food selections — memoised to avoid reshuffling on every render
+  const lunchFoods = useMemo(
+    () => pickMealFoods(stops, 0, allFoodItems, dietary, 5),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [stops.length, allFoodItems.length, dietary.join(',')],
+  );
+  const dinnerFoods = useMemo(
+    () => pickMealFoods(stops, stops.length - 1, allFoodItems, dietary, 5),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [stops.length, allFoodItems.length, dietary.join(',')],
+  );
 
   if (stops.length === 0) {
     return (
@@ -452,8 +657,7 @@ export default function DayTimeline({ stops, dayIdx, onDelete, onSwap, allAttrac
       {stops.map((stop, i) => (
         <div key={stop.id}>
 
-          {/* ── Stop row — FIX 3: badge lives only inside photo (bottom-left),
-               not duplicated on the timeline line ── */}
+          {/* ── Stop row ── */}
           <div
             className={collapsingId === stop.id ? 'card-collapsing' : ''}
             style={{ position: 'relative', paddingLeft: STOP_PADL, paddingBottom: 12 }}
@@ -466,47 +670,24 @@ export default function DayTimeline({ stops, dayIdx, onDelete, onSwap, allAttrac
             />
           </div>
 
-          {/* ── Between stops: food + walking pill ── */}
+          {/* ── Between stops: Lunch (slot 0 only) + walking pill ── */}
           {i < stops.length - 1 && (
             <>
-              {food[i] && (
-                <>
-                  {/* FIX 5: Floating meal pill */}
-                  <div style={{ display: 'flex', justifyContent: 'center', padding: '2px 0 4px' }}>
-                    <div style={{
-                      background: TINT,
-                      border: `1px solid rgba(232,71,42,0.2)`,
-                      borderRadius: 20,
-                      padding: '3px 12px',
-                      fontSize: 11,
-                      color: ACCENT,
-                      fontWeight: 600,
-                    }}>
-                      🍽️ {i === 0 ? 'Lunch' : 'Dinner'}
-                    </div>
-                  </div>
-                  <div style={{ position: 'relative', paddingLeft: STOP_PADL, paddingBottom: 8 }}>
-                    {/* Coral diamond on the line */}
-                    <div style={{
-                      position: 'absolute',
-                      left: DIAMOND_LEFT_IN_ROW,  // 11px → centre = 16+11+7 = 34px ✓
-                      top: 10,
-                      width: 14, height: 14,
-                      background: ACCENT,
-                      transform: 'rotate(45deg)',
-                      borderRadius: 3,
-                      border: `2px solid ${PAGE_BG}`,
-                      zIndex: 2,
-                    }} />
-                    <FoodCard foodItem={food[i]} mealLabel={i === 0 ? 'Lunch' : 'Dinner'} />
-                  </div>
-                </>
+              {i === 0 && lunchFoods.length > 0 && (
+                <FoodRow foods={lunchFoods} mealLabel="Lunch" />
               )}
               <WalkingPill stop={stop} nextStop={stops[i + 1]} />
             </>
           )}
         </div>
       ))}
+
+      {/* ── Dinner after the last stop ── */}
+      {dinnerFoods.length > 0 && (
+        <div style={{ marginTop: 8 }}>
+          <FoodRow foods={dinnerFoods} mealLabel="Dinner" />
+        </div>
+      )}
 
       {/* ── Swap modal ── */}
       {swapStop && (

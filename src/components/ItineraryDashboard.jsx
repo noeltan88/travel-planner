@@ -466,7 +466,8 @@ export default function ItineraryDashboard({
                   allAttractionsByCity?.[day.city || primaryCity] || allAttractions
                 }
                 allUsedIds={allUsedIds}
-                food={food}
+                allFoodItems={cityData_i?.food || []}
+                dietary={quizAnswers?.dietary || []}
               />
 
               {/* Practical tips at each city boundary */}
