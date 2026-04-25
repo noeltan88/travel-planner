@@ -1,6 +1,24 @@
+/**
+ * QuizFlow — white + coral palette (Part A restyle)
+ *
+ * Design tokens:
+ *   Background:      #FFFFFF / #FAFAFA
+ *   Primary text:    #1A1A1A
+ *   Secondary text:  #999999
+ *   Accent:          #E8472A
+ *
+ * Progress bar: 3px, flush top, no rounded ends.
+ * Options:      white + 1px #E0E0E0 border → selected: coral bg, white text.
+ * Continue:     solid coral pill, 52px tall, no shadow.
+ * Back:         ghost, #999.
+ *
+ * Step 5 (id:'vibe') is replaced by VibeCheck card-swipe (Part B).
+ */
 import { useState, useEffect, useMemo } from 'react';
-import { QUIZ } from '../utils/quizData';
+import { QUIZ }    from '../utils/quizData';
+import VibeCheck   from './VibeCheck';
 
+// ── Constants ─────────────────────────────────────────────────────────────────
 const HOLIDAYS = [
   { name: 'Chinese New Year 2026',         start: '2026-01-28', end: '2026-02-04' },
   { name: 'Qingming Festival 2026',        start: '2026-04-04', end: '2026-04-06' },
@@ -23,8 +41,9 @@ const AGE_GROUPS = [
 
 const LAST_STEP = QUIZ.length - 1;
 const ACC       = '#E8472A';
+const ACC_TINT  = '#FEF0EC';
 
-// ── Calendar helpers ─────────────────────────────────────────────
+// ── Calendar helpers ──────────────────────────────────────────────────────────
 const MONTH_NAMES = [
   'January','February','March','April','May','June',
   'July','August','September','October','November','December',
@@ -38,49 +57,84 @@ function formatDateDisplay(dateStr) {
   return `${d} ${M[m - 1]} ${y}`;
 }
 
-function MonthGrid({ year, month, today, dep, ret, onDayClick }) {
+// ── MonthGrid — light theme ───────────────────────────────────────────────────
+function MonthGrid({ year, month, dep, ret, onDayClick }) {
   const firstDow    = new Date(year, month, 1).getDay();
   const startPad    = (firstDow + 6) % 7;
   const daysInMonth = new Date(year, month + 1, 0).getDate();
-  const cells = [
+  const cells       = [
     ...Array(startPad).fill(null),
     ...Array.from({ length: daysInMonth }, (_, i) => i + 1),
   ];
-  const ACC_TINT = 'rgba(232,71,42,0.18)';
 
   return (
     <div style={{ marginBottom: 28 }}>
-      <p style={{ textAlign: 'center', fontWeight: 700, color: 'white', marginBottom: 10, fontSize: 14, letterSpacing: '0.01em' }}>
+      <p style={{
+        textAlign: 'center', fontWeight: 700, color: '#1A1A1A',
+        marginBottom: 10, fontSize: 14,
+      }}>
         {MONTH_NAMES[month]} {year}
       </p>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)' }}>
         {DAY_LABELS.map(d => (
-          <div key={d} style={{ textAlign: 'center', fontSize: 11, color: 'rgba(255,255,255,0.3)', paddingBottom: 6, fontWeight: 600 }}>
+          <div key={d} style={{
+            textAlign: 'center', fontSize: 11, color: '#CCC',
+            paddingBottom: 6, fontWeight: 600,
+          }}>
             {d}
           </div>
         ))}
         {cells.map((day, idx) => {
           if (day === null) return <div key={`p${idx}`} style={{ height: 36 }} />;
+
           const dateStr    = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
           const isPast     = dateStr < today;
+          const isToday    = dateStr === today;
           const isDep      = dateStr === dep;
           const isRet      = dateStr === ret;
           const inRange    = dep && ret && dateStr > dep && dateStr < ret;
           const isSelected = isDep || isRet;
+
           return (
             <div
               key={day}
               onClick={() => !isPast && onDayClick(dateStr)}
-              style={{ height: 36, display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', cursor: isPast ? 'default' : 'pointer' }}
+              style={{
+                height: 36, display: 'flex', alignItems: 'center',
+                justifyContent: 'center', position: 'relative',
+                cursor: isPast ? 'default' : 'pointer',
+              }}
             >
+              {/* Range fill */}
               {isDep && ret  && <div style={{ position: 'absolute', top: 2, bottom: 2, left: '50%', right: 0, background: ACC_TINT, zIndex: 0 }} />}
               {isRet && dep  && <div style={{ position: 'absolute', top: 2, bottom: 2, left: 0, right: '50%', background: ACC_TINT, zIndex: 0 }} />}
               {inRange       && <div style={{ position: 'absolute', top: 2, bottom: 2, left: 0, right: 0, background: ACC_TINT, zIndex: 0 }} />}
-              <div style={{ width: 32, height: 32, borderRadius: '50%', background: isSelected ? ACC : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', zIndex: 1 }}>
-                <span style={{ fontSize: 13, fontWeight: isSelected ? 700 : 400, color: isPast ? 'rgba(255,255,255,0.2)' : isSelected ? 'white' : 'rgba(255,255,255,0.85)' }}>
+
+              {/* Day circle */}
+              <div style={{
+                width: 32, height: 32, borderRadius: '50%',
+                background: isSelected ? ACC : 'transparent',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                position: 'relative', zIndex: 1,
+              }}>
+                <span style={{
+                  fontSize: 13,
+                  fontWeight: isSelected ? 700 : 400,
+                  color: isPast ? '#D0D0D0' : isSelected ? '#fff' : '#1A1A1A',
+                }}>
                   {day}
                 </span>
               </div>
+
+              {/* Today dot */}
+              {isToday && !isSelected && (
+                <div style={{
+                  position: 'absolute', bottom: 2,
+                  left: '50%', transform: 'translateX(-50%)',
+                  width: 4, height: 4, borderRadius: '50%',
+                  background: ACC, zIndex: 2,
+                }} />
+              )}
             </div>
           );
         })}
@@ -89,7 +143,7 @@ function MonthGrid({ year, month, today, dep, ret, onDayClick }) {
   );
 }
 
-function InlineCalendar({ dep, ret, today, onDayTap }) {
+function InlineCalendar({ dep, ret, onDayTap }) {
   const yr0 = Number(today.slice(0, 4));
   const mo0 = Number(today.slice(5, 7)) - 1;
   const months = Array.from({ length: 12 }, (_, i) => {
@@ -99,13 +153,45 @@ function InlineCalendar({ dep, ret, today, onDayTap }) {
   return (
     <div>
       {months.map(({ year, month }) => (
-        <MonthGrid key={`${year}-${month}`} year={year} month={month} today={today} dep={dep} ret={ret} onDayClick={onDayTap} />
+        <MonthGrid
+          key={`${year}-${month}`}
+          year={year} month={month}
+          dep={dep} ret={ret}
+          onDayClick={onDayTap}
+        />
       ))}
     </div>
   );
 }
-// ────────────────────────────────────────────────────────────────
 
+// ── FlightTimeInput — light theme ─────────────────────────────────────────────
+function FlightTimeInput({ label, value, onChange }) {
+  return (
+    <label style={{
+      display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+      minHeight: 52, padding: '0 16px', borderRadius: 12, marginBottom: 12,
+      background: '#F8F8F8', border: '1.5px solid #E8E8E8',
+      boxSizing: 'border-box', cursor: 'pointer',
+    }}>
+      <span style={{ fontSize: 14, fontWeight: 500, color: '#666', flexShrink: 0, marginRight: 12 }}>
+        {label}
+      </span>
+      <input
+        type="time"
+        value={value || ''}
+        onChange={e => onChange(e.target.value)}
+        style={{
+          background: 'transparent', border: 'none', outline: 'none',
+          color: value ? '#1A1A1A' : '#CCC',
+          fontSize: 15, fontWeight: 700, textAlign: 'right',
+          colorScheme: 'light', minWidth: 80,
+        }}
+      />
+    </label>
+  );
+}
+
+// ── parseTimePeriod ───────────────────────────────────────────────────────────
 function parseTimePeriod(timeStr) {
   if (!timeStr) return null;
   const hour = parseInt(timeStr.split(':')[0], 10);
@@ -115,63 +201,214 @@ function parseTimePeriod(timeStr) {
   return 'evening';
 }
 
-function FlightTimeInput({ label, value, onChange }) {
+// ── Option card ───────────────────────────────────────────────────────────────
+function OptionCard({ opt, sel, multi, isGroupQ, isFamilyKids, answers, onToggle, onToggleKidsAge, onToggleGrandparents, onOthersChange, othersText, comingSoonTapped }) {
+  const [hovered, setHovered] = useState(false);
+
+  const isTappedSoon = comingSoonTapped === opt.value;
+
+  const cardBg     = opt.comingSoon ? '#FAFAFA'
+                   : sel            ? ACC
+                   :                  (hovered ? ACC_TINT : '#fff');
+  const cardBorder = opt.comingSoon ? '1px solid #F0F0F0'
+                   : sel            ? `1px solid ${ACC}`
+                   :                  '1px solid #E0E0E0';
+  const nameColor  = sel && !opt.comingSoon ? '#fff' : '#1A1A1A';
+  const descColor  = sel && !opt.comingSoon ? 'rgba(255,255,255,0.75)' : '#999';
+
   return (
-    <label style={{
-      display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-      minHeight: 56, padding: '0 16px', borderRadius: 12, marginBottom: 16,
-      background: 'rgba(255,255,255,0.07)', border: '1.5px solid rgba(255,255,255,0.12)',
-      boxSizing: 'border-box', cursor: 'pointer',
-    }}>
-      <span style={{ fontSize: 14, fontWeight: 600, color: 'rgba(255,255,255,0.7)', flexShrink: 0, marginRight: 12 }}>
-        {label}
-      </span>
-      <input
-        type="time"
-        value={value || ''}
-        onChange={e => onChange(e.target.value)}
+    <div>
+      <button
+        onClick={() => onToggle(opt.value, opt.comingSoon)}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
         style={{
-          background: 'transparent', border: 'none', outline: 'none',
-          color: value ? 'white' : 'rgba(255,255,255,0.35)',
-          fontSize: 16, fontWeight: 700, textAlign: 'right',
-          colorScheme: 'dark', minWidth: 80,
-          WebkitAppearance: 'none',
+          width: '100%',
+          display: 'flex', alignItems: 'center', gap: 12,
+          padding: '14px 16px', borderRadius: 16,
+          textAlign: 'left', cursor: opt.comingSoon ? 'default' : 'pointer',
+          background: cardBg, border: cardBorder,
+          opacity: opt.comingSoon ? 0.55 : 1,
+          transition: 'background 0.15s ease, border-color 0.15s ease',
         }}
-      />
-    </label>
+      >
+        {/* Emoji icon */}
+        <span style={{
+          fontSize: 24, width: 32, textAlign: 'center', flexShrink: 0,
+          filter: opt.comingSoon ? 'grayscale(1)' : 'none',
+        }}>
+          {opt.icon}
+        </span>
+
+        {/* Text */}
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 1 }}>
+            <span style={{ fontSize: 14, fontWeight: 600, color: nameColor }}>{opt.name}</span>
+            {opt.comingSoon && (
+              <span style={{
+                fontSize: 10, fontWeight: 600, padding: '1px 6px',
+                borderRadius: 20, background: '#F0F0F0', color: '#999',
+              }}>
+                Coming Soon
+              </span>
+            )}
+          </div>
+          <span style={{ fontSize: 12, color: descColor, display: 'block' }}>{opt.desc}</span>
+        </div>
+
+        {/* Checkbox / radio indicator */}
+        {!opt.comingSoon && (
+          <div style={{
+            width: 20, height: 20, borderRadius: '50%', flexShrink: 0,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            border: sel
+              ? '1.5px solid rgba(255,255,255,0.5)'
+              : '1.5px solid #D0D0D0',
+            background: sel ? 'rgba(255,255,255,0.22)' : 'transparent',
+            transition: 'all 0.15s ease',
+          }}>
+            {sel && (
+              <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
+                <path d="M1 4L3.5 6.5L9 1" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            )}
+          </div>
+        )}
+      </button>
+
+      {/* Family-kids extras */}
+      {isGroupQ && opt.value === 'family-kids' && (
+        <div style={{
+          maxHeight: isFamilyKids ? 220 : 0,
+          overflow: 'hidden',
+          transition: 'max-height 0.3s ease',
+        }}>
+          <div style={{ padding: '14px 4px 4px' }}>
+            {/* Grandparents toggle */}
+            <div style={{
+              display: 'flex', alignItems: 'center',
+              justifyContent: 'space-between', marginBottom: 14,
+            }}>
+              <p style={{ fontSize: 13, fontWeight: 600, color: '#1A1A1A', margin: 0 }}>
+                Grandparents joining too? 👴👵
+              </p>
+              <button
+                onClick={e => { e.stopPropagation(); onToggleGrandparents(); }}
+                style={{
+                  width: 44, height: 26, borderRadius: 13, border: 'none',
+                  cursor: 'pointer', flexShrink: 0,
+                  background: answers.grandparents ? ACC : '#E0E0E0',
+                  position: 'relative', transition: 'background 0.2s',
+                }}
+              >
+                <div style={{
+                  position: 'absolute', top: 3,
+                  left: answers.grandparents ? 21 : 3,
+                  width: 20, height: 20, borderRadius: '50%',
+                  background: 'white', transition: 'left 0.2s',
+                  boxShadow: '0 1px 4px rgba(0,0,0,0.15)',
+                }} />
+              </button>
+            </div>
+
+            {/* Kids ages */}
+            <p style={{
+              fontSize: 11, fontWeight: 700, color: '#999',
+              letterSpacing: '0.06em', margin: '0 0 8px',
+            }}>
+              KIDS AGES (SELECT ALL THAT APPLY)
+            </p>
+            <div style={{ display: 'flex', gap: 8 }}>
+              {AGE_GROUPS.map(ag => {
+                const agSel = (answers.kids_ages || []).includes(ag.value);
+                return (
+                  <button
+                    key={ag.value}
+                    onClick={e => { e.stopPropagation(); onToggleKidsAge(ag.value); }}
+                    style={{
+                      flex: 1, padding: '7px 0', borderRadius: 20, border: 'none',
+                      cursor: 'pointer',
+                      background: agSel ? ACC_TINT : '#F5F5F5',
+                      outline: agSel ? `1.5px solid ${ACC}` : '1.5px solid #E0E0E0',
+                      color: agSel ? ACC : '#1A1A1A',
+                      fontSize: 12, fontWeight: 600,
+                      transition: 'background 0.15s, color 0.15s',
+                    }}
+                  >
+                    {ag.icon} {ag.label}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Coming soon tapped message */}
+      {isTappedSoon && (
+        <div style={{
+          marginTop: 6, padding: '8px 14px', borderRadius: 12,
+          background: ACC_TINT, color: ACC, fontSize: 12, fontWeight: 500,
+        }}>
+          We're working on it — China is ready now!
+        </div>
+      )}
+
+      {/* Dietary "others" free-text */}
+      {opt.value === 'others' && sel && (
+        <div style={{ marginTop: 8 }}>
+          <input
+            type="text"
+            value={othersText}
+            onChange={e => onOthersChange(e.target.value)}
+            placeholder="e.g. nut allergy, no shellfish…"
+            autoFocus
+            style={{
+              width: '100%', padding: '12px 16px', borderRadius: 12, fontSize: 13,
+              outline: 'none', background: '#F8F8F8', border: `1.5px solid ${ACC}`,
+              color: '#1A1A1A', boxSizing: 'border-box',
+            }}
+          />
+        </div>
+      )}
+    </div>
   );
 }
 
+// ── Main component ─────────────────────────────────────────────────────────────
 export default function QuizFlow({ onComplete }) {
-  const [step,            setStep]           = useState(0);
-  const [answers,         setAnswers]         = useState({ country: 'china' });
-  const [othersText,      setOthersText]      = useState('');
-  const [comingSoonTapped,setComingSoonTapped]= useState(null);
-  const [citySearch,      setCitySearch]      = useState('');
-  // Date screen tabs + calendar sheet
-  const [dateTab,         setDateTab]         = useState('dates');
-  const [calendarOpen,    setCalendarOpen]    = useState(false);
+  const [step,             setStep]            = useState(0);
+  const [answers,          setAnswers]          = useState({ country: 'china' });
+  const [othersText,       setOthersText]       = useState('');
+  const [comingSoonTapped, setComingSoonTapped] = useState(null);
+  const [citySearch,       setCitySearch]       = useState('');
+  const [dateTab,          setDateTab]          = useState('dates');
+  const [calendarOpen,     setCalendarOpen]     = useState(false);
 
-  const q           = QUIZ[step];
-  const isLastStep  = step === LAST_STEP;
-  const isDietary   = q.id === 'dietary';
-  const isCity      = q.id === 'city';
-  const isDateRange = q.type === 'daterange';
-  const isGroupQ    = q.id === 'group';
-  const isFamilyKids= answers.group === 'family-kids';
-  const selected    = answers[q.id] || (q.multi ? [] : null);
+  const q          = QUIZ[step];
+  const isLastStep = step === LAST_STEP;
+  const isVibe     = q.id === 'vibe';
+  const isDietary  = q.id === 'dietary';
+  const isCity     = q.id === 'city';
+  const isDateRange= q.type === 'daterange';
+  const isGroupQ   = q.id === 'group';
+  const isFamilyKids = answers.group === 'family-kids';
+  const selected     = answers[q.id] || (q.multi ? [] : null);
 
   // Auto-select "No restrictions" on dietary step
   useEffect(() => {
     if (QUIZ[step]?.id !== 'dietary') return;
-    if ((answers.dietary || []).length === 0) setAnswers(a => ({ ...a, dietary: ['none'] }));
+    if ((answers.dietary || []).length === 0)
+      setAnswers(a => ({ ...a, dietary: ['none'] }));
   }, [step]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Date range derived state
   const datesAnswer = answers.dates || {};
   const dep         = datesAnswer.departure || '';
   const ret         = datesAnswer.return    || '';
-  const totalDays   = dep && ret ? Math.round((new Date(ret) - new Date(dep)) / 86400000) + 1 : 0;
+  const totalDays   = dep && ret
+    ? Math.round((new Date(ret) - new Date(dep)) / 86400000) + 1
+    : 0;
   const dateError   = dep && ret && dep >= ret;
   const overlappingHolidays = useMemo(() => {
     if (!dep || !ret || dateError) return [];
@@ -183,10 +420,11 @@ export default function QuizFlow({ onComplete }) {
     : q.multi ? selected.length > 0 : selected !== null;
 
   const visibleOptions    = isCity && citySearch.trim()
-    ? q.options.filter(opt => opt.name.toLowerCase().includes(citySearch.toLowerCase()))
+    ? q.options.filter(o => o.name.toLowerCase().includes(citySearch.toLowerCase()))
     : q.options;
   const selectedCityCount = (answers.city || []).length;
 
+  // ── Date handlers ──────────────────────────────────────────────────────────
   function updateDate(field, value) {
     setAnswers(prev => ({ ...prev, dates: { ...(prev.dates || {}), [field]: value } }));
   }
@@ -202,21 +440,14 @@ export default function QuizFlow({ onComplete }) {
         setAnswers(prev => ({ ...prev, dates: { departure: dateStr, return: '' } }));
       } else {
         updateDate('return', dateStr);
-        setCalendarOpen(false); // auto-close when both dates picked
+        setCalendarOpen(false);
       }
     } else {
       setAnswers(prev => ({ ...prev, dates: { departure: dateStr, return: '' } }));
     }
   }
 
-  function toggleKidsAge(value) {
-    const cur = answers.kids_ages || [];
-    setAnswers(prev => ({
-      ...prev,
-      kids_ages: cur.includes(value) ? cur.filter(v => v !== value) : [...cur, value],
-    }));
-  }
-
+  // ── Option toggle ──────────────────────────────────────────────────────────
   function toggle(value, comingSoon) {
     if (comingSoon) { setComingSoonTapped(value); return; }
     setComingSoonTapped(null);
@@ -232,11 +463,29 @@ export default function QuizFlow({ onComplete }) {
         setAnswers({ ...answers, [q.id]: [...cur.filter(v => !exclusiveVals.includes(v)), value] });
       }
     } else {
-      const extra = (q.id === 'group' && value !== 'family-kids') ? { grandparents: false, kids_ages: [] } : {};
+      const extra = (q.id === 'group' && value !== 'family-kids')
+        ? { grandparents: false, kids_ages: [] }
+        : {};
       setAnswers({ ...answers, [q.id]: value, ...extra });
     }
   }
 
+  function toggleKidsAge(value) {
+    const cur = answers.kids_ages || [];
+    setAnswers(prev => ({
+      ...prev,
+      kids_ages: cur.includes(value) ? cur.filter(v => v !== value) : [...cur, value],
+    }));
+  }
+
+  // ── VibeCheck completion ───────────────────────────────────────────────────
+  function handleVibeComplete(vibeArray) {
+    setAnswers(a => ({ ...a, vibe: vibeArray }));
+    setCitySearch('');
+    setStep(s => s + 1);
+  }
+
+  // ── Continue / submit ──────────────────────────────────────────────────────
   function handleContinue() {
     if (step < LAST_STEP) {
       setCitySearch('');
@@ -266,104 +515,157 @@ export default function QuizFlow({ onComplete }) {
     return answers[q.id] === value;
   }
 
+  // ── Render ─────────────────────────────────────────────────────────────────
   return (
-    <div className="hero-bg flex flex-col relative overflow-hidden" style={{ height: '100dvh' }}>
+    <div style={{
+      background:     '#fff',
+      height:         '100dvh',
+      display:        'flex',
+      flexDirection:  'column',
+      position:       'relative',
+      overflow:       'hidden',
+    }}>
 
-      {/* Decorative Chinese character */}
-      <div
-        className="absolute top-8 right-6 text-[120px] font-black leading-none pointer-events-none select-none"
-        style={{ color: 'var(--accent-deco)', opacity: 0.5 }}
-      >
+      {/* ── 3px progress bar — flush to top edge, no rounding ────────────── */}
+      <div style={{
+        position:   'absolute', top: 0, left: 0, right: 0,
+        height:     3,
+        background: '#F0F0F0',
+        zIndex:     10,
+        flexShrink: 0,
+      }}>
+        <div style={{
+          height:     '100%',
+          width:      `${((step + 1) / QUIZ.length) * 100}%`,
+          background: ACC,
+          transition: 'width 0.35s ease',
+        }} />
+      </div>
+
+      {/* ── Decorative Chinese character — very subtle watermark ─────────── */}
+      <div style={{
+        position:       'absolute',
+        top:            36,
+        right:          18,
+        fontSize:       120,
+        fontWeight:     900,
+        lineHeight:     1,
+        color:          ACC,
+        opacity:        0.05,
+        pointerEvents:  'none',
+        userSelect:     'none',
+        zIndex:         0,
+      }}>
         {q.deco}
       </div>
 
-      {/* Progress bar */}
-      <div className="px-6 pt-14 pb-4">
-        <div className="flex gap-2 mb-2">
-          {QUIZ.map((_, i) => (
-            <div key={i} className="h-1 flex-1 rounded-full transition-all duration-300"
-              style={{ background: i <= step ? 'var(--accent)' : 'rgba(255,255,255,0.2)' }} />
-          ))}
-        </div>
-        <p className="text-xs font-semibold tracking-widest" style={{ color: 'var(--accent)' }}>
+      {/* ── Step label ───────────────────────────────────────────────────── */}
+      <div style={{ padding: '28px 20px 0', flexShrink: 0, zIndex: 1 }}>
+        <p style={{
+          fontSize: 11, fontWeight: 700, letterSpacing: '0.08em',
+          color: '#CCC', margin: 0,
+        }}>
           {q.label} · {step + 1}/{QUIZ.length}
         </p>
       </div>
 
-      {/* Question */}
-      <div className="px-6 pt-2 pb-4">
-        <h1 className="text-2xl font-bold text-white leading-tight mb-1">{q.title}</h1>
-        <p className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>{q.sub}</p>
-        {q.note && <p className="text-sm mt-0.5" style={{ color: 'rgba(255,255,255,0.4)' }}>{q.note}</p>}
+      {/* ── Question title + subtitle ─────────────────────────────────────── */}
+      <div style={{ padding: '6px 20px 14px', flexShrink: 0, zIndex: 1 }}>
+        <h1 style={{
+          fontSize: 22, fontWeight: 500, color: '#1A1A1A',
+          margin: '0 0 4px', lineHeight: 1.3,
+        }}>
+          {isVibe ? "What catches your eye?" : q.title}
+        </h1>
+        <p style={{ fontSize: 14, color: '#999', margin: 0 }}>
+          {isVibe
+            ? "Swipe through — we'll build around what you love"
+            : q.sub}
+        </p>
+        {q.note && !isVibe && (
+          <p style={{ fontSize: 13, color: '#CCC', margin: '2px 0 0' }}>{q.note}</p>
+        )}
       </div>
 
-      {/* City search bar */}
+      {/* ── City search bar ───────────────────────────────────────────────── */}
       {isCity && (
-        <div className="px-4 pb-3 flex-shrink-0">
-          <div className="relative">
+        <div style={{ padding: '0 16px 10px', flexShrink: 0, zIndex: 1 }}>
+          <div style={{ position: 'relative' }}>
             <input
-              type="text" value={citySearch} onChange={e => setCitySearch(e.target.value)}
-              placeholder="Search cities…" className="w-full px-4 py-3 rounded-2xl text-sm outline-none"
-              style={{ background: 'rgba(255,255,255,0.1)', border: '1.5px solid rgba(255,255,255,0.2)', color: 'white' }}
+              type="text"
+              value={citySearch}
+              onChange={e => setCitySearch(e.target.value)}
+              placeholder="Search cities…"
+              style={{
+                width: '100%', padding: '12px 40px 12px 16px', borderRadius: 16,
+                fontSize: 14, outline: 'none', boxSizing: 'border-box',
+                background: '#F8F8F8', border: '1.5px solid #E8E8E8', color: '#1A1A1A',
+              }}
             />
             {citySearch && (
-              <button onClick={() => setCitySearch('')}
-                style={{ position: 'absolute', right: 14, top: '50%', transform: 'translateY(-50%)', color: 'rgba(255,255,255,0.45)', background: 'none', border: 'none', cursor: 'pointer', fontSize: 18, lineHeight: 1 }}
-              >×</button>
+              <button
+                onClick={() => setCitySearch('')}
+                style={{
+                  position: 'absolute', right: 14, top: '50%',
+                  transform: 'translateY(-50%)',
+                  color: '#999', background: 'none', border: 'none',
+                  cursor: 'pointer', fontSize: 18, lineHeight: 1,
+                }}
+              >
+                ×
+              </button>
             )}
           </div>
-          <p className="text-xs mt-2 px-1" style={{ color: 'rgba(255,255,255,0.45)' }}>
-            {selectedCityCount === 0 ? 'No cities selected' : `${selectedCityCount} ${selectedCityCount === 1 ? 'city' : 'cities'} selected`}
+          <p style={{ fontSize: 12, marginTop: 6, paddingLeft: 2, color: '#CCC' }}>
+            {selectedCityCount === 0
+              ? 'No cities selected'
+              : `${selectedCityCount} ${selectedCityCount === 1 ? 'city' : 'cities'} selected`}
           </p>
         </div>
       )}
 
-      {/* ── Date range screen ─────────────────────────────────── */}
+      {/* ── Date range screen ─────────────────────────────────────────────── */}
       {isDateRange && (
-        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', padding: '0 16px 8px' }}>
-
-          {/* Tab pills — strict 50/50 width */}
+        <div style={{
+          flex: 1, display: 'flex', flexDirection: 'column',
+          overflow: 'hidden', padding: '0 16px 8px', zIndex: 1,
+        }}>
+          {/* Tab pills */}
           <div style={{
             display: 'flex', flexShrink: 0,
-            background: 'rgba(255,255,255,0.07)', borderRadius: 22, padding: 4, marginBottom: 20,
+            background: '#F5F5F5', borderRadius: 22, padding: 4, marginBottom: 18,
           }}>
-            <button
-              onClick={() => setDateTab('dates')}
-              style={{
-                width: '50%', padding: '9px 0', borderRadius: 18, border: 'none', cursor: 'pointer',
-                background: dateTab === 'dates' ? ACC : 'transparent',
-                color: dateTab === 'dates' ? 'white' : 'rgba(255,255,255,0.5)',
-                fontWeight: 700, fontSize: 13,
-                transition: 'background 0.15s, color 0.15s',
-              }}
-            >
-              📅 Dates
-            </button>
-            <button
-              onClick={() => setDateTab('times')}
-              style={{
-                width: '50%', padding: '9px 0', borderRadius: 18, border: 'none', cursor: 'pointer',
-                position: 'relative',
-                background: dateTab === 'times' ? ACC : 'transparent',
-                color: dateTab === 'times' ? 'white' : 'rgba(255,255,255,0.5)',
-                fontWeight: 700, fontSize: 13,
-                transition: 'background 0.15s, color 0.15s',
-              }}
-            >
-              ✈️ Flight Times
-              {/* Superscript badge — absolutely positioned so it doesn't affect tab width */}
-              <span style={{
-                position: 'absolute', top: 4, right: 8,
-                fontSize: 8, padding: '1px 4px', borderRadius: 4, fontWeight: 700,
-                background: 'rgba(255,255,255,0.2)',
-                color: 'rgba(255,255,255,0.65)',
-              }}>
-                opt
-              </span>
-            </button>
+            {[
+              { id: 'dates', label: '📅 Dates' },
+              { id: 'times', label: '✈️ Flight Times', badge: 'opt' },
+            ].map(tab => (
+              <button
+                key={tab.id}
+                onClick={() => setDateTab(tab.id)}
+                style={{
+                  width: '50%', padding: '9px 0', borderRadius: 18,
+                  border: 'none', cursor: 'pointer', position: 'relative',
+                  background: dateTab === tab.id ? ACC : 'transparent',
+                  color:      dateTab === tab.id ? '#fff' : '#999',
+                  fontWeight: 700, fontSize: 13,
+                  transition: 'background 0.15s, color 0.15s',
+                }}
+              >
+                {tab.label}
+                {tab.badge && (
+                  <span style={{
+                    position: 'absolute', top: 4, right: 8,
+                    fontSize: 9, padding: '1px 4px', borderRadius: 4,
+                    background: 'rgba(0,0,0,0.08)', color: '#999', fontWeight: 700,
+                  }}>
+                    {tab.badge}
+                  </span>
+                )}
+              </button>
+            ))}
           </div>
 
-          {/* TAB 1 — Dates (no scroll needed; content is compact) */}
+          {/* TAB 1 — Dates */}
           {dateTab === 'dates' && (
             <div>
               {/* Day counter badge */}
@@ -371,75 +673,81 @@ export default function QuizFlow({ onComplete }) {
                 {totalDays >= 1 ? (
                   <div style={{
                     display: 'inline-flex', alignItems: 'center', gap: 8,
-                    background: 'rgba(232,71,42,0.15)', border: '1.5px solid rgba(232,71,42,0.35)',
+                    background: 'rgba(232,71,42,0.07)',
+                    border: `1.5px solid rgba(232,71,42,0.22)`,
                     borderRadius: 24, padding: '7px 20px',
                   }}>
-                    <span style={{ fontSize: 22, fontWeight: 900, color: 'white', lineHeight: 1 }}>{totalDays}</span>
-                    <span style={{ fontSize: 14, fontWeight: 700, color: 'white' }}>days in China 🇨🇳</span>
+                    <span style={{ fontSize: 22, fontWeight: 900, color: ACC, lineHeight: 1 }}>{totalDays}</span>
+                    <span style={{ fontSize: 14, fontWeight: 700, color: '#1A1A1A' }}>days in China 🇨🇳</span>
                   </div>
                 ) : (
                   <div style={{
                     display: 'inline-flex', alignItems: 'center',
-                    background: 'rgba(255,255,255,0.06)', border: '1.5px solid rgba(255,255,255,0.1)',
+                    background: '#F5F5F5', border: '1.5px solid #E8E8E8',
                     borderRadius: 24, padding: '7px 20px',
                   }}>
-                    <span style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)', fontWeight: 500 }}>Select your dates</span>
+                    <span style={{ fontSize: 13, color: '#CCC', fontWeight: 500 }}>Select your dates</span>
                   </div>
                 )}
               </div>
 
-              {/* Tappable date fields — neutral styling, no red */}
+              {/* Departure / Return fields */}
               <div style={{ display: 'flex', gap: 10, marginBottom: 14 }}>
-                <button
-                  onClick={() => setCalendarOpen(true)}
-                  style={{
-                    flex: 1, padding: '14px 14px', borderRadius: 16, border: 'none', cursor: 'pointer', textAlign: 'left',
-                    background: dep ? 'rgba(255,255,255,0.11)' : 'rgba(255,255,255,0.07)',
-                    outline: '1.5px solid rgba(255,255,255,0.15)',
-                  }}
-                >
-                  <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.45)', fontWeight: 600, letterSpacing: '0.07em', margin: '0 0 6px' }}>📅 DEPARTURE</p>
-                  <p style={{ fontSize: 14, fontWeight: 700, color: dep ? 'white' : 'rgba(255,255,255,0.3)', margin: 0 }}>
-                    {dep ? formatDateDisplay(dep) : 'Tap to select'}
-                  </p>
-                </button>
-                <button
-                  onClick={() => setCalendarOpen(true)}
-                  style={{
-                    flex: 1, padding: '14px 14px', borderRadius: 16, border: 'none', cursor: 'pointer', textAlign: 'left',
-                    background: ret ? 'rgba(255,255,255,0.11)' : 'rgba(255,255,255,0.07)',
-                    outline: '1.5px solid rgba(255,255,255,0.15)',
-                  }}
-                >
-                  <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.45)', fontWeight: 600, letterSpacing: '0.07em', margin: '0 0 6px' }}>📅 RETURN</p>
-                  <p style={{ fontSize: 14, fontWeight: 700, color: ret ? 'white' : 'rgba(255,255,255,0.3)', margin: 0 }}>
-                    {ret ? formatDateDisplay(ret) : dep ? 'Tap to select' : '—'}
-                  </p>
-                </button>
+                {[
+                  { field: 'departure', label: '📅 DEPARTURE', value: dep },
+                  { field: 'return',    label: '📅 RETURN',    value: ret },
+                ].map(({ field, label, value: val }) => (
+                  <button
+                    key={field}
+                    onClick={() => setCalendarOpen(true)}
+                    style={{
+                      flex: 1, padding: '14px', borderRadius: 16,
+                      border: `1.5px solid ${val ? 'rgba(232,71,42,0.3)' : '#E8E8E8'}`,
+                      cursor: 'pointer', textAlign: 'left',
+                      background: val ? 'rgba(232,71,42,0.04)' : '#F8F8F8',
+                    }}
+                  >
+                    <p style={{
+                      fontSize: 10, color: '#CCC', fontWeight: 700,
+                      letterSpacing: '0.07em', margin: '0 0 6px',
+                    }}>
+                      {label}
+                    </p>
+                    <p style={{
+                      fontSize: 14, fontWeight: 700, margin: 0,
+                      color: val ? '#1A1A1A' : '#CCC',
+                    }}>
+                      {val
+                        ? formatDateDisplay(val)
+                        : field === 'return' && !dep ? '—' : 'Tap to select'}
+                    </p>
+                  </button>
+                ))}
               </div>
 
-              {/* Holiday warnings — sit tight below the cards */}
-              {overlappingHolidays.length > 0 && (
-                <div>
-                  {overlappingHolidays.map(h => (
-                    <div key={h.name} style={{
-                      background: 'rgba(245,158,11,0.12)', border: '1.5px solid rgba(245,158,11,0.35)',
-                      borderRadius: 14, padding: '12px 16px', marginBottom: 10,
-                    }}>
-                      <p style={{ fontSize: 13, color: '#fde68a', lineHeight: 1.5, margin: 0 }}>
-                        ⚠️ Your dates overlap with <strong>{h.name}</strong> — popular attractions will be very crowded. Consider adjusting dates or booking well in advance.
-                      </p>
-                    </div>
-                  ))}
+              {/* Holiday warnings */}
+              {overlappingHolidays.map(h => (
+                <div
+                  key={h.name}
+                  style={{
+                    background: 'rgba(245,158,11,0.07)',
+                    border: '1.5px solid rgba(245,158,11,0.28)',
+                    borderRadius: 14, padding: '12px 16px', marginBottom: 10,
+                  }}
+                >
+                  <p style={{ fontSize: 13, color: '#92400e', lineHeight: 1.5, margin: 0 }}>
+                    ⚠️ Your dates overlap with <strong>{h.name}</strong> — popular attractions will be very crowded.
+                    Consider adjusting dates or booking well in advance.
+                  </p>
                 </div>
-              )}
+              ))}
             </div>
           )}
 
           {/* TAB 2 — Flight Times */}
           {dateTab === 'times' && (
             <div>
-              <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.45)', lineHeight: 1.6, margin: '0 0 20px' }}>
+              <p style={{ fontSize: 13, color: '#999', lineHeight: 1.6, margin: '0 0 18px' }}>
                 Optional — helps us plan your first and last day more accurately. Leave blank and we'll use sensible defaults.
               </p>
               <FlightTimeInput
@@ -457,135 +765,101 @@ export default function QuizFlow({ onComplete }) {
         </div>
       )}
 
-      {/* ── Options (non-date screens) ────────────────────────── */}
-      {!isDateRange && (
-        <div
-          className="flex-1 px-4 pb-2 overflow-y-auto flex flex-col gap-3"
-          style={{ WebkitOverflowScrolling: 'touch', scrollBehavior: 'smooth', willChange: 'scroll-position' }}
-        >
-          {visibleOptions.map(opt => {
-            const sel        = isSelected(opt.value);
-            const isTappedSoon = comingSoonTapped === opt.value;
-            return (
-              <div key={opt.value}>
-                <button
-                  onClick={() => toggle(opt.value, opt.comingSoon)}
-                  className="w-full flex items-center gap-3 p-4 rounded-2xl text-left transition-all duration-200"
-                  style={{
-                    background: opt.comingSoon ? 'rgba(255,255,255,0.03)' : sel ? 'var(--accent-tint)' : 'rgba(255,255,255,0.07)',
-                    border:     opt.comingSoon ? '2px solid rgba(255,255,255,0.06)' : sel ? '2px solid var(--accent)' : '2px solid rgba(255,255,255,0.12)',
-                    opacity: opt.comingSoon ? 0.5 : 1,
-                    cursor:  opt.comingSoon ? 'default' : 'pointer',
-                  }}
-                >
-                  <span className="text-2xl w-8 flex-shrink-0 text-center" style={{ filter: opt.comingSoon ? 'grayscale(1)' : 'none' }}>{opt.icon}</span>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2">
-                      <span className="font-semibold text-white text-sm">{opt.name}</span>
-                      {opt.comingSoon && (
-                        <span className="text-xs font-semibold px-2 py-0.5 rounded-full"
-                          style={{ background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.45)', fontSize: 10 }}>
-                          Coming Soon
-                        </span>
-                      )}
-                    </div>
-                    <div className="text-xs truncate" style={{ color: 'rgba(255,255,255,0.4)' }}>{opt.desc}</div>
-                  </div>
-                  {!opt.comingSoon && (
-                    <div className="w-5 h-5 rounded-full flex-shrink-0 flex items-center justify-center border-2 transition-all"
-                      style={{ borderColor: sel ? 'var(--accent)' : 'rgba(255,255,255,0.3)', background: sel ? 'var(--accent)' : 'transparent' }}>
-                      {sel && (
-                        <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
-                          <path d="M1 4L3.5 6.5L9 1" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                        </svg>
-                      )}
-                    </div>
-                  )}
-                </button>
+      {/* ── VibeCheck (replaces normal options for step id='vibe') ────────── */}
+      {isVibe && (
+        <VibeCheck
+          key={step}
+          selectedCities={answers.city || []}
+          onComplete={handleVibeComplete}
+        />
+      )}
 
-                {/* Family-kids extras */}
-                {isGroupQ && opt.value === 'family-kids' && (
-                  <div style={{ maxHeight: isFamilyKids ? 200 : 0, overflow: 'hidden', transition: 'max-height 0.3s ease' }}>
-                    <div style={{ padding: '12px 4px 4px' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14 }}>
-                        <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: 13, fontWeight: 600 }}>Grandparents joining too? 👴👵</p>
-                        <button
-                          onClick={e => { e.stopPropagation(); setAnswers(prev => ({ ...prev, grandparents: !prev.grandparents })); }}
-                          style={{ width: 44, height: 26, borderRadius: 13, border: 'none', cursor: 'pointer', flexShrink: 0, background: answers.grandparents ? 'var(--accent)' : 'rgba(255,255,255,0.2)', position: 'relative', transition: 'background 0.2s' }}
-                        >
-                          <div style={{ position: 'absolute', top: 3, left: answers.grandparents ? 21 : 3, width: 20, height: 20, borderRadius: '50%', background: 'white', transition: 'left 0.2s' }} />
-                        </button>
-                      </div>
-                      <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: 12, fontWeight: 600, marginBottom: 8, letterSpacing: '0.04em' }}>
-                        KIDS AGES (SELECT ALL THAT APPLY)
-                      </p>
-                      <div style={{ display: 'flex', gap: 8 }}>
-                        {AGE_GROUPS.map(ag => {
-                          const agSel = (answers.kids_ages || []).includes(ag.value);
-                          return (
-                            <button key={ag.value} onClick={e => { e.stopPropagation(); toggleKidsAge(ag.value); }}
-                              style={{ flex: 1, padding: '7px 0', borderRadius: 20, border: 'none', cursor: 'pointer', background: agSel ? 'var(--accent-tint)' : 'rgba(255,255,255,0.08)', outline: agSel ? '1.5px solid var(--accent)' : '1.5px solid rgba(255,255,255,0.15)', color: 'white', fontSize: 12, fontWeight: 600, transition: 'background 0.15s, outline 0.15s' }}>
-                              {ag.icon} {ag.label}
-                            </button>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {isTappedSoon && (
-                  <div className="mt-1 mx-1 px-3 py-2 rounded-xl text-xs"
-                    style={{ background: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.6)' }}>
-                    We're working on it — China is ready now!
-                  </div>
-                )}
-
-                {opt.value === 'others' && sel && (
-                  <div className="mt-2 px-1">
-                    <input type="text" value={othersText} onChange={e => setOthersText(e.target.value)}
-                      placeholder="e.g. nut allergy, no shellfish…" className="w-full px-4 py-3 rounded-xl text-sm outline-none"
-                      style={{ background: 'rgba(255,255,255,0.12)', border: '1.5px solid rgba(255,255,255,0.25)', color: 'white' }} autoFocus />
-                  </div>
-                )}
-              </div>
-            );
-          })}
+      {/* ── Normal options (non-date, non-vibe) ──────────────────────────── */}
+      {!isDateRange && !isVibe && (
+        <div style={{
+          flex: 1, padding: '0 16px 4px',
+          overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 10,
+          WebkitOverflowScrolling: 'touch', zIndex: 1,
+        }}>
+          {visibleOptions.map(opt => (
+            <OptionCard
+              key={opt.value}
+              opt={opt}
+              sel={isSelected(opt.value)}
+              multi={q.multi}
+              isGroupQ={isGroupQ}
+              isFamilyKids={isFamilyKids}
+              answers={answers}
+              onToggle={toggle}
+              onToggleKidsAge={toggleKidsAge}
+              onToggleGrandparents={() => setAnswers(prev => ({ ...prev, grandparents: !prev.grandparents }))}
+              onOthersChange={setOthersText}
+              othersText={othersText}
+              comingSoonTapped={comingSoonTapped}
+            />
+          ))}
 
           {isDietary && (
-            <p className="text-xs px-1 pb-2 leading-relaxed" style={{ color: 'rgba(255,255,255,0.35)' }}>
+            <p style={{ fontSize: 12, color: '#CCC', lineHeight: 1.6, paddingBottom: 8 }}>
               Recommendations are based on our research. Always verify with the restaurant directly as dietary information may change.
             </p>
           )}
         </div>
       )}
 
-      {/* Navigation */}
-      <div className="px-6 pt-2 pb-8 flex gap-3">
+      {/* ── Navigation — Back (ghost) + Continue (coral pill) ────────────── */}
+      <div style={{
+        padding:    '10px 20px 28px',
+        flexShrink: 0,
+        display:    'flex',
+        gap:        12,
+        alignItems: 'center',
+        zIndex:     1,
+        background: '#fff',
+        boxShadow:  '0 -1px 0 #F5F5F5',
+      }}>
         {step > 0 && (
-          <button onClick={() => setStep(step - 1)}
-            className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0"
-            style={{ background: 'rgba(255,255,255,0.1)' }}>
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <path d="M13 4L7 10L13 16" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
+          <button
+            onClick={() => { setStep(step - 1); setCitySearch(''); }}
+            style={{
+              background: 'none', border: 'none', cursor: 'pointer',
+              color: '#999', fontSize: 14, fontWeight: 500,
+              padding: '0 4px', flexShrink: 0,
+            }}
+          >
+            ← Back
           </button>
         )}
-        <button
-          onClick={handleContinue} disabled={!canContinue}
-          className="flex-1 h-12 rounded-2xl font-bold text-white transition-all duration-200"
-          style={{ background: canContinue ? 'var(--accent)' : 'rgba(255,255,255,0.15)', opacity: canContinue ? 1 : 0.6 }}
-        >
-          {isLastStep ? 'Build My Itinerary →' : 'Continue →'}
-        </button>
+
+        {/* Continue button — hidden during VibeCheck (it self-advances) */}
+        {!isVibe && (
+          <button
+            onClick={handleContinue}
+            disabled={!canContinue}
+            style={{
+              flex:         1,
+              height:       52,
+              borderRadius: 28,
+              border:       'none',
+              cursor:       canContinue ? 'pointer' : 'default',
+              background:   canContinue ? ACC : '#F0F0F0',
+              color:        canContinue ? '#fff' : '#CCC',
+              fontSize:     14,
+              fontWeight:   500,
+              transition:   'background 0.15s, color 0.15s',
+            }}
+          >
+            {isLastStep ? 'Build My Itinerary →' : 'Continue →'}
+          </button>
+        )}
       </div>
 
-      {/* ── Calendar bottom sheet ─────────────────────────────── */}
+      {/* ══ Calendar bottom sheet (date range step only) ════════════════════ */}
       {isDateRange && calendarOpen && (
         <>
           <style>{`
             @keyframes sheetSlideUp {
-              from { transform: translateY(100%); opacity: 0.6; }
+              from { transform: translateY(100%); opacity: 0.7; }
               to   { transform: translateY(0);    opacity: 1;   }
             }
           `}</style>
@@ -593,60 +867,91 @@ export default function QuizFlow({ onComplete }) {
           {/* Backdrop */}
           <div
             onClick={() => setCalendarOpen(false)}
-            style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.55)', zIndex: 50 }}
+            style={{
+              position: 'absolute', inset: 0,
+              background: 'rgba(0,0,0,0.35)', zIndex: 50,
+            }}
           />
 
-          {/* Sheet */}
+          {/* Sheet — light */}
           <div style={{
-            position: 'absolute', left: 0, right: 0, bottom: 0, zIndex: 51,
-            background: '#1a1232',
+            position:     'absolute', left: 0, right: 0, bottom: 0,
+            zIndex:       51,
+            background:   '#fff',
             borderRadius: '24px 24px 0 0',
-            maxHeight: '84vh',
-            display: 'flex', flexDirection: 'column',
-            animation: 'sheetSlideUp 0.28s cubic-bezier(0.32,0.72,0,1)',
+            maxHeight:    '84vh',
+            display:      'flex', flexDirection: 'column',
+            animation:    'sheetSlideUp 0.28s cubic-bezier(0.32,0.72,0,1)',
+            boxShadow:    '0 -4px 32px rgba(0,0,0,0.12)',
           }}>
 
             {/* Drag handle */}
             <div style={{ display: 'flex', justifyContent: 'center', paddingTop: 12, flexShrink: 0 }}>
-              <div style={{ width: 36, height: 4, borderRadius: 2, background: 'rgba(255,255,255,0.2)' }} />
+              <div style={{ width: 36, height: 4, borderRadius: 2, background: '#E0E0E0' }} />
             </div>
 
             {/* Sheet header */}
             <div style={{ padding: '14px 20px 14px', flexShrink: 0 }}>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14 }}>
-                <p style={{ fontSize: 16, fontWeight: 700, color: 'white', margin: 0 }}>Select your dates</p>
+              <div style={{
+                display: 'flex', alignItems: 'center',
+                justifyContent: 'space-between', marginBottom: 14,
+              }}>
+                <p style={{ fontSize: 16, fontWeight: 700, color: '#1A1A1A', margin: 0 }}>
+                  Select your dates
+                </p>
                 <button
                   onClick={() => setCalendarOpen(false)}
-                  style={{ padding: '7px 20px', borderRadius: 20, border: 'none', cursor: 'pointer', background: ACC, color: 'white', fontWeight: 700, fontSize: 13 }}
+                  style={{
+                    padding: '7px 20px', borderRadius: 20,
+                    border: 'none', cursor: 'pointer',
+                    background: ACC, color: '#fff', fontWeight: 700, fontSize: 13,
+                  }}
                 >
                   Done ✓
                 </button>
               </div>
 
-              {/* Mini dep / ret display */}
+              {/* Mini dep/ret display */}
               <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                <div style={{ flex: 1, textAlign: 'center', padding: '9px 10px', borderRadius: 12, background: dep ? 'rgba(232,71,42,0.12)' : 'rgba(255,255,255,0.06)', outline: dep ? '1.5px solid rgba(232,71,42,0.4)' : '1.5px solid rgba(255,255,255,0.1)' }}>
-                  <p style={{ fontSize: 9, color: 'rgba(255,255,255,0.4)', fontWeight: 600, letterSpacing: '0.07em', margin: '0 0 3px' }}>DEPARTURE</p>
-                  <p style={{ fontSize: 12, fontWeight: 700, color: dep ? 'white' : 'rgba(255,255,255,0.3)', margin: 0 }}>
-                    {dep ? formatDateDisplay(dep) : 'Tap a date'}
-                  </p>
-                </div>
-                <span style={{ color: 'rgba(255,255,255,0.3)', fontSize: 16, flexShrink: 0 }}>→</span>
-                <div style={{ flex: 1, textAlign: 'center', padding: '9px 10px', borderRadius: 12, background: ret ? 'rgba(232,71,42,0.12)' : 'rgba(255,255,255,0.06)', outline: ret ? '1.5px solid rgba(232,71,42,0.4)' : '1.5px solid rgba(255,255,255,0.1)' }}>
-                  <p style={{ fontSize: 9, color: 'rgba(255,255,255,0.4)', fontWeight: 600, letterSpacing: '0.07em', margin: '0 0 3px' }}>RETURN</p>
-                  <p style={{ fontSize: 12, fontWeight: 700, color: ret ? 'white' : 'rgba(255,255,255,0.3)', margin: 0 }}>
-                    {ret ? formatDateDisplay(ret) : dep ? 'Tap return date' : '—'}
-                  </p>
-                </div>
+                {[
+                  { label: 'DEPARTURE', value: dep, hint: 'Tap a date' },
+                  { label: 'RETURN',    value: ret, hint: dep ? 'Tap return date' : '—' },
+                ].map(({ label, value: val, hint }) => (
+                  <div
+                    key={label}
+                    style={{
+                      flex: 1, textAlign: 'center', padding: '9px 10px', borderRadius: 12,
+                      background: val ? 'rgba(232,71,42,0.05)' : '#F8F8F8',
+                      outline: val ? `1.5px solid rgba(232,71,42,0.3)` : '1.5px solid #E8E8E8',
+                    }}
+                  >
+                    <p style={{
+                      fontSize: 9, color: '#CCC', fontWeight: 700,
+                      letterSpacing: '0.07em', margin: '0 0 3px',
+                    }}>
+                      {label}
+                    </p>
+                    <p style={{
+                      fontSize: 12, fontWeight: 700,
+                      color: val ? '#1A1A1A' : '#CCC', margin: 0,
+                    }}>
+                      {val ? formatDateDisplay(val) : hint}
+                    </p>
+                  </div>
+                ))}
               </div>
             </div>
 
             {/* Divider */}
-            <div style={{ height: 1, background: 'rgba(255,255,255,0.08)', flexShrink: 0 }} />
+            <div style={{ height: 1, background: '#F0F0F0', flexShrink: 0 }} />
 
             {/* Scrollable calendar */}
-            <div style={{ flex: 1, overflowY: 'auto', padding: '16px 16px 48px', WebkitOverflowScrolling: 'touch' }}>
-              <InlineCalendar dep={dep} ret={ret} today={today} onDayTap={handleDayTap} />
+            <div style={{
+              flex: 1, overflowY: 'auto',
+              padding: '16px 16px 48px',
+              WebkitOverflowScrolling: 'touch',
+            }}>
+              <InlineCalendar dep={dep} ret={ret} onDayTap={handleDayTap} />
             </div>
           </div>
         </>
