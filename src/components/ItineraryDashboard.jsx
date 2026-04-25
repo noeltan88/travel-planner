@@ -1,3 +1,13 @@
+/**
+ * ItineraryDashboard — Variation C
+ *
+ * Design:
+ *   • White background, coral (#E8472A) accents throughout
+ *   • Day tabs sticky at the very top (no persistent map above them)
+ *   • Floating coral 🗺️ FAB (bottom-right) → opens full-screen UnifiedMap overlay
+ *   • Hotel card + export/share buttons are inline at the bottom of the scroll
+ *   • No separate Hotels or Export tabs — everything lives in one continuous scroll
+ */
 import { useRef, useState, useEffect } from 'react';
 import DayTimeline from './DayTimeline';
 import HotelCard from './HotelCard';
@@ -5,7 +15,6 @@ import PracticalTips from './PracticalTips';
 import PrintView from './PrintView';
 import { exportToPDF } from '../utils/pdfExport';
 import { loadCityData } from '../utils/algorithm';
-// Single map instance — handles both collapsed (300 px) and expanded states
 import UnifiedMap from './UnifiedMap';
 
 // ── Date helper ────────────────────────────────────────────────────────────────
@@ -23,18 +32,138 @@ function formatDayDate(departureDateStr, dayIndex) {
   }
 }
 
-const MAP_HEIGHT = 300; // px — collapsed map height
+const ACCENT = '#E8472A';
 
+// ── Section divider — coral left-bar + day label ───────────────────────────────
+function DaySectionHeader({ dayNum, dateStr, stopCount, cityName, cityEmoji }) {
+  return (
+    <div style={{ padding: '28px 16px 10px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 3 }}>
+        <div style={{
+          width: 4, height: 20, borderRadius: 2,
+          background: ACCENT, flexShrink: 0,
+        }} />
+        <p style={{
+          fontSize: 15, fontWeight: 800, color: '#1a1a2e',
+          margin: 0, letterSpacing: -0.2,
+        }}>
+          Day {dayNum}{dateStr ? ` · ${dateStr}` : ''}
+        </p>
+      </div>
+      <p style={{
+        fontSize: 11, color: '#94a3b8', margin: '0 0 0 14px',
+        fontWeight: 500,
+      }}>
+        {stopCount} stop{stopCount !== 1 ? 's' : ''}
+        {cityName ? ` · ${cityName}` : ''}
+        {cityEmoji ? ` ${cityEmoji}` : ''}
+      </p>
+    </div>
+  );
+}
+
+// ── Inline export section at the bottom of the scroll ─────────────────────────
+function ExportSection({ onExport, exporting, onWhatsApp, onReset }) {
+  return (
+    <div style={{ padding: '8px 16px 40px', display: 'flex', flexDirection: 'column', gap: 10 }}>
+      {/* Divider */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 4 }}>
+        <div style={{ flex: 1, height: 1, background: '#f1f5f9' }} />
+        <span style={{ fontSize: 11, color: '#cbd5e1', fontWeight: 600 }}>SAVE &amp; SHARE</span>
+        <div style={{ flex: 1, height: 1, background: '#f1f5f9' }} />
+      </div>
+
+      <button
+        onClick={onExport}
+        disabled={exporting}
+        style={{
+          padding: '15px', borderRadius: 16, fontWeight: 700, fontSize: 14,
+          color: '#fff', border: 'none', cursor: exporting ? 'default' : 'pointer',
+          background: exporting ? '#94a3b8' : ACCENT,
+          boxShadow: exporting ? 'none' : `0 4px 16px rgba(232,71,42,0.3)`,
+          transition: 'all 0.2s ease',
+        }}
+      >
+        {exporting ? 'Generating PDF…' : '📥 Download PDF'}
+      </button>
+
+      <button
+        onClick={onWhatsApp}
+        style={{
+          padding: '15px', borderRadius: 16, fontWeight: 700, fontSize: 14,
+          color: '#fff', border: 'none', cursor: 'pointer', background: '#25D366',
+          boxShadow: '0 4px 16px rgba(37,211,102,0.25)',
+        }}
+      >
+        💬 Share on WhatsApp
+      </button>
+
+      {onReset && (
+        <button
+          onClick={onReset}
+          style={{
+            padding: '14px', borderRadius: 16, fontWeight: 600, fontSize: 14,
+            color: ACCENT, border: `1.5px solid ${ACCENT}`,
+            cursor: 'pointer', background: 'transparent',
+          }}
+        >
+          🔄 Plan a new trip →
+        </button>
+      )}
+    </div>
+  );
+}
+
+// ── Floating Map button ────────────────────────────────────────────────────────
+function MapFAB({ onClick }) {
+  return (
+    <button
+      onClick={onClick}
+      aria-label="Open map"
+      style={{
+        position:     'fixed',
+        bottom:       24,
+        right:        20,
+        zIndex:       40,
+        width:        56,
+        height:       56,
+        borderRadius: '50%',
+        background:   ACCENT,
+        border:       'none',
+        cursor:       'pointer',
+        display:      'flex',
+        alignItems:   'center',
+        justifyContent: 'center',
+        fontSize:     22,
+        boxShadow:    `0 4px 20px rgba(232,71,42,0.45)`,
+        transition:   'transform 0.15s ease, box-shadow 0.15s ease',
+      }}
+      onMouseEnter={e => {
+        e.currentTarget.style.transform  = 'scale(1.08)';
+        e.currentTarget.style.boxShadow  = `0 6px 28px rgba(232,71,42,0.55)`;
+      }}
+      onMouseLeave={e => {
+        e.currentTarget.style.transform  = 'scale(1)';
+        e.currentTarget.style.boxShadow  = `0 4px 20px rgba(232,71,42,0.45)`;
+      }}
+    >
+      🗺️
+    </button>
+  );
+}
+
+// ── Main component ─────────────────────────────────────────────────────────────
 export default function ItineraryDashboard({
   itinerary, dayStops, activeDay, setActiveDay,
-  activeTab, setActiveTab, deleteStop, swapStop,
+  activeTab, setActiveTab,   // kept for API compat; Hotels/Export are now inline
+  deleteStop, swapStop,
   itineraryRef, quizAnswers, onReset,
 }) {
   const printRef       = useRef(null);
-  const daySectionRefs = useRef([]);   // one ref per day section for scroll tracking
-  const stickyTabsRef  = useRef(null); // sticky day-tabs bar
+  const daySectionRefs = useRef([]);
+  const stickyTabsRef  = useRef(null);
   const [exporting, setExporting]     = useState(false);
-  const [expandedMap, setExpandedMap] = useState(false);
+  const [mapOpen,   setMapOpen]       = useState(false);   // full-screen map overlay
 
   if (!itinerary) return null;
 
@@ -43,32 +172,30 @@ export default function ItineraryDashboard({
   const allAttractions = Object.values(allAttractionsByCity || {}).flat();
   const depDate        = quizAnswers?.departure_date || null;
 
-  // All stop IDs scheduled across every day — passed to swap helpers so they
-  // never suggest an attraction already appearing anywhere in the itinerary.
+  // All stop IDs across every day (for swap deduplication)
   const allUsedIds = new Set(
     days.flatMap((_, i) => (dayStops[i] || []).map(s => s.id)),
   );
 
-  // allFoodByCity: { cityKey: foodArray } — passed to UnifiedMap for explore markers
+  // Food data per city for UnifiedMap explore mode
   const allFoodByCity = {};
   (cities || []).forEach(ck => {
     const cd = loadCityData(ck);
     if (cd?.food) allFoodByCity[ck] = cd.food;
   });
 
-  // ── Prevent body scroll when map is expanded ──────────────────────────────
+  // ── Block body scroll when map is open ────────────────────────────────────
   useEffect(() => {
-    document.documentElement.style.overflow = expandedMap ? 'hidden' : '';
+    document.documentElement.style.overflow = mapOpen ? 'hidden' : '';
     return () => { document.documentElement.style.overflow = ''; };
-  }, [expandedMap]);
+  }, [mapOpen]);
 
-  // ── Scroll tracking — update active day tab as user scrolls ───────────────
+  // ── Scroll tracking — update active day tab as user scrolls ──────────────
   useEffect(() => {
-    if (activeTab !== 'itinerary' || expandedMap) return;
-
+    if (mapOpen) return;
     function onScroll() {
-      const tabsH  = stickyTabsRef.current?.offsetHeight ?? 44;
-      const offset = MAP_HEIGHT + tabsH + 24; // map + tabs + small lookahead
+      const tabsH  = stickyTabsRef.current?.offsetHeight ?? 48;
+      const offset = tabsH + 16;
       let current  = 0;
       for (let i = 0; i < daySectionRefs.current.length; i++) {
         const el = daySectionRefs.current[i];
@@ -78,21 +205,20 @@ export default function ItineraryDashboard({
       }
       setActiveDay(current);
     }
-
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
-  }, [activeTab, expandedMap, setActiveDay]);
+  }, [mapOpen, setActiveDay]);
 
-  // ── Scroll to a section when a day tab is tapped ──────────────────────────
+  // ── Scroll to a section when a day tab is tapped ─────────────────────────
   function scrollToDay(dayIdx) {
     const el    = daySectionRefs.current[dayIdx];
     if (!el) return;
-    const tabsH = stickyTabsRef.current?.offsetHeight ?? 44;
-    const top   = el.getBoundingClientRect().top + window.scrollY - MAP_HEIGHT - tabsH - 8;
+    const tabsH = stickyTabsRef.current?.offsetHeight ?? 48;
+    const top   = el.getBoundingClientRect().top + window.scrollY - tabsH - 4;
     window.scrollTo({ top, behavior: 'smooth' });
   }
 
-  // ── Export handlers ────────────────────────────────────────────────────────
+  // ── Export handlers ───────────────────────────────────────────────────────
   async function handleExport() {
     if (!printRef.current || exporting) return;
     setExporting(true);
@@ -108,205 +234,156 @@ export default function ItineraryDashboard({
     ))].join(' · ');
     const dayLines = days.map((day, i) => {
       const stops  = dayStops[i] || [];
-      const header = day.cityHeader ? `${day.label} — ${day.cityHeader.name}` : day.label;
+      const header = day.cityHeader
+        ? `${day.label} — ${day.cityHeader.name}`
+        : day.label;
       return `*${header}*\n${stops.map(s => `  • ${s.name}`).join('\n')}`;
     });
     const lines = [
       '✈️ My China Trip Itinerary', cityLine,
-      dep && ret ? `📅 ${dep} → ${ret} (${days.length} days)` : `📅 ${days.length} days`,
+      dep && ret
+        ? `📅 ${dep} → ${ret} (${days.length} days)`
+        : `📅 ${days.length} days`,
       '', ...dayLines, '',
-      hotel ? `🏨 Staying at: ${hotel.name}` : '', '',
+      hotel ? `🏨 Staying at: ${hotel.name}` : '',
+      '',
       'Generated with ChinaTrip Planner 🗺️',
     ].filter((l, i, arr) => !(l === '' && arr[i - 1] === ''));
-    window.open(`https://wa.me/?text=${encodeURIComponent(lines.join('\n'))}`, '_blank');
+    window.open(
+      `https://wa.me/?text=${encodeURIComponent(lines.join('\n'))}`,
+      '_blank',
+    );
   }
 
   // ──────────────────────────────────────────────────────────────────────────
-  // Single return — every tab always in the DOM.
-  // CSS display:none/block keeps both Mapbox canvases alive.
-  // ──────────────────────────────────────────────────────────────────────────
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', background: 'var(--bg)' }}>
+    <div style={{ minHeight: '100vh', background: '#fff' }}>
 
-      {/* ══ FLOATING PILLS — Hotels + Export ═════════════════════════════════
-           Visible on the itinerary tab when map is collapsed.
-           position:fixed so they sit in the top-right corner of the viewport.  */}
-      {activeTab === 'itinerary' && !expandedMap && (
-        <div style={{
-          position:  'fixed',
-          top:       12,
-          right:     12,
-          zIndex:    50,
-          display:   'flex',
-          gap:       8,
-        }}>
-          <button
-            onClick={() => setActiveTab('hotels')}
-            style={{
-              padding:        '6px 14px',
-              borderRadius:   20,
-              fontSize:       12,
-              fontWeight:     700,
-              border:         'none',
-              cursor:         'pointer',
-              background:     'rgba(255,255,255,0.92)',
-              color:          '#1a1a2e',
-              boxShadow:      '0 2px 10px rgba(0,0,0,0.14)',
-              backdropFilter: 'blur(10px)',
-              whiteSpace:     'nowrap',
-            }}
-          >
-            🏨 Hotels
-          </button>
-          <button
-            onClick={() => setActiveTab('export')}
-            style={{
-              padding:        '6px 14px',
-              borderRadius:   20,
-              fontSize:       12,
-              fontWeight:     700,
-              border:         'none',
-              cursor:         'pointer',
-              background:     'rgba(255,255,255,0.92)',
-              color:          '#1a1a2e',
-              boxShadow:      '0 2px 10px rgba(0,0,0,0.14)',
-              backdropFilter: 'blur(10px)',
-              whiteSpace:     'nowrap',
-            }}
-          >
-            📋 Export
-          </button>
-        </div>
-      )}
-
-      {/* ══ HOTELS TAB ═══════════════════════════════════════════════════════ */}
-      <div style={{ display: activeTab === 'hotels' ? 'block' : 'none', paddingBottom: 24 }}>
-        {/* Back button */}
-        <button
-          onClick={() => setActiveTab('itinerary')}
-          style={{
-            position:       'fixed',
-            top:            12,
-            left:           12,
-            zIndex:         50,
-            padding:        '6px 14px',
-            borderRadius:   20,
-            fontSize:       12,
-            fontWeight:     700,
-            border:         'none',
-            cursor:         'pointer',
-            background:     'rgba(255,255,255,0.92)',
-            color:          '#1a1a2e',
-            boxShadow:      '0 2px 10px rgba(0,0,0,0.14)',
-            backdropFilter: 'blur(10px)',
-          }}
-        >
-          ← Back
-        </button>
-        <div className="hero-bg px-6 pt-14 pb-6">
-          <h2 className="text-xl font-bold text-white">Hotel Recommendations</h2>
-          <p className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>
-            Picked for your itinerary locations
-          </p>
-        </div>
-        <div className="pt-4">
-          <HotelCard
-            hotel={hotel}
-            otherHotels={itinerary.hotels?.filter(h => h.id !== hotel?.id).slice(0, 3)}
-          />
-        </div>
+      {/* ══ STICKY DAY TABS ══════════════════════════════════════════════════
+           Sits right at the top — no map pushing it down.                    */}
+      <div
+        ref={stickyTabsRef}
+        style={{
+          display:         mapOpen ? 'none' : 'flex',
+          position:        'sticky',
+          top:             0,
+          zIndex:          20,
+          background:      '#fff',
+          borderBottom:    '1px solid #f1f5f9',
+          overflowX:       'auto',
+          gap:             8,
+          padding:         '10px 14px',
+          scrollbarWidth:  'none',
+          msOverflowStyle: 'none',
+          boxShadow:       '0 1px 6px rgba(0,0,0,0.06)',
+        }}
+      >
+        {days.map((day, i) => {
+          const dateStr = formatDayDate(depDate, i);
+          const active  = i === activeDay;
+          return (
+            <button
+              key={i}
+              onClick={() => scrollToDay(i)}
+              style={{
+                flexShrink:   0,
+                padding:      '6px 16px',
+                borderRadius: 20,
+                fontSize:     12,
+                fontWeight:   700,
+                cursor:       'pointer',
+                border:       'none',
+                whiteSpace:   'nowrap',
+                background:   active ? ACCENT : '#f8f9fb',
+                color:        active ? '#fff' : '#64748b',
+                transition:   'background 0.15s, color 0.15s',
+              }}
+            >
+              Day {i + 1}{dateStr ? ` · ${dateStr}` : ''}
+            </button>
+          );
+        })}
       </div>
 
-      {/* ══ EXPORT TAB ═══════════════════════════════════════════════════════ */}
+      {/* ══ CONTINUOUS SCROLL — days → hotel → export ════════════════════════ */}
       <div style={{
-        display: activeTab === 'export' ? 'flex' : 'none',
-        flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-        minHeight: '100vh', padding: '0 24px 32px',
+        display:       mapOpen ? 'none' : 'block',
+        paddingBottom: 88,   // room for the FAB
       }}>
-        {/* Back button */}
-        <button
-          onClick={() => setActiveTab('itinerary')}
-          style={{
-            position:       'fixed',
-            top:            12,
-            left:           12,
-            zIndex:         50,
-            padding:        '6px 14px',
-            borderRadius:   20,
-            fontSize:       12,
-            fontWeight:     700,
-            border:         'none',
-            cursor:         'pointer',
-            background:     'rgba(255,255,255,0.92)',
-            color:          '#1a1a2e',
-            boxShadow:      '0 2px 10px rgba(0,0,0,0.14)',
-            backdropFilter: 'blur(10px)',
-          }}
-        >
-          ← Back
-        </button>
-        <div style={{ textAlign: 'center', marginBottom: 32 }}>
-          <p style={{ fontSize: 40, marginBottom: 16 }}>📋</p>
-          <h2 className="text-xl font-bold mb-2" style={{ color: 'var(--text-primary)' }}>
-            Export Your Itinerary
-          </h2>
-          <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
-            All days, stops, food picks &amp; hotel recommendation
-          </p>
+        {days.map((day, i) => {
+          const stops      = dayStops[i] || [];
+          const food       = day.food    || [];
+          const dateStr    = formatDayDate(depDate, i);
+          const cityName   = day.cityHeader?.name || day.city || '';
+          const cityEmoji  = day.cityHeader?.emoji || '';
+          const cityData_i = loadCityData(day.city || primaryCity);
+
+          return (
+            <div
+              key={i}
+              ref={el => { daySectionRefs.current[i] = el; }}
+            >
+              <DaySectionHeader
+                dayNum={i + 1}
+                dateStr={dateStr}
+                stopCount={stops.length}
+                cityName={cityName}
+                cityEmoji={cityEmoji}
+              />
+
+              <DayTimeline
+                stops={stops}
+                dayIdx={i}
+                onDelete={deleteStop}
+                onSwap={swapStop}
+                allAttractions={
+                  allAttractionsByCity?.[day.city || primaryCity] || allAttractions
+                }
+                allUsedIds={allUsedIds}
+                food={food}
+              />
+
+              {/* Practical tips at each city boundary */}
+              {(i === days.length - 1 || days[i + 1]?.city !== day.city) &&
+                cityData_i?.practical && (
+                <PracticalTips practical={cityData_i.practical} />
+              )}
+            </div>
+          );
+        })}
+
+        {/* ── Hotel card inline ─────────────────────────────────────────── */}
+        <div style={{ padding: '12px 0 0' }}>
+          <HotelCard
+            hotel={hotel}
+            otherHotels={
+              itinerary.hotels?.filter(h => h.id !== hotel?.id).slice(0, 3)
+              ?? otherHotels
+            }
+          />
         </div>
-        <button
-          onClick={handleExport} disabled={exporting}
-          className="w-full max-w-xs py-4 rounded-2xl font-bold text-white mb-2"
-          style={{ background: exporting ? '#94a3b8' : 'var(--accent)' }}
-        >
-          {exporting ? 'Generating PDF…' : '📥 Download PDF'}
-        </button>
-        <p className="text-xs text-center mb-6" style={{ color: 'var(--text-muted)' }}>
-          Saves as {primaryCity}-{days.length}-day-itinerary.pdf
-        </p>
-        <button
-          onClick={handleWhatsApp}
-          className="w-full max-w-xs py-4 rounded-2xl font-bold text-white mb-3"
-          style={{ background: '#25D366' }}
-        >
-          💬 Share on WhatsApp
-        </button>
-        {onReset && (
-          <button
-            onClick={onReset}
-            className="w-full max-w-xs py-3 rounded-2xl font-semibold"
-            style={{ background: 'transparent', border: '1.5px solid var(--accent)', color: 'var(--accent)' }}
-          >
-            🔄 Plan a new trip →
-          </button>
-        )}
-        <PrintView
-          printRef={printRef}
-          itinerary={itinerary}
-          dayStops={dayStops}
-          quizAnswers={quizAnswers}
+
+        {/* ── Export / share inline ─────────────────────────────────────── */}
+        <ExportSection
+          onExport={handleExport}
+          exporting={exporting}
+          onWhatsApp={handleWhatsApp}
+          onReset={onReset}
         />
       </div>
 
-      {/* ══ ITINERARY TAB — continuous scroll ════════════════════════════════
-           Layout (top → bottom):
-            1. UnifiedMap    — 300 px collapsed / full-screen expanded, sticky
-            2. Day tabs      — sticky below map (hidden when expanded)
-            3. Day sections  — continuous scroll (hidden when expanded)
-            4. Hotel card    — very bottom                                    */}
-      <div style={{ display: activeTab === 'itinerary' ? 'block' : 'none' }}>
+      {/* ══ FLOATING MAP FAB ═════════════════════════════════════════════════ */}
+      {!mapOpen && <MapFAB onClick={() => setMapOpen(true)} />}
 
-        {/* ── 1. Unified map — sticky at top, animates height on expand ──── */}
+      {/* ══ FULL-SCREEN MAP OVERLAY ══════════════════════════════════════════
+           UnifiedMap already has its own expand/collapse controls;
+           we pass expanded=true so it renders in full-screen card-rail mode. */}
+      {mapOpen && (
         <div style={{
-          position:   'sticky',
-          top:        0,
-          zIndex:     15,
-          width:      '100%',
-          height:     expandedMap ? '100vh' : MAP_HEIGHT,
-          transition: 'height 300ms ease',
-          background: '#f1f5f9',
-          boxShadow:  '0 2px 8px rgba(0,0,0,0.12)',
-          overflow:   'hidden',
+          position:   'fixed',
+          inset:      0,
+          zIndex:     50,
+          background: '#e8eaf0',
         }}>
           <UnifiedMap
             days={days}
@@ -314,10 +391,10 @@ export default function ItineraryDashboard({
             activeDay={activeDay}
             onDayChange={setActiveDay}
             primaryCity={primaryCity}
-            isVisible={activeTab === 'itinerary'}
-            expanded={expandedMap}
-            onExpand={() => setExpandedMap(true)}
-            onCollapse={() => setExpandedMap(false)}
+            isVisible={mapOpen}
+            expanded={true}
+            onExpand={() => {}}
+            onCollapse={() => setMapOpen(false)}
             deleteStop={deleteStop}
             swapStop={swapStop}
             allAttractions={allAttractions}
@@ -326,106 +403,15 @@ export default function ItineraryDashboard({
             depDate={depDate}
           />
         </div>
+      )}
 
-        {/* ── 2. Day tabs — sticky just below the map (hidden when expanded) */}
-        <div
-          ref={stickyTabsRef}
-          style={{
-            display:          expandedMap ? 'none' : 'flex',
-            position:         'sticky',
-            top:              MAP_HEIGHT,
-            zIndex:           10,
-            background:       '#fff',
-            borderBottom:     '1px solid #f1f5f9',
-            overflowX:        'auto',
-            gap:              8,
-            padding:          '8px 12px',
-            scrollbarWidth:   'none',
-            msOverflowStyle:  'none',
-          }}
-        >
-          {days.map((day, i) => {
-            const dateStr = formatDayDate(depDate, i);
-            const active  = i === activeDay;
-            return (
-              <button
-                key={i}
-                onClick={() => scrollToDay(i)}
-                style={{
-                  flexShrink:  0,
-                  padding:     '6px 14px',
-                  borderRadius: 20,
-                  fontSize:    12,
-                  fontWeight:  600,
-                  cursor:      'pointer',
-                  border:      'none',
-                  whiteSpace:  'nowrap',
-                  background:  active ? 'rgba(232,71,42,0.12)' : '#f1f5f9',
-                  color:       active ? 'var(--accent)' : '#64748b',
-                  outline:     active ? '1.5px solid var(--accent)' : 'none',
-                }}
-              >
-                Day {i + 1}{dateStr ? ` · ${dateStr}` : ''}
-              </button>
-            );
-          })}
-        </div>
-
-        {/* ── 3. Continuous day sections (hidden when map is expanded) ─────── */}
-        <div style={{ display: expandedMap ? 'none' : 'block', paddingBottom: 24 }}>
-          {days.map((day, i) => {
-            const stops      = dayStops[i] || [];
-            const food       = day.food    || [];
-            const dateStr    = formatDayDate(depDate, i);
-            const cityName   = day.cityHeader?.name || day.city || '';
-            const cityData_i = loadCityData(day.city || primaryCity);
-
-            return (
-              <div
-                key={i}
-                ref={el => { daySectionRefs.current[i] = el; }}
-              >
-                {/* Section header */}
-                <div style={{ padding: '20px 16px 6px' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 4 }}>
-                    <div style={{ flex: 1, height: 1, background: 'rgba(0,0,0,0.07)' }} />
-                    <p style={{ fontSize: 12, fontWeight: 700, color: 'var(--text-primary)', whiteSpace: 'nowrap' }}>
-                      Day {i + 1}{dateStr ? ` · ${dateStr}` : ''}
-                    </p>
-                    <div style={{ flex: 1, height: 1, background: 'rgba(0,0,0,0.07)' }} />
-                  </div>
-                  <p style={{ textAlign: 'center', fontSize: 11, color: 'var(--text-muted)', margin: 0 }}>
-                    {stops.length} stop{stops.length !== 1 ? 's' : ''}
-                    {cityName ? ` · ${cityName}` : ''}
-                    {day.cityHeader ? ` ${day.cityHeader.emoji}` : ''}
-                  </p>
-                </div>
-
-                {/* Stops with food + walking rows between them */}
-                <DayTimeline
-                  stops={stops}
-                  dayIdx={i}
-                  onDelete={deleteStop}
-                  onSwap={swapStop}
-                  allAttractions={allAttractionsByCity?.[day.city || primaryCity] || allAttractions}
-                  allUsedIds={allUsedIds}
-                  food={food}
-                />
-
-                {/* Practical tips at city boundaries */}
-                {(i === days.length - 1 || days[i + 1]?.city !== day.city) &&
-                  cityData_i?.practical && (
-                  <PracticalTips practical={cityData_i.practical} />
-                )}
-              </div>
-            );
-          })}
-
-          {/* ── 4. Hotel card — once at the very bottom ──────────────────── */}
-          <HotelCard hotel={hotel} otherHotels={otherHotels} />
-        </div>
-
-      </div>
+      {/* ══ HIDDEN PRINT VIEW (for PDF export) ══════════════════════════════ */}
+      <PrintView
+        printRef={printRef}
+        itinerary={itinerary}
+        dayStops={dayStops}
+        quizAnswers={quizAnswers}
+      />
 
     </div>
   );
