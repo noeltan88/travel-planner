@@ -125,6 +125,25 @@ body {
 }
 .step-done { animation: step-done 0.3s ease forwards; }
 
+/* Swipe tutorial tooltip */
+@keyframes swipeTutorialFade {
+  0%   { opacity: 0; transform: translateX(-50%) translateY(6px); }
+  12%  { opacity: 1; transform: translateX(-50%) translateY(0); }
+  80%  { opacity: 1; transform: translateX(-50%) translateY(0); }
+  100% { opacity: 0; transform: translateX(-50%) translateY(0); }
+}
+@keyframes arrowPulse {
+  0%, 100% { transform: translateX(0); }
+  50%       { transform: translateX(-6px); }
+}
+.swipe-tutorial {
+  animation: swipeTutorialFade 3s ease forwards;
+}
+.swipe-tutorial-arrow {
+  display: inline-block;
+  animation: arrowPulse 0.55s ease 0.6s 2 both;
+}
+
 /* Delete collapse */
 @keyframes collapse-height {
   from { max-height: 600px; opacity: 1; margin-bottom: 10px; }

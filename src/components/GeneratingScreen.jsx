@@ -31,56 +31,64 @@ export default function GeneratingScreen({ answers }) {
     }, STEPS.length * 750 + 200);
   }, []);
 
-  const cityLabel = CITY_LABELS[answers?.city] || 'Your Destination';
-  const durationMap = { 2: '2–3 days', 4: '4–5 days', 6: '6–7 days', 8: '8–10 days', 12: '10–14 days' };
+  const cityLabel    = CITY_LABELS[answers?.city] || 'Your Destination';
+  const durationMap  = { 2: '2–3 days', 4: '4–5 days', 6: '6–7 days', 8: '8–10 days', 12: '10–14 days' };
   const durationLabel = durationMap[answers?.duration] || `${answers?.duration} days`;
 
   return (
-    <div className="hero-bg min-h-screen flex flex-col items-center justify-center px-8 text-center relative overflow-hidden">
-      {/* Decorative */}
+    <div
+      className="min-h-screen flex flex-col items-center justify-center px-8 text-center relative overflow-hidden"
+      style={{ background: '#F5F4F2' }}
+    >
+      {/* Decorative 游 watermark — very light coral, not dominant */}
       <div
         className="absolute top-6 right-4 text-[100px] font-black leading-none pointer-events-none select-none"
         style={{ color: 'rgba(232,71,42,0.06)' }}
       >游</div>
 
-      {/* Plane */}
+      {/* Plane emoji */}
       <div className="animate-pulse-scale text-6xl mb-6">✈️</div>
 
-      <h2 className="text-2xl font-bold text-white mb-1">Building your itinerary</h2>
-      <p className="text-base mb-2" style={{ color: 'rgba(255,255,255,0.7)' }}>
-        {cityLabel}
-      </p>
-      <p className="text-sm mb-8" style={{ color: 'rgba(255,255,255,0.5)' }}>
-        {durationLabel}
-      </p>
+      {/* Title */}
+      <h2
+        className="mb-1"
+        style={{ fontSize: 26, fontWeight: 500, color: '#1A1A1A' }}
+      >
+        Building your itinerary
+      </h2>
 
-      {/* Bouncing dots */}
+      {/* City + duration */}
+      <p className="text-base mb-1" style={{ color: '#999' }}>{cityLabel}</p>
+      <p className="text-sm mb-8"  style={{ color: '#999' }}>{durationLabel}</p>
+
+      {/* Bouncing dots — coral */}
       <div className="flex gap-2 mb-10">
         {[0, 1, 2].map(i => (
           <div
             key={i}
             className="bounce-dot w-2 h-2 rounded-full"
-            style={{ background: 'var(--accent)', animationDelay: `${i * 0.2}s` }}
+            style={{ background: '#E8472A', animationDelay: `${i * 0.2}s` }}
           />
         ))}
       </div>
 
-      {/* Steps */}
+      {/* Step checklist */}
       <div className="w-full max-w-xs flex flex-col gap-3">
         {STEPS.map((step, i) => {
-          const done = doneSteps.includes(i);
+          const done   = doneSteps.includes(i);
           const active = activeStep === i && !done;
           return (
             <div
               key={i}
               className="flex items-center gap-3 transition-all duration-500"
-              style={{ opacity: i <= activeStep ? 1 : 0.3 }}
+              style={{ opacity: i <= activeStep ? 1 : 0.4 }}
             >
+              {/* Indicator circle */}
               <div
                 className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 transition-all duration-300"
                 style={{
-                  background: done ? 'var(--accent)' : active ? 'rgba(232,71,42,0.3)' : 'rgba(255,255,255,0.1)',
-                  border: active ? '2px solid var(--accent)' : 'none',
+                  background: done ? '#E8472A' : '#E0E0E0',
+                  border: 'none',
                 }}
               >
                 {done ? (
@@ -88,10 +96,15 @@ export default function GeneratingScreen({ answers }) {
                     <path d="M1 5L4.5 8.5L11 1" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                 ) : active ? (
-                  <div className="w-2 h-2 rounded-full bg-white" />
+                  <div className="w-2 h-2 rounded-full" style={{ background: '#999' }} />
                 ) : null}
               </div>
-              <span className="text-sm text-left" style={{ color: done || active ? 'white' : 'rgba(255,255,255,0.4)' }}>
+
+              {/* Step text */}
+              <span
+                className="text-sm text-left"
+                style={{ color: done ? '#1A1A1A' : active ? '#1A1A1A' : '#999' }}
+              >
                 {step}
               </span>
             </div>

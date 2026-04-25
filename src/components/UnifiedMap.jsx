@@ -225,9 +225,9 @@ function StopCard({ stop, index, active, onSwipeUp, onSwipeDown }) {
 
         {/* Swap / remove hints pushed to bottom */}
         <div style={{ marginTop: 'auto', display: 'flex', gap: 8, alignItems: 'center' }}>
-          <span style={{ fontSize: 9, color: '#cbd5e1', fontWeight: 600 }}>↑ swap</span>
-          <div style={{ width: 1, height: 8, background: '#e2e8f0' }} />
-          <span style={{ fontSize: 9, color: '#cbd5e1', fontWeight: 600 }}>↓ remove</span>
+          <span style={{ fontSize: 11, color: '#E8472A', fontWeight: 500 }}>↑ swap</span>
+          <div style={{ width: 1, height: 10, background: '#f1c9c2' }} />
+          <span style={{ fontSize: 11, color: '#E8472A', fontWeight: 500 }}>↓ remove</span>
         </div>
       </div>
     </div>
@@ -855,15 +855,12 @@ export default function UnifiedMap({
               {/* Dark day tabs + snap card rail (pinned to bottom: 0) */}
               <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0 }}>
 
-                {/* Dark floating day tabs */}
+                {/* Standalone pill day tabs — no background bar */}
                 <div style={{
-                  background:      'rgba(0,0,0,0.60)',
-                  backdropFilter:  'blur(12px)',
-                  height:          DAY_TABS_H,
                   display:         'flex',
                   alignItems:      'center',
-                  gap:             6,
-                  padding:         '0 10px',
+                  gap:             8,
+                  padding:         '8px 10px',
                   overflowX:       'auto',
                   scrollbarWidth:  'none',
                   msOverflowStyle: 'none',
@@ -879,15 +876,16 @@ export default function UnifiedMap({
                         onClick={() => jumpToDay(i)}
                         style={{
                           flexShrink:   0,
-                          padding:      '5px 12px',
+                          padding:      '6px 14px',
                           borderRadius: 20,
                           fontSize:     11,
                           fontWeight:   600,
                           cursor:       'pointer',
                           border:       'none',
                           whiteSpace:   'nowrap',
-                          background:   active ? '#fff' : 'transparent',
-                          color:        active ? '#1a1a2e' : 'rgba(255,255,255,0.70)',
+                          background:   active ? '#E8472A' : '#fff',
+                          color:        active ? '#fff' : '#1A1A1A',
+                          boxShadow:    '0 2px 8px rgba(0,0,0,0.12)',
                           transition:   'background 0.18s, color 0.18s',
                         }}
                       >

@@ -82,7 +82,7 @@ function StopCard({ stop, index, onDelete, onSwapRequest }) {
             flex: 1, display: 'flex', flexDirection: 'column',
             alignItems: 'center', justifyContent: 'center', gap: 3,
             border: 'none', cursor: 'pointer',
-            background: '#6366f1', color: '#fff',
+            background: '#E8472A', color: '#fff',
             fontSize: 10, fontWeight: 700,
           }}
         >
@@ -94,7 +94,7 @@ function StopCard({ stop, index, onDelete, onSwapRequest }) {
             flex: 1, display: 'flex', flexDirection: 'column',
             alignItems: 'center', justifyContent: 'center', gap: 3,
             border: 'none', cursor: 'pointer',
-            background: '#EF4444', color: '#fff',
+            background: '#FF4444', color: '#fff',
             fontSize: 10, fontWeight: 700,
           }}
         >

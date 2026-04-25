@@ -194,8 +194,20 @@ export default function ItineraryDashboard({
   const printRef       = useRef(null);
   const daySectionRefs = useRef([]);
   const stickyTabsRef  = useRef(null);
-  const [exporting, setExporting] = useState(false);
-  const [mapOpen,   setMapOpen]   = useState(false);
+  const [exporting,     setExporting]     = useState(false);
+  const [mapOpen,       setMapOpen]       = useState(false);
+  const [showTutorial,  setShowTutorial]  = useState(false);
+
+  // ── Swipe tutorial — show once, 1 s after load, auto-dismiss after 3 s ────
+  useEffect(() => {
+    if (localStorage.getItem('swipe-tutorial-shown')) return;
+    const t1 = setTimeout(() => setShowTutorial(true), 1000);
+    const t2 = setTimeout(() => {
+      setShowTutorial(false);
+      localStorage.setItem('swipe-tutorial-shown', '1');
+    }, 4000); // 1 s delay + 3 s display
+    return () => { clearTimeout(t1); clearTimeout(t2); };
+  }, []);
 
   if (!itinerary) return null;
 
@@ -495,6 +507,39 @@ export default function ItineraryDashboard({
             allFoodByCity={allFoodByCity}
             depDate={depDate}
           />
+        </div>
+      )}
+
+      {/* ══ SWIPE TUTORIAL TOOLTIP (one-time) ═══════════════════════════════ */}
+      {showTutorial && !mapOpen && (
+        <div
+          className="swipe-tutorial"
+          style={{
+            position:       'fixed',
+            top:            '52vh',
+            left:           '50%',
+            /* translateX(-50%) applied via keyframe; also set here as initial */
+            transform:      'translateX(-50%)',
+            zIndex:         45,
+            pointerEvents:  'none',
+          }}
+        >
+          <div style={{
+            background:     'rgba(26,26,46,0.88)',
+            backdropFilter: 'blur(10px)',
+            borderRadius:   28,
+            padding:        '11px 20px',
+            display:        'flex',
+            alignItems:     'center',
+            gap:            10,
+            boxShadow:      '0 4px 20px rgba(0,0,0,0.22)',
+            whiteSpace:     'nowrap',
+          }}>
+            <span className="swipe-tutorial-arrow" style={{ fontSize: 18, color: '#fff' }}>←</span>
+            <span style={{ fontSize: 13, fontWeight: 600, color: '#fff' }}>
+              Swipe to swap or remove
+            </span>
+          </div>
         </div>
       )}
 
