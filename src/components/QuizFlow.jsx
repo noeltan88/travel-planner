@@ -582,7 +582,7 @@ export default function QuizFlow({ onComplete }) {
 
       {/* ── DATES ────────────────────────────────────────────────────────── */}
       {isDateRange && (
-        <div style={{ flex: 1, overflowY: 'auto', overscrollBehavior: 'none', padding: '0 16px 8px', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ flex: 1, overflowY: 'auto', overscrollBehavior: 'none', padding: '0 16px 8px' }}>
           {/* Month navigation */}
           <div style={{
             background: BG,
