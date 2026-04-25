@@ -753,12 +753,6 @@ export default function VibeCheck({ selectedCities, onComplete }) {
       )}
 
       {/* ── Card stack ──────────────────────────────────────────────────── */}
-      <style>{`
-        @keyframes vibeCardFadeIn {
-          from { opacity: 0; }
-          to   { opacity: 1; }
-        }
-      `}</style>
       <div
         ref={cardContainerRef}
         style={{ position: 'relative', flex: 1, minHeight: 0, overflow: 'visible' }}
@@ -767,9 +761,10 @@ export default function VibeCheck({ selectedCities, onComplete }) {
         onTouchEnd={onTouchEnd}
         onMouseDown={onMouseDown}
       >
-        {/* Card 3 — back. Keyed by card id so a new card entering gets a fresh
-            mount and fades in rather than popping in. No size animation on
-            entry — just opacity 0→1 over 150ms (80ms delay). */}
+        {/* Card 3 — back. Keyed by card id: when idx advances the new back card
+            mounts fresh (no prior transform → appears instantly at rest position,
+            no entrance animation). transition:none during flyOff so the card
+            jumps to its promoted slot while the eye follows the flying card. */}
         {card2 && (
           <VibeCard
             key={card2.id}
@@ -777,26 +772,22 @@ export default function VibeCheck({ selectedCities, onComplete }) {
             dimAmount={Math.max(0, 0.35 * (1 - progress))}
             style={{
               transform: `scale(${c2Scale}) translateY(${c2TY}px)`,
-              transition: isDragging ? 'none'
-                : flyOff ? 'transform 250ms ease-out 30ms'
-                : 'transform 0.3s ease-out',
-              animation: 'vibeCardFadeIn 150ms ease-out 80ms both',
+              transition: isDragging || flyOff ? 'none' : 'transform 0.3s ease-out',
               zIndex: 1,
               boxShadow: '0 2px 8px rgba(0,0,0,0.07)',
             }}
           />
         )}
 
-        {/* Card 2 — middle. Smooth ease-out advance, no spring overshoot. */}
+        {/* Card 2 — middle. transition:none during flyOff so it jumps instantly
+            to the promoted (active) slot rather than visibly scaling into it. */}
         {card1 && (
           <VibeCard
             card={card1} cardIdx={idx + 1} cardTotal={total}
             dimAmount={Math.max(0, 0.2 * (1 - progress))}
             style={{
               transform: `scale(${c1Scale}) translateY(${c1TY}px)`,
-              transition: isDragging ? 'none'
-                : flyOff ? 'transform 250ms ease-out'
-                : 'transform 0.3s ease-out',
+              transition: isDragging || flyOff ? 'none' : 'transform 0.3s ease-out',
               zIndex: 2,
               boxShadow: '0 4px 16px rgba(0,0,0,0.10)',
             }}
