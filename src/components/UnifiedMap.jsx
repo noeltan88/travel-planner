@@ -18,7 +18,7 @@ import { useEffect, useRef, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
 import AttractionImage from './AttractionImage';
 import { getSwapAlternatives } from '../utils/algorithm';
-import { ChevronRight, X, Mountain, Utensils, Bed, Minimize2, Maximize2 } from 'lucide-react';
+import { ChevronRight, X, Mountain, Utensils, Bed, Minimize2, Maximize2, Compass } from 'lucide-react';
 
 const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN;
 const ACCENT       = '#E8472A';
@@ -452,6 +452,10 @@ export default function UnifiedMap({
   // Prevent re-entrant onDayChange calls
   const notifiedDayRef = useRef(activeDay);
 
+  // FIX 7: Tab auto-scroll refs (map screen)
+  const tabsScrollRef = useRef(null);
+  const tabRefs       = useRef([]);
+
   // ── State ─────────────────────────────────────────────────────────────────
   const [activeFlatIdx,   setActiveFlatIdx]   = useState(0);
   const [explore,         setExplore]         = useState(false);
@@ -467,11 +471,11 @@ export default function UnifiedMap({
   const cardList = [];
   days.forEach((day, dayIdx) => {
     if (dayIdx > 0) {
-      const dateStr  = formatDayDate(depDate, dayIdx);
-      const cityPart = day.cityHeader?.emoji ? ` ${day.cityHeader.emoji}` : '';
-      const label    = dateStr
-        ? `Day ${dayIdx + 1} · ${dateStr}${cityPart}`
-        : `Day ${dayIdx + 1}${cityPart}`;
+      const dateStr = formatDayDate(depDate, dayIdx);
+      // FIX 3: no emoji in divider labels
+      const label   = dateStr
+        ? `Day ${dayIdx + 1} · ${dateStr}`
+        : `Day ${dayIdx + 1}`;
       cardList.push({ type: 'divider', dayIdx, label, key: `div-${dayIdx}` });
     }
     (dayStops[dayIdx] || []).forEach((stop, stopIdx) => {
@@ -525,6 +529,16 @@ export default function UnifiedMap({
     const max = Math.max(0, cardList.length - 1);
     if (activeFlatIdx > max) setActiveFlatIdx(max);
   }, [cardList.length]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // FIX 7: Auto-scroll map day tabs to keep active tab visible
+  useEffect(() => {
+    const activeTab = tabRefs.current[activeFlatDay];
+    const container = tabsScrollRef.current;
+    if (!activeTab || !container) return;
+    const scrollLeft =
+      activeTab.offsetLeft - container.offsetWidth / 2 + activeTab.offsetWidth / 2;
+    container.scrollTo({ left: scrollLeft, behavior: 'smooth' });
+  }, [activeFlatDay]);
 
   // ── Single-init Mapbox ────────────────────────────────────────────────────
   useEffect(() => {
@@ -826,53 +840,59 @@ export default function UnifiedMap({
           {/* ══ DAY VIEW — card rail + day tabs + Explore pill ═════════════ */}
           {!explore && (
             <>
-              {/* "Explore" floating pill — bottom-right above day tabs */}
+              {/* FIX 5: "Explore" pill — top-left with Compass icon, weight 500 */}
               <button
                 onClick={() => setExplore(true)}
                 style={{
-                  position:       'absolute',
-                  bottom:         CARD_H + DAY_TABS_H + 12,
-                  right:          16,
-                  zIndex:         20,
-                  background:     'rgba(255,255,255,0.95)',
-                  border:         'none',
-                  borderRadius:   20,
-                  padding:        '8px 16px',
-                  fontSize:       13,
-                  fontWeight:     700,
-                  color:          '#1a1a2e',
-                  cursor:         'pointer',
-                  display:        'flex',
-                  alignItems:     'center',
-                  gap:            6,
-                  boxShadow:      '0 2px 12px rgba(0,0,0,0.20)',
-                  backdropFilter: 'blur(8px)',
+                  position:     'absolute',
+                  top:          16,
+                  left:         16,
+                  zIndex:       20,
+                  background:   '#fff',
+                  border:       'none',
+                  borderRadius: 20,
+                  padding:      '8px 16px',
+                  fontSize:     13,
+                  fontWeight:   500,
+                  color:        '#1A1A1A',
+                  cursor:       'pointer',
+                  display:      'flex',
+                  alignItems:   'center',
+                  gap:          6,
+                  boxShadow:    '0 2px 8px rgba(0,0,0,0.12)',
                 }}
               >
-                🔍 Explore
+                <Compass size={14} />
+                Explore
               </button>
 
-              {/* Dark day tabs + snap card rail (pinned to bottom: 0) */}
+              {/* FIX 4: card rail + pill tabs pinned to bottom — no wrapper background */}
               <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0 }}>
 
-                {/* Standalone pill day tabs — no background bar */}
-                <div style={{
-                  display:         'flex',
-                  alignItems:      'center',
-                  gap:             8,
-                  padding:         '8px 10px',
-                  overflowX:       'auto',
-                  scrollbarWidth:  'none',
-                  msOverflowStyle: 'none',
-                  flexShrink:      0,
-                }}>
+                {/* FIX 3 + FIX 4: standalone pill tabs, no emoji, no bar background */}
+                {/* FIX 7: tabsScrollRef + tabRefs for auto-scroll */}
+                <div
+                  ref={tabsScrollRef}
+                  style={{
+                    display:         'flex',
+                    alignItems:      'center',
+                    gap:             8,
+                    padding:         '8px 10px',
+                    overflowX:       'auto',
+                    scrollbarWidth:  'none',
+                    msOverflowStyle: 'none',
+                    flexShrink:      0,
+                  }}
+                >
                   {days.map((day, i) => {
                     const active  = i === activeFlatDay;
+                    // FIX 3: no emoji anywhere in tab labels
                     const dateStr = formatDayDate(depDate, i);
-                    const label   = `Day ${i + 1}${dateStr ? ` · ${dateStr}` : ''}${day.cityHeader?.emoji ? ` ${day.cityHeader.emoji}` : ''}`;
+                    const label   = `Day ${i + 1}${dateStr ? ` · ${dateStr}` : ''}`;
                     return (
                       <button
                         key={i}
+                        ref={el => { tabRefs.current[i] = el; }}
                         onClick={() => jumpToDay(i)}
                         style={{
                           flexShrink:   0,
@@ -983,26 +1003,25 @@ export default function UnifiedMap({
                 })}
               </div>
 
-              {/* "← Back to plan" pill — bottom centre */}
+              {/* FIX 6: "← Back to plan" white pill — bottom centre */}
               <button
                 onClick={() => setExplore(false)}
                 style={{
-                  position:       'absolute',
-                  bottom:         24,
-                  left:           '50%',
-                  transform:      'translateX(-50%)',
-                  zIndex:         20,
-                  background:     'rgba(20,20,38,0.88)',
-                  backdropFilter: 'blur(10px)',
-                  border:         'none',
-                  borderRadius:   24,
-                  padding:        '11px 20px',
-                  fontSize:       13,
-                  fontWeight:     700,
-                  color:          '#fff',
-                  cursor:         'pointer',
-                  boxShadow:      '0 4px 16px rgba(0,0,0,0.28)',
-                  whiteSpace:     'nowrap',
+                  position:  'absolute',
+                  bottom:    24,
+                  left:      '50%',
+                  transform: 'translateX(-50%)',
+                  zIndex:    20,
+                  background: '#fff',
+                  border:    'none',
+                  borderRadius: 24,
+                  padding:   '11px 20px',
+                  fontSize:  13,
+                  fontWeight: 600,
+                  color:     '#1A1A1A',
+                  cursor:    'pointer',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.12)',
+                  whiteSpace: 'nowrap',
                 }}
               >
                 ← Back to plan

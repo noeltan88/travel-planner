@@ -194,6 +194,8 @@ export default function ItineraryDashboard({
   const printRef       = useRef(null);
   const daySectionRefs = useRef([]);
   const stickyTabsRef  = useRef(null);
+  const tabsScrollRef  = useRef(null);   // FIX 7: ref for tab scroll container
+  const tabRefs        = useRef([]);     // FIX 7: refs for each tab button
   const [exporting,     setExporting]     = useState(false);
   const [mapOpen,       setMapOpen]       = useState(false);
   const [showTutorial,  setShowTutorial]  = useState(false);
@@ -269,37 +271,43 @@ export default function ItineraryDashboard({
     return () => { document.documentElement.style.overflow = ''; };
   }, [mapOpen]);
 
-  // ── IntersectionObserver — update active day tab as user scrolls ──────────
+  // ── FIX 1: IntersectionObserver — reliable active day tab as user scrolls ──
   useEffect(() => {
     if (mapOpen) return;
-    const stickyH = stickyTabsRef.current?.offsetHeight ?? 88;
-
     const observer = new IntersectionObserver(
-      entries => {
+      (entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
-            const idx = daySectionRefs.current.findIndex(el => el === entry.target);
-            if (idx >= 0) setActiveDay(idx);
+            const index = parseInt(entry.target.dataset.dayIndex);
+            if (!isNaN(index)) setActiveDay(index);
           }
         });
       },
-      // FIX 6: threshold 0.3 → fires when 30% of section header enters the root,
-      // giving more reliable active-tab sync while scrolling between day sections.
-      { rootMargin: `-${stickyH + 4}px 0px -55% 0px`, threshold: 0.3 },
+      { rootMargin: '-20% 0px -60% 0px', threshold: 0 },
     );
-
     daySectionRefs.current.forEach(el => { if (el) observer.observe(el); });
     return () => observer.disconnect();
   }, [mapOpen, days.length, setActiveDay]);
 
-  // ── Scroll to a section when day tab is tapped ────────────────────────────
-  function scrollToDay(dayIdx) {
-    const el    = daySectionRefs.current[dayIdx];
-    if (!el) return;
-    const tabsH = stickyTabsRef.current?.offsetHeight ?? 88;
-    const top   = el.getBoundingClientRect().top + window.scrollY - tabsH - 4;
-    window.scrollTo({ top, behavior: 'smooth' });
+  // ── FIX 2: Scroll to a section when day tab is tapped ────────────────────
+  function scrollToDay(dayIndex) {
+    const el = document.getElementById(`day-section-${dayIndex}`);
+    if (el) {
+      const stickyHeaderHeight = 100;
+      const top = el.getBoundingClientRect().top + window.scrollY - stickyHeaderHeight;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
   }
+
+  // ── FIX 7: Auto-scroll itinerary tabs to keep active tab visible ──────────
+  useEffect(() => {
+    const activeTab = tabRefs.current[activeDay];
+    const container = tabsScrollRef.current;
+    if (!activeTab || !container) return;
+    const scrollLeft =
+      activeTab.offsetLeft - container.offsetWidth / 2 + activeTab.offsetWidth / 2;
+    container.scrollTo({ left: scrollLeft, behavior: 'smooth' });
+  }, [activeDay]);
 
   // ── Export handlers ───────────────────────────────────────────────────────
   async function handleExport() {
@@ -384,18 +392,22 @@ export default function ItineraryDashboard({
           </button>
         </div>
 
-        {/* Scrollable day tabs */}
-        <div style={{
-          display: 'flex', overflowX: 'auto', gap: 8,
-          padding: '0 14px 10px',
-          scrollbarWidth: 'none', msOverflowStyle: 'none',
-        }}>
+        {/* Scrollable day tabs — FIX 7: ref for auto-scroll */}
+        <div
+          ref={tabsScrollRef}
+          style={{
+            display: 'flex', overflowX: 'auto', gap: 8,
+            padding: '0 14px 10px',
+            scrollbarWidth: 'none', msOverflowStyle: 'none',
+          }}
+        >
           {days.map((day, i) => {
             const dateStr = formatDayDate(depDate, i);
             const active  = i === activeDay;
             return (
               <button
                 key={i}
+                ref={el => { tabRefs.current[i] = el; }}
                 onClick={() => scrollToDay(i)}
                 style={{
                   flexShrink: 0, padding: '6px 16px', borderRadius: 20,
@@ -432,6 +444,8 @@ export default function ItineraryDashboard({
           return (
             <div
               key={i}
+              id={`day-section-${i}`}
+              data-day-index={i}
               ref={el => { daySectionRefs.current[i] = el; }}
             >
               <DaySectionHeader
