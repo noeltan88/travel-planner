@@ -399,15 +399,66 @@ function FoodMiniCard({ food, onClick }) {
 // ── FoodSheet — fixed bottom sheet for full food detail ───────────────────────
 function FoodSheet({ food, onClose }) {
   const [visible, setVisible] = useState(false);
+
+  // Swipe-down refs
+  const sheetRef        = useRef(null);
+  const dragStartY      = useRef(0);
+  const dragCurrentY    = useRef(0);
+  const isDraggingSheet = useRef(false);
+
   useEffect(() => { requestAnimationFrame(() => setVisible(true)); }, []);
 
+  // touchmove must be added via addEventListener with { passive: false }
+  // so we can call e.preventDefault() and stop the page from scrolling
+  // while the user is dragging the sheet down.
+  useEffect(() => {
+    const sheet = sheetRef.current;
+    if (!sheet) return;
+    const handleMove = (e) => {
+      if (!isDraggingSheet.current) return;
+      const dy = e.touches[0].clientY - dragStartY.current;
+      if (dy > 0) {
+        e.preventDefault();
+        dragCurrentY.current = dy;
+        sheet.style.transform = `translateY(${dy}px)`;
+      }
+    };
+    sheet.addEventListener('touchmove', handleMove, { passive: false });
+    return () => sheet.removeEventListener('touchmove', handleMove);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
   function close() { setVisible(false); setTimeout(onClose, 320); }
+
+  function handleTouchStart(e) {
+    dragStartY.current      = e.touches[0].clientY;
+    isDraggingSheet.current = true;
+    if (sheetRef.current) sheetRef.current.style.transition = 'none';
+  }
+
+  function handleTouchEnd() {
+    isDraggingSheet.current = false;
+    const dy = dragCurrentY.current;
+    dragCurrentY.current = 0;
+    if (dy > 80) {
+      // Restore transition so the slide-out animates cleanly
+      if (sheetRef.current) {
+        sheetRef.current.style.transition = 'transform 0.35s cubic-bezier(0.32, 0.72, 0, 1)';
+      }
+      close();
+    } else {
+      // Snap back to fully open
+      if (sheetRef.current) {
+        sheetRef.current.style.transition = 'transform 200ms ease-out';
+        sheetRef.current.style.transform  = 'translateY(0)';
+      }
+    }
+  }
 
   const category = food.type === 'cafe' ? 'market' : 'food_street';
 
   return (
     <>
-      {/* Overlay */}
+      {/* Overlay — tap outside to dismiss (unchanged) */}
       <div
         onClick={close}
         style={{
@@ -417,108 +468,124 @@ function FoodSheet({ food, onClose }) {
         }}
       />
 
-      {/* Sheet */}
+      {/*
+        Outer wrapper — handles translateX(-50%) centering only.
+        Never touched by drag logic so centering is never lost.
+      */}
       <div style={{
-        position: 'fixed',
-        bottom: 0,
-        left: '50%',
-        width: '100%',
-        maxWidth: 430,
-        zIndex: 101,
-        background: '#fff',
-        borderRadius: '24px 24px 0 0',
-        transform: `translateX(-50%) translateY(${visible ? '0%' : '100%'})`,
-        transition: 'transform 0.35s cubic-bezier(0.32, 0.72, 0, 1)',
-        maxHeight: '85vh',
-        overflowY: 'auto',
+        position:  'fixed',
+        bottom:    0,
+        left:      '50%',
+        width:     '100%',
+        maxWidth:  430,
+        zIndex:    101,
+        transform: 'translateX(-50%)',
       }}>
-        {/* Drag handle */}
-        <div style={{ display: 'flex', justifyContent: 'center', padding: '12px 0 8px', flexShrink: 0 }}>
-          <div style={{ width: 40, height: 4, borderRadius: 2, background: '#e2e8f0' }} />
-        </div>
-
-        <div style={{ padding: '0 20px 40px' }}>
-          {/* Photo — 180px */}
-          <div style={{ height: 180, borderRadius: 14, overflow: 'hidden' }}>
-            <AttractionImage
-              src={food.photo_url || null}
-              alt={food.name}
-              category={category}
-              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-            />
+        {/*
+          Inner sheet — handles translateY slide-up animation + drag.
+          sheetRef lives here so drag only changes translateY.
+        */}
+        <div
+          ref={sheetRef}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+          style={{
+            background:    '#fff',
+            borderRadius:  '24px 24px 0 0',
+            transform:     `translateY(${visible ? '0%' : '100%'})`,
+            transition:    'transform 0.35s cubic-bezier(0.32, 0.72, 0, 1)',
+            maxHeight:     '85vh',
+            overflowY:     'auto',
+          }}
+        >
+          {/* Drag handle */}
+          <div style={{ display: 'flex', justifyContent: 'center', padding: '12px 0 8px', flexShrink: 0 }}>
+            <div style={{ width: 40, height: 4, borderRadius: 2, background: '#e2e8f0' }} />
           </div>
 
-          {/* Name */}
-          <p style={{ fontSize: 18, fontWeight: 500, color: '#1A1A1A', margin: '12px 0 0' }}>
-            {food.name}
-          </p>
-
-          {/* Chinese name */}
-          {food.chinese && (
-            <p style={{ fontSize: 13, color: '#999', margin: '2px 0 0' }}>{food.chinese}</p>
-          )}
-
-          {/* Price range */}
-          {food.price_range && (
-            <p style={{ fontSize: 13, color: '#999', margin: '4px 0 0' }}>{food.price_range}</p>
-          )}
-
-          {/* Rating */}
-          {food.google_rating && (
-            <p style={{ fontSize: 12, color: '#999', margin: '4px 0 0' }}>
-              ⭐ {food.google_rating}
-              {food.google_review_count
-                ? ` · ${Number(food.google_review_count).toLocaleString()} reviews`
-                : ''}
-            </p>
-          )}
-
-          {/* Tip — coral box matching stop cards */}
-          {food.tip && (
-            <div style={{
-              marginTop: 10, background: TINT, borderRadius: 10,
-              padding: '10px 12px', fontSize: 13, color: '#1A1A1A', lineHeight: 1.6,
-            }}>
-              {food.tip}
+          <div style={{ padding: '0 20px 40px' }}>
+            {/* Photo — 180px */}
+            <div style={{ height: 180, borderRadius: 14, overflow: 'hidden' }}>
+              <AttractionImage
+                src={food.photo_url || null}
+                alt={food.name}
+                category={category}
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              />
             </div>
-          )}
 
-          {/* Where / description (if no tip) */}
-          {!food.tip && food.where && (
-            <p style={{ fontSize: 13, color: '#666', lineHeight: 1.6, margin: '10px 0 0' }}>
-              {food.where}
+            {/* Name */}
+            <p style={{ fontSize: 18, fontWeight: 500, color: '#1A1A1A', margin: '12px 0 0' }}>
+              {food.name}
             </p>
-          )}
 
-          {/* Must order */}
-          {food.must_order && (
-            <p style={{ fontSize: 12, color: '#666', lineHeight: 1.6, margin: '8px 0 0' }}>
-              🍽️ <strong>Must order:</strong> {food.must_order}
-            </p>
-          )}
+            {/* Chinese name */}
+            {food.chinese && (
+              <p style={{ fontSize: 13, color: '#999', margin: '2px 0 0' }}>{food.chinese}</p>
+            )}
 
-          {/* Get directions */}
-          {food.lat && food.lng ? (
-            <a
-              href={`https://www.google.com/maps/dir/?api=1&destination=${food.lat},${food.lng}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                display: 'block',
-                marginTop: 16,
-                padding: '11px 0',
-                textAlign: 'center',
-                borderRadius: 10,
-                border: `1px solid ${ACCENT}`,
-                color: ACCENT,
-                fontSize: 14,
-                fontWeight: 600,
-                textDecoration: 'none',
-              }}
-            >
-              Get directions
-            </a>
-          ) : null}
+            {/* Price range */}
+            {food.price_range && (
+              <p style={{ fontSize: 13, color: '#999', margin: '4px 0 0' }}>{food.price_range}</p>
+            )}
+
+            {/* Rating */}
+            {food.google_rating && (
+              <p style={{ fontSize: 12, color: '#999', margin: '4px 0 0' }}>
+                ⭐ {food.google_rating}
+                {food.google_review_count
+                  ? ` · ${Number(food.google_review_count).toLocaleString()} reviews`
+                  : ''}
+              </p>
+            )}
+
+            {/* Tip — coral box matching stop cards */}
+            {food.tip && (
+              <div style={{
+                marginTop: 10, background: TINT, borderRadius: 10,
+                padding: '10px 12px', fontSize: 13, color: '#1A1A1A', lineHeight: 1.6,
+              }}>
+                {food.tip}
+              </div>
+            )}
+
+            {/* Where / description (if no tip) */}
+            {!food.tip && food.where && (
+              <p style={{ fontSize: 13, color: '#666', lineHeight: 1.6, margin: '10px 0 0' }}>
+                {food.where}
+              </p>
+            )}
+
+            {/* Must order */}
+            {food.must_order && (
+              <p style={{ fontSize: 12, color: '#666', lineHeight: 1.6, margin: '8px 0 0' }}>
+                🍽️ <strong>Must order:</strong> {food.must_order}
+              </p>
+            )}
+
+            {/* Get directions */}
+            {food.lat && food.lng ? (
+              <a
+                href={`https://www.google.com/maps/dir/?api=1&destination=${food.lat},${food.lng}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: 'block',
+                  marginTop: 16,
+                  padding: '11px 0',
+                  textAlign: 'center',
+                  borderRadius: 10,
+                  border: `1px solid ${ACCENT}`,
+                  color: ACCENT,
+                  fontSize: 14,
+                  fontWeight: 600,
+                  textDecoration: 'none',
+                }}
+              >
+                Get directions
+              </a>
+            ) : null}
+          </div>
         </div>
       </div>
     </>
