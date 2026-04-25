@@ -42,7 +42,6 @@ const PERSONALITY = {
 };
 const DEFAULT_PERSONALITY = "You're full of Surprises 🎲";
 
-const HINT_KEY    = 'vibecheck_hint_seen';
 const LOAD_TEXTS  = ['Crunching your swipes…', 'Reading between the lines…', 'Almost there…'];
 const LOAD_MS     = 1800;
 
@@ -119,8 +118,8 @@ export default function VibeCheck({ selectedCities, onComplete }) {
   const [phase,   setPhase]   = useState('swiping'); // 'swiping' | 'loading' | 'results'
   const [finalData, setFinalData] = useState(null);  // { vibeArr, topCat, top3 }
 
-  // First-time swipe hint overlay
-  const [showHint, setShowHint] = useState(() => !localStorage.getItem(HINT_KEY));
+  // Swipe hint overlay — always shows on every VibeCheck load (FIX 3)
+  const [showHint, setShowHint] = useState(true);
 
   // Touch swipe
   const touchRef  = useRef(null);
@@ -141,7 +140,6 @@ export default function VibeCheck({ selectedCities, onComplete }) {
   }, [showHint]); // eslint-disable-line react-hooks/exhaustive-deps
 
   function dismissHint() {
-    localStorage.setItem(HINT_KEY, '1');
     setShowHint(false);
   }
 

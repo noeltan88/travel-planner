@@ -156,6 +156,10 @@ export default function QuizFlow({ onComplete }) {
   const todayD = new Date();
   const [calYear,  setCalYear]  = useState(todayD.getFullYear());
   const [calMonth, setCalMonth] = useState(todayD.getMonth());
+  const calSwipeStartX = useRef(null);
+
+  // Family-kids extras scroll ref
+  const familyExtrasRef = useRef(null);
 
   const q           = QUIZ[step];
   const isVibe      = q.id === 'vibe';
@@ -176,6 +180,15 @@ export default function QuizFlow({ onComplete }) {
     if (q.id === 'pace' && !answers.pace)
       setAnswers(a => ({ ...a, pace: 'balance' }));
   }, [step]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // FIX 2 — auto-scroll family extras into view when family-kids is selected
+  useEffect(() => {
+    if (!isFamilyKids) return;
+    const t = setTimeout(() => {
+      familyExtrasRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 100);
+    return () => clearTimeout(t);
+  }, [isFamilyKids]);
 
   // Auto-advance 1s after China is selected on country screen
   useEffect(() => {
@@ -230,6 +243,18 @@ export default function QuizFlow({ onComplete }) {
   function nextCal() {
     if (calMonth === 11) { setCalMonth(0); setCalYear(y => y + 1); }
     else setCalMonth(m => m + 1);
+  }
+
+  // FIX 1 — calendar swipe gesture
+  function onCalTouchStart(e) {
+    calSwipeStartX.current = e.touches[0].clientX;
+  }
+  function onCalTouchEnd(e) {
+    if (calSwipeStartX.current === null) return;
+    const dx = e.changedTouches[0].clientX - calSwipeStartX.current;
+    calSwipeStartX.current = null;
+    if (dx < -50) nextCal();
+    else if (dx > 50) prevCal();
   }
 
   // ── Toggle option ──────────────────────────────────────────────────────────
@@ -461,8 +486,12 @@ export default function QuizFlow({ onComplete }) {
             <button onClick={nextCal} style={{ width: 36, height: 36, borderRadius: '50%', background: '#fff', border: 'none', cursor: 'pointer', fontSize: 18, color: '#1A1A1A', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>→</button>
           </div>
 
-          {/* Calendar card */}
-          <div style={{ background: '#fff', borderRadius: 18, padding: '14px 10px', marginBottom: 14 }}>
+          {/* Calendar card — swipe left/right to change month */}
+          <div
+            onTouchStart={onCalTouchStart}
+            onTouchEnd={onCalTouchEnd}
+            style={{ background: '#fff', borderRadius: 18, padding: '14px 10px', marginBottom: 14, touchAction: 'pan-y' }}
+          >
             <MonthGrid year={calYear} month={calMonth} dep={dep} ret={ret} onDayClick={handleDayTap} />
           </div>
 
@@ -544,9 +573,9 @@ export default function QuizFlow({ onComplete }) {
             })}
           </div>
 
-          {/* Family extras */}
+          {/* Family extras — ref used for auto-scroll (FIX 2) */}
           {isFamilyKids && (
-            <div style={{ marginTop: 12, background: '#fff', borderRadius: 18, padding: 16 }}>
+            <div ref={familyExtrasRef} style={{ marginTop: 12, background: '#fff', borderRadius: 18, padding: 16 }}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14 }}>
                 <p style={{ fontSize: 13, fontWeight: 600, color: '#1A1A1A', margin: 0 }}>Grandparents joining? 👴👵</p>
                 <button
