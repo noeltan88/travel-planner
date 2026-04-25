@@ -119,35 +119,48 @@ function MapFAB({ onClick }) {
   return (
     <button
       onClick={onClick}
-      aria-label="Open map"
+      aria-label="Show on map"
       style={{
-        position:     'fixed',
-        bottom:       24,
-        right:        20,
-        zIndex:       40,
-        width:        56,
-        height:       56,
-        borderRadius: '50%',
-        background:   ACCENT,
-        border:       'none',
-        cursor:       'pointer',
-        display:      'flex',
-        alignItems:   'center',
-        justifyContent: 'center',
-        fontSize:     22,
-        boxShadow:    `0 4px 20px rgba(232,71,42,0.45)`,
-        transition:   'transform 0.15s ease, box-shadow 0.15s ease',
+        position:       'fixed',
+        bottom:         24,
+        right:          20,
+        zIndex:         40,
+        height:         48,
+        borderRadius:   28,
+        background:     ACCENT,
+        border:         'none',
+        cursor:         'pointer',
+        display:        'flex',
+        alignItems:     'center',
+        gap:            8,
+        padding:        '0 20px 0 16px',
+        boxShadow:      `0 4px 20px rgba(232,71,42,0.45)`,
+        transition:     'transform 0.15s ease, box-shadow 0.15s ease',
       }}
       onMouseEnter={e => {
-        e.currentTarget.style.transform  = 'scale(1.08)';
-        e.currentTarget.style.boxShadow  = `0 6px 28px rgba(232,71,42,0.55)`;
+        e.currentTarget.style.transform = 'scale(1.05)';
+        e.currentTarget.style.boxShadow = `0 6px 28px rgba(232,71,42,0.55)`;
       }}
       onMouseLeave={e => {
-        e.currentTarget.style.transform  = 'scale(1)';
-        e.currentTarget.style.boxShadow  = `0 4px 20px rgba(232,71,42,0.45)`;
+        e.currentTarget.style.transform = 'scale(1)';
+        e.currentTarget.style.boxShadow = `0 4px 20px rgba(232,71,42,0.45)`;
       }}
     >
-      🗺️
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="5"  cy="3.5"  r="2"   fill="white"/>
+        <circle cx="15" cy="16.5" r="2"   fill="white"/>
+        <circle cx="10" cy="10"   r="1.5" fill="white"/>
+        <path
+          d="M5 5.5 C5 7.5 10 7.5 10 10 C10 12.5 15 12.5 15 14.5"
+          stroke="white"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          fill="none"
+        />
+      </svg>
+      <span style={{ fontSize: 13, fontWeight: 700, color: '#fff', letterSpacing: 0.1 }}>
+        Show on map
+      </span>
     </button>
   );
 }
