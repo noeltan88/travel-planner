@@ -168,14 +168,16 @@ function MapFAB({ onClick }) {
         e.currentTarget.style.boxShadow  = '0 4px 16px rgba(232,71,42,0.4)';
       }}
     >
-      {/* S-curve map SVG */}
-      <svg width="22" height="22" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="5"  cy="3.5"  r="2"   fill="white"/>
-        <circle cx="15" cy="16.5" r="2"   fill="white"/>
-        <circle cx="10" cy="10"   r="1.5" fill="white"/>
+      {/* Route icon: circle origin bottom-left → winding S-path → arrow top-right */}
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="6" cy="19" r="3" stroke="white" strokeWidth="2" fill="none"/>
         <path
-          d="M5 5.5 C5 7.5 10 7.5 10 10 C10 12.5 15 12.5 15 14.5"
-          stroke="white" strokeWidth="1.5" strokeLinecap="round" fill="none"
+          d="M9 19 H18 Q21 19 21 16 Q21 13 18 13 H6 Q3 13 3 10 Q3 7 6 7 H18"
+          stroke="white" strokeWidth="2" strokeLinecap="round" fill="none"
+        />
+        <path
+          d="M15 4 L18 7 L15 10"
+          stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none"
         />
       </svg>
     </button>
