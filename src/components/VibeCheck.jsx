@@ -510,40 +510,51 @@ export default function VibeCheck({ selectedCities, onComplete }) {
     );
   }
 
-  // ══ PHASE: RESULTS — FIX 1 (fixed) + FIX 5 (compact sizing) ══════════════
+  // ══ PHASE: RESULTS ════════════════════════════════════════════════════════════
   if (phase === 'results') {
     const { vibeArr, topCat, scores: sc } = finalData;
     const pers       = topCat ? (PERSONALITY[topCat] || DEFAULT_PERSONALITY) : DEFAULT_PERSONALITY;
     const sortedCats = [...VIBE_CATEGORIES].sort((a, b) => (sc[b.key] || 0) - (sc[a.key] || 0));
     const MAX_POSS   = 4;
-    const topTags    = topCat ? (VIBE_CATEGORIES.find(c => c.key === topCat)?.tags || []) : [];
-    const topPhoto   = topCat
-      ? Object.values(masterDb.cities || {})
-          .flatMap(city => city.attractions || [])
-          .filter(a => a.photo_url && a.vibe_tags?.some(t => topTags.includes(t)))
-          .sort((a, b) => (b.google_rating || 0) - (a.google_rating || 0))[0]?.photo_url || null
-      : null;
+
+    // FIX 1: photo from the actual vibe-check card pool, matched to top category.
+    // rawCards are the cards built from the user's selected cities — search those
+    // first so the photo is relevant and contextually correct.
+    const topPhoto = (() => {
+      if (topCat) {
+        const match = rawCards
+          .filter(c => c.vibeCategory === topCat && c.photo_url)
+          .sort((a, b) => (b.google_rating || 0) - (a.google_rating || 0))[0];
+        if (match) return match.photo_url;
+      }
+      // Fallback: highest-rated card with a photo from anywhere in the pool
+      return rawCards
+        .filter(c => c.photo_url)
+        .sort((a, b) => (b.google_rating || 0) - (a.google_rating || 0))[0]?.photo_url || null;
+    })();
 
     return (
-      /* FIX 1: position fixed, no scroll */
       <div style={{
         position: 'fixed', top: 0, left: 0, width: '100%', height: '100dvh',
         overflow: 'hidden', overscrollBehavior: 'none', background: BG,
         display: 'flex', flexDirection: 'column',
         padding: '20px 20px 0', boxSizing: 'border-box',
       }}>
-        {/* FIX 5: photo 70px */}
+        {/* FIX 2: 110px circular photo, coral border, subtle shadow */}
         {topPhoto && (
-          <div style={{ width: 70, height: 70, borderRadius: '50%', border: `3px solid ${ACC}`, overflow: 'hidden', margin: '0 auto 12px', flexShrink: 0 }}>
+          <div style={{
+            width: 110, height: 110, borderRadius: '50%',
+            border: `3px solid ${ACC}`, overflow: 'hidden',
+            margin: '0 auto 12px', flexShrink: 0,
+            boxShadow: '0 4px 16px rgba(232,71,42,0.25)',
+          }}>
             <img src={topPhoto} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
           </div>
         )}
 
-        {/* FIX 5: 22px title */}
         <p style={{ fontSize: 22, fontWeight: 500, color: '#1A1A1A', textAlign: 'center', margin: '0 0 6px', lineHeight: 1.2 }}>
           {pers.label}
         </p>
-        {/* FIX 5: 13px desc */}
         <p style={{ fontSize: 13, color: '#666', textAlign: 'center', margin: '0 0 12px', lineHeight: 1.5 }}>
           {pers.desc}
         </p>
@@ -552,8 +563,7 @@ export default function VibeCheck({ selectedCities, onComplete }) {
           Your travel vibe breakdown
         </p>
 
-        {/* FIX 5: 8px row gap */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 16 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           {sortedCats.map(cat => {
             const pct = Math.round(Math.max(0, sc[cat.key] || 0) / MAX_POSS * 100);
             return (
@@ -572,23 +582,24 @@ export default function VibeCheck({ selectedCities, onComplete }) {
           })}
         </div>
 
-        {/* CTAs */}
-        <button
-          onClick={() => setPhase('picks')}
-          style={{ width: '100%', height: 52, borderRadius: 28, background: ACC, color: '#fff', border: 'none', cursor: 'pointer', fontSize: 14, fontWeight: 500, marginBottom: 10, flexShrink: 0 }}
-        >
-          See my recommendations →
-        </button>
-        <button
-          onClick={resetSwipe}
-          style={{
-            background: 'none', border: 'none', cursor: 'pointer',
-            fontSize: 13, color: ACC, fontWeight: 500, textAlign: 'center',
-            paddingBottom: 'max(16px, env(safe-area-inset-bottom, 16px))', flexShrink: 0,
-          }}
-        >
-          Retake vibe check
-        </button>
+        {/* FIX 2: spacer pushes CTAs to bottom — no hard-coded gap */}
+        <div style={{ flex: 1, minHeight: 12 }} />
+
+        {/* CTAs pinned to bottom with safe-area padding */}
+        <div style={{ flexShrink: 0, paddingBottom: 'max(24px, env(safe-area-inset-bottom, 24px))' }}>
+          <button
+            onClick={() => setPhase('picks')}
+            style={{ width: '100%', height: 52, borderRadius: 28, background: ACC, color: '#fff', border: 'none', cursor: 'pointer', fontSize: 14, fontWeight: 500, marginBottom: 10 }}
+          >
+            See my recommendations →
+          </button>
+          <button
+            onClick={resetSwipe}
+            style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 13, color: ACC, fontWeight: 500, textAlign: 'center', width: '100%' }}
+          >
+            Retake vibe check
+          </button>
+        </div>
       </div>
     );
   }
