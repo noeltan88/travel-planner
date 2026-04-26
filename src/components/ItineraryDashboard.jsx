@@ -77,7 +77,9 @@ function DaySectionHeader({ dayNum, dateStr, stopCount, cityName, cityEmoji, est
           </p>
         )}
         <p style={{ fontSize: 11, color: '#999', margin: '3px 0 0', fontWeight: 500 }}>
-          {stopCount} stop{stopCount !== 1 ? 's' : ''}
+          {stopCount != null
+            ? `${stopCount} stop${stopCount !== 1 ? 's' : ''}`
+            : 'Travel day'}
           {cityName ? ` · ${cityName}` : ''}
           {cityEmoji ? ` ${cityEmoji}` : ''}
         </p>
@@ -90,6 +92,79 @@ function DaySectionHeader({ dayNum, dateStr, stopCount, cityName, cityEmoji, est
           </p>
         </div>
       )}
+    </div>
+  );
+}
+
+// ── FIX 2: Travel day card ────────────────────────────────────────────────────
+const TRAVEL_EMOJI = {
+  hsr:               '🚄',
+  flight:            '✈️',
+  flight_then_drive: '✈️🚗',
+  hsr_then_drive:    '🚄🚗',
+  drive:             '🚗',
+};
+const TRAVEL_LABEL = {
+  hsr:               'High Speed Rail',
+  flight:            'Flight',
+  flight_then_drive: 'Flight + Drive',
+  hsr_then_drive:    'HSR + Drive',
+  drive:             'Drive',
+};
+const TRAVEL_TIPS = {
+  hsr:               'Book on 12306.cn or Trip.com at least 3 days ahead. Bring your passport — required for train boarding.',
+  flight:            'Check in online 24hrs before. Allow 90 mins for airport transfer each end.',
+  flight_then_drive: 'Book airport transfer in advance — taxis at remote airports are scarce. Confirm pickup before flying.',
+  hsr_then_drive:    'Book on 12306.cn or Trip.com. Arrange a driver at the destination station in advance.',
+  drive:             'Hire a driver through your hotel — more reliable than hailing taxis for long distances.',
+};
+
+function TravelDayCard({ day }) {
+  const { connection, fromCityName, toCityName } = day;
+  if (!connection) return null;
+  const mode  = connection.mode || 'drive';
+  const emoji = TRAVEL_EMOJI[mode] || '🚗';
+  const label = TRAVEL_LABEL[mode] || mode;
+  const tip   = TRAVEL_TIPS[mode]  || TRAVEL_TIPS.drive;
+
+  return (
+    <div style={{ padding: '0 16px 16px' }}>
+      <div style={{
+        background: '#fff', borderRadius: 14,
+        boxShadow: '0 2px 12px rgba(0,0,0,0.06)',
+        padding: 20, textAlign: 'center',
+      }}>
+        <div style={{ fontSize: 48, marginBottom: 8 }}>{emoji}</div>
+
+        <p style={{ fontSize: 20, fontWeight: 500, color: '#1A1A1A', margin: '0 0 4px' }}>
+          {fromCityName} → {toCityName}
+        </p>
+        <p style={{ fontSize: 13, color: '#999', margin: '0 0 2px' }}>{label}</p>
+        <p style={{ fontSize: 13, color: '#999', margin: '0 0 16px' }}>
+          {connection.duration_hrs} hour{connection.duration_hrs !== 1 ? 's' : ''}
+        </p>
+
+        <div style={{ height: 1, background: ACCENT, opacity: 0.25, margin: '0 0 16px' }} />
+
+        {connection.station_note && (
+          <p style={{
+            fontSize: 12, color: '#666', fontStyle: 'italic',
+            margin: '0 0 16px', lineHeight: 1.5,
+          }}>
+            {connection.station_note}
+          </p>
+        )}
+
+        <div style={{
+          background: '#FEF0EC',
+          borderLeft: `3px solid ${ACCENT}`,
+          borderRadius: 8,
+          padding: '10px 12px',
+          textAlign: 'left',
+        }}>
+          <p style={{ fontSize: 12, color: '#555', margin: 0, lineHeight: 1.6 }}>{tip}</p>
+        </div>
+      </div>
     </div>
   );
 }
@@ -431,13 +506,16 @@ export default function ItineraryDashboard({
         paddingBottom: 88,   // room for the FAB
       }}>
         {days.map((day, i) => {
-          const stops         = dayStops[i] || [];
-          const food          = day.food    || [];
-          const dateStr       = formatDayDate(depDate, i);
-          const cityName      = day.cityHeader?.name  || day.city  || '';
-          const cityEmoji     = day.cityHeader?.emoji || '';
-          const cityData_i    = loadCityData(day.city || primaryCity);
-          const estimatedSpend = stops
+          const stops          = dayStops[i] || [];
+          const dateStr        = formatDayDate(depDate, i);
+          const isTravelDay    = !!day.isTravelDay;
+          const cityName       = isTravelDay
+            ? `${day.fromCityName} → ${day.toCityName}`
+            : (day.cityHeader?.name  || day.city  || '');
+          const cityEmoji      = isTravelDay ? (TRAVEL_EMOJI[day.connection?.mode] || '✈️')
+            : (day.cityHeader?.emoji || '');
+          const cityData_i     = isTravelDay ? null : loadCityData(day.city || primaryCity);
+          const estimatedSpend = isTravelDay ? 0 : stops
             .filter(s => !s.free && s.price_rmb)
             .reduce((sum, s) => sum + (Number(s.price_rmb) || 0), 0);
 
@@ -448,31 +526,37 @@ export default function ItineraryDashboard({
               data-day-index={i}
               ref={el => { daySectionRefs.current[i] = el; }}
             >
+              {/* Day header — "TRAVEL DAY" for travel days, normal header otherwise */}
               <DaySectionHeader
                 dayNum={i + 1}
                 dateStr={dateStr}
-                stopCount={stops.length}
+                stopCount={isTravelDay ? null : stops.length}
                 cityName={cityName}
                 cityEmoji={cityEmoji}
-                estimatedSpend={estimatedSpend}
+                estimatedSpend={isTravelDay ? 0 : estimatedSpend}
               />
 
-              <DayTimeline
-                stops={stops}
-                dayIdx={i}
-                onDelete={deleteStop}
-                onSwap={swapStop}
-                allAttractions={
-                  allAttractionsByCity?.[day.city || primaryCity] || allAttractions
-                }
-                allUsedIds={allUsedIds}
-                allFoodItems={cityData_i?.food || []}
-                dietary={quizAnswers?.dietary || []}
-              />
+              {/* FIX 1+2: Travel days get TravelDayCard; normal days get DayTimeline */}
+              {isTravelDay ? (
+                <TravelDayCard day={day} />
+              ) : (
+                <DayTimeline
+                  stops={stops}
+                  dayIdx={i}
+                  onDelete={deleteStop}
+                  onSwap={swapStop}
+                  allAttractions={
+                    allAttractionsByCity?.[day.city || primaryCity] || allAttractions
+                  }
+                  allUsedIds={allUsedIds}
+                  allFoodItems={cityData_i?.food || []}
+                  dietary={quizAnswers?.dietary || []}
+                  city={day.city || primaryCity}
+                />
+              )}
 
-              {/* Practical tips at each city boundary */}
-              {(i === days.length - 1 || days[i + 1]?.city !== day.city) &&
-                cityData_i?.practical && (
+              {/* FIX 6: "Before You Go" only on the very first day, never on travel days */}
+              {i === 0 && !isTravelDay && cityData_i?.practical && (
                 <PracticalTips practical={cityData_i.practical} />
               )}
             </div>

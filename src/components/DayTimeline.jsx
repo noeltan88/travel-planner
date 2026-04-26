@@ -17,6 +17,7 @@ import SwapModal from './SwapModal';
 import AttractionImage from './AttractionImage';
 import { getKlookLink } from '../utils/affiliateLinks';
 import { getSwapAlternatives } from '../utils/algorithm';
+import travelTimes from '../data/travel-times.json';
 
 // ── Design tokens ─────────────────────────────────────────────────────────────
 const ACCENT     = '#E8472A';
@@ -383,12 +384,12 @@ function FoodMiniCard({ food, onClick }) {
         }}>
           {food.name}
         </p>
-        {food.price_range && (
-          <p style={{ fontSize: 11, color: '#999', margin: '0 0 1px' }}>{food.price_range}</p>
+        {formatFoodPrice(food) && (
+          <p style={{ fontSize: 11, color: '#999', margin: '0 0 1px' }}>{formatFoodPrice(food)}</p>
         )}
-        {(food.type || food.category) && (
+        {(food.type || food.category || food.cuisine) && (
           <p style={{ fontSize: 10, color: '#bbb', margin: 0 }}>
-            {food.type || food.category}
+            {formatFoodType(food)}
           </p>
         )}
       </div>
@@ -525,8 +526,8 @@ function FoodSheet({ food, onClose }) {
             )}
 
             {/* Price range */}
-            {food.price_range && (
-              <p style={{ fontSize: 13, color: '#999', margin: '4px 0 0' }}>{food.price_range}</p>
+            {formatFoodPrice(food) && (
+              <p style={{ fontSize: 13, color: '#999', margin: '4px 0 0' }}>{formatFoodPrice(food)}</p>
             )}
 
             {/* Rating */}
@@ -645,12 +646,24 @@ function FoodRow({ foods, mealLabel }) {
   );
 }
 
+// ── FIX 3: Real cluster travel time lookup (mirrors algorithm.js logic) ────────
+function getWalkMins(city, stop, nextStop) {
+  const cA = stop?.cluster_group    || '_default';
+  const cB = nextStop?.cluster_group || '_default';
+  if (cA === cB) return 10;
+  if (!city) return 25;
+  const cityData = travelTimes[city];
+  if (!cityData) return 25;
+  const pair = cityData[`${cA}→${cB}`] || cityData[`${cB}→${cA}`];
+  return pair?.recommended_minutes ?? 25;
+}
+
 // ── WalkingPill — subtle pill between stops ───────────────────────────────────
-function WalkingPill({ stop, nextStop }) {
-  const same = stop?.cluster_group &&
-    nextStop?.cluster_group &&
-    stop.cluster_group === nextStop.cluster_group;
-  const mins = same ? 10 : 25;
+function WalkingPill({ city, stop, nextStop }) {
+  const mins = getWalkMins(city, stop, nextStop);
+  const sameCluster = (stop?.cluster_group && nextStop?.cluster_group &&
+    stop.cluster_group === nextStop.cluster_group);
+  const label = sameCluster ? `~${mins} min walk` : `~${mins} min transit`;
   return (
     <div style={{ display: 'flex', justifyContent: 'center', padding: '6px 0' }}>
       <div style={{
@@ -658,10 +671,30 @@ function WalkingPill({ stop, nextStop }) {
         borderRadius: 20, padding: '4px 12px',
         fontSize: 10, color: '#999', fontWeight: 500,
       }}>
-        🚶 ~{mins} min walk
+        {sameCluster ? '🚶' : '🚇'} {label}
       </div>
     </div>
   );
+}
+
+// ── FIX 5: Food price + type formatting ────────────────────────────────────────
+function formatFoodPrice(food) {
+  const raw = food.price_range || food.price_level;
+  if (!raw) return null;
+  // Already a formatted display string (e.g. "¥50-100pp")
+  if (typeof raw === 'string' && raw.startsWith('¥')) return raw;
+  const map = {
+    budget: '¥20–60pp',  '1': '¥20–60pp',
+    mid:    '¥60–150pp', '2': '¥60–150pp', '3': '¥60–150pp',
+    luxury: '¥150+pp',   '4': '¥150+pp',
+  };
+  return map[String(raw)] ?? null;
+}
+
+function formatFoodType(food) {
+  if (food.cuisine) return food.cuisine;
+  const raw = food.type || food.category || '';
+  return raw.charAt(0).toUpperCase() + raw.slice(1);
 }
 
 // ── Main export ───────────────────────────────────────────────────────────────
@@ -670,6 +703,7 @@ export default function DayTimeline({
   allAttractions, allUsedIds,
   allFoodItems = [],   // full city food pool for meal recommendations
   dietary = [],        // dietary prefs from quiz answers
+  city = null,         // FIX 3: city key for real travel-time lookups
 }) {
   const [swapStop,     setSwapStop]     = useState(null);
   const [collapsingId, setCollapsingId] = useState(null);
@@ -743,7 +777,7 @@ export default function DayTimeline({
               {i === 0 && lunchFoods.length > 0 && (
                 <FoodRow foods={lunchFoods} mealLabel="Lunch" />
               )}
-              <WalkingPill stop={stop} nextStop={stops[i + 1]} />
+              <WalkingPill city={city} stop={stop} nextStop={stops[i + 1]} />
             </>
           )}
         </div>

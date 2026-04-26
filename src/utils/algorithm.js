@@ -94,11 +94,17 @@ function haversine(lat1, lng1, lat2, lng2) {
 function getClusterTravelMinutes(city, clusterA, clusterB) {
   if (clusterA === clusterB) return 10; // walking within cluster
   const cityData = travelTimes[city];
-  if (!cityData) return 25;             // fallback — no data for city
+  if (!cityData) {
+    console.warn(`[algo] getClusterTravelMinutes: no travel-times entry for city="${city}"`);
+    return 25;
+  }
   const key1 = `${clusterA}→${clusterB}`;
   const key2 = `${clusterB}→${clusterA}`;
   const pair = cityData[key1] || cityData[key2];
-  if (!pair) return 25;                 // fallback — pair not found
+  if (!pair) {
+    console.warn(`[algo] getClusterTravelMinutes: pair not found "${key1}" in city="${city}" (available: ${Object.keys(cityData).slice(0,3).join(', ')}…)`);
+    return 25;
+  }
   return pair.recommended_minutes ?? 25;
 }
 
@@ -267,17 +273,20 @@ function sequenceByEnergy(stops, isLastDay = false) {
 // ── Time-slot assignment ──────────────────────────────────────────
 
 function assignTimeSlots(stops, startHour = 9, city = null) {
-  let cur = startHour * 60;
+  // FIX 4: snap start to nearest 15-min boundary
+  let cur = Math.round((startHour * 60) / 15) * 15;
   return stops.map((s, i) => {
-    const start = formatTime(cur);
-    const end   = formatTime(cur + (s.duration_hrs ?? 1) * 60);
+    const start   = formatTime(cur);
+    const durMins = (s.duration_hrs ?? 1) * 60;
+    const end     = formatTime(cur + durMins);
     if (i < stops.length - 1) {
       const thisCluster = s.cluster_group             || '_default';
       const nextCluster = stops[i + 1]?.cluster_group || '_default';
       const transitMins = city
         ? getClusterTravelMinutes(city, thisCluster, nextCluster)
         : (thisCluster === nextCluster ? 10 : 25);
-      cur += (s.duration_hrs ?? 1) * 60 + transitMins;
+      // Round next start to nearest 15 min to avoid odd minutes accumulating
+      cur = Math.round((cur + durMins + transitMins) / 15) * 15;
     }
     return { ...s, startTime: start, endTime: end };
   });
@@ -723,6 +732,11 @@ export function buildFullItinerary(answers) {
     const nextCity = cities[cityIdx + 1];
     if (nextCity) {
       const connection = getCityConnection(city, nextCity);
+      console.log(`[algo] city-connection ${city}→${nextCity}:`,
+        connection
+          ? `✓ ${connection.mode} ${connection.duration_hrs}h`
+          : '✗ NOT FOUND — check key in city-connections.json',
+      );
       if (connection) {
         const nextData = loadCityData(nextCity);
         allDays.push({
