@@ -81,7 +81,6 @@ function DaySectionHeader({ dayNum, dateStr, stopCount, cityName, cityEmoji, est
             ? `${stopCount} stop${stopCount !== 1 ? 's' : ''}`
             : 'Travel day'}
           {cityName ? ` · ${cityName}` : ''}
-          {cityEmoji ? ` ${cityEmoji}` : ''}
         </p>
       </div>
       {estimatedSpend > 0 && (
@@ -247,7 +246,11 @@ function SplitSectionLabel({ cityName }) {
 // ── Inline export / share section ─────────────────────────────────────────────
 function ExportSection({ onExport, exporting, onWhatsApp, onReset }) {
   return (
-    <div style={{ padding: '8px 16px 40px', display: 'flex', flexDirection: 'column', gap: 10 }}>
+    <div style={{
+      padding: '8px 16px',
+      paddingBottom: 'env(safe-area-inset-bottom, 16px)',
+      display: 'flex', flexDirection: 'column', gap: 10,
+    }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 4 }}>
         <div style={{ flex: 1, height: 1, background: LINE_COL }} />
         <span style={{ fontSize: 11, color: '#cbd5e1', fontWeight: 600 }}>SAVE &amp; SHARE</span>
@@ -405,15 +408,19 @@ export default function ItineraryDashboard({
   });
   const headerTitle = cityDisplays.join(' · ');
 
-  // FIX 2: Human-readable date range + pace label (no raw ISO dates)
+  // Human-readable date range + pace label (no raw ISO dates)
   const PACE_LABELS = { chill: 'Chill', balance: 'Balance', pack: 'Pack it in' };
   const tripDates   = formatTripDates(depDate, retDate);
   const paceLabel   = PACE_LABELS[quizAnswers?.pace] || '';
-  const summaryLine = [
-    tripDates,
-    `${days.length} day${days.length !== 1 ? 's' : ''}`,
-    paceLabel,
-  ].filter(Boolean).join(' · ');
+
+  // FIX 1: distinguish sightseeing days from full travel days in the header
+  const longTravelDayCount  = days.filter(d => d.isTravelDay).length;
+  const sightseeingDayCount = days.length - longTravelDayCount;
+  const dayCountStr = longTravelDayCount > 0
+    ? `${sightseeingDayCount} day${sightseeingDayCount !== 1 ? 's' : ''} + ${longTravelDayCount} travel day${longTravelDayCount !== 1 ? 's' : ''}`
+    : `${days.length} day${days.length !== 1 ? 's' : ''}`;
+
+  const summaryLine = [tripDates, dayCountStr, paceLabel].filter(Boolean).join(' · ');
 
   // ── Block body scroll when map is open ───────────────────────────────────
   useEffect(() => {
@@ -576,10 +583,7 @@ export default function ItineraryDashboard({
       </div>
 
       {/* ══ CONTINUOUS SCROLL — days → hotel → export ════════════════════════ */}
-      <div style={{
-        display:       mapOpen ? 'none' : 'block',
-        paddingBottom: 88,   // room for the FAB
-      }}>
+      <div style={{ display: mapOpen ? 'none' : 'block' }}>
         {days.map((day, i) => {
           const stops            = dayStops[i] || [];
           const dateStr          = formatDayDate(depDate, i);
@@ -730,6 +734,9 @@ export default function ItineraryDashboard({
           onWhatsApp={handleWhatsApp}
           onReset={onReset}
         />
+
+        {/* FAB spacer — clears the fixed map button */}
+        <div style={{ height: 80 }} />
       </div>
 
       {/* ══ FLOATING MAP FAB ═════════════════════════════════════════════════ */}

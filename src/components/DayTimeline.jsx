@@ -202,6 +202,27 @@ function StopCard({ stop, index, onDelete, onSwapRequest }) {
           }}>
             {index + 1}
           </div>
+
+          {/* FIX 3: Ripple hint dot — inside photo bottom-right, away from price */}
+          {!hintDismissed && (
+            <div
+              onClick={e => { e.stopPropagation(); setHintTipOpen(t => !t); }}
+              style={{
+                position: 'absolute', bottom: 10, right: 10,
+                width: 14, height: 14, cursor: 'pointer', zIndex: 3,
+              }}
+            >
+              <div style={{
+                position: 'absolute', inset: 0, borderRadius: '50%',
+                background: '#fff', animation: 'ripple 1.5s ease-out infinite',
+              }} />
+              <div style={{
+                position: 'absolute', inset: 0, borderRadius: '50%',
+                background: '#fff', animation: 'ripple 1.5s ease-out infinite 0.5s',
+              }} />
+              <div style={{ position: 'absolute', inset: 0, borderRadius: '50%', background: '#fff', zIndex: 1 }} />
+            </div>
+          )}
         </div>
 
         {/* Swipe hint tooltip overlay */}
@@ -239,27 +260,6 @@ function StopCard({ stop, index, onDelete, onSwapRequest }) {
 
         {/* Content */}
         <div style={{ padding: '12px 14px 14px', position: 'relative' }}>
-
-          {/* Pulsing ripple hint dot */}
-          {!hintDismissed && (
-            <div
-              onClick={e => { e.stopPropagation(); setHintTipOpen(t => !t); }}
-              style={{
-                position: 'absolute', top: 10, right: 10,
-                width: 14, height: 14, cursor: 'pointer', zIndex: 3,
-              }}
-            >
-              <div style={{
-                position: 'absolute', inset: 0, borderRadius: '50%',
-                background: ACCENT, animation: 'ripple 1.5s ease-out infinite',
-              }} />
-              <div style={{
-                position: 'absolute', inset: 0, borderRadius: '50%',
-                background: ACCENT, animation: 'ripple 1.5s ease-out infinite 0.5s',
-              }} />
-              <div style={{ position: 'absolute', inset: 0, borderRadius: '50%', background: ACCENT, zIndex: 1 }} />
-            </div>
-          )}
 
           {/* Name + price */}
           <div style={{ display: 'flex', alignItems: 'flex-start', gap: 8, marginBottom: 2 }}>

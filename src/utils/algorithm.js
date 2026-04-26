@@ -672,9 +672,6 @@ export function buildFullItinerary(answers) {
     kidsAges.length > 0 &&
     kidsAges.every(k => k === '13+');
 
-  const allBudgets = buildDayBudgets(totalDays, pace, arrivalTime, departureTime);
-  const allocation = allocateDaysPerCity(cities, totalDays);
-
   // ── Pre-compute transitions ───────────────────────────────────────
   // transitions[i] describes the journey FROM cities[i] TO cities[i+1].
   // type: 'short' (<3h)  → no travel day, reduce last-day hours
@@ -692,6 +689,17 @@ export function buildFullItinerary(answers) {
     console.log(`[algo] city-connection ${city}→${cities[i + 1]}: ✓ ${conn.mode} ${conn.duration_hrs}h → ${type}`);
     return { connection: conn, type };
   });
+
+  // FIX 1: MEDIUM split days consume one city-day from each bordering city
+  // (last day of A + first day of B → 1 split day).  Inflate the allocation
+  // by 1 per MEDIUM transition so the user's requested sightseeing day count
+  // is preserved.  LONG transitions add a whole travel day on top automatically;
+  // SHORT transitions only reduce hours (no day consumed).
+  const numMediumTransitions = transitions.filter(t => t?.type === 'medium').length;
+  const adjustedDays = totalDays + numMediumTransitions;
+
+  const allBudgets = buildDayBudgets(adjustedDays, pace, arrivalTime, departureTime);
+  const allocation = allocateDaysPerCity(cities, adjustedDays);
 
   const allDays              = [];
   const allAttractionsByCity = {};
