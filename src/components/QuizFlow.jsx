@@ -497,50 +497,51 @@ export default function QuizFlow({ onComplete }) {
 
       {/* ── COUNTRY ──────────────────────────────────────────────────────── */}
       {isCountry && (
-        <div style={{ flex: 1, overflowY: 'auto', padding: '4px 16px 8px', display: 'flex', flexDirection: 'column', gap: 10 }}>
+        <div style={{ padding: '4px 16px 8px', display: 'flex', flexDirection: 'column', gap: 10 }}>
           {q.options.map(opt => {
             const sel = isSel(opt.value);
             return (
-              <div key={opt.value}>
-                <button
-                  onClick={() => toggle(opt.value, opt.comingSoon)}
-                  style={{
-                    width: '100%', display: 'flex', alignItems: 'center', gap: 14,
-                    padding: '16px 18px', borderRadius: 16, textAlign: 'left',
-                    cursor: opt.comingSoon ? 'default' : 'pointer',
-                    background: '#fff',
-                    borderTop: `1.5px solid ${sel ? ACC : 'transparent'}`,
-                    borderRight: `1.5px solid ${sel ? ACC : 'transparent'}`,
-                    borderBottom: `1.5px solid ${sel ? ACC : 'transparent'}`,
-                    borderLeft: `4px solid ${sel ? ACC : 'transparent'}`,
-                    opacity: opt.comingSoon ? 0.5 : 1,
-                    boxSizing: 'border-box',
-                    transition: 'border-color 0.15s',
-                  }}
-                >
-                  <span style={{ fontSize: 26, flexShrink: 0 }}>{opt.icon}</span>
-                  <span style={{ flex: 1, fontSize: 15, fontWeight: 600, color: '#1A1A1A' }}>{opt.name}</span>
-                  {opt.comingSoon && (
-                    <span style={{ fontSize: 10, fontWeight: 700, padding: '3px 8px', borderRadius: 20, background: '#F0F0F0', color: '#999', flexShrink: 0 }}>
-                      Coming Soon
-                    </span>
-                  )}
-                  {!opt.comingSoon && (
-                    <div style={{
-                      width: 20, height: 20, borderRadius: '50%', flexShrink: 0,
-                      border: sel ? `6px solid ${ACC}` : '2px solid #D0D0D0',
-                      background: '#fff', transition: 'border 0.15s',
-                    }} />
-                  )}
-                </button>
-                {comingSoonTapped === opt.value && (
-                  <div style={{ marginTop: 6, padding: '8px 14px', borderRadius: 12, background: ACC_TINT, color: ACC, fontSize: 12, fontWeight: 500 }}>
-                    We're working on it — China is ready now!
-                  </div>
+              <button
+                key={opt.value}
+                onClick={() => toggle(opt.value, opt.comingSoon)}
+                style={{
+                  width: '100%', display: 'flex', alignItems: 'center', gap: 14,
+                  padding: '16px 18px', borderRadius: 16, textAlign: 'left',
+                  cursor: opt.comingSoon ? 'default' : 'pointer',
+                  background: '#fff',
+                  borderTop: `1.5px solid ${sel ? ACC : 'transparent'}`,
+                  borderRight: `1.5px solid ${sel ? ACC : 'transparent'}`,
+                  borderBottom: `1.5px solid ${sel ? ACC : 'transparent'}`,
+                  borderLeft: `4px solid ${sel ? ACC : 'transparent'}`,
+                  opacity: opt.comingSoon ? 0.5 : 1,
+                  boxSizing: 'border-box',
+                  transition: 'border-color 0.15s',
+                }}
+              >
+                <span style={{ fontSize: 26, flexShrink: 0 }}>{opt.icon}</span>
+                <span style={{ flex: 1, fontSize: 15, fontWeight: 600, color: '#1A1A1A' }}>{opt.name}</span>
+                {opt.comingSoon && (
+                  <span style={{ fontSize: 10, fontWeight: 700, padding: '3px 8px', borderRadius: 20, background: '#F0F0F0', color: '#999', flexShrink: 0 }}>
+                    Coming Soon
+                  </span>
                 )}
-              </div>
+                {!opt.comingSoon && (
+                  <div style={{
+                    width: 20, height: 20, borderRadius: '50%', flexShrink: 0,
+                    border: sel ? `6px solid ${ACC}` : '2px solid #D0D0D0',
+                    background: '#fff', transition: 'border 0.15s',
+                  }} />
+                )}
+              </button>
             );
           })}
+
+          {/* Coming soon inline message — below the full list, never inside it */}
+          {comingSoonTapped && (
+            <p style={{ fontSize: 13, color: '#999', textAlign: 'center', margin: '2px 0 0' }}>
+              Coming soon — China is available now 🇨🇳
+            </p>
+          )}
         </div>
       )}
 

@@ -246,11 +246,7 @@ function SplitSectionLabel({ cityName }) {
 // ── Inline export / share section ─────────────────────────────────────────────
 function ExportSection({ onExport, exporting, onWhatsApp, onReset }) {
   return (
-    <div style={{
-      padding: '8px 16px',
-      paddingBottom: 'env(safe-area-inset-bottom, 16px)',
-      display: 'flex', flexDirection: 'column', gap: 10,
-    }}>
+    <div style={{ padding: '8px 16px', display: 'flex', flexDirection: 'column', gap: 10 }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 4 }}>
         <div style={{ flex: 1, height: 1, background: LINE_COL }} />
         <span style={{ fontSize: 11, color: '#cbd5e1', fontWeight: 600 }}>SAVE &amp; SHARE</span>
@@ -502,7 +498,7 @@ export default function ItineraryDashboard({
 
   // ─────────────────────────────────────────────────────────────────────────
   return (
-    <div style={{ minHeight: '100vh', background: PAGE_BG }}>
+    <div style={{ background: PAGE_BG }}>
 
       {/* ══ STICKY HEADER ════════════════════════════════════════════════════ */}
       <div
@@ -583,7 +579,7 @@ export default function ItineraryDashboard({
       </div>
 
       {/* ══ CONTINUOUS SCROLL — days → hotel → export ════════════════════════ */}
-      <div style={{ display: mapOpen ? 'none' : 'block' }}>
+      <div style={{ display: mapOpen ? 'none' : 'block', paddingBottom: 'max(24px, env(safe-area-inset-bottom))' }}>
         {days.map((day, i) => {
           const stops            = dayStops[i] || [];
           const dateStr          = formatDayDate(depDate, i);
@@ -735,8 +731,6 @@ export default function ItineraryDashboard({
           onReset={onReset}
         />
 
-        {/* FAB spacer — clears the fixed map button */}
-        <div style={{ height: 80 }} />
       </div>
 
       {/* ══ FLOATING MAP FAB ═════════════════════════════════════════════════ */}
