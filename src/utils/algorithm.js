@@ -1,4 +1,6 @@
-import masterDb from '../data/china-master-db-v1.json';
+import masterDb        from '../data/china-master-db-v1.json';
+import travelTimes     from '../data/travel-times.json';
+import cityConnections from '../data/city-connections.json';
 
 // ── Constants ─────────────────────────────────────────────────────
 //
@@ -9,10 +11,8 @@ import masterDb from '../data/china-master-db-v1.json';
 const PACE_HOURS        = { chill: 6, balance: 11, pack: 15 };
 const PACE_MAX_STOPS    = { chill: 2, balance: 4,  pack: 6  };
 const PACE_MAX_CLUSTERS = { chill: 1, balance: 2,  pack: 3  };
-const TRAVEL_SAME_HRS   = 1 / 3;  // 20 min — same cluster
-const TRAVEL_DIFF_HRS   = 0.5;    // 30 min — cross-cluster (subway realistic)
-const TRAVEL_SAME_MINS  = 20;
-const TRAVEL_DIFF_MINS  = 30;
+// Flat travel constants removed — real times now come from travel-times.json
+// via getClusterTravelMinutes(). Kept as last-resort fallbacks only inside that fn.
 
 const EMOJI_OVERRIDES = {
   guangzhou: '🥘', shenzhen: '🤖', shanghai: '🌆', chongqing: '🌶️',
@@ -82,6 +82,34 @@ function haversine(lat1, lng1, lat2, lng2) {
     Math.cos(lat2 * Math.PI / 180) *
     Math.sin(dLng / 2) ** 2;
   return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+
+// ── Cluster travel time lookup ────────────────────────────────────
+
+/**
+ * Returns the recommended travel time in MINUTES between two clusters
+ * within the same city, using real route data from travel-times.json.
+ * Falls back to 10 min (same cluster) or 25 min (cross-cluster) if data missing.
+ */
+function getClusterTravelMinutes(city, clusterA, clusterB) {
+  if (clusterA === clusterB) return 10; // walking within cluster
+  const cityData = travelTimes[city];
+  if (!cityData) return 25;             // fallback — no data for city
+  const key1 = `${clusterA}→${clusterB}`;
+  const key2 = `${clusterB}→${clusterA}`;
+  const pair = cityData[key1] || cityData[key2];
+  if (!pair) return 25;                 // fallback — pair not found
+  return pair.recommended_minutes ?? 25;
+}
+
+/**
+ * Returns the city-connection object from city-connections.json for a
+ * fromCity→toCity pair (or its reverse), or null if not found.
+ */
+function getCityConnection(fromCity, toCity) {
+  const key1 = `${fromCity}→${toCity}`;
+  const key2 = `${toCity}→${fromCity}`;
+  return cityConnections.cities[key1] || cityConnections.cities[key2] || null;
 }
 
 // ── Scoring ───────────────────────────────────────────────────────
@@ -238,15 +266,17 @@ function sequenceByEnergy(stops, isLastDay = false) {
 
 // ── Time-slot assignment ──────────────────────────────────────────
 
-function assignTimeSlots(stops, startHour = 9) {
+function assignTimeSlots(stops, startHour = 9, city = null) {
   let cur = startHour * 60;
   return stops.map((s, i) => {
     const start = formatTime(cur);
     const end   = formatTime(cur + (s.duration_hrs ?? 1) * 60);
     if (i < stops.length - 1) {
-      const thisCluster = s.cluster_group          || '_default';
+      const thisCluster = s.cluster_group             || '_default';
       const nextCluster = stops[i + 1]?.cluster_group || '_default';
-      const transitMins = thisCluster === nextCluster ? TRAVEL_SAME_MINS : TRAVEL_DIFF_MINS;
+      const transitMins = city
+        ? getClusterTravelMinutes(city, thisCluster, nextCluster)
+        : (thisCluster === nextCluster ? 10 : 25);
       cur += (s.duration_hrs ?? 1) * 60 + transitMins;
     }
     return { ...s, startTime: start, endTime: end };
@@ -391,9 +421,9 @@ function buildCityDays(city, scoredPool, iconAttractions, kidsAttractions, foodP
       const cluster    = a.cluster_group || '_default';
       const isNewClust = !clustersUsed.has(cluster);
       if (isNewClust && clustersUsed.size >= maxClusters)              return false;
-      // FIX 1: time budget with transit
+      // FIX 1: time budget with transit (real minutes from travel-times.json)
       const transitCost = dayStops.length === 0 ? 0
-        : (cluster === prevCluster ? TRAVEL_SAME_HRS : TRAVEL_DIFF_HRS);
+        : getClusterTravelMinutes(city, prevCluster, cluster) / 60;
       if ((a.duration_hrs ?? 1) + transitCost > available)            return false;
       return true;
     }
@@ -402,7 +432,7 @@ function buildCityDays(city, scoredPool, iconAttractions, kidsAttractions, foodP
     function addStop(a) {
       const cluster     = a.cluster_group || '_default';
       const transitCost = dayStops.length === 0 ? 0
-        : (cluster === prevCluster ? TRAVEL_SAME_HRS : TRAVEL_DIFF_HRS);
+        : getClusterTravelMinutes(city, prevCluster, cluster) / 60;
       available   -= (a.duration_hrs ?? 1) + transitCost;
       prevCluster  = cluster;
       clustersUsed.add(cluster);
@@ -419,7 +449,7 @@ function buildCityDays(city, scoredPool, iconAttractions, kidsAttractions, foodP
       if (dayStops.length >= effectiveMax) break;
       const cluster     = icon.cluster_group || '_default';
       const transitCost = dayStops.length === 0 ? 0
-        : (cluster === prevCluster ? TRAVEL_SAME_HRS : TRAVEL_DIFF_HRS);
+        : getClusterTravelMinutes(city, prevCluster, cluster) / 60;
       const needed = (icon.duration_hrs ?? 2) + transitCost;
       if (needed > available) {
         console.log(`[algo] Day ${dayIdx + 1}: icon "${icon.name}" skipped — no time (need ${needed.toFixed(1)}h, have ${available.toFixed(1)}h)`);
@@ -520,7 +550,7 @@ function buildCityDays(city, scoredPool, iconAttractions, kidsAttractions, foodP
         if (usedKidsIds.has(ka.id)) return false;
         const cluster     = ka.cluster_group || '_default';
         const transitCost = dayStops.length === 0 ? 0
-          : (cluster === prevCluster ? TRAVEL_SAME_HRS : TRAVEL_DIFF_HRS);
+          : getClusterTravelMinutes(city, prevCluster, cluster) / 60;
         if ((ka.duration_hrs ?? 2) + transitCost > available)  return false;
         if (has03 && ka.energy_level === 'high')               return false;
         return true;
@@ -528,7 +558,7 @@ function buildCityDays(city, scoredPool, iconAttractions, kidsAttractions, foodP
       if (kidPick) {
         const cluster     = kidPick.cluster_group || '_default';
         const transitCost = dayStops.length === 0 ? 0
-          : (cluster === prevCluster ? TRAVEL_SAME_HRS : TRAVEL_DIFF_HRS);
+          : getClusterTravelMinutes(city, prevCluster, cluster) / 60;
         available  -= (kidPick.duration_hrs ?? 2) + transitCost;
         prevCluster = cluster;
         clustersUsed.add(cluster);
@@ -555,7 +585,7 @@ function buildCityDays(city, scoredPool, iconAttractions, kidsAttractions, foodP
     const ordered = nearestNeighbourSort(dayStops);
 
     // ── 6. Assign start/end times ─────────────────────────────────
-    const withTimes = assignTimeSlots(ordered, startHour);
+    const withTimes = assignTimeSlots(ordered, startHour, city);
 
     // ── 7. Food recommendations ───────────────────────────────────
     const dayCluster = dayStops[0]?.cluster_group ?? null;
@@ -640,7 +670,7 @@ export function buildFullItinerary(answers) {
   const allAttractionsByCity = {};
   let   globalBudgetOffset   = 0;
 
-  cities.forEach(city => {
+  cities.forEach((city, cityIdx) => {
     const data = loadCityData(city);
     if (!data) return;
 
@@ -688,6 +718,27 @@ export function buildFullItinerary(answers) {
     }
 
     allDays.push(...cityDayObjects);
+
+    // ── Insert travel day between this city and the next ───────────
+    const nextCity = cities[cityIdx + 1];
+    if (nextCity) {
+      const connection = getCityConnection(city, nextCity);
+      if (connection) {
+        const nextData = loadCityData(nextCity);
+        allDays.push({
+          isTravelDay: true,
+          city:        null,
+          fromCity:    city,
+          toCity:      nextCity,
+          connection,
+          fromCityName: data.name,
+          toCityName:   nextData?.name ?? nextCity,
+          stops:        [],
+          food:         [],
+          cityHeader:   null,
+        });
+      }
+    }
   });
 
   allDays.forEach((d, i) => { d.day = i + 1; d.label = `Day ${i + 1}`; });

@@ -1,0 +1,1485 @@
+{
+  "metadata": {
+    "generated": "2026-04-26",
+    "notes": "Travel times are approximate and based on fastest available direct service. HSR times are for G-trains where available, D-trains otherwise. Flight times exclude airport transfer (add 1.5hrs each end). All times in hours.",
+    "transport_modes": {
+      "hsr": "High Speed Rail (G or D train)",
+      "flight": "Direct flight",
+      "hsr_then_drive": "HSR to nearest city then drive/bus",
+      "drive": "Road only, no rail option",
+      "flight_then_drive": "Fly to nearest airport then drive"
+    }
+  },
+  "cities": {
+    "beijing→shanghai": {
+      "mode": "hsr",
+      "duration_hrs": 4.5,
+      "frequency": "Every 15-30 min",
+      "station_note": "Beijing South → Shanghai Hongqiao. G2/G4 are the fastest.",
+      "travel_day": true
+    },
+    "beijing→guangzhou": {
+      "mode": "hsr",
+      "duration_hrs": 8.0,
+      "frequency": "Several daily",
+      "station_note": "Beijing West → Guangzhou South. Overnight option available.",
+      "travel_day": true
+    },
+    "beijing→shenzhen": {
+      "mode": "hsr",
+      "duration_hrs": 8.5,
+      "frequency": "Several daily",
+      "station_note": "Beijing West → Shenzhen North.",
+      "travel_day": true
+    },
+    "beijing→chengdu": {
+      "mode": "flight",
+      "duration_hrs": 2.5,
+      "frequency": "Every 1-2 hrs",
+      "station_note": "Beijing Capital/Daxing → Chengdu Tianfu. No direct HSR — fly recommended.",
+      "travel_day": true
+    },
+    "beijing→chongqing": {
+      "mode": "flight",
+      "duration_hrs": 2.5,
+      "frequency": "Every 1-2 hrs",
+      "station_note": "Beijing Capital → Chongqing Jiangbei. HSR exists but 11hrs — fly instead.",
+      "travel_day": true
+    },
+    "beijing→hangzhou": {
+      "mode": "hsr",
+      "duration_hrs": 4.5,
+      "frequency": "Several daily",
+      "station_note": "Beijing South → Hangzhou East.",
+      "travel_day": true
+    },
+    "beijing→xian": {
+      "mode": "hsr",
+      "duration_hrs": 4.5,
+      "frequency": "Several daily",
+      "station_note": "Beijing West → Xi'an North.",
+      "travel_day": true
+    },
+    "beijing→guilin": {
+      "mode": "flight",
+      "duration_hrs": 2.5,
+      "frequency": "Several daily",
+      "station_note": "Beijing Capital → Guilin Liangjiang. HSR exists but 9hrs — fly recommended.",
+      "travel_day": true
+    },
+    "beijing→changsha": {
+      "mode": "hsr",
+      "duration_hrs": 5.5,
+      "frequency": "Several daily",
+      "station_note": "Beijing West → Changsha South.",
+      "travel_day": true
+    },
+    "beijing→zhangjiajie": {
+      "mode": "flight",
+      "duration_hrs": 2.5,
+      "frequency": "Several daily",
+      "station_note": "Beijing Capital → Zhangjiajie Hehua Airport. No direct HSR.",
+      "travel_day": true
+    },
+    "beijing→yunnan": {
+      "mode": "flight",
+      "duration_hrs": 3.0,
+      "frequency": "Several daily",
+      "station_note": "Beijing Capital → Kunming Changshui. Yunnan's main hub.",
+      "travel_day": true
+    },
+    "beijing→suzhou": {
+      "mode": "hsr",
+      "duration_hrs": 4.0,
+      "frequency": "Several daily",
+      "station_note": "Beijing South → Suzhou. Change at Shanghai Hongqiao or direct G-train.",
+      "travel_day": true
+    },
+    "beijing→jiuzhaigou": {
+      "mode": "flight_then_drive",
+      "duration_hrs": 5.0,
+      "frequency": "Several daily to Jiuzhai Huanglong Airport",
+      "station_note": "Beijing → Jiuzhai Huanglong Airport (40min from valley). Seasonal airport — closed Dec-Mar.",
+      "travel_day": true
+    },
+    "beijing→harbin": {
+      "mode": "hsr",
+      "duration_hrs": 5.5,
+      "frequency": "Several daily",
+      "station_note": "Beijing → Harbin West. G-train direct.",
+      "travel_day": true
+    },
+    "beijing→changbaishan": {
+      "mode": "flight_then_drive",
+      "duration_hrs": 4.0,
+      "frequency": "Several daily to Baishan/Changbaishan Airport",
+      "station_note": "Beijing → Changbaishan Airport then 1hr drive to scenic area.",
+      "travel_day": true
+    },
+    "beijing→sanya": {
+      "mode": "flight",
+      "duration_hrs": 3.5,
+      "frequency": "Several daily",
+      "station_note": "Beijing Capital → Sanya Phoenix Airport. No HSR option.",
+      "travel_day": true
+    },
+    "beijing→xiamen": {
+      "mode": "flight",
+      "duration_hrs": 2.5,
+      "frequency": "Several daily",
+      "station_note": "Beijing Capital → Xiamen Gaoqi Airport. HSR exists but 8hrs — fly recommended.",
+      "travel_day": true
+    },
+    "beijing→huangshan": {
+      "mode": "hsr",
+      "duration_hrs": 4.5,
+      "frequency": "Several daily",
+      "station_note": "Beijing South → Huangshan North.",
+      "travel_day": true
+    },
+    "beijing→nanjing": {
+      "mode": "hsr",
+      "duration_hrs": 3.5,
+      "frequency": "Every 30 min",
+      "station_note": "Beijing South → Nanjing South. Very frequent G-trains.",
+      "travel_day": false
+    },
+    "beijing→qingdao": {
+      "mode": "hsr",
+      "duration_hrs": 4.0,
+      "frequency": "Several daily",
+      "station_note": "Beijing South → Qingdao.",
+      "travel_day": true
+    },
+    "shanghai→guangzhou": {
+      "mode": "hsr",
+      "duration_hrs": 7.5,
+      "frequency": "Several daily",
+      "station_note": "Shanghai Hongqiao → Guangzhou South.",
+      "travel_day": true
+    },
+    "shanghai→shenzhen": {
+      "mode": "hsr",
+      "duration_hrs": 8.0,
+      "frequency": "Several daily",
+      "station_note": "Shanghai Hongqiao → Shenzhen North.",
+      "travel_day": true
+    },
+    "shanghai→chengdu": {
+      "mode": "flight",
+      "duration_hrs": 2.5,
+      "frequency": "Every 1-2 hrs",
+      "station_note": "Shanghai Pudong → Chengdu Tianfu. HSR exists but 11hrs — fly recommended.",
+      "travel_day": true
+    },
+    "shanghai→chongqing": {
+      "mode": "flight",
+      "duration_hrs": 2.5,
+      "frequency": "Several daily",
+      "station_note": "Shanghai Pudong → Chongqing Jiangbei.",
+      "travel_day": true
+    },
+    "shanghai→hangzhou": {
+      "mode": "hsr",
+      "duration_hrs": 1.0,
+      "frequency": "Every 15-30 min",
+      "station_note": "Shanghai Hongqiao → Hangzhou East. Very frequent, easy day trip.",
+      "travel_day": false
+    },
+    "shanghai→xian": {
+      "mode": "hsr",
+      "duration_hrs": 5.5,
+      "frequency": "Several daily",
+      "station_note": "Shanghai Hongqiao → Xi'an North.",
+      "travel_day": true
+    },
+    "shanghai→guilin": {
+      "mode": "flight",
+      "duration_hrs": 2.0,
+      "frequency": "Several daily",
+      "station_note": "Shanghai Pudong → Guilin Liangjiang. HSR exists but 7hrs — fly recommended.",
+      "travel_day": true
+    },
+    "shanghai→changsha": {
+      "mode": "hsr",
+      "duration_hrs": 4.0,
+      "frequency": "Several daily",
+      "station_note": "Shanghai Hongqiao → Changsha South.",
+      "travel_day": true
+    },
+    "shanghai→zhangjiajie": {
+      "mode": "flight",
+      "duration_hrs": 2.0,
+      "frequency": "Several daily",
+      "station_note": "Shanghai Pudong → Zhangjiajie Hehua Airport.",
+      "travel_day": true
+    },
+    "shanghai→yunnan": {
+      "mode": "flight",
+      "duration_hrs": 3.0,
+      "frequency": "Several daily",
+      "station_note": "Shanghai Pudong → Kunming Changshui.",
+      "travel_day": true
+    },
+    "shanghai→suzhou": {
+      "mode": "hsr",
+      "duration_hrs": 0.5,
+      "frequency": "Every 15 min",
+      "station_note": "Shanghai Hongqiao → Suzhou. Essentially a suburb run. Easy half-day trip.",
+      "travel_day": false
+    },
+    "shanghai→jiuzhaigou": {
+      "mode": "flight_then_drive",
+      "duration_hrs": 4.5,
+      "frequency": "Several daily to Jiuzhai Huanglong Airport",
+      "station_note": "Shanghai → Jiuzhai Huanglong Airport. Seasonal — check dates.",
+      "travel_day": true
+    },
+    "shanghai→harbin": {
+      "mode": "flight",
+      "duration_hrs": 2.5,
+      "frequency": "Several daily",
+      "station_note": "Shanghai Pudong → Harbin Taiping. HSR exists but 9hrs — fly recommended.",
+      "travel_day": true
+    },
+    "shanghai→changbaishan": {
+      "mode": "flight_then_drive",
+      "duration_hrs": 4.0,
+      "frequency": "Several daily via Changbaishan Airport",
+      "station_note": "Shanghai → Changbaishan Airport then 1hr drive.",
+      "travel_day": true
+    },
+    "shanghai→sanya": {
+      "mode": "flight",
+      "duration_hrs": 3.0,
+      "frequency": "Several daily",
+      "station_note": "Shanghai Pudong → Sanya Phoenix Airport.",
+      "travel_day": true
+    },
+    "shanghai→xiamen": {
+      "mode": "hsr",
+      "duration_hrs": 3.5,
+      "frequency": "Several daily",
+      "station_note": "Shanghai Hongqiao → Xiamen North.",
+      "travel_day": true
+    },
+    "shanghai→huangshan": {
+      "mode": "hsr",
+      "duration_hrs": 2.0,
+      "frequency": "Several daily",
+      "station_note": "Shanghai Hongqiao → Huangshan North. Easy day trip or overnight.",
+      "travel_day": false
+    },
+    "shanghai→nanjing": {
+      "mode": "hsr",
+      "duration_hrs": 1.5,
+      "frequency": "Every 15-30 min",
+      "station_note": "Shanghai Hongqiao → Nanjing South. Very frequent, easy day trip.",
+      "travel_day": false
+    },
+    "shanghai→qingdao": {
+      "mode": "hsr",
+      "duration_hrs": 4.5,
+      "frequency": "Several daily",
+      "station_note": "Shanghai Hongqiao → Qingdao.",
+      "travel_day": true
+    },
+    "guangzhou→shenzhen": {
+      "mode": "hsr",
+      "duration_hrs": 0.5,
+      "frequency": "Every 5-10 min",
+      "station_note": "Guangzhou South → Shenzhen North. Extremely frequent. Easy day trip.",
+      "travel_day": false
+    },
+    "guangzhou→chengdu": {
+      "mode": "flight",
+      "duration_hrs": 2.0,
+      "frequency": "Every 1-2 hrs",
+      "station_note": "Guangzhou Baiyun → Chengdu Tianfu.",
+      "travel_day": true
+    },
+    "guangzhou→chongqing": {
+      "mode": "flight",
+      "duration_hrs": 2.0,
+      "frequency": "Several daily",
+      "station_note": "Guangzhou Baiyun → Chongqing Jiangbei.",
+      "travel_day": true
+    },
+    "guangzhou→hangzhou": {
+      "mode": "hsr",
+      "duration_hrs": 6.0,
+      "frequency": "Several daily",
+      "station_note": "Guangzhou South → Hangzhou East.",
+      "travel_day": true
+    },
+    "guangzhou→xian": {
+      "mode": "flight",
+      "duration_hrs": 2.5,
+      "frequency": "Several daily",
+      "station_note": "Guangzhou Baiyun → Xi'an Xianyang. HSR exists but 8hrs — fly recommended.",
+      "travel_day": true
+    },
+    "guangzhou→guilin": {
+      "mode": "hsr",
+      "duration_hrs": 2.5,
+      "frequency": "Several daily",
+      "station_note": "Guangzhou South → Guilin West. Best HSR option for Guilin.",
+      "travel_day": false
+    },
+    "guangzhou→changsha": {
+      "mode": "hsr",
+      "duration_hrs": 2.0,
+      "frequency": "Every 30 min",
+      "station_note": "Guangzhou South → Changsha South.",
+      "travel_day": false
+    },
+    "guangzhou→zhangjiajie": {
+      "mode": "flight",
+      "duration_hrs": 1.5,
+      "frequency": "Several daily",
+      "station_note": "Guangzhou Baiyun → Zhangjiajie Hehua Airport.",
+      "travel_day": true
+    },
+    "guangzhou→yunnan": {
+      "mode": "flight",
+      "duration_hrs": 1.5,
+      "frequency": "Several daily",
+      "station_note": "Guangzhou Baiyun → Kunming Changshui.",
+      "travel_day": true
+    },
+    "guangzhou→suzhou": {
+      "mode": "hsr",
+      "duration_hrs": 6.5,
+      "frequency": "Several daily",
+      "station_note": "Guangzhou South → Suzhou.",
+      "travel_day": true
+    },
+    "guangzhou→jiuzhaigou": {
+      "mode": "flight_then_drive",
+      "duration_hrs": 4.0,
+      "frequency": "Several daily via Chengdu or direct to Jiuzhai Huanglong",
+      "station_note": "Guangzhou → Jiuzhai Huanglong Airport or via Chengdu.",
+      "travel_day": true
+    },
+    "guangzhou→harbin": {
+      "mode": "flight",
+      "duration_hrs": 3.5,
+      "frequency": "Several daily",
+      "station_note": "Guangzhou Baiyun → Harbin Taiping.",
+      "travel_day": true
+    },
+    "guangzhou→changbaishan": {
+      "mode": "flight_then_drive",
+      "duration_hrs": 5.0,
+      "frequency": "Via Changbaishan Airport or Yanji",
+      "station_note": "Guangzhou → Changbaishan Airport then 1hr drive.",
+      "travel_day": true
+    },
+    "guangzhou→sanya": {
+      "mode": "flight",
+      "duration_hrs": 1.5,
+      "frequency": "Several daily",
+      "station_note": "Guangzhou Baiyun → Sanya Phoenix Airport.",
+      "travel_day": true
+    },
+    "guangzhou→xiamen": {
+      "mode": "hsr",
+      "duration_hrs": 3.0,
+      "frequency": "Several daily",
+      "station_note": "Guangzhou South → Xiamen North.",
+      "travel_day": true
+    },
+    "guangzhou→huangshan": {
+      "mode": "flight",
+      "duration_hrs": 2.0,
+      "frequency": "Several daily",
+      "station_note": "Guangzhou Baiyun → Huangshan Airport.",
+      "travel_day": true
+    },
+    "guangzhou→nanjing": {
+      "mode": "hsr",
+      "duration_hrs": 5.5,
+      "frequency": "Several daily",
+      "station_note": "Guangzhou South → Nanjing South.",
+      "travel_day": true
+    },
+    "guangzhou→qingdao": {
+      "mode": "flight",
+      "duration_hrs": 2.5,
+      "frequency": "Several daily",
+      "station_note": "Guangzhou Baiyun → Qingdao Jiaodong Airport.",
+      "travel_day": true
+    },
+    "shenzhen→chengdu": {
+      "mode": "flight",
+      "duration_hrs": 2.0,
+      "frequency": "Several daily",
+      "station_note": "Shenzhen Bao'an → Chengdu Tianfu.",
+      "travel_day": true
+    },
+    "shenzhen→chongqing": {
+      "mode": "flight",
+      "duration_hrs": 2.0,
+      "frequency": "Several daily",
+      "station_note": "Shenzhen Bao'an → Chongqing Jiangbei.",
+      "travel_day": true
+    },
+    "shenzhen→hangzhou": {
+      "mode": "hsr",
+      "duration_hrs": 7.0,
+      "frequency": "Several daily",
+      "station_note": "Shenzhen North → Hangzhou East.",
+      "travel_day": true
+    },
+    "shenzhen→xian": {
+      "mode": "flight",
+      "duration_hrs": 2.5,
+      "frequency": "Several daily",
+      "station_note": "Shenzhen Bao'an → Xi'an Xianyang.",
+      "travel_day": true
+    },
+    "shenzhen→guilin": {
+      "mode": "hsr",
+      "duration_hrs": 3.0,
+      "frequency": "Several daily",
+      "station_note": "Shenzhen North → Guilin West.",
+      "travel_day": true
+    },
+    "shenzhen→changsha": {
+      "mode": "hsr",
+      "duration_hrs": 2.5,
+      "frequency": "Several daily",
+      "station_note": "Shenzhen North → Changsha South.",
+      "travel_day": false
+    },
+    "shenzhen→zhangjiajie": {
+      "mode": "flight",
+      "duration_hrs": 1.5,
+      "frequency": "Several daily",
+      "station_note": "Shenzhen Bao'an → Zhangjiajie Hehua Airport.",
+      "travel_day": true
+    },
+    "shenzhen→yunnan": {
+      "mode": "flight",
+      "duration_hrs": 1.5,
+      "frequency": "Several daily",
+      "station_note": "Shenzhen Bao'an → Kunming Changshui.",
+      "travel_day": true
+    },
+    "shenzhen→suzhou": {
+      "mode": "hsr",
+      "duration_hrs": 7.5,
+      "frequency": "Several daily",
+      "station_note": "Shenzhen North → Suzhou.",
+      "travel_day": true
+    },
+    "shenzhen→jiuzhaigou": {
+      "mode": "flight_then_drive",
+      "duration_hrs": 4.0,
+      "frequency": "Via Chengdu or direct to Jiuzhai Huanglong",
+      "station_note": "Shenzhen → Jiuzhai Huanglong Airport or via Chengdu.",
+      "travel_day": true
+    },
+    "shenzhen→harbin": {
+      "mode": "flight",
+      "duration_hrs": 3.5,
+      "frequency": "Several daily",
+      "station_note": "Shenzhen Bao'an → Harbin Taiping.",
+      "travel_day": true
+    },
+    "shenzhen→changbaishan": {
+      "mode": "flight_then_drive",
+      "duration_hrs": 5.0,
+      "frequency": "Via Changbaishan Airport",
+      "station_note": "Shenzhen → Changbaishan Airport then 1hr drive.",
+      "travel_day": true
+    },
+    "shenzhen→sanya": {
+      "mode": "flight",
+      "duration_hrs": 1.5,
+      "frequency": "Several daily",
+      "station_note": "Shenzhen Bao'an → Sanya Phoenix Airport.",
+      "travel_day": true
+    },
+    "shenzhen→xiamen": {
+      "mode": "hsr",
+      "duration_hrs": 3.5,
+      "frequency": "Several daily",
+      "station_note": "Shenzhen North → Xiamen North.",
+      "travel_day": true
+    },
+    "shenzhen→huangshan": {
+      "mode": "flight",
+      "duration_hrs": 2.0,
+      "frequency": "Several daily",
+      "station_note": "Shenzhen Bao'an → Huangshan Airport.",
+      "travel_day": true
+    },
+    "shenzhen→nanjing": {
+      "mode": "hsr",
+      "duration_hrs": 6.0,
+      "frequency": "Several daily",
+      "station_note": "Shenzhen North → Nanjing South.",
+      "travel_day": true
+    },
+    "shenzhen→qingdao": {
+      "mode": "flight",
+      "duration_hrs": 2.5,
+      "frequency": "Several daily",
+      "station_note": "Shenzhen Bao'an → Qingdao Jiaodong Airport.",
+      "travel_day": true
+    },
+    "chengdu→chongqing": {
+      "mode": "hsr",
+      "duration_hrs": 1.0,
+      "frequency": "Every 30 min",
+      "station_note": "Chengdu East → Chongqing North. Very easy, frequent service.",
+      "travel_day": false
+    },
+    "chengdu→hangzhou": {
+      "mode": "flight",
+      "duration_hrs": 2.5,
+      "frequency": "Several daily",
+      "station_note": "Chengdu Tianfu → Hangzhou Xiaoshan.",
+      "travel_day": true
+    },
+    "chengdu→xian": {
+      "mode": "hsr",
+      "duration_hrs": 3.5,
+      "frequency": "Several daily",
+      "station_note": "Chengdu East → Xi'an North.",
+      "travel_day": true
+    },
+    "chengdu→guilin": {
+      "mode": "flight",
+      "duration_hrs": 1.5,
+      "frequency": "Several daily",
+      "station_note": "Chengdu Tianfu → Guilin Liangjiang.",
+      "travel_day": true
+    },
+    "chengdu→changsha": {
+      "mode": "flight",
+      "duration_hrs": 1.5,
+      "frequency": "Several daily",
+      "station_note": "Chengdu Tianfu → Changsha Huanghua.",
+      "travel_day": true
+    },
+    "chengdu→zhangjiajie": {
+      "mode": "flight",
+      "duration_hrs": 1.5,
+      "frequency": "Several daily",
+      "station_note": "Chengdu Tianfu → Zhangjiajie Hehua Airport.",
+      "travel_day": true
+    },
+    "chengdu→yunnan": {
+      "mode": "flight",
+      "duration_hrs": 1.0,
+      "frequency": "Every 1-2 hrs",
+      "station_note": "Chengdu Tianfu → Kunming Changshui. Very frequent.",
+      "travel_day": true
+    },
+    "chengdu→suzhou": {
+      "mode": "flight",
+      "duration_hrs": 2.5,
+      "frequency": "Several daily",
+      "station_note": "Chengdu Tianfu → Shanghai then taxi/metro to Suzhou.",
+      "travel_day": true
+    },
+    "chengdu→jiuzhaigou": {
+      "mode": "flight_then_drive",
+      "duration_hrs": 2.5,
+      "frequency": "Several daily to Jiuzhai Huanglong Airport",
+      "station_note": "Chengdu → Jiuzhai Huanglong Airport (40min from valley). Seasonal airport.",
+      "travel_day": true
+    },
+    "chengdu→harbin": {
+      "mode": "flight",
+      "duration_hrs": 3.0,
+      "frequency": "Several daily",
+      "station_note": "Chengdu Tianfu → Harbin Taiping.",
+      "travel_day": true
+    },
+    "chengdu→changbaishan": {
+      "mode": "flight_then_drive",
+      "duration_hrs": 4.5,
+      "frequency": "Via Changbaishan Airport",
+      "station_note": "Chengdu → Changbaishan Airport then 1hr drive.",
+      "travel_day": true
+    },
+    "chengdu→sanya": {
+      "mode": "flight",
+      "duration_hrs": 2.0,
+      "frequency": "Several daily",
+      "station_note": "Chengdu Tianfu → Sanya Phoenix Airport.",
+      "travel_day": true
+    },
+    "chengdu→xiamen": {
+      "mode": "flight",
+      "duration_hrs": 2.0,
+      "frequency": "Several daily",
+      "station_note": "Chengdu Tianfu → Xiamen Gaoqi Airport.",
+      "travel_day": true
+    },
+    "chengdu→huangshan": {
+      "mode": "flight",
+      "duration_hrs": 2.0,
+      "frequency": "Several daily",
+      "station_note": "Chengdu Tianfu → Huangshan Airport.",
+      "travel_day": true
+    },
+    "chengdu→nanjing": {
+      "mode": "flight",
+      "duration_hrs": 2.0,
+      "frequency": "Several daily",
+      "station_note": "Chengdu Tianfu → Nanjing Lukou Airport.",
+      "travel_day": true
+    },
+    "chengdu→qingdao": {
+      "mode": "flight",
+      "duration_hrs": 2.5,
+      "frequency": "Several daily",
+      "station_note": "Chengdu Tianfu → Qingdao Jiaodong Airport.",
+      "travel_day": true
+    },
+    "chongqing→hangzhou": {
+      "mode": "flight",
+      "duration_hrs": 2.0,
+      "frequency": "Several daily",
+      "station_note": "Chongqing Jiangbei → Hangzhou Xiaoshan.",
+      "travel_day": true
+    },
+    "chongqing→xian": {
+      "mode": "hsr",
+      "duration_hrs": 3.5,
+      "frequency": "Several daily",
+      "station_note": "Chongqing North → Xi'an North.",
+      "travel_day": true
+    },
+    "chongqing→guilin": {
+      "mode": "flight",
+      "duration_hrs": 1.5,
+      "frequency": "Several daily",
+      "station_note": "Chongqing Jiangbei → Guilin Liangjiang.",
+      "travel_day": true
+    },
+    "chongqing→changsha": {
+      "mode": "hsr",
+      "duration_hrs": 2.0,
+      "frequency": "Several daily",
+      "station_note": "Chongqing North → Changsha South.",
+      "travel_day": false
+    },
+    "chongqing→zhangjiajie": {
+      "mode": "flight",
+      "duration_hrs": 1.0,
+      "frequency": "Several daily",
+      "station_note": "Chongqing Jiangbei → Zhangjiajie Hehua Airport. Closest major city.",
+      "travel_day": true
+    },
+    "chongqing→yunnan": {
+      "mode": "flight",
+      "duration_hrs": 1.0,
+      "frequency": "Several daily",
+      "station_note": "Chongqing Jiangbei → Kunming Changshui.",
+      "travel_day": true
+    },
+    "chongqing→suzhou": {
+      "mode": "flight",
+      "duration_hrs": 2.5,
+      "frequency": "Several daily",
+      "station_note": "Chongqing Jiangbei → Shanghai then to Suzhou.",
+      "travel_day": true
+    },
+    "chongqing→jiuzhaigou": {
+      "mode": "flight_then_drive",
+      "duration_hrs": 2.5,
+      "frequency": "Several daily to Jiuzhai Huanglong Airport",
+      "station_note": "Chongqing → Jiuzhai Huanglong Airport. Seasonal.",
+      "travel_day": true
+    },
+    "chongqing→harbin": {
+      "mode": "flight",
+      "duration_hrs": 3.0,
+      "frequency": "Several daily",
+      "station_note": "Chongqing Jiangbei → Harbin Taiping.",
+      "travel_day": true
+    },
+    "chongqing→changbaishan": {
+      "mode": "flight_then_drive",
+      "duration_hrs": 4.5,
+      "frequency": "Via Changbaishan Airport",
+      "station_note": "Chongqing → Changbaishan Airport then 1hr drive.",
+      "travel_day": true
+    },
+    "chongqing→sanya": {
+      "mode": "flight",
+      "duration_hrs": 2.0,
+      "frequency": "Several daily",
+      "station_note": "Chongqing Jiangbei → Sanya Phoenix Airport.",
+      "travel_day": true
+    },
+    "chongqing→xiamen": {
+      "mode": "flight",
+      "duration_hrs": 2.0,
+      "frequency": "Several daily",
+      "station_note": "Chongqing Jiangbei → Xiamen Gaoqi Airport.",
+      "travel_day": true
+    },
+    "chongqing→huangshan": {
+      "mode": "flight",
+      "duration_hrs": 2.0,
+      "frequency": "Several daily",
+      "station_note": "Chongqing Jiangbei → Huangshan Airport.",
+      "travel_day": true
+    },
+    "chongqing→nanjing": {
+      "mode": "flight",
+      "duration_hrs": 2.0,
+      "frequency": "Several daily",
+      "station_note": "Chongqing Jiangbei → Nanjing Lukou Airport.",
+      "travel_day": true
+    },
+    "chongqing→qingdao": {
+      "mode": "flight",
+      "duration_hrs": 2.5,
+      "frequency": "Several daily",
+      "station_note": "Chongqing Jiangbei → Qingdao Jiaodong Airport.",
+      "travel_day": true
+    },
+    "hangzhou→xian": {
+      "mode": "hsr",
+      "duration_hrs": 5.0,
+      "frequency": "Several daily",
+      "station_note": "Hangzhou East → Xi'an North.",
+      "travel_day": true
+    },
+    "hangzhou→guilin": {
+      "mode": "flight",
+      "duration_hrs": 2.0,
+      "frequency": "Several daily",
+      "station_note": "Hangzhou Xiaoshan → Guilin Liangjiang.",
+      "travel_day": true
+    },
+    "hangzhou→changsha": {
+      "mode": "hsr",
+      "duration_hrs": 3.5,
+      "frequency": "Several daily",
+      "station_note": "Hangzhou East → Changsha South.",
+      "travel_day": true
+    },
+    "hangzhou→zhangjiajie": {
+      "mode": "flight",
+      "duration_hrs": 2.0,
+      "frequency": "Several daily",
+      "station_note": "Hangzhou Xiaoshan → Zhangjiajie Hehua Airport.",
+      "travel_day": true
+    },
+    "hangzhou→yunnan": {
+      "mode": "flight",
+      "duration_hrs": 3.0,
+      "frequency": "Several daily",
+      "station_note": "Hangzhou Xiaoshan → Kunming Changshui.",
+      "travel_day": true
+    },
+    "hangzhou→suzhou": {
+      "mode": "hsr",
+      "duration_hrs": 0.5,
+      "frequency": "Every 30 min",
+      "station_note": "Hangzhou East → Suzhou. Very easy, frequent.",
+      "travel_day": false
+    },
+    "hangzhou→jiuzhaigou": {
+      "mode": "flight_then_drive",
+      "duration_hrs": 4.5,
+      "frequency": "Via Jiuzhai Huanglong Airport",
+      "station_note": "Hangzhou → Jiuzhai Huanglong Airport. Seasonal.",
+      "travel_day": true
+    },
+    "hangzhou→harbin": {
+      "mode": "flight",
+      "duration_hrs": 3.0,
+      "frequency": "Several daily",
+      "station_note": "Hangzhou Xiaoshan → Harbin Taiping.",
+      "travel_day": true
+    },
+    "hangzhou→changbaishan": {
+      "mode": "flight_then_drive",
+      "duration_hrs": 4.5,
+      "frequency": "Via Changbaishan Airport",
+      "station_note": "Hangzhou → Changbaishan Airport then 1hr drive.",
+      "travel_day": true
+    },
+    "hangzhou→sanya": {
+      "mode": "flight",
+      "duration_hrs": 3.0,
+      "frequency": "Several daily",
+      "station_note": "Hangzhou Xiaoshan → Sanya Phoenix Airport.",
+      "travel_day": true
+    },
+    "hangzhou→xiamen": {
+      "mode": "hsr",
+      "duration_hrs": 3.0,
+      "frequency": "Several daily",
+      "station_note": "Hangzhou East → Xiamen North.",
+      "travel_day": true
+    },
+    "hangzhou→huangshan": {
+      "mode": "hsr",
+      "duration_hrs": 1.5,
+      "frequency": "Several daily",
+      "station_note": "Hangzhou East → Huangshan North. Easy day trip.",
+      "travel_day": false
+    },
+    "hangzhou→nanjing": {
+      "mode": "hsr",
+      "duration_hrs": 1.5,
+      "frequency": "Every 30 min",
+      "station_note": "Hangzhou East → Nanjing South.",
+      "travel_day": false
+    },
+    "hangzhou→qingdao": {
+      "mode": "hsr",
+      "duration_hrs": 4.5,
+      "frequency": "Several daily",
+      "station_note": "Hangzhou East → Qingdao.",
+      "travel_day": true
+    },
+    "xian→guilin": {
+      "mode": "flight",
+      "duration_hrs": 2.0,
+      "frequency": "Several daily",
+      "station_note": "Xi'an Xianyang → Guilin Liangjiang.",
+      "travel_day": true
+    },
+    "xian→changsha": {
+      "mode": "hsr",
+      "duration_hrs": 4.0,
+      "frequency": "Several daily",
+      "station_note": "Xi'an North → Changsha South.",
+      "travel_day": true
+    },
+    "xian→zhangjiajie": {
+      "mode": "flight",
+      "duration_hrs": 1.5,
+      "frequency": "Several daily",
+      "station_note": "Xi'an Xianyang → Zhangjiajie Hehua Airport.",
+      "travel_day": true
+    },
+    "xian→yunnan": {
+      "mode": "flight",
+      "duration_hrs": 2.0,
+      "frequency": "Several daily",
+      "station_note": "Xi'an Xianyang → Kunming Changshui.",
+      "travel_day": true
+    },
+    "xian→suzhou": {
+      "mode": "hsr",
+      "duration_hrs": 5.5,
+      "frequency": "Several daily",
+      "station_note": "Xi'an North → Suzhou.",
+      "travel_day": true
+    },
+    "xian→jiuzhaigou": {
+      "mode": "flight_then_drive",
+      "duration_hrs": 3.5,
+      "frequency": "Via Jiuzhai Huanglong Airport",
+      "station_note": "Xi'an → Jiuzhai Huanglong Airport. Seasonal.",
+      "travel_day": true
+    },
+    "xian→harbin": {
+      "mode": "flight",
+      "duration_hrs": 2.5,
+      "frequency": "Several daily",
+      "station_note": "Xi'an Xianyang → Harbin Taiping.",
+      "travel_day": true
+    },
+    "xian→changbaishan": {
+      "mode": "flight_then_drive",
+      "duration_hrs": 4.0,
+      "frequency": "Via Changbaishan Airport",
+      "station_note": "Xi'an → Changbaishan Airport then 1hr drive.",
+      "travel_day": true
+    },
+    "xian→sanya": {
+      "mode": "flight",
+      "duration_hrs": 2.5,
+      "frequency": "Several daily",
+      "station_note": "Xi'an Xianyang → Sanya Phoenix Airport.",
+      "travel_day": true
+    },
+    "xian→xiamen": {
+      "mode": "flight",
+      "duration_hrs": 2.0,
+      "frequency": "Several daily",
+      "station_note": "Xi'an Xianyang → Xiamen Gaoqi Airport.",
+      "travel_day": true
+    },
+    "xian→huangshan": {
+      "mode": "flight",
+      "duration_hrs": 2.0,
+      "frequency": "Several daily",
+      "station_note": "Xi'an Xianyang → Huangshan Airport.",
+      "travel_day": true
+    },
+    "xian→nanjing": {
+      "mode": "hsr",
+      "duration_hrs": 4.0,
+      "frequency": "Several daily",
+      "station_note": "Xi'an North → Nanjing South.",
+      "travel_day": true
+    },
+    "xian→qingdao": {
+      "mode": "flight",
+      "duration_hrs": 1.5,
+      "frequency": "Several daily",
+      "station_note": "Xi'an Xianyang → Qingdao Jiaodong Airport.",
+      "travel_day": true
+    },
+    "guilin→changsha": {
+      "mode": "hsr",
+      "duration_hrs": 2.5,
+      "frequency": "Several daily",
+      "station_note": "Guilin West → Changsha South.",
+      "travel_day": false
+    },
+    "guilin→zhangjiajie": {
+      "mode": "flight",
+      "duration_hrs": 1.0,
+      "frequency": "Several daily",
+      "station_note": "Guilin Liangjiang → Zhangjiajie Hehua Airport. Very close.",
+      "travel_day": true
+    },
+    "guilin→yunnan": {
+      "mode": "flight",
+      "duration_hrs": 1.5,
+      "frequency": "Several daily",
+      "station_note": "Guilin Liangjiang → Kunming Changshui.",
+      "travel_day": true
+    },
+    "guilin→suzhou": {
+      "mode": "flight",
+      "duration_hrs": 2.5,
+      "frequency": "Several daily",
+      "station_note": "Guilin Liangjiang → Shanghai then to Suzhou.",
+      "travel_day": true
+    },
+    "guilin→jiuzhaigou": {
+      "mode": "flight_then_drive",
+      "duration_hrs": 4.0,
+      "frequency": "Via Chengdu or Jiuzhai Huanglong Airport",
+      "station_note": "Guilin → Chengdu → Jiuzhaigou. Seasonal.",
+      "travel_day": true
+    },
+    "guilin→harbin": {
+      "mode": "flight",
+      "duration_hrs": 3.5,
+      "frequency": "Several daily",
+      "station_note": "Guilin Liangjiang → Harbin Taiping.",
+      "travel_day": true
+    },
+    "guilin→changbaishan": {
+      "mode": "flight_then_drive",
+      "duration_hrs": 5.0,
+      "frequency": "Via Changbaishan Airport",
+      "station_note": "Guilin → Changbaishan Airport then 1hr drive.",
+      "travel_day": true
+    },
+    "guilin→sanya": {
+      "mode": "flight",
+      "duration_hrs": 1.5,
+      "frequency": "Several daily",
+      "station_note": "Guilin Liangjiang → Sanya Phoenix Airport.",
+      "travel_day": true
+    },
+    "guilin→xiamen": {
+      "mode": "flight",
+      "duration_hrs": 1.5,
+      "frequency": "Several daily",
+      "station_note": "Guilin Liangjiang → Xiamen Gaoqi Airport.",
+      "travel_day": true
+    },
+    "guilin→huangshan": {
+      "mode": "flight",
+      "duration_hrs": 2.0,
+      "frequency": "Several daily",
+      "station_note": "Guilin Liangjiang → Huangshan Airport.",
+      "travel_day": true
+    },
+    "guilin→nanjing": {
+      "mode": "hsr",
+      "duration_hrs": 5.0,
+      "frequency": "Several daily",
+      "station_note": "Guilin West → Nanjing South.",
+      "travel_day": true
+    },
+    "guilin→qingdao": {
+      "mode": "flight",
+      "duration_hrs": 2.5,
+      "frequency": "Several daily",
+      "station_note": "Guilin Liangjiang → Qingdao Jiaodong Airport.",
+      "travel_day": true
+    },
+    "changsha→zhangjiajie": {
+      "mode": "hsr",
+      "duration_hrs": 2.0,
+      "frequency": "Several daily",
+      "station_note": "Changsha South → Zhangjiajie West. Best option for Zhangjiajie.",
+      "travel_day": false
+    },
+    "changsha→yunnan": {
+      "mode": "flight",
+      "duration_hrs": 2.0,
+      "frequency": "Several daily",
+      "station_note": "Changsha Huanghua → Kunming Changshui.",
+      "travel_day": true
+    },
+    "changsha→suzhou": {
+      "mode": "hsr",
+      "duration_hrs": 4.5,
+      "frequency": "Several daily",
+      "station_note": "Changsha South → Suzhou.",
+      "travel_day": true
+    },
+    "changsha→jiuzhaigou": {
+      "mode": "flight_then_drive",
+      "duration_hrs": 3.5,
+      "frequency": "Via Jiuzhai Huanglong Airport",
+      "station_note": "Changsha → Jiuzhai Huanglong Airport. Seasonal.",
+      "travel_day": true
+    },
+    "changsha→harbin": {
+      "mode": "flight",
+      "duration_hrs": 3.0,
+      "frequency": "Several daily",
+      "station_note": "Changsha Huanghua → Harbin Taiping.",
+      "travel_day": true
+    },
+    "changsha→changbaishan": {
+      "mode": "flight_then_drive",
+      "duration_hrs": 4.5,
+      "frequency": "Via Changbaishan Airport",
+      "station_note": "Changsha → Changbaishan Airport then 1hr drive.",
+      "travel_day": true
+    },
+    "changsha→sanya": {
+      "mode": "flight",
+      "duration_hrs": 2.0,
+      "frequency": "Several daily",
+      "station_note": "Changsha Huanghua → Sanya Phoenix Airport.",
+      "travel_day": true
+    },
+    "changsha→xiamen": {
+      "mode": "hsr",
+      "duration_hrs": 3.5,
+      "frequency": "Several daily",
+      "station_note": "Changsha South → Xiamen North.",
+      "travel_day": true
+    },
+    "changsha→huangshan": {
+      "mode": "hsr",
+      "duration_hrs": 3.0,
+      "frequency": "Several daily",
+      "station_note": "Changsha South → Huangshan North.",
+      "travel_day": true
+    },
+    "changsha→nanjing": {
+      "mode": "hsr",
+      "duration_hrs": 4.0,
+      "frequency": "Several daily",
+      "station_note": "Changsha South → Nanjing South.",
+      "travel_day": true
+    },
+    "changsha→qingdao": {
+      "mode": "flight",
+      "duration_hrs": 2.0,
+      "frequency": "Several daily",
+      "station_note": "Changsha Huanghua → Qingdao Jiaodong Airport.",
+      "travel_day": true
+    },
+    "zhangjiajie→yunnan": {
+      "mode": "flight",
+      "duration_hrs": 2.0,
+      "frequency": "Several daily",
+      "station_note": "Zhangjiajie Hehua → Kunming Changshui.",
+      "travel_day": true
+    },
+    "zhangjiajie→suzhou": {
+      "mode": "flight",
+      "duration_hrs": 2.5,
+      "frequency": "Several daily",
+      "station_note": "Zhangjiajie Hehua → Shanghai then to Suzhou.",
+      "travel_day": true
+    },
+    "zhangjiajie→jiuzhaigou": {
+      "mode": "flight_then_drive",
+      "duration_hrs": 4.0,
+      "frequency": "Via Chengdu",
+      "station_note": "Zhangjiajie → Chengdu → Jiuzhaigou. Two remote destinations — plan carefully.",
+      "travel_day": true
+    },
+    "zhangjiajie→harbin": {
+      "mode": "flight",
+      "duration_hrs": 3.5,
+      "frequency": "Several daily",
+      "station_note": "Zhangjiajie Hehua → Harbin Taiping.",
+      "travel_day": true
+    },
+    "zhangjiajie→changbaishan": {
+      "mode": "flight_then_drive",
+      "duration_hrs": 5.0,
+      "frequency": "Via Changbaishan Airport",
+      "station_note": "Zhangjiajie → Changbaishan Airport then 1hr drive.",
+      "travel_day": true
+    },
+    "zhangjiajie→sanya": {
+      "mode": "flight",
+      "duration_hrs": 2.5,
+      "frequency": "Several daily",
+      "station_note": "Zhangjiajie Hehua → Sanya Phoenix Airport.",
+      "travel_day": true
+    },
+    "zhangjiajie→xiamen": {
+      "mode": "flight",
+      "duration_hrs": 2.0,
+      "frequency": "Several daily",
+      "station_note": "Zhangjiajie Hehua → Xiamen Gaoqi Airport.",
+      "travel_day": true
+    },
+    "zhangjiajie→huangshan": {
+      "mode": "flight",
+      "duration_hrs": 2.0,
+      "frequency": "Several daily",
+      "station_note": "Zhangjiajie Hehua → Huangshan Airport.",
+      "travel_day": true
+    },
+    "zhangjiajie→nanjing": {
+      "mode": "flight",
+      "duration_hrs": 2.0,
+      "frequency": "Several daily",
+      "station_note": "Zhangjiajie Hehua → Nanjing Lukou Airport.",
+      "travel_day": true
+    },
+    "zhangjiajie→qingdao": {
+      "mode": "flight",
+      "duration_hrs": 2.5,
+      "frequency": "Several daily",
+      "station_note": "Zhangjiajie Hehua → Qingdao Jiaodong Airport.",
+      "travel_day": true
+    },
+    "yunnan→suzhou": {
+      "mode": "flight",
+      "duration_hrs": 3.0,
+      "frequency": "Several daily",
+      "station_note": "Kunming Changshui → Shanghai then to Suzhou.",
+      "travel_day": true
+    },
+    "yunnan→jiuzhaigou": {
+      "mode": "flight_then_drive",
+      "duration_hrs": 3.5,
+      "frequency": "Via Chengdu or direct to Jiuzhai Huanglong",
+      "station_note": "Kunming → Jiuzhai Huanglong Airport or via Chengdu. Seasonal.",
+      "travel_day": true
+    },
+    "yunnan→harbin": {
+      "mode": "flight",
+      "duration_hrs": 4.0,
+      "frequency": "Several daily",
+      "station_note": "Kunming Changshui → Harbin Taiping.",
+      "travel_day": true
+    },
+    "yunnan→changbaishan": {
+      "mode": "flight_then_drive",
+      "duration_hrs": 5.5,
+      "frequency": "Via Changbaishan Airport",
+      "station_note": "Kunming → Changbaishan Airport then 1hr drive.",
+      "travel_day": true
+    },
+    "yunnan→sanya": {
+      "mode": "flight",
+      "duration_hrs": 2.0,
+      "frequency": "Several daily",
+      "station_note": "Kunming Changshui → Sanya Phoenix Airport.",
+      "travel_day": true
+    },
+    "yunnan→xiamen": {
+      "mode": "flight",
+      "duration_hrs": 2.0,
+      "frequency": "Several daily",
+      "station_note": "Kunming Changshui → Xiamen Gaoqi Airport.",
+      "travel_day": true
+    },
+    "yunnan→huangshan": {
+      "mode": "flight",
+      "duration_hrs": 3.0,
+      "frequency": "Several daily",
+      "station_note": "Kunming Changshui → Huangshan Airport.",
+      "travel_day": true
+    },
+    "yunnan→nanjing": {
+      "mode": "flight",
+      "duration_hrs": 3.0,
+      "frequency": "Several daily",
+      "station_note": "Kunming Changshui → Nanjing Lukou Airport.",
+      "travel_day": true
+    },
+    "yunnan→qingdao": {
+      "mode": "flight",
+      "duration_hrs": 3.5,
+      "frequency": "Several daily",
+      "station_note": "Kunming Changshui → Qingdao Jiaodong Airport.",
+      "travel_day": true
+    },
+    "suzhou→jiuzhaigou": {
+      "mode": "flight_then_drive",
+      "duration_hrs": 4.5,
+      "frequency": "Via Shanghai or direct to Jiuzhai Huanglong",
+      "station_note": "Suzhou → Shanghai → Jiuzhai Huanglong Airport. Seasonal.",
+      "travel_day": true
+    },
+    "suzhou→harbin": {
+      "mode": "flight",
+      "duration_hrs": 3.0,
+      "frequency": "Several daily via Shanghai",
+      "station_note": "Suzhou → Shanghai → Harbin Taiping.",
+      "travel_day": true
+    },
+    "suzhou→changbaishan": {
+      "mode": "flight_then_drive",
+      "duration_hrs": 4.5,
+      "frequency": "Via Shanghai and Changbaishan Airport",
+      "station_note": "Suzhou → Shanghai → Changbaishan Airport then 1hr drive.",
+      "travel_day": true
+    },
+    "suzhou→sanya": {
+      "mode": "flight",
+      "duration_hrs": 3.5,
+      "frequency": "Several daily via Shanghai",
+      "station_note": "Suzhou → Shanghai → Sanya Phoenix Airport.",
+      "travel_day": true
+    },
+    "suzhou→xiamen": {
+      "mode": "hsr",
+      "duration_hrs": 3.5,
+      "frequency": "Several daily",
+      "station_note": "Suzhou → Xiamen North.",
+      "travel_day": true
+    },
+    "suzhou→huangshan": {
+      "mode": "hsr",
+      "duration_hrs": 2.0,
+      "frequency": "Several daily",
+      "station_note": "Suzhou → Huangshan North.",
+      "travel_day": false
+    },
+    "suzhou→nanjing": {
+      "mode": "hsr",
+      "duration_hrs": 1.0,
+      "frequency": "Every 30 min",
+      "station_note": "Suzhou → Nanjing South. Very easy, frequent.",
+      "travel_day": false
+    },
+    "suzhou→qingdao": {
+      "mode": "hsr",
+      "duration_hrs": 4.5,
+      "frequency": "Several daily",
+      "station_note": "Suzhou → Qingdao.",
+      "travel_day": true
+    },
+    "jiuzhaigou→harbin": {
+      "mode": "flight_then_drive",
+      "duration_hrs": 5.0,
+      "frequency": "Via Chengdu",
+      "station_note": "Jiuzhaigou → Chengdu → Harbin. Long journey — not recommended to combine.",
+      "travel_day": true
+    },
+    "jiuzhaigou→changbaishan": {
+      "mode": "flight_then_drive",
+      "duration_hrs": 6.0,
+      "frequency": "Via Chengdu or direct flights",
+      "station_note": "Two remote destinations — very long journey. Not recommended to combine.",
+      "travel_day": true
+    },
+    "jiuzhaigou→sanya": {
+      "mode": "flight_then_drive",
+      "duration_hrs": 4.5,
+      "frequency": "Via Chengdu",
+      "station_note": "Jiuzhaigou → Chengdu → Sanya.",
+      "travel_day": true
+    },
+    "jiuzhaigou→xiamen": {
+      "mode": "flight_then_drive",
+      "duration_hrs": 4.0,
+      "frequency": "Via Chengdu",
+      "station_note": "Jiuzhaigou → Chengdu → Xiamen.",
+      "travel_day": true
+    },
+    "jiuzhaigou→huangshan": {
+      "mode": "flight_then_drive",
+      "duration_hrs": 4.5,
+      "frequency": "Via Chengdu",
+      "station_note": "Jiuzhaigou → Chengdu → Huangshan.",
+      "travel_day": true
+    },
+    "jiuzhaigou→nanjing": {
+      "mode": "flight_then_drive",
+      "duration_hrs": 4.0,
+      "frequency": "Via Chengdu",
+      "station_note": "Jiuzhaigou → Chengdu → Nanjing.",
+      "travel_day": true
+    },
+    "jiuzhaigou→qingdao": {
+      "mode": "flight_then_drive",
+      "duration_hrs": 4.5,
+      "frequency": "Via Chengdu",
+      "station_note": "Jiuzhaigou → Chengdu → Qingdao.",
+      "travel_day": true
+    },
+    "harbin→changbaishan": {
+      "mode": "drive",
+      "duration_hrs": 4.0,
+      "frequency": "Anytime",
+      "station_note": "Harbin → Changbaishan by road. Can also fly via Changbaishan Airport (1hr).",
+      "travel_day": true
+    },
+    "harbin→sanya": {
+      "mode": "flight",
+      "duration_hrs": 4.0,
+      "frequency": "Several daily",
+      "station_note": "Harbin Taiping → Sanya Phoenix Airport. Classic winter escape route.",
+      "travel_day": true
+    },
+    "harbin→xiamen": {
+      "mode": "flight",
+      "duration_hrs": 3.0,
+      "frequency": "Several daily",
+      "station_note": "Harbin Taiping → Xiamen Gaoqi Airport.",
+      "travel_day": true
+    },
+    "harbin→huangshan": {
+      "mode": "flight",
+      "duration_hrs": 3.0,
+      "frequency": "Several daily",
+      "station_note": "Harbin Taiping → Huangshan Airport.",
+      "travel_day": true
+    },
+    "harbin→nanjing": {
+      "mode": "flight",
+      "duration_hrs": 2.5,
+      "frequency": "Several daily",
+      "station_note": "Harbin Taiping → Nanjing Lukou Airport.",
+      "travel_day": true
+    },
+    "harbin→qingdao": {
+      "mode": "flight",
+      "duration_hrs": 2.0,
+      "frequency": "Several daily",
+      "station_note": "Harbin Taiping → Qingdao Jiaodong Airport.",
+      "travel_day": true
+    },
+    "changbaishan→sanya": {
+      "mode": "flight_then_drive",
+      "duration_hrs": 5.0,
+      "frequency": "Via Changbaishan Airport",
+      "station_note": "Changbaishan Airport → Sanya Phoenix Airport. Long journey.",
+      "travel_day": true
+    },
+    "changbaishan→xiamen": {
+      "mode": "flight_then_drive",
+      "duration_hrs": 4.5,
+      "frequency": "Via Changbaishan Airport",
+      "station_note": "Changbaishan Airport → Xiamen Gaoqi Airport.",
+      "travel_day": true
+    },
+    "changbaishan→huangshan": {
+      "mode": "flight_then_drive",
+      "duration_hrs": 4.5,
+      "frequency": "Via Changbaishan Airport",
+      "station_note": "Changbaishan Airport → Huangshan Airport.",
+      "travel_day": true
+    },
+    "changbaishan→nanjing": {
+      "mode": "flight_then_drive",
+      "duration_hrs": 4.0,
+      "frequency": "Via Changbaishan Airport",
+      "station_note": "Changbaishan Airport → Nanjing Lukou Airport.",
+      "travel_day": true
+    },
+    "changbaishan→qingdao": {
+      "mode": "flight_then_drive",
+      "duration_hrs": 4.0,
+      "frequency": "Via Changbaishan Airport",
+      "station_note": "Changbaishan Airport → Qingdao Jiaodong Airport.",
+      "travel_day": true
+    },
+    "sanya→xiamen": {
+      "mode": "flight",
+      "duration_hrs": 1.5,
+      "frequency": "Several daily",
+      "station_note": "Sanya Phoenix → Xiamen Gaoqi Airport.",
+      "travel_day": true
+    },
+    "sanya→huangshan": {
+      "mode": "flight",
+      "duration_hrs": 2.5,
+      "frequency": "Several daily",
+      "station_note": "Sanya Phoenix → Huangshan Airport.",
+      "travel_day": true
+    },
+    "sanya→nanjing": {
+      "mode": "flight",
+      "duration_hrs": 2.5,
+      "frequency": "Several daily",
+      "station_note": "Sanya Phoenix → Nanjing Lukou Airport.",
+      "travel_day": true
+    },
+    "sanya→qingdao": {
+      "mode": "flight",
+      "duration_hrs": 3.0,
+      "frequency": "Several daily",
+      "station_note": "Sanya Phoenix → Qingdao Jiaodong Airport.",
+      "travel_day": true
+    },
+    "xiamen→huangshan": {
+      "mode": "hsr",
+      "duration_hrs": 3.5,
+      "frequency": "Several daily",
+      "station_note": "Xiamen North → Huangshan North.",
+      "travel_day": true
+    },
+    "xiamen→nanjing": {
+      "mode": "hsr",
+      "duration_hrs": 4.0,
+      "frequency": "Several daily",
+      "station_note": "Xiamen North → Nanjing South.",
+      "travel_day": true
+    },
+    "xiamen→qingdao": {
+      "mode": "flight",
+      "duration_hrs": 2.0,
+      "frequency": "Several daily",
+      "station_note": "Xiamen Gaoqi → Qingdao Jiaodong Airport.",
+      "travel_day": true
+    },
+    "huangshan→nanjing": {
+      "mode": "hsr",
+      "duration_hrs": 2.0,
+      "frequency": "Several daily",
+      "station_note": "Huangshan North → Nanjing South. Easy combination.",
+      "travel_day": false
+    },
+    "huangshan→qingdao": {
+      "mode": "hsr",
+      "duration_hrs": 5.0,
+      "frequency": "Several daily",
+      "station_note": "Huangshan North → Qingdao.",
+      "travel_day": true
+    },
+    "nanjing→qingdao": {
+      "mode": "hsr",
+      "duration_hrs": 3.5,
+      "frequency": "Several daily",
+      "station_note": "Nanjing South → Qingdao.",
+      "travel_day": true
+    }
+  }
+}
