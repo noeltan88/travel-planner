@@ -382,10 +382,11 @@ function buildCityDays(city, scoredPool, iconAttractions, kidsAttractions, foodP
     .map(arr => [...arr].sort((a, b) => b._score - a._score))
     .sort((a, b) => (b[0]?._score ?? 0) - (a[0]?._score ?? 0));
 
-  const usedIds     = new Set();
-  const usedKidsIds = new Set();
-  const usedFoodIds = new Set();
-  const days        = [];
+  const usedIds            = new Set();
+  const usedKidsIds        = new Set();
+  const usedFoodIds        = new Set();
+  const usedLandmarkGroups = new Set(); // dedup: only 1 attraction per landmark_group per city
+  const days               = [];
   let standaloneQ   = [...standalones];
   let clusterCursor = 0;
 
@@ -444,6 +445,8 @@ function buildCityDays(city, scoredPool, iconAttractions, kidsAttractions, foodP
     function canAdd(a, { mustEveningBest = false } = {}) {
       if (dayStops.length >= effectiveMax)                              return false;
       if (usedIds.has(a.id))                                            return false;
+      // Landmark group dedup: skip if same root landmark already scheduled this city
+      if (a.landmark_group && usedLandmarkGroups.has(a.landmark_group)) return false;
       if (lowEnergyOnly && a.energy_level !== 'low')                   return false;
       if ((noHighEnergy || isFirstDay) && a.energy_level === 'high')   return false;
       // FIX 5: kids 0-3 — low energy + family-friendly required at slot level too
@@ -473,6 +476,7 @@ function buildCityDays(city, scoredPool, iconAttractions, kidsAttractions, foodP
       prevCluster  = cluster;
       clustersUsed.add(cluster);
       usedIds.add(a.id);
+      if (a.landmark_group) usedLandmarkGroups.add(a.landmark_group);
       dayStops.push(a);
     }
 
@@ -482,6 +486,7 @@ function buildCityDays(city, scoredPool, iconAttractions, kidsAttractions, foodP
     const todayIcons = iconSchedule.filter(q => q.dayIdx === dayIdx);
     for (const { icon } of todayIcons) {
       if (usedIds.has(icon.id)) continue;          // already placed earlier
+      if (icon.landmark_group && usedLandmarkGroups.has(icon.landmark_group)) continue; // dedup
       if (dayStops.length >= effectiveMax) break;
       const cluster     = icon.cluster_group || '_default';
       const transitCost = dayStops.length === 0 ? 0
@@ -495,6 +500,7 @@ function buildCityDays(city, scoredPool, iconAttractions, kidsAttractions, foodP
       prevCluster = cluster;
       clustersUsed.add(cluster);
       usedIds.add(icon.id);
+      if (icon.landmark_group) usedLandmarkGroups.add(icon.landmark_group);
       dayStops.push(icon);
       console.log(`[algo] Day ${dayIdx + 1}: 📍 icon "${icon.name}" injected`);
     }
