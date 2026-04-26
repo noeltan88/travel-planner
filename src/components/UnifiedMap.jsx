@@ -459,7 +459,7 @@ export default function UnifiedMap({
   // ── State ─────────────────────────────────────────────────────────────────
   const [activeFlatIdx,   setActiveFlatIdx]   = useState(0);
   const [explore,         setExplore]         = useState(false);
-  const [exploreFilter,   setExploreFilter]   = useState(null);  // 'attraction'|'food'|null
+  const [exploreFilter,   setExploreFilter]   = useState('all'); // 'all'|'attraction'|'food'
   const [exploreSelected, setExploreSelected] = useState(null);  // item from explore marker tap
   const [swapState,       setSwapState]       = useState(null);
   const [swapAlts,        setSwapAlts]        = useState([]);
@@ -517,12 +517,12 @@ export default function UnifiedMap({
 
   // Reset explore state when map collapses
   useEffect(() => {
-    if (!expanded) { setExplore(false); setExploreFilter(null); setExploreSelected(null); }
+    if (!expanded) { setExplore(false); setExploreFilter('all'); setExploreSelected(null); }
   }, [expanded]);
 
   // Reset filter + selected when leaving explore mode
   useEffect(() => {
-    if (!explore) { setExploreFilter(null); setExploreSelected(null); }
+    if (!explore) { setExploreFilter('all'); setExploreSelected(null); }
   }, [explore]);
 
   // Clamp activeFlatIdx if cardList shrinks (stop deleted)
@@ -596,7 +596,7 @@ export default function UnifiedMap({
         .filter(f => f.lat && f.lng)
         .map(f => ({ ...f, _cat: 'food' }));
       const all   = [...attrItems, ...foodItems];
-      const items = exploreFilter ? all.filter(i => i._cat === exploreFilter) : all;
+      const items = (exploreFilter && exploreFilter !== 'all') ? all.filter(i => i._cat === exploreFilter) : all;
       if (!items.length) return;
 
       function placeExplore() {
@@ -784,7 +784,7 @@ export default function UnifiedMap({
   }
 
   function toggleFilter(cat) {
-    setExploreFilter(prev => (prev === cat ? null : cat));
+    setExploreFilter(prev => (prev === cat ? 'all' : cat));
   }
 
   // ── Add-to-day handler — calls parent, shows success toast ───────────────
