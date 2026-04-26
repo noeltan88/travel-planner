@@ -105,7 +105,9 @@ function getClusterTravelMinutes(city, clusterA, clusterB) {
     console.warn(`[algo] getClusterTravelMinutes: pair not found "${key1}" in city="${city}" (available: ${Object.keys(cityData).slice(0,3).join(', ')}…)`);
     return 25;
   }
-  return pair.recommended_minutes ?? 25;
+  const minutes = pair.recommended_minutes ?? 25;
+  console.log(`[travel] ${city} | ${clusterA}→${clusterB} | result: ${minutes}min`);
+  return minutes;
 }
 
 /**
