@@ -392,6 +392,31 @@ function buildCityDays(city, scoredPool, iconAttractions, kidsAttractions, foodP
   // Pre-assign icon attractions to days (bypasses vibe/energy/cluster rules)
   const iconSchedule = spreadIcons(iconAttractions, budgets.length);
 
+  // BUG 2 FIX: guarantee each icon has enough budget on its assigned day.
+  // Prefer moving to the nearest earlier day with capacity; fall back to extending
+  // the assigned day's budget so the icon is never silently skipped.
+  for (const assignment of iconSchedule) {
+    const needed = assignment.icon.duration_hrs ?? 2;
+    if (budgets[assignment.dayIdx].hours >= needed) continue; // already fits
+
+    // Try earlier days with sufficient capacity
+    let moved = false;
+    for (let d = assignment.dayIdx - 1; d >= 0; d--) {
+      if (budgets[d].hours >= needed) {
+        console.log(`[algo] Icon "${assignment.icon.name}" moved day ${assignment.dayIdx + 1}→${d + 1} (need ${needed}h, day had ${budgets[assignment.dayIdx].hours}h)`);
+        assignment.dayIdx = d;
+        moved = true;
+        break;
+      }
+    }
+    // No earlier day fits — extend this day's budget to accommodate the icon
+    if (!moved) {
+      const extended = needed + 0.5; // icon duration + small buffer
+      console.log(`[algo] Icon "${assignment.icon.name}" extending day ${assignment.dayIdx + 1} budget: ${budgets[assignment.dayIdx].hours}h → ${extended}h`);
+      budgets[assignment.dayIdx] = { ...budgets[assignment.dayIdx], hours: extended };
+    }
+  }
+
   budgets.forEach(({
     hours: budgetHours,
     startHour,
@@ -474,19 +499,44 @@ function buildCityDays(city, scoredPool, iconAttractions, kidsAttractions, foodP
       console.log(`[algo] Day ${dayIdx + 1}: 📍 icon "${icon.name}" injected`);
     }
 
-    // ── 1. Standalone day (never on Day 1 — FIX 8) ───────────────
-    let usedStandalone = false;
+    // ── 1. Standalone injection (never on Day 1 — noStandalone flag) ────────
     if (!noStandalone) {
+      const wasFirstStop = dayStops.length === 0;
       const sa = standaloneQ.find(a => canAdd(a));
       if (sa) {
-        standaloneQ  = standaloneQ.filter(a => a.id !== sa.id);
+        standaloneQ = standaloneQ.filter(a => a.id !== sa.id);
         addStop(sa);
-        usedStandalone = true;
+
+        // BUG 1 FIX (day-trip deduction): if the standalone was the first stop of
+        // the day and is far from city clusters (> 60 min away), deduct the outbound
+        // travel time from available so the remaining-time check for city stops is
+        // realistic. The return transit is already counted by canAdd() when it
+        // evaluates the next stop from the standalone's cluster.
+        if (wasFirstStop) {
+          const saCluster = sa.cluster_group || '_default';
+          const ttData    = travelTimes[city];
+          if (ttData) {
+            let outboundMins = 999;
+            for (const [k, v] of Object.entries(ttData)) {
+              const [a, b] = k.split('→');
+              if ((a === saCluster || b === saCluster) && a !== b) {
+                const mins = v?.recommended_minutes ?? 999;
+                if (mins < outboundMins) outboundMins = mins;
+              }
+            }
+            if (outboundMins > 60 && outboundMins < 999) {
+              available -= outboundMins / 60;
+              console.log(`[algo] Day ${dayIdx + 1}: "${sa.name}" is day-trip (${outboundMins}min out) — deducting outbound travel from available`);
+            }
+          }
+        }
       }
     }
 
-    // ── 2. Cluster-based fill ─────────────────────────────────────
-    if (!usedStandalone) {
+    // ── 2. Cluster-based fill (always runs — time budget limits additions) ───
+    // Standalone only means that attraction takes priority; remaining hours are
+    // filled with non-standalone stops from other clusters as normal.
+    {
 
       if (isFirstDay) {
         // FIX 8: Day 1 — fill from energy-ascending pool (low first, no high energy)
