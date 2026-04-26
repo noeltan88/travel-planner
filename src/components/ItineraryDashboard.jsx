@@ -119,7 +119,7 @@ const TRAVEL_TIPS = {
   drive:             'Hire a driver through your hotel — more reliable than hailing taxis for long distances.',
 };
 
-function TravelDayCard({ day }) {
+function TravelDayCard({ day, compact = false }) {
   const { connection, fromCityName, toCityName } = day;
   if (!connection) return null;
   const mode  = connection.mode || 'drive';
@@ -127,6 +127,33 @@ function TravelDayCard({ day }) {
   const label = TRAVEL_LABEL[mode] || mode;
   const tip   = TRAVEL_TIPS[mode]  || TRAVEL_TIPS.drive;
 
+  // ── Compact variant (used inside split travel days) ───────────────
+  if (compact) {
+    return (
+      <div style={{ padding: '4px 16px 4px' }}>
+        <div style={{
+          background: '#FEF0EC',
+          border: `1px solid rgba(232,71,42,0.2)`,
+          borderRadius: 12,
+          padding: '12px 16px',
+          display: 'flex', alignItems: 'center', gap: 12,
+        }}>
+          <span style={{ fontSize: 26, lineHeight: 1 }}>{emoji}</span>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <p style={{ fontSize: 14, fontWeight: 700, color: '#1A1A1A', margin: 0 }}>
+              {fromCityName} → {toCityName}
+            </p>
+            <p style={{ fontSize: 12, color: '#666', margin: '2px 0 0' }}>
+              {label} · {connection.duration_hrs}h
+              {connection.station_note ? ` · ${connection.station_note}` : ''}
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // ── Full variant (used for long travel days) ──────────────────────
   return (
     <div style={{ padding: '0 16px 16px' }}>
       <div style={{
@@ -165,6 +192,54 @@ function TravelDayCard({ day }) {
           <p style={{ fontSize: 12, color: '#555', margin: 0, lineHeight: 1.6 }}>{tip}</p>
         </div>
       </div>
+    </div>
+  );
+}
+
+// ── Short transition pill (shown after last day of departure city) ─────────────
+function ShortTransitionPill({ transition }) {
+  if (!transition?.connection) return null;
+  const mode  = transition.connection.mode || 'drive';
+  const emoji = TRAVEL_EMOJI[mode] || '🚄';
+  const label = TRAVEL_LABEL[mode] || mode;
+  return (
+    <div style={{ padding: '2px 16px 14px' }}>
+      <div style={{
+        background: '#F0F9FF',
+        border: '1px solid #BAE6FD',
+        borderRadius: 10,
+        padding: '10px 14px',
+        display: 'flex', alignItems: 'center', gap: 10,
+      }}>
+        <span style={{ fontSize: 18, lineHeight: 1 }}>{emoji}</span>
+        <div>
+          <span style={{ fontSize: 13, fontWeight: 600, color: '#1A1A1A' }}>
+            {transition.fromCityName} → {transition.toCityName}
+          </span>
+          <span style={{ fontSize: 12, color: '#0284C7', marginLeft: 8 }}>
+            {transition.connection.duration_hrs}h · {label}
+          </span>
+          {transition.connection.station_note && (
+            <p style={{ fontSize: 11, color: '#666', margin: '2px 0 0', fontStyle: 'italic' }}>
+              {transition.connection.station_note}
+            </p>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Section sub-label for split travel days ───────────────────────────────────
+function SplitSectionLabel({ cityName }) {
+  return (
+    <div style={{ padding: '10px 16px 2px' }}>
+      <p style={{
+        fontSize: 10, fontWeight: 700, color: '#999',
+        margin: 0, textTransform: 'uppercase', letterSpacing: 1,
+      }}>
+        {cityName}
+      </p>
     </div>
   );
 }
@@ -506,18 +581,33 @@ export default function ItineraryDashboard({
         paddingBottom: 88,   // room for the FAB
       }}>
         {days.map((day, i) => {
-          const stops          = dayStops[i] || [];
-          const dateStr        = formatDayDate(depDate, i);
-          const isTravelDay    = !!day.isTravelDay;
-          const cityName       = isTravelDay
+          const stops            = dayStops[i] || [];
+          const dateStr          = formatDayDate(depDate, i);
+          const isTravelDay      = !!day.isTravelDay;
+          const isSplitTravelDay = !!day.isSplitTravelDay;
+          const isTransitDay     = isTravelDay || isSplitTravelDay;
+
+          // For split travel days, partition stops by their original morning IDs
+          const morningIds    = isSplitTravelDay ? (day.morningStopIds || new Set()) : null;
+          const splitMorning  = isSplitTravelDay ? stops.filter(s => morningIds.has(s.id))  : null;
+          const splitEvening  = isSplitTravelDay ? stops.filter(s => !morningIds.has(s.id)) : null;
+
+          const cityName = isTransitDay
             ? `${day.fromCityName} → ${day.toCityName}`
-            : (day.cityHeader?.name  || day.city  || '');
-          const cityEmoji      = isTravelDay ? (TRAVEL_EMOJI[day.connection?.mode] || '✈️')
+            : (day.cityHeader?.name || day.city || '');
+          const cityEmoji = isTransitDay
+            ? (TRAVEL_EMOJI[day.connection?.mode] || '✈️')
             : (day.cityHeader?.emoji || '');
-          const cityData_i     = isTravelDay ? null : loadCityData(day.city || primaryCity);
-          const estimatedSpend = isTravelDay ? 0 : stops
+
+          const cityData_i = isTransitDay ? null : loadCityData(day.city || primaryCity);
+          const estimatedSpend = isTransitDay ? 0 : stops
             .filter(s => !s.free && s.price_rmb)
             .reduce((sum, s) => sum + (Number(s.price_rmb) || 0), 0);
+
+          // Stop count label for the section header
+          const stopCount = isTravelDay ? null
+            : isSplitTravelDay ? stops.length
+            : stops.length;
 
           return (
             <div
@@ -526,20 +616,74 @@ export default function ItineraryDashboard({
               data-day-index={i}
               ref={el => { daySectionRefs.current[i] = el; }}
             >
-              {/* Day header — "TRAVEL DAY" for travel days, normal header otherwise */}
               <DaySectionHeader
                 dayNum={i + 1}
                 dateStr={dateStr}
-                stopCount={isTravelDay ? null : stops.length}
+                stopCount={stopCount}
                 cityName={cityName}
                 cityEmoji={cityEmoji}
-                estimatedSpend={isTravelDay ? 0 : estimatedSpend}
+                estimatedSpend={estimatedSpend}
               />
 
-              {/* FIX 1+2: Travel days get TravelDayCard; normal days get DayTimeline */}
-              {isTravelDay ? (
+              {/* ── Full travel day (long journey, no stops) ────────────── */}
+              {isTravelDay && (
                 <TravelDayCard day={day} />
-              ) : (
+              )}
+
+              {/* ── Split travel day (medium journey) ───────────────────── */}
+              {isSplitTravelDay && (
+                <>
+                  {/* Morning half — departure city stops */}
+                  <SplitSectionLabel cityName={`Morning · ${day.fromCityName}`} />
+                  {splitMorning && splitMorning.length > 0 ? (
+                    <DayTimeline
+                      stops={splitMorning}
+                      dayIdx={i}
+                      onDelete={deleteStop}
+                      onSwap={swapStop}
+                      allAttractions={
+                        allAttractionsByCity?.[day.fromCity] || allAttractions
+                      }
+                      allUsedIds={allUsedIds}
+                      allFoodItems={loadCityData(day.fromCity)?.food || []}
+                      dietary={quizAnswers?.dietary || []}
+                      city={day.fromCity}
+                    />
+                  ) : (
+                    <p style={{ padding: '4px 16px 10px', fontSize: 13, color: '#999', margin: 0 }}>
+                      Relax and check out — enjoy breakfast before you go
+                    </p>
+                  )}
+
+                  {/* Travel connection */}
+                  <TravelDayCard day={day} compact />
+
+                  {/* Evening half — arrival city stops */}
+                  <SplitSectionLabel cityName={`Evening · ${day.toCityName}`} />
+                  {splitEvening && splitEvening.length > 0 ? (
+                    <DayTimeline
+                      stops={splitEvening}
+                      dayIdx={i}
+                      onDelete={deleteStop}
+                      onSwap={swapStop}
+                      allAttractions={
+                        allAttractionsByCity?.[day.toCity] || allAttractions
+                      }
+                      allUsedIds={allUsedIds}
+                      allFoodItems={loadCityData(day.toCity)?.food || []}
+                      dietary={quizAnswers?.dietary || []}
+                      city={day.toCity}
+                    />
+                  ) : (
+                    <p style={{ padding: '4px 16px 16px', fontSize: 13, color: '#999', margin: 0 }}>
+                      Settle in and explore the neighbourhood
+                    </p>
+                  )}
+                </>
+              )}
+
+              {/* ── Normal sightseeing day ──────────────────────────────── */}
+              {!isTravelDay && !isSplitTravelDay && (
                 <DayTimeline
                   stops={stops}
                   dayIdx={i}
@@ -555,8 +699,13 @@ export default function ItineraryDashboard({
                 />
               )}
 
-              {/* FIX 6: "Before You Go" only on the very first day, never on travel days */}
-              {i === 0 && !isTravelDay && cityData_i?.practical && (
+              {/* Short transit pill — shown after the last day of the departure city */}
+              {day.shortTransition && (
+                <ShortTransitionPill transition={day.shortTransition} />
+              )}
+
+              {/* "Before You Go" only on the very first day, never on transit days */}
+              {i === 0 && !isTransitDay && cityData_i?.practical && (
                 <PracticalTips practical={cityData_i.practical} />
               )}
             </div>

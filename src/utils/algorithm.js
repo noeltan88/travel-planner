@@ -667,7 +667,7 @@ export function buildFullItinerary(answers) {
     ? parseInt(answers.departure_date.split('-')[1], 10)
     : null;
 
-  // FIX 4: kids 13+ only → skip all kids logic, treat as adults
+  // kids 13+ only → skip all kids logic, treat as adults
   const effectivelyAdults = isKidsTrip &&
     kidsAges.length > 0 &&
     kidsAges.every(k => k === '13+');
@@ -675,20 +675,96 @@ export function buildFullItinerary(answers) {
   const allBudgets = buildDayBudgets(totalDays, pace, arrivalTime, departureTime);
   const allocation = allocateDaysPerCity(cities, totalDays);
 
+  // ── Pre-compute transitions ───────────────────────────────────────
+  // transitions[i] describes the journey FROM cities[i] TO cities[i+1].
+  // type: 'short' (<3h)  → no travel day, reduce last-day hours
+  //       'medium' (3-5h) → split day: morning in city[i] + evening in city[i+1]
+  //       'long'   (>5h)  → full isTravelDay (no stops)
+  const transitions = cities.map((city, i) => {
+    if (i >= cities.length - 1) return null;
+    const conn = getCityConnection(city, cities[i + 1]);
+    if (!conn) {
+      console.log(`[algo] city-connection ${city}→${cities[i + 1]}: ✗ NOT FOUND`);
+      return null;
+    }
+    const hrs  = conn.duration_hrs ?? 0;
+    const type = hrs < 3 ? 'short' : hrs <= 5 ? 'medium' : 'long';
+    console.log(`[algo] city-connection ${city}→${cities[i + 1]}: ✓ ${conn.mode} ${conn.duration_hrs}h → ${type}`);
+    return { connection: conn, type };
+  });
+
   const allDays              = [];
   const allAttractionsByCity = {};
   let   globalBudgetOffset   = 0;
+  // Holds an isSplitTravelDay object that needs evening stops from the next city
+  let   pendingSplitDay      = null;
 
   cities.forEach((city, cityIdx) => {
     const data = loadCityData(city);
-    if (!data) return;
+    if (!data) {
+      globalBudgetOffset += (allocation[city] || 1);
+      // Close any pending split without evening stops
+      if (pendingSplitDay) {
+        pendingSplitDay.stops         = pendingSplitDay.morningStops;
+        pendingSplitDay.splitIndex    = pendingSplitDay.morningStops.length;
+        pendingSplitDay.morningStopIds = new Set(pendingSplitDay.morningStops.map(s => s.id));
+        allDays.push(pendingSplitDay);
+        pendingSplitDay = null;
+      }
+      return;
+    }
 
-    const cityDays    = allocation[city] || 1;
-    const cityBudgets = allBudgets.slice(globalBudgetOffset, globalBudgetOffset + cityDays);
-    globalBudgetOffset += cityDays;
+    const outgoing = transitions[cityIdx];                              // null for last city
+    const incoming = cityIdx > 0 ? transitions[cityIdx - 1] : null;    // null for first city
 
+    const cityDayCount = allocation[city] || 1;
+    const baseBudgets  = allBudgets.slice(globalBudgetOffset, globalBudgetOffset + cityDayCount);
+    globalBudgetOffset += cityDayCount;
+
+    // Clone budgets so we don't mutate allBudgets
+    const cityBudgets = baseBudgets.map(b => ({ ...b }));
+
+    // Detect conflict: single-day city with MEDIUM on both sides.
+    // We can't donate the same day as both the incoming-evening half AND outgoing-morning half.
+    // In this case skip budget adjustments and treat both transitions as LONG.
+    const singleDayConflict =
+      cityBudgets.length === 1 &&
+      incoming?.type === 'medium' &&
+      outgoing?.type === 'medium';
+
+    if (!singleDayConflict) {
+      // ── Adjust last day for outgoing SHORT / MEDIUM ─────────────────
+      if (outgoing?.type === 'short' && cityBudgets.length > 0) {
+        const last   = cityBudgets[cityBudgets.length - 1];
+        const deduct = outgoing.connection.duration_hrs ?? 0;
+        last.hours   = Math.max(1.5, last.hours - deduct);
+      } else if (outgoing?.type === 'medium' && cityBudgets.length > 0) {
+        cityBudgets[cityBudgets.length - 1] = {
+          ...cityBudgets[cityBudgets.length - 1],
+          hours:        2,
+          maxStops:     2,
+          startHour:    9,
+          noHighEnergy: true,
+          noStandalone: true,
+        };
+      }
+
+      // ── Adjust first day for incoming MEDIUM (evening arrival) ──────
+      if (incoming?.type === 'medium' && cityBudgets.length > 0) {
+        cityBudgets[0] = {
+          ...cityBudgets[0],
+          hours:         3,
+          maxStops:      2,
+          startHour:     18,
+          preferEvening: true,
+          noHighEnergy:  true,
+          noStandalone:  true,
+        };
+      }
+    }
+
+    // ── Build attractions pool ────────────────────────────────────────
     const effectiveKidsTrip = isKidsTrip && !effectivelyAdults;
-
     const scored   = (data.attractions || []).map(a =>
       scoreAttraction(a, { vibes, group, grandparents, isKidsTrip: effectiveKidsTrip })
     );
@@ -700,13 +776,11 @@ export function buildFullItinerary(answers) {
     });
     filtered.sort((a, b) => b._score - a._score);
 
-    // Icons: from scored pool (for _score shape), bypassing filters
     const iconAttractions = scored.filter(a => a.icon === true).slice(0, 3);
-
     const kidsAttractions = effectiveKidsTrip ? (data.kids_attractions || []) : [];
-
     allAttractionsByCity[city] = data.attractions || [];
 
+    // ── Build city day objects ────────────────────────────────────────
     const cityDayObjects = buildCityDays(
       city,
       filtered,
@@ -726,25 +800,99 @@ export function buildFullItinerary(answers) {
       };
     }
 
-    allDays.push(...cityDayObjects);
+    // ── Handle incoming MEDIUM: consume first day as evening half ─────
+    const consumeAsEvening =
+      incoming?.type === 'medium' &&
+      pendingSplitDay &&
+      cityDayObjects.length > 0 &&
+      !singleDayConflict;
 
-    // ── Insert travel day between this city and the next ───────────
+    if (consumeAsEvening) {
+      const eveningDay   = cityDayObjects.shift();
+      const morningStops = pendingSplitDay.morningStops;
+      const eveningStops = eveningDay.stops || [];
+
+      pendingSplitDay.eveningStops   = eveningStops;
+      pendingSplitDay.toCityName     = data.name;
+      pendingSplitDay.stops          = [...morningStops, ...eveningStops];
+      pendingSplitDay.splitIndex     = morningStops.length;
+      pendingSplitDay.morningStopIds = new Set(morningStops.map(s => s.id));
+      allDays.push(pendingSplitDay);
+      pendingSplitDay = null;
+
+      // Re-apply cityHeader to the next remaining day (first day was consumed)
+      if (cityDayObjects.length > 0) {
+        cityDayObjects[0].cityHeader = {
+          name:    data.name,
+          chinese: data.chinese,
+          emoji:   EMOJI_OVERRIDES[city] || data.emoji || '🏙️',
+          tagline: data.tagline,
+        };
+      }
+    } else if (pendingSplitDay) {
+      // No MEDIUM incoming (or conflict) — close pending split without evening stops
+      pendingSplitDay.stops          = pendingSplitDay.morningStops;
+      pendingSplitDay.splitIndex     = pendingSplitDay.morningStops.length;
+      pendingSplitDay.morningStopIds = new Set(pendingSplitDay.morningStops.map(s => s.id));
+      allDays.push(pendingSplitDay);
+      pendingSplitDay = null;
+    }
+
+    // ── Handle outgoing transition ────────────────────────────────────
     const nextCity = cities[cityIdx + 1];
-    if (nextCity) {
-      const connection = getCityConnection(city, nextCity);
-      console.log(`[algo] city-connection ${city}→${nextCity}:`,
-        connection
-          ? `✓ ${connection.mode} ${connection.duration_hrs}h`
-          : '✗ NOT FOUND — check key in city-connections.json',
-      );
-      if (connection) {
-        const nextData = loadCityData(nextCity);
+    const nextData = nextCity ? loadCityData(nextCity) : null;
+
+    if (outgoing?.type === 'medium' && !singleDayConflict) {
+      // Pop last day as morning half, create pending split day
+      const morningDay = cityDayObjects.length > 0
+        ? cityDayObjects.pop()
+        : { stops: [], food: [], city };
+
+      allDays.push(...cityDayObjects);
+
+      const morningStops = morningDay.stops || [];
+      pendingSplitDay = {
+        isSplitTravelDay: true,
+        city:             null,
+        fromCity:         city,
+        toCity:           nextCity,
+        fromCityName:     data.name,
+        toCityName:       nextData?.name ?? nextCity,
+        connection:       outgoing.connection,
+        morningStops,
+        eveningStops:     [],         // filled when processing nextCity
+        stops:            [],         // filled when complete
+        splitIndex:       morningStops.length,
+        morningStopIds:   new Set(morningStops.map(s => s.id)),
+        food:             morningDay.food || [],
+        cityHeader:       null,
+      };
+
+    } else if (outgoing?.type === 'short') {
+      // All days pushed normally; tag the last non-travel day with a transit pill
+      allDays.push(...cityDayObjects);
+      for (let k = allDays.length - 1; k >= 0; k--) {
+        if (!allDays[k].isTravelDay && !allDays[k].isSplitTravelDay) {
+          allDays[k].shortTransition = {
+            connection:   outgoing.connection,
+            fromCityName: data.name,
+            toCityName:   nextData?.name ?? nextCity,
+            toCity:       nextCity,
+          };
+          break;
+        }
+      }
+
+    } else if (outgoing?.type === 'long' || (outgoing?.type === 'medium' && singleDayConflict)) {
+      // Full travel day (no stops)
+      allDays.push(...cityDayObjects);
+      if (nextCity) {
         allDays.push({
-          isTravelDay: true,
-          city:        null,
-          fromCity:    city,
-          toCity:      nextCity,
-          connection,
+          isTravelDay:  true,
+          city:         null,
+          fromCity:     city,
+          toCity:       nextCity,
+          connection:   outgoing.connection,
           fromCityName: data.name,
           toCityName:   nextData?.name ?? nextCity,
           stops:        [],
@@ -752,8 +900,20 @@ export function buildFullItinerary(answers) {
           cityHeader:   null,
         });
       }
+
+    } else {
+      // No outgoing transition (last city or connection not found)
+      allDays.push(...cityDayObjects);
     }
   });
+
+  // Close any unclosed pending split day
+  if (pendingSplitDay) {
+    pendingSplitDay.stops          = pendingSplitDay.morningStops;
+    pendingSplitDay.splitIndex     = pendingSplitDay.morningStops.length;
+    pendingSplitDay.morningStopIds = new Set(pendingSplitDay.morningStops.map(s => s.id));
+    allDays.push(pendingSplitDay);
+  }
 
   allDays.forEach((d, i) => { d.day = i + 1; d.label = `Day ${i + 1}`; });
 
