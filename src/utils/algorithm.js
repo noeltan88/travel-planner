@@ -337,16 +337,21 @@ function pickFood(foodPool, preferredCluster, dietary, usedFoodIds) {
 // Returns an array of { icon, dayIdx } pairs that pre-assign each
 // icon attraction to a specific day, spread as evenly as possible.
 //
-function spreadIcons(iconAttractions, numDays) {
+function spreadIcons(iconAttractions, numDays, excludeDays = new Set()) {
   const icons = numDays === 1
     ? iconAttractions.slice(0, 2)   // 1-day trip: cap at 2
     : iconAttractions.slice(0, 3);  // multi-day: up to 3
 
+  // Build candidate pool: all days that aren't reserved for a standalone attraction.
+  // Fall back to all days if exclusions leave nothing (degenerate edge case).
+  const pool = Array.from({ length: numDays }, (_, i) => i).filter(i => !excludeDays.has(i));
+  const days  = pool.length > 0 ? pool : Array.from({ length: numDays }, (_, i) => i);
+
   return icons.map((icon, i) => {
-    const targetDay = icons.length <= 1
+    const pos = days.length <= 1
       ? 0
-      : Math.round(i * (numDays - 1) / (icons.length - 1));
-    return { icon, dayIdx: targetDay };
+      : Math.round(i * (days.length - 1) / Math.max(icons.length - 1, 1));
+    return { icon, dayIdx: days[Math.min(pos, days.length - 1)] };
   });
 }
 
@@ -390,19 +395,33 @@ function buildCityDays(city, scoredPool, iconAttractions, kidsAttractions, foodP
   let standaloneQ   = [...standalones];
   let clusterCursor = 0;
 
-  // Pre-assign icon attractions to days (bypasses vibe/energy/cluster rules)
-  const iconSchedule = spreadIcons(iconAttractions, budgets.length);
+  // ── Pass 1: pre-mark which days will receive standalone attractions ──────────
+  // This is a forward-looking heuristic — no canAdd() calls, no day state needed.
+  // We simply claim the first N eligible (non-noStandalone) days, one per standalone.
+  // Icons are then spread only across the remaining days (Pass 2 below).
+  const standaloneDayIndices = new Set();
+  if (standalones.length > 0) {
+    const eligibleDays = budgets.map((b, i) => i).filter(i => !budgets[i].noStandalone);
+    for (let si = 0; si < Math.min(standalones.length, eligibleDays.length); si++) {
+      standaloneDayIndices.add(eligibleDays[si]);
+    }
+    console.log(`[algo] Standalone days pre-marked: [${[...standaloneDayIndices].map(d => d + 1).join(',')}] for ${standalones.map(s => s.name).join(', ')}`);
+  }
 
-  // BUG 2 FIX: guarantee each icon has enough budget on its assigned day.
-  // Prefer moving to the nearest earlier day with capacity; fall back to extending
-  // the assigned day's budget so the icon is never silently skipped.
+  // ── Pass 2: spread icons across non-standalone days only ─────────────────────
+  const iconSchedule = spreadIcons(iconAttractions, budgets.length, standaloneDayIndices);
+
+  // Guarantee each icon has enough budget on its assigned day.
+  // Prefer moving to the nearest earlier non-standalone day with capacity;
+  // fall back to extending the assigned day's budget so the icon is never silently skipped.
   for (const assignment of iconSchedule) {
     const needed = assignment.icon.duration_hrs ?? 2;
     if (budgets[assignment.dayIdx].hours >= needed) continue; // already fits
 
-    // Try earlier days with sufficient capacity
+    // Try earlier days with sufficient capacity — skip standalone days
     let moved = false;
     for (let d = assignment.dayIdx - 1; d >= 0; d--) {
+      if (standaloneDayIndices.has(d)) continue; // preserve standalone days
       if (budgets[d].hours >= needed) {
         console.log(`[algo] Icon "${assignment.icon.name}" moved day ${assignment.dayIdx + 1}→${d + 1} (need ${needed}h, day had ${budgets[assignment.dayIdx].hours}h)`);
         assignment.dayIdx = d;
@@ -410,7 +429,7 @@ function buildCityDays(city, scoredPool, iconAttractions, kidsAttractions, foodP
         break;
       }
     }
-    // No earlier day fits — extend this day's budget to accommodate the icon
+    // No earlier non-standalone day fits — extend this day's budget to accommodate the icon
     if (!moved) {
       const extended = needed + 0.5; // icon duration + small buffer
       console.log(`[algo] Icon "${assignment.icon.name}" extending day ${assignment.dayIdx + 1} budget: ${budgets[assignment.dayIdx].hours}h → ${extended}h`);
