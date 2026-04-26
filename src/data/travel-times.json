@@ -1,0 +1,1682 @@
+{
+  "guangzhou": {
+    "pearl-river→pearl-river": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "yuexiu-historic→yuexiu-historic": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "baiyun-north→baiyun-north": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "panyu-chimelong→panyu-chimelong": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "pearl-river→yuexiu-historic": {
+      "transit_minutes": null,
+      "drive_minutes": 16,
+      "recommended_minutes": 16,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (5.3km apart)"
+    },
+    "pearl-river→baiyun-north": {
+      "transit_minutes": null,
+      "drive_minutes": 7,
+      "recommended_minutes": 7,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (2.2km apart)"
+    },
+    "pearl-river→panyu-chimelong": {
+      "transit_minutes": null,
+      "drive_minutes": 40,
+      "recommended_minutes": 40,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (13.2km apart)"
+    },
+    "yuexiu-historic→baiyun-north": {
+      "transit_minutes": null,
+      "drive_minutes": 14,
+      "recommended_minutes": 14,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (4.7km apart)"
+    },
+    "yuexiu-historic→panyu-chimelong": {
+      "transit_minutes": null,
+      "drive_minutes": 48,
+      "recommended_minutes": 48,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (15.9km apart)"
+    },
+    "baiyun-north→panyu-chimelong": {
+      "transit_minutes": null,
+      "drive_minutes": 46,
+      "recommended_minutes": 46,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (15.4km apart)"
+    }
+  },
+  "shenzhen": {
+    "futian-center→futian-center": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "nanshan-oct→nanshan-oct": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "longhua-north→longhua-north": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "yantian-east→yantian-east": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "nanshan-theme-parks→nanshan-theme-parks": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "futian-center→nanshan-oct": {
+      "transit_minutes": null,
+      "drive_minutes": 39,
+      "recommended_minutes": 39,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (12.9km apart)"
+    },
+    "futian-center→longhua-north": {
+      "transit_minutes": null,
+      "drive_minutes": 21,
+      "recommended_minutes": 21,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (6.9km apart)"
+    },
+    "futian-center→yantian-east": {
+      "transit_minutes": null,
+      "drive_minutes": 61,
+      "recommended_minutes": 61,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (20.4km apart)"
+    },
+    "futian-center→nanshan-theme-parks": {
+      "transit_minutes": null,
+      "drive_minutes": 25,
+      "recommended_minutes": 25,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (8.3km apart)"
+    },
+    "nanshan-oct→longhua-north": {
+      "transit_minutes": null,
+      "drive_minutes": 39,
+      "recommended_minutes": 39,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (13.0km apart)"
+    },
+    "nanshan-oct→yantian-east": {
+      "transit_minutes": null,
+      "drive_minutes": 100,
+      "recommended_minutes": 100,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (33.3km apart)"
+    },
+    "nanshan-oct→nanshan-theme-parks": {
+      "transit_minutes": null,
+      "drive_minutes": 14,
+      "recommended_minutes": 14,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (4.6km apart)"
+    },
+    "longhua-north→yantian-east": {
+      "transit_minutes": null,
+      "drive_minutes": 69,
+      "recommended_minutes": 69,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (23.0km apart)"
+    },
+    "longhua-north→nanshan-theme-parks": {
+      "transit_minutes": null,
+      "drive_minutes": 28,
+      "recommended_minutes": 28,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (9.4km apart)"
+    },
+    "yantian-east→nanshan-theme-parks": {
+      "transit_minutes": null,
+      "drive_minutes": 86,
+      "recommended_minutes": 86,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (28.7km apart)"
+    }
+  },
+  "shanghai": {
+    "bund-area→bund-area": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "french-concession→french-concession": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "pudong-skyline→pudong-skyline": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "pudong-century→pudong-century": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "pudong-disney→pudong-disney": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "bund-area→french-concession": {
+      "transit_minutes": null,
+      "drive_minutes": 9,
+      "recommended_minutes": 9,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (3.0km apart)"
+    },
+    "bund-area→pudong-skyline": {
+      "transit_minutes": null,
+      "drive_minutes": 6,
+      "recommended_minutes": 6,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (2.1km apart)"
+    },
+    "bund-area→pudong-century": {
+      "transit_minutes": null,
+      "drive_minutes": 48,
+      "recommended_minutes": 48,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (16.0km apart)"
+    },
+    "bund-area→pudong-disney": {
+      "transit_minutes": null,
+      "drive_minutes": 61,
+      "recommended_minutes": 61,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (20.4km apart)"
+    },
+    "french-concession→pudong-skyline": {
+      "transit_minutes": null,
+      "drive_minutes": 12,
+      "recommended_minutes": 12,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (4.0km apart)"
+    },
+    "french-concession→pudong-century": {
+      "transit_minutes": null,
+      "drive_minutes": 39,
+      "recommended_minutes": 39,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (13.0km apart)"
+    },
+    "french-concession→pudong-disney": {
+      "transit_minutes": null,
+      "drive_minutes": 60,
+      "recommended_minutes": 60,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (20.0km apart)"
+    },
+    "pudong-skyline→pudong-century": {
+      "transit_minutes": null,
+      "drive_minutes": 51,
+      "recommended_minutes": 51,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (16.9km apart)"
+    },
+    "pudong-skyline→pudong-disney": {
+      "transit_minutes": null,
+      "drive_minutes": 55,
+      "recommended_minutes": 55,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (18.5km apart)"
+    },
+    "pudong-century→pudong-disney": {
+      "transit_minutes": null,
+      "drive_minutes": 77,
+      "recommended_minutes": 77,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (25.6km apart)"
+    }
+  },
+  "chongqing": {
+    "yuzhong-peninsula→yuzhong-peninsula": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "jiulongpo-south→jiulongpo-south": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "standalone→standalone": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "jiangbei-north→jiangbei-north": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "yuzhong-peninsula→jiulongpo-south": {
+      "transit_minutes": null,
+      "drive_minutes": 214,
+      "recommended_minutes": 214,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (71.3km apart)"
+    },
+    "yuzhong-peninsula→standalone": {
+      "transit_minutes": null,
+      "drive_minutes": 102,
+      "recommended_minutes": 102,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (33.9km apart)"
+    },
+    "yuzhong-peninsula→jiangbei-north": {
+      "transit_minutes": null,
+      "drive_minutes": 36,
+      "recommended_minutes": 36,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (12.1km apart)"
+    },
+    "jiulongpo-south→standalone": {
+      "transit_minutes": null,
+      "drive_minutes": 147,
+      "recommended_minutes": 147,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (49.0km apart)"
+    },
+    "jiulongpo-south→jiangbei-north": {
+      "transit_minutes": null,
+      "drive_minutes": 235,
+      "recommended_minutes": 235,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (78.3km apart)"
+    },
+    "standalone→jiangbei-north": {
+      "transit_minutes": null,
+      "drive_minutes": 136,
+      "recommended_minutes": 136,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (45.3km apart)"
+    }
+  },
+  "chengdu": {
+    "jinniu-north→jinniu-north": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "city-centre→city-centre": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "pidu-west→pidu-west": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "sanxingdui→sanxingdui": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "dujiangyan-day-trip→dujiangyan-day-trip": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "standalone→standalone": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "tianfu-south→tianfu-south": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "jinniu-north→city-centre": {
+      "transit_minutes": null,
+      "drive_minutes": 6,
+      "recommended_minutes": 6,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (2.0km apart)"
+    },
+    "jinniu-north→pidu-west": {
+      "transit_minutes": null,
+      "drive_minutes": 17,
+      "recommended_minutes": 17,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (5.5km apart)"
+    },
+    "jinniu-north→sanxingdui": {
+      "transit_minutes": null,
+      "drive_minutes": 65,
+      "recommended_minutes": 65,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (21.7km apart)"
+    },
+    "jinniu-north→dujiangyan-day-trip": {
+      "transit_minutes": null,
+      "drive_minutes": 175,
+      "recommended_minutes": 175,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (58.2km apart)"
+    },
+    "jinniu-north→standalone": {
+      "transit_minutes": null,
+      "drive_minutes": 231,
+      "recommended_minutes": 231,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (77.0km apart)"
+    },
+    "jinniu-north→tianfu-south": {
+      "transit_minutes": null,
+      "drive_minutes": 59,
+      "recommended_minutes": 59,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (19.6km apart)"
+    },
+    "city-centre→pidu-west": {
+      "transit_minutes": null,
+      "drive_minutes": 11,
+      "recommended_minutes": 11,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (3.6km apart)"
+    },
+    "city-centre→sanxingdui": {
+      "transit_minutes": null,
+      "drive_minutes": 64,
+      "recommended_minutes": 64,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (21.4km apart)"
+    },
+    "city-centre→dujiangyan-day-trip": {
+      "transit_minutes": null,
+      "drive_minutes": 169,
+      "recommended_minutes": 169,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (56.3km apart)"
+    },
+    "city-centre→standalone": {
+      "transit_minutes": null,
+      "drive_minutes": 233,
+      "recommended_minutes": 233,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (77.6km apart)"
+    },
+    "city-centre→tianfu-south": {
+      "transit_minutes": null,
+      "drive_minutes": 59,
+      "recommended_minutes": 59,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (19.8km apart)"
+    },
+    "pidu-west→sanxingdui": {
+      "transit_minutes": null,
+      "drive_minutes": 60,
+      "recommended_minutes": 60,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (20.1km apart)"
+    },
+    "pidu-west→dujiangyan-day-trip": {
+      "transit_minutes": null,
+      "drive_minutes": 158,
+      "recommended_minutes": 158,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (52.7km apart)"
+    },
+    "pidu-west→standalone": {
+      "transit_minutes": null,
+      "drive_minutes": 239,
+      "recommended_minutes": 239,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (79.7km apart)"
+    },
+    "pidu-west→tianfu-south": {
+      "transit_minutes": null,
+      "drive_minutes": 65,
+      "recommended_minutes": 65,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (21.5km apart)"
+    },
+    "sanxingdui→dujiangyan-day-trip": {
+      "transit_minutes": null,
+      "drive_minutes": 155,
+      "recommended_minutes": 155,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (51.6km apart)"
+    },
+    "sanxingdui→standalone": {
+      "transit_minutes": null,
+      "drive_minutes": 296,
+      "recommended_minutes": 296,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (98.7km apart)"
+    },
+    "sanxingdui→tianfu-south": {
+      "transit_minutes": null,
+      "drive_minutes": 123,
+      "recommended_minutes": 123,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (41.1km apart)"
+    },
+    "dujiangyan-day-trip→standalone": {
+      "transit_minutes": null,
+      "drive_minutes": 356,
+      "recommended_minutes": 356,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (118.7km apart)"
+    },
+    "dujiangyan-day-trip→tianfu-south": {
+      "transit_minutes": null,
+      "drive_minutes": 200,
+      "recommended_minutes": 200,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (66.8km apart)"
+    },
+    "standalone→tianfu-south": {
+      "transit_minutes": null,
+      "drive_minutes": 175,
+      "recommended_minutes": 175,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (58.3km apart)"
+    }
+  },
+  "beijing": {
+    "forbidden-city-core→forbidden-city-core": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "standalone→standalone": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "temple-of-heaven→temple-of-heaven": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "summer-palace→summer-palace": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "hutong-drum-tower→hutong-drum-tower": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "olympic-park→olympic-park": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "xicheng-zoo→xicheng-zoo": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "forbidden-city-core→standalone": {
+      "transit_minutes": null,
+      "drive_minutes": 162,
+      "recommended_minutes": 162,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (54.0km apart)"
+    },
+    "forbidden-city-core→temple-of-heaven": {
+      "transit_minutes": null,
+      "drive_minutes": 12,
+      "recommended_minutes": 12,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (3.9km apart)"
+    },
+    "forbidden-city-core→summer-palace": {
+      "transit_minutes": null,
+      "drive_minutes": 48,
+      "recommended_minutes": 48,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (15.9km apart)"
+    },
+    "forbidden-city-core→hutong-drum-tower": {
+      "transit_minutes": null,
+      "drive_minutes": 8,
+      "recommended_minutes": 8,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (2.7km apart)"
+    },
+    "forbidden-city-core→olympic-park": {
+      "transit_minutes": null,
+      "drive_minutes": 18,
+      "recommended_minutes": 18,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (5.9km apart)"
+    },
+    "forbidden-city-core→xicheng-zoo": {
+      "transit_minutes": null,
+      "drive_minutes": 8,
+      "recommended_minutes": 8,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (2.6km apart)"
+    },
+    "standalone→temple-of-heaven": {
+      "transit_minutes": null,
+      "drive_minutes": 174,
+      "recommended_minutes": 174,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (57.8km apart)"
+    },
+    "standalone→summer-palace": {
+      "transit_minutes": null,
+      "drive_minutes": 136,
+      "recommended_minutes": 136,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (45.4km apart)"
+    },
+    "standalone→hutong-drum-tower": {
+      "transit_minutes": null,
+      "drive_minutes": 154,
+      "recommended_minutes": 154,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (51.3km apart)"
+    },
+    "standalone→olympic-park": {
+      "transit_minutes": null,
+      "drive_minutes": 147,
+      "recommended_minutes": 147,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (49.1km apart)"
+    },
+    "standalone→xicheng-zoo": {
+      "transit_minutes": null,
+      "drive_minutes": 158,
+      "recommended_minutes": 158,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (52.6km apart)"
+    },
+    "temple-of-heaven→summer-palace": {
+      "transit_minutes": null,
+      "drive_minutes": 57,
+      "recommended_minutes": 57,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (18.9km apart)"
+    },
+    "temple-of-heaven→hutong-drum-tower": {
+      "transit_minutes": null,
+      "drive_minutes": 20,
+      "recommended_minutes": 20,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (6.6km apart)"
+    },
+    "temple-of-heaven→olympic-park": {
+      "transit_minutes": null,
+      "drive_minutes": 28,
+      "recommended_minutes": 28,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (9.2km apart)"
+    },
+    "temple-of-heaven→xicheng-zoo": {
+      "transit_minutes": null,
+      "drive_minutes": 18,
+      "recommended_minutes": 18,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (5.9km apart)"
+    },
+    "summer-palace→hutong-drum-tower": {
+      "transit_minutes": null,
+      "drive_minutes": 44,
+      "recommended_minutes": 44,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (14.7km apart)"
+    },
+    "summer-palace→olympic-park": {
+      "transit_minutes": null,
+      "drive_minutes": 49,
+      "recommended_minutes": 49,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (16.2km apart)"
+    },
+    "summer-palace→xicheng-zoo": {
+      "transit_minutes": null,
+      "drive_minutes": 40,
+      "recommended_minutes": 40,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (13.3km apart)"
+    },
+    "hutong-drum-tower→olympic-park": {
+      "transit_minutes": null,
+      "drive_minutes": 11,
+      "recommended_minutes": 11,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (3.5km apart)"
+    },
+    "hutong-drum-tower→xicheng-zoo": {
+      "transit_minutes": null,
+      "drive_minutes": 9,
+      "recommended_minutes": 9,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (2.9km apart)"
+    },
+    "olympic-park→xicheng-zoo": {
+      "transit_minutes": null,
+      "drive_minutes": 19,
+      "recommended_minutes": 19,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (6.4km apart)"
+    }
+  },
+  "hangzhou": {
+    "west-lake-core→west-lake-core": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "longjing-tea→longjing-tea": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "gongshu-canal→gongshu-canal": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "standalone→standalone": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "west-lake-core→longjing-tea": {
+      "transit_minutes": null,
+      "drive_minutes": 15,
+      "recommended_minutes": 15,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (5.0km apart)"
+    },
+    "west-lake-core→gongshu-canal": {
+      "transit_minutes": null,
+      "drive_minutes": 12,
+      "recommended_minutes": 12,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (4.0km apart)"
+    },
+    "west-lake-core→standalone": {
+      "transit_minutes": null,
+      "drive_minutes": 71,
+      "recommended_minutes": 71,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (23.8km apart)"
+    },
+    "longjing-tea→gongshu-canal": {
+      "transit_minutes": null,
+      "drive_minutes": 3,
+      "recommended_minutes": 3,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (1.1km apart)"
+    },
+    "longjing-tea→standalone": {
+      "transit_minutes": null,
+      "drive_minutes": 58,
+      "recommended_minutes": 58,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (19.2km apart)"
+    },
+    "gongshu-canal→standalone": {
+      "transit_minutes": null,
+      "drive_minutes": 60,
+      "recommended_minutes": 60,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (19.9km apart)"
+    }
+  },
+  "xian": {
+    "lintong-east→lintong-east": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "old-city-centre→old-city-centre": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "yanta-district→yanta-district": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "lintong-east→old-city-centre": {
+      "transit_minutes": null,
+      "drive_minutes": 70,
+      "recommended_minutes": 70,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (23.5km apart)"
+    },
+    "lintong-east→yanta-district": {
+      "transit_minutes": null,
+      "drive_minutes": 81,
+      "recommended_minutes": 81,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (27.0km apart)"
+    },
+    "old-city-centre→yanta-district": {
+      "transit_minutes": null,
+      "drive_minutes": 30,
+      "recommended_minutes": 30,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (10.1km apart)"
+    }
+  },
+  "guilin": {
+    "guilin-city→guilin-city": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "longji-terraces→longji-terraces": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "yangshuo-valley→yangshuo-valley": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "guilin-city→longji-terraces": {
+      "transit_minutes": null,
+      "drive_minutes": 216,
+      "recommended_minutes": 216,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (71.9km apart)"
+    },
+    "guilin-city→yangshuo-valley": {
+      "transit_minutes": null,
+      "drive_minutes": 128,
+      "recommended_minutes": 128,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (42.7km apart)"
+    },
+    "longji-terraces→yangshuo-valley": {
+      "transit_minutes": null,
+      "drive_minutes": 343,
+      "recommended_minutes": 343,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (114.4km apart)"
+    }
+  },
+  "changsha": {
+    "yuelu-mountain→yuelu-mountain": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "kaifu-museum→kaifu-museum": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "wuyi-city-centre→wuyi-city-centre": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "standalone→standalone": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "yuelu-mountain→kaifu-museum": {
+      "transit_minutes": null,
+      "drive_minutes": 15,
+      "recommended_minutes": 15,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (5.0km apart)"
+    },
+    "yuelu-mountain→wuyi-city-centre": {
+      "transit_minutes": null,
+      "drive_minutes": 61,
+      "recommended_minutes": 61,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (20.5km apart)"
+    },
+    "yuelu-mountain→standalone": {
+      "transit_minutes": null,
+      "drive_minutes": 31,
+      "recommended_minutes": 31,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (10.4km apart)"
+    },
+    "kaifu-museum→wuyi-city-centre": {
+      "transit_minutes": null,
+      "drive_minutes": 75,
+      "recommended_minutes": 75,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (24.9km apart)"
+    },
+    "kaifu-museum→standalone": {
+      "transit_minutes": null,
+      "drive_minutes": 44,
+      "recommended_minutes": 44,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (14.6km apart)"
+    },
+    "wuyi-city-centre→standalone": {
+      "transit_minutes": null,
+      "drive_minutes": 59,
+      "recommended_minutes": 59,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (19.8km apart)"
+    }
+  },
+  "zhangjiajie": {
+    "wulingyuan-core→wulingyuan-core": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "city-south→city-south": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "standalone→standalone": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "wulingyuan-core→city-south": {
+      "transit_minutes": null,
+      "drive_minutes": 40,
+      "recommended_minutes": 40,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (13.2km apart)"
+    },
+    "wulingyuan-core→standalone": {
+      "transit_minutes": null,
+      "drive_minutes": 253,
+      "recommended_minutes": 253,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (84.2km apart)"
+    },
+    "city-south→standalone": {
+      "transit_minutes": null,
+      "drive_minutes": 234,
+      "recommended_minutes": 234,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (78.1km apart)"
+    }
+  },
+  "yunnan": {
+    "lijiang-core→lijiang-core": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "dali-core→dali-core": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "shangri-la→shangri-la": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "kunming-city→kunming-city": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "lijiang-core→dali-core": {
+      "transit_minutes": null,
+      "drive_minutes": 434,
+      "recommended_minutes": 434,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (144.6km apart)"
+    },
+    "lijiang-core→shangri-la": {
+      "transit_minutes": null,
+      "drive_minutes": 435,
+      "recommended_minutes": 435,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (145.1km apart)"
+    },
+    "lijiang-core→kunming-city": {
+      "transit_minutes": null,
+      "drive_minutes": 1109,
+      "recommended_minutes": 1109,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (369.8km apart)"
+    },
+    "dali-core→shangri-la": {
+      "transit_minutes": null,
+      "drive_minutes": 834,
+      "recommended_minutes": 834,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (278.0km apart)"
+    },
+    "dali-core→kunming-city": {
+      "transit_minutes": null,
+      "drive_minutes": 923,
+      "recommended_minutes": 923,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (307.8km apart)"
+    },
+    "shangri-la→kunming-city": {
+      "transit_minutes": null,
+      "drive_minutes": 1523,
+      "recommended_minutes": 1523,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (507.7km apart)"
+    }
+  },
+  "suzhou": {
+    "gusu-old-town→gusu-old-town": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "gusu-west→gusu-west": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "water-towns→water-towns": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "gusu-old-town→gusu-west": {
+      "transit_minutes": null,
+      "drive_minutes": 14,
+      "recommended_minutes": 14,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (4.7km apart)"
+    },
+    "gusu-old-town→water-towns": {
+      "transit_minutes": null,
+      "drive_minutes": 84,
+      "recommended_minutes": 84,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (28.0km apart)"
+    },
+    "gusu-west→water-towns": {
+      "transit_minutes": null,
+      "drive_minutes": 96,
+      "recommended_minutes": 96,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (32.1km apart)"
+    }
+  },
+  "jiuzhaigou": {
+    "jiuzhaigou-rize→jiuzhaigou-rize": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "jiuzhaigou-shuzheng→jiuzhaigou-shuzheng": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "jiuzhaigou-zechawa→jiuzhaigou-zechawa": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "jiuzhaigou-rize→jiuzhaigou-shuzheng": {
+      "transit_minutes": null,
+      "drive_minutes": 9,
+      "recommended_minutes": 9,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (3.1km apart)"
+    },
+    "jiuzhaigou-rize→jiuzhaigou-zechawa": {
+      "transit_minutes": null,
+      "drive_minutes": 6,
+      "recommended_minutes": 6,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (1.9km apart)"
+    },
+    "jiuzhaigou-shuzheng→jiuzhaigou-zechawa": {
+      "transit_minutes": null,
+      "drive_minutes": 14,
+      "recommended_minutes": 14,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (4.7km apart)"
+    }
+  },
+  "harbin": {
+    "songbei-north→songbei-north": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "daoli-central→daoli-central": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "songbei-north→daoli-central": {
+      "transit_minutes": null,
+      "drive_minutes": 4,
+      "recommended_minutes": 4,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (1.4km apart)"
+    }
+  },
+  "changbaishan": {
+    "north-slope→north-slope": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "wanda-resort→wanda-resort": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "erdaobai-town→erdaobai-town": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "yanji-city→yanji-city": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "north-slope→wanda-resort": {
+      "transit_minutes": null,
+      "drive_minutes": 120,
+      "recommended_minutes": 120,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (40.0km apart)"
+    },
+    "north-slope→erdaobai-town": {
+      "transit_minutes": null,
+      "drive_minutes": 179,
+      "recommended_minutes": 179,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (59.6km apart)"
+    },
+    "north-slope→yanji-city": {
+      "transit_minutes": null,
+      "drive_minutes": 467,
+      "recommended_minutes": 467,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (155.8km apart)"
+    },
+    "wanda-resort→erdaobai-town": {
+      "transit_minutes": null,
+      "drive_minutes": 272,
+      "recommended_minutes": 272,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (90.8km apart)"
+    },
+    "wanda-resort→yanji-city": {
+      "transit_minutes": null,
+      "drive_minutes": 564,
+      "recommended_minutes": 564,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (188.1km apart)"
+    },
+    "erdaobai-town→yanji-city": {
+      "transit_minutes": null,
+      "drive_minutes": 292,
+      "recommended_minutes": 292,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (97.4km apart)"
+    }
+  },
+  "sanya": {
+    "haitang-bay→haitang-bay": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "yalong-bay→yalong-bay": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "sanya-bay→sanya-bay": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "tianya-haijiao→tianya-haijiao": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "haitang-bay→yalong-bay": {
+      "transit_minutes": null,
+      "drive_minutes": 11,
+      "recommended_minutes": 11,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (3.6km apart)"
+    },
+    "haitang-bay→sanya-bay": {
+      "transit_minutes": null,
+      "drive_minutes": 77,
+      "recommended_minutes": 77,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (25.7km apart)"
+    },
+    "haitang-bay→tianya-haijiao": {
+      "transit_minutes": null,
+      "drive_minutes": 138,
+      "recommended_minutes": 138,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (46.1km apart)"
+    },
+    "yalong-bay→sanya-bay": {
+      "transit_minutes": null,
+      "drive_minutes": 80,
+      "recommended_minutes": 80,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (26.5km apart)"
+    },
+    "yalong-bay→tianya-haijiao": {
+      "transit_minutes": null,
+      "drive_minutes": 142,
+      "recommended_minutes": 142,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (47.5km apart)"
+    },
+    "sanya-bay→tianya-haijiao": {
+      "transit_minutes": null,
+      "drive_minutes": 64,
+      "recommended_minutes": 64,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (21.4km apart)"
+    }
+  },
+  "xiamen": {
+    "gulangyu-island→gulangyu-island": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "siming-south→siming-south": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "tulou-day-trip→tulou-day-trip": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "jimei→jimei": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "gulangyu-island→siming-south": {
+      "transit_minutes": null,
+      "drive_minutes": 9,
+      "recommended_minutes": 9,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (3.1km apart)"
+    },
+    "gulangyu-island→tulou-day-trip": {
+      "transit_minutes": null,
+      "drive_minutes": 336,
+      "recommended_minutes": 336,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (112.0km apart)"
+    },
+    "gulangyu-island→jimei": {
+      "transit_minutes": null,
+      "drive_minutes": 50,
+      "recommended_minutes": 50,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (16.5km apart)"
+    },
+    "siming-south→tulou-day-trip": {
+      "transit_minutes": null,
+      "drive_minutes": 345,
+      "recommended_minutes": 345,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (115.1km apart)"
+    },
+    "siming-south→jimei": {
+      "transit_minutes": null,
+      "drive_minutes": 51,
+      "recommended_minutes": 51,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (17.0km apart)"
+    },
+    "tulou-day-trip→jimei": {
+      "transit_minutes": null,
+      "drive_minutes": 328,
+      "recommended_minutes": 328,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (109.4km apart)"
+    }
+  },
+  "huangshan": {
+    "huangshan-front→huangshan-front": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "hongcun-xidi→hongcun-xidi": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "tunxi-oldstreet→tunxi-oldstreet": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "huangshan-back→huangshan-back": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "huangshan-front→hongcun-xidi": {
+      "transit_minutes": null,
+      "drive_minutes": 101,
+      "recommended_minutes": 101,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (33.7km apart)"
+    },
+    "huangshan-front→tunxi-oldstreet": {
+      "transit_minutes": null,
+      "drive_minutes": 146,
+      "recommended_minutes": 146,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (48.7km apart)"
+    },
+    "huangshan-front→huangshan-back": {
+      "transit_minutes": null,
+      "drive_minutes": 9,
+      "recommended_minutes": 9,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (3.2km apart)"
+    },
+    "hongcun-xidi→tunxi-oldstreet": {
+      "transit_minutes": null,
+      "drive_minutes": 119,
+      "recommended_minutes": 119,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (39.6km apart)"
+    },
+    "hongcun-xidi→huangshan-back": {
+      "transit_minutes": null,
+      "drive_minutes": 110,
+      "recommended_minutes": 110,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (36.7km apart)"
+    },
+    "tunxi-oldstreet→huangshan-back": {
+      "transit_minutes": null,
+      "drive_minutes": 149,
+      "recommended_minutes": 149,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (49.8km apart)"
+    }
+  },
+  "nanjing": {
+    "zhongshan-scenic→zhongshan-scenic": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "qinhuai-district→qinhuai-district": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "daxinggong→daxinggong": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "city-north→city-north": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "zhongshan-scenic→qinhuai-district": {
+      "transit_minutes": null,
+      "drive_minutes": 18,
+      "recommended_minutes": 18,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (5.9km apart)"
+    },
+    "zhongshan-scenic→daxinggong": {
+      "transit_minutes": null,
+      "drive_minutes": 13,
+      "recommended_minutes": 13,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (4.4km apart)"
+    },
+    "zhongshan-scenic→city-north": {
+      "transit_minutes": null,
+      "drive_minutes": 19,
+      "recommended_minutes": 19,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (6.4km apart)"
+    },
+    "qinhuai-district→daxinggong": {
+      "transit_minutes": null,
+      "drive_minutes": 14,
+      "recommended_minutes": 14,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (4.6km apart)"
+    },
+    "qinhuai-district→city-north": {
+      "transit_minutes": null,
+      "drive_minutes": 13,
+      "recommended_minutes": 13,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (4.5km apart)"
+    },
+    "daxinggong→city-north": {
+      "transit_minutes": null,
+      "drive_minutes": 6,
+      "recommended_minutes": 6,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (2.1km apart)"
+    }
+  },
+  "qingdao": {
+    "zhongshan-road→zhongshan-road": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "eight-passes→eight-passes": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "signal-hill→signal-hill": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "laoshan→laoshan": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "wusi-square→wusi-square": {
+      "transit_minutes": 10,
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "zhongshan-road→eight-passes": {
+      "transit_minutes": null,
+      "drive_minutes": 9,
+      "recommended_minutes": 9,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (3.1km apart)"
+    },
+    "zhongshan-road→signal-hill": {
+      "transit_minutes": null,
+      "drive_minutes": 6,
+      "recommended_minutes": 6,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (2.1km apart)"
+    },
+    "zhongshan-road→laoshan": {
+      "transit_minutes": null,
+      "drive_minutes": 95,
+      "recommended_minutes": 95,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (31.7km apart)"
+    },
+    "zhongshan-road→wusi-square": {
+      "transit_minutes": null,
+      "drive_minutes": 18,
+      "recommended_minutes": 18,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (6.1km apart)"
+    },
+    "eight-passes→signal-hill": {
+      "transit_minutes": null,
+      "drive_minutes": 10,
+      "recommended_minutes": 10,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (3.3km apart)"
+    },
+    "eight-passes→laoshan": {
+      "transit_minutes": null,
+      "drive_minutes": 91,
+      "recommended_minutes": 91,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (30.2km apart)"
+    },
+    "eight-passes→wusi-square": {
+      "transit_minutes": null,
+      "drive_minutes": 11,
+      "recommended_minutes": 11,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (3.8km apart)"
+    },
+    "signal-hill→laoshan": {
+      "transit_minutes": null,
+      "drive_minutes": 89,
+      "recommended_minutes": 89,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (29.7km apart)"
+    },
+    "signal-hill→wusi-square": {
+      "transit_minutes": null,
+      "drive_minutes": 14,
+      "recommended_minutes": 14,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (4.8km apart)"
+    },
+    "laoshan→wusi-square": {
+      "transit_minutes": null,
+      "drive_minutes": 79,
+      "recommended_minutes": 79,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (26.5km apart)"
+    }
+  }
+}
