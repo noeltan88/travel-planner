@@ -84,6 +84,17 @@ async function routesCall(originLat, originLng, destLat, destLng, travelMode) {
   await sleep(SLEEP_MS);
   apiCallCount++;
   try {
+    const body = {
+      origin:                   { location: { latLng: { latitude: originLat, longitude: originLng } } },
+      destination:              { location: { latLng: { latitude: destLat,   longitude: destLng   } } },
+      travelMode,
+      computeAlternativeRoutes: false,
+    };
+    // Transit requires a departure time to return routes
+    if (travelMode === 'TRANSIT') {
+      body.departureTime = '2026-06-15T09:00:00Z';
+    }
+
     const res = await fetch(BASE, {
       method:  'POST',
       headers: {
@@ -91,12 +102,7 @@ async function routesCall(originLat, originLng, destLat, destLng, travelMode) {
         'X-Goog-Api-Key':    KEY,
         'X-Goog-FieldMask':  'routes.duration,routes.distanceMeters',
       },
-      body: JSON.stringify({
-        origin:                   { location: { latLng: { latitude: originLat, longitude: originLng } } },
-        destination:              { location: { latLng: { latitude: destLat,   longitude: destLng   } } },
-        travelMode,
-        computeAlternativeRoutes: false,
-      }),
+      body: JSON.stringify(body),
     });
 
     if (!res.ok) {
@@ -137,15 +143,7 @@ async function main() {
 
   for (const [cityKey, cityData] of Object.entries(db.cities)) {
 
-    // Resume: skip city if already done
-    if (out[cityKey]) {
-      const n = Object.keys(out[cityKey]).length;
-      console.log(`  ↷ ${cityData.name} — already done (${n} pairs) — skipping`);
-      grandPairs += n;
-      continue;
-    }
-
-    // ── Build cluster centroid map ───────────────────────────────────────────
+    // ── Build cluster centroid map (always needed) ───────────────────────────
     const clusterMap = {}; // { clusterKey: [attraction, ...] }
     for (const a of cityData.attractions) {
       const c = a.cluster_group;
@@ -163,109 +161,140 @@ async function main() {
       if (cen) centroids[c] = cen;
     }
 
-    console.log(`\n── ${cityData.name} (${clusters.length} clusters)`);
+    // ── Check whether this city needs any work ───────────────────────────────
+    // Seed cityResult from existing data so we preserve drive times
+    const cityResult = out[cityKey] ? { ...out[cityKey] } : {};
 
-    const cityResult = {};
+    const crossPairs = [];
+    for (let i = 0; i < clusters.length; i++) {
+      for (let j = i + 1; j < clusters.length; j++) {
+        crossPairs.push([clusters[i], clusters[j]]);
+      }
+    }
+
+    const needsWork = crossPairs.some(([cA, cB]) => {
+      const ex = cityResult[`${cA}→${cB}`];
+      // Needs work if pair is missing entirely, or transit_minutes is still null
+      return !ex || ex.transit_minutes == null;
+    });
+
+    if (!needsWork) {
+      const n = Object.keys(cityResult).length;
+      console.log(`  ↷ ${cityData.name} — fully done (${n} pairs) — skipping`);
+      grandPairs += n;
+      continue;
+    }
+
+    console.log(`\n── ${cityData.name} (${clusters.length} clusters)`);
 
     // ── Same-cluster defaults (no API calls) ─────────────────────────────────
     for (const c of clusters) {
       const key = `${c}→${c}`;
-      cityResult[key] = {
-        transit_minutes:     10,
-        drive_minutes:       5,
-        recommended_minutes: 10,
-        recommended_mode:    'walk',
-        note:                'Walking distance within cluster',
-      };
+      if (!cityResult[key]) {
+        cityResult[key] = {
+          transit_minutes:     10,
+          drive_minutes:       5,
+          recommended_minutes: 10,
+          recommended_mode:    'walk',
+          note:                'Walking distance within cluster',
+        };
+      }
     }
 
     // ── Cross-cluster pairs ──────────────────────────────────────────────────
-    for (let i = 0; i < clusters.length; i++) {
-      for (let j = i + 1; j < clusters.length; j++) {
-        const cA = clusters[i];
-        const cB = clusters[j];
-        const cenA = centroids[cA];
-        const cenB = centroids[cB];
+    for (const [cA, cB] of crossPairs) {
+      const cenA    = centroids[cA];
+      const cenB    = centroids[cB];
+      const pairKey = `${cA}→${cB}`;
+      const existing = cityResult[pairKey];
 
-        const pairKey = `${cA}→${cB}`;
-        process.stdout.write(`  ${pairKey} … `);
+      // Skip only if both transit AND drive are already populated
+      if (existing?.transit_minutes != null && existing?.drive_minutes != null) {
+        process.stdout.write(`  ${pairKey} — ✓ complete, skip\n`);
+        grandPairs++;
+        continue;
+      }
 
-        // If either centroid is missing coords — fallback immediately
-        if (!cenA || !cenB) {
-          const note = 'estimated — missing centroid coordinates';
+      process.stdout.write(`  ${pairKey} … `);
+
+      // If either centroid is missing coords — fallback immediately
+      if (!cenA || !cenB) {
+        if (!existing) {
           cityResult[pairKey] = {
             transit_minutes:     null,
             drive_minutes:       null,
             recommended_minutes: null,
             recommended_mode:    'taxi',
-            note,
+            note:                'estimated — missing centroid coordinates',
           };
-          process.stdout.write(`no coords\n`);
-          continue;
         }
+        process.stdout.write(`no coords\n`);
+        grandPairs++;
+        continue;
+      }
 
-        // ── Transit call ──────────────────────────────────────────────────────
-        const transitRes = await routesCall(cenA.lat, cenA.lng, cenB.lat, cenB.lng, 'TRANSIT');
-        const transitMins = transitRes?.durationMins ?? null;
+      // ── Transit call (always re-fetch if null) ────────────────────────────
+      const transitRes  = await routesCall(cenA.lat, cenA.lng, cenB.lat, cenB.lng, 'TRANSIT');
+      const transitMins = transitRes?.durationMins ?? null;
 
-        // ── Drive call ────────────────────────────────────────────────────────
-        const driveRes   = await routesCall(cenA.lat, cenA.lng, cenB.lat, cenB.lng, 'DRIVE');
-        const driveMins  = driveRes?.durationMins ?? null;
+      // ── Drive call (skip if already have it) ──────────────────────────────
+      let driveMins = existing?.drive_minutes ?? null;
+      if (driveMins == null) {
+        const driveRes = await routesCall(cenA.lat, cenA.lng, cenB.lat, cenB.lng, 'DRIVE');
+        driveMins = driveRes?.durationMins ?? null;
+      }
 
-        // ── Fallback if both fail ─────────────────────────────────────────────
-        let finalTransit = transitMins;
-        let finalDrive   = driveMins;
-        let isFallback   = false;
+      // ── Fallback if both still null ───────────────────────────────────────
+      let finalTransit = transitMins;
+      let finalDrive   = driveMins;
+      let isFallback   = false;
 
-        if (finalTransit == null && finalDrive == null) {
-          const distKm      = haversine(cenA.lat, cenA.lng, cenB.lat, cenB.lng);
-          const estimateMins = Math.round(distKm * 3);
-          finalDrive  = estimateMins;
-          isFallback  = true;
-        }
+      if (finalTransit == null && finalDrive == null) {
+        const distKm      = haversine(cenA.lat, cenA.lng, cenB.lat, cenB.lng);
+        finalDrive  = Math.round(distKm * 3);
+        isFallback  = true;
+      }
 
-        // ── Determine recommendation ──────────────────────────────────────────
-        let recommended_minutes;
-        let recommended_mode;
+      // ── Determine recommendation ──────────────────────────────────────────
+      let recommended_minutes;
+      let recommended_mode;
 
-        if (finalTransit != null && finalDrive != null) {
-          const transitLag = finalTransit - finalDrive;
-          if (transitLag <= 10) {
-            // Transit within 10 min of drive → prefer transit
-            recommended_mode    = 'transit';
-            recommended_minutes = finalTransit;
-          } else {
-            recommended_mode    = 'taxi';
-            recommended_minutes = finalDrive;
-          }
-        } else if (finalTransit != null) {
+      if (finalTransit != null && finalDrive != null) {
+        const transitLag = finalTransit - finalDrive;
+        if (transitLag <= 10) {
           recommended_mode    = 'transit';
           recommended_minutes = finalTransit;
         } else {
           recommended_mode    = 'taxi';
           recommended_minutes = finalDrive;
         }
-
-        const note = isFallback
-          ? `estimated — no route data (${haversine(cenA.lat, cenA.lng, cenB.lat, cenB.lng).toFixed(1)}km apart)`
-          : buildNote(finalTransit, finalDrive, recommended_mode);
-
-        cityResult[pairKey] = {
-          transit_minutes:     finalTransit,
-          drive_minutes:       finalDrive,
-          recommended_minutes,
-          recommended_mode,
-          note,
-        };
-
-        process.stdout.write(
-          `transit ${finalTransit != null ? finalTransit + 'min' : 'N/A'}`
-          + ` / drive ${finalDrive != null ? finalDrive + 'min' : 'N/A'}`
-          + ` → ${recommended_mode} ${recommended_minutes}min\n`,
-        );
-
-        grandPairs++;
+      } else if (finalTransit != null) {
+        recommended_mode    = 'transit';
+        recommended_minutes = finalTransit;
+      } else {
+        recommended_mode    = 'taxi';
+        recommended_minutes = finalDrive;
       }
+
+      const note = isFallback
+        ? `estimated — no route data (${haversine(cenA.lat, cenA.lng, cenB.lat, cenB.lng).toFixed(1)}km apart)`
+        : buildNote(finalTransit, finalDrive, recommended_mode);
+
+      cityResult[pairKey] = {
+        transit_minutes:     finalTransit,
+        drive_minutes:       finalDrive,
+        recommended_minutes,
+        recommended_mode,
+        note,
+      };
+
+      process.stdout.write(
+        `transit ${finalTransit != null ? finalTransit + 'min' : 'N/A'}`
+        + ` / drive ${finalDrive != null ? finalDrive + 'min' : 'N/A'}`
+        + ` → ${recommended_mode} ${recommended_minutes}min\n`,
+      );
+
+      grandPairs++;
     }
 
     out[cityKey] = cityResult;
