@@ -480,38 +480,48 @@ function buildCityDays(city, scoredPool, iconAttractions, kidsAttractions, foodP
       dayStops.push(a);
     }
 
-    // ── 0. Icon injection (guaranteed, spread evenly across days) ─
+    // Pass 1 — check if a standalone will be placed today BEFORE injecting icons.
+    // Standalone attractions (e.g. Great Wall, 76km out) and city icons (e.g. Temple
+    // of Heaven) must never share a day — the round-trip transit between them burns
+    // the entire remaining budget.
+    const willPlaceStandalone = !noStandalone && standaloneQ.some(a => canAdd(a));
+
+    // ── 0. Icon injection — skipped on standalone days ────────────────────────
     //    Bypasses vibe score, energy level, and cluster rules.
     //    Still respects effectiveMax and time budget.
-    const todayIcons = iconSchedule.filter(q => q.dayIdx === dayIdx);
-    for (const { icon } of todayIcons) {
-      if (usedIds.has(icon.id)) continue;          // already placed earlier
-      if (icon.landmark_group && usedLandmarkGroups.has(icon.landmark_group)) continue; // dedup
-      if (dayStops.length >= effectiveMax) break;
-      const cluster     = icon.cluster_group || '_default';
-      const transitCost = dayStops.length === 0 ? 0
-        : getClusterTravelMinutes(city, prevCluster, cluster) / 60;
-      const needed = (icon.duration_hrs ?? 2) + transitCost;
-      if (needed > available) {
-        console.log(`[algo] Day ${dayIdx + 1}: icon "${icon.name}" skipped — no time (need ${needed.toFixed(1)}h, have ${available.toFixed(1)}h)`);
-        continue;
+    if (!willPlaceStandalone) {
+      const todayIcons = iconSchedule.filter(q => q.dayIdx === dayIdx);
+      for (const { icon } of todayIcons) {
+        if (usedIds.has(icon.id)) continue;          // already placed earlier
+        if (icon.landmark_group && usedLandmarkGroups.has(icon.landmark_group)) continue; // dedup
+        if (dayStops.length >= effectiveMax) break;
+        const cluster     = icon.cluster_group || '_default';
+        const transitCost = dayStops.length === 0 ? 0
+          : getClusterTravelMinutes(city, prevCluster, cluster) / 60;
+        const needed = (icon.duration_hrs ?? 2) + transitCost;
+        if (needed > available) {
+          console.log(`[algo] Day ${dayIdx + 1}: icon "${icon.name}" skipped — no time (need ${needed.toFixed(1)}h, have ${available.toFixed(1)}h)`);
+          continue;
+        }
+        available  -= needed;
+        prevCluster = cluster;
+        clustersUsed.add(cluster);
+        usedIds.add(icon.id);
+        if (icon.landmark_group) usedLandmarkGroups.add(icon.landmark_group);
+        dayStops.push(icon);
+        console.log(`[algo] Day ${dayIdx + 1}: 📍 icon "${icon.name}" injected`);
       }
-      available  -= needed;
-      prevCluster = cluster;
-      clustersUsed.add(cluster);
-      usedIds.add(icon.id);
-      if (icon.landmark_group) usedLandmarkGroups.add(icon.landmark_group);
-      dayStops.push(icon);
-      console.log(`[algo] Day ${dayIdx + 1}: 📍 icon "${icon.name}" injected`);
     }
 
     // ── 1. Standalone injection (never on Day 1 — noStandalone flag) ────────
+    let standaloneUsedToday = false;
     if (!noStandalone) {
       const wasFirstStop = dayStops.length === 0;
       const sa = standaloneQ.find(a => canAdd(a));
       if (sa) {
         standaloneQ = standaloneQ.filter(a => a.id !== sa.id);
         addStop(sa);
+        standaloneUsedToday = true;
 
         // BUG 1 FIX (day-trip deduction): if the standalone was the first stop of
         // the day and is far from city clusters (> 60 min away), deduct the outbound
