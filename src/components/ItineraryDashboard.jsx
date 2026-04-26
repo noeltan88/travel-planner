@@ -15,7 +15,6 @@
  */
 import { useRef, useState, useEffect } from 'react';
 import DayTimeline from './DayTimeline';
-import HotelCard from './HotelCard';
 import PracticalTips from './PracticalTips';
 import PrintView from './PrintView';
 import { exportToPDF } from '../utils/pdfExport';
@@ -330,6 +329,235 @@ function MapFAB({ onClick }) {
         />
       </svg>
     </button>
+  );
+}
+
+// ── Hotel accordion card ──────────────────────────────────────────────────────
+function HotelAccordionCard({ hotel, agodaHref }) {
+  const [imgErr, setImgErr] = useState(false);
+  return (
+    <div style={{
+      margin: '0 10px',
+      background: '#fff',
+      borderRadius: 12,
+      overflow: 'hidden',
+      boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+      borderLeft: '3px solid #E8472A',
+    }}>
+      {/* Photo / gradient fallback */}
+      {hotel.photo_url && !imgErr ? (
+        <img
+          src={hotel.photo_url}
+          alt={hotel.name}
+          onError={() => setImgErr(true)}
+          style={{ width: '100%', height: 130, objectFit: 'cover', display: 'block' }}
+        />
+      ) : (
+        <div style={{
+          width: '100%', height: 130,
+          background: 'linear-gradient(135deg, rgba(232,71,42,0.18), rgba(26,26,26,0.12))',
+        }} />
+      )}
+
+      {/* Content */}
+      <div style={{ padding: 12 }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 8 }}>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <p style={{ fontSize: 15, fontWeight: 500, color: '#1A1A1A', margin: 0, lineHeight: 1.3 }}>
+              {hotel.name}
+            </p>
+            {hotel.chinese && (
+              <p style={{ fontSize: 11, color: '#999', margin: '2px 0 0' }}>{hotel.chinese}</p>
+            )}
+            {hotel.area && (
+              <p style={{ fontSize: 11, color: '#999', margin: '4px 0 0' }}>📍 {hotel.area}</p>
+            )}
+            {hotel.rating != null && (
+              <p style={{ fontSize: 12, color: '#999', margin: '4px 0 0' }}>
+                ⭐ {hotel.rating}
+                {hotel.reviews != null ? ` · ${hotel.reviews} reviews` : ''}
+              </p>
+            )}
+          </div>
+          {hotel.price && (
+            <p style={{ fontSize: 15, fontWeight: 500, color: '#1A1A1A', flexShrink: 0, margin: 0 }}>
+              {hotel.price}
+            </p>
+          )}
+        </div>
+
+        {/* Agoda CTA */}
+        <a
+          href={agodaHref}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            display: 'block', marginTop: 10,
+            height: 44, lineHeight: '44px', textAlign: 'center',
+            background: '#1A1A1A', color: '#fff',
+            fontSize: 13, fontWeight: 500,
+            borderRadius: 10, textDecoration: 'none',
+          }}
+        >
+          Check on Agoda →
+        </a>
+      </div>
+    </div>
+  );
+}
+
+// ── Where to stay section ─────────────────────────────────────────────────────
+function WhereToStay({ cities, days, quizAnswers }) {
+  // Distinct sightseeing city keys, in visit order, intersected with itinerary cities list
+  const visitedCities = [...new Set(
+    days
+      .filter(d => !d.isTravelDay && !d.isSplitTravelDay && d.city)
+      .map(d => d.city),
+  )].filter(ck => cities.includes(ck));
+
+  const defaultCity = visitedCities[0] || cities[0] || '';
+  const [selectedCity, setSelectedCity] = useState(defaultCity);
+  const [openTier,     setOpenTier]     = useState('luxury'); // luxury expanded by default
+
+  const cityData  = loadCityData(selectedCity);
+  const allHotels = cityData?.hotels || [];
+  const cityName  = cityData?.name   || selectedCity;
+  const checkIn   = quizAnswers?.departure_date || '';
+  const checkOut  = quizAnswers?.return_date    || '';
+
+  const byTier = tier =>
+    allHotels
+      .filter(h => h.budget_tier === tier)
+      .sort((a, b) => (b.rating ?? 0) - (a.rating ?? 0))
+      .slice(0, 5);
+
+  const TIERS = [
+    { key: 'luxury', emoji: '👑', label: 'Luxury',    hotels: byTier('luxury') },
+    { key: 'mid',    emoji: '🏨', label: 'Mid-range', hotels: byTier('mid')    },
+    { key: 'budget', emoji: '💰', label: 'Budget',    hotels: byTier('budget') },
+  ];
+
+  function agodaHref(hotel) {
+    const p = new URLSearchParams({ city: cityName, adults: '2', textToSearch: hotel.name });
+    if (checkIn)  p.set('checkIn',  checkIn);
+    if (checkOut) p.set('checkOut', checkOut);
+    return `https://www.agoda.com/search?${p}`;
+  }
+
+  function toggleTier(tier) {
+    setOpenTier(prev => (prev === tier ? null : tier));
+  }
+
+  return (
+    <div style={{ padding: '8px 0 24px' }}>
+
+      {/* Section divider */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '8px 16px 20px' }}>
+        <div style={{ flex: 1, height: 1, background: LINE_COL }} />
+        <span style={{ fontSize: 12, color: '#999', fontWeight: 500 }}>🏨 Where to stay</span>
+        <div style={{ flex: 1, height: 1, background: LINE_COL }} />
+      </div>
+
+      {/* Header */}
+      <div style={{ padding: '0 16px 4px' }}>
+        <h2 style={{ fontSize: 22, fontWeight: 500, color: '#1A1A1A', margin: 0, lineHeight: 1.3 }}>
+          Where to stay in {cityName}?
+        </h2>
+        <p style={{ fontSize: 13, color: '#999', margin: '4px 0 0' }}>
+          Recommended based on your stops
+        </p>
+      </div>
+
+      {/* City selector pills — multi-city trips only */}
+      {visitedCities.length > 1 && (
+        <div style={{
+          display: 'flex', gap: 8, padding: '12px 16px 4px',
+          overflowX: 'auto', scrollbarWidth: 'none', msOverflowStyle: 'none',
+        }}>
+          {visitedCities.map(ck => {
+            const nm  = loadCityData(ck)?.name || ck;
+            const sel = ck === selectedCity;
+            return (
+              <button
+                key={ck}
+                onClick={() => setSelectedCity(ck)}
+                style={{
+                  flexShrink: 0, padding: '6px 16px', borderRadius: 20,
+                  border: sel ? 'none' : `1px solid ${LINE_COL}`,
+                  background: sel ? ACCENT : '#fff',
+                  color:      sel ? '#fff' : '#1A1A1A',
+                  fontSize: 13, fontWeight: 500, cursor: 'pointer',
+                }}
+              >
+                {nm}
+              </button>
+            );
+          })}
+        </div>
+      )}
+
+      {/* Accordion */}
+      <div style={{ padding: '16px 16px 0', display: 'flex', flexDirection: 'column', gap: 10 }}>
+        {TIERS.map(({ key, emoji, label, hotels }) => {
+          const isOpen = openTier === key;
+          return (
+            <div
+              key={key}
+              style={{ borderRadius: 14, overflow: 'hidden', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}
+            >
+              {/* Section header */}
+              <button
+                onClick={() => toggleTier(key)}
+                style={{
+                  width: '100%', background: '#fff', border: 'none',
+                  borderBottom: isOpen ? `2px solid ${ACCENT}` : 'none',
+                  padding: 16, display: 'flex', alignItems: 'center',
+                  cursor: 'pointer', gap: 10,
+                }}
+              >
+                <span style={{ fontSize: 20, lineHeight: 1, flexShrink: 0 }}>{emoji}</span>
+                <span style={{ fontSize: 15, fontWeight: 500, color: '#1A1A1A', flex: 1, textAlign: 'left' }}>
+                  {label}
+                </span>
+                <span style={{ fontSize: 13, color: '#999', flexShrink: 0 }}>
+                  {hotels.length} hotel{hotels.length !== 1 ? 's' : ''}
+                </span>
+                <span style={{
+                  fontSize: 18, color: '#999', flexShrink: 0, lineHeight: 1, marginLeft: 2,
+                  display: 'inline-block',
+                  transform: isOpen ? 'rotate(90deg)' : 'rotate(0deg)',
+                  transition: 'transform 0.2s ease',
+                }}>
+                  ›
+                </span>
+              </button>
+
+              {/* Expanded hotel list */}
+              {isOpen && (
+                <div style={{
+                  background: '#F5F4F2', padding: '10px 0 10px',
+                  display: 'flex', flexDirection: 'column', gap: 10,
+                }}>
+                  {hotels.length === 0 ? (
+                    <p style={{ padding: '8px 16px', fontSize: 13, color: '#999', margin: 0 }}>
+                      No hotels available in this category
+                    </p>
+                  ) : (
+                    hotels.map(hotel => (
+                      <HotelAccordionCard
+                        key={hotel.id}
+                        hotel={hotel}
+                        agodaHref={agodaHref(hotel)}
+                      />
+                    ))
+                  )}
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
   );
 }
 
@@ -712,16 +940,12 @@ export default function ItineraryDashboard({
           );
         })}
 
-        {/* ── Hotel card ───────────────────────────────────────────────── */}
-        <div style={{ padding: '12px 0 0' }}>
-          <HotelCard
-            hotel={hotel}
-            otherHotels={
-              itinerary.hotels?.filter(h => h.id !== hotel?.id).slice(0, 3)
-              ?? otherHotels
-            }
-          />
-        </div>
+        {/* ── Where to stay accordion ─────────────────────────────────── */}
+        <WhereToStay
+          cities={cities || [primaryCity]}
+          days={days}
+          quizAnswers={quizAnswers}
+        />
 
         {/* ── Export / share ───────────────────────────────────────────── */}
         <ExportSection
