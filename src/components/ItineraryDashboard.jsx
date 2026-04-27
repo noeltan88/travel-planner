@@ -332,6 +332,92 @@ function MapFAB({ onClick }) {
   );
 }
 
+// ── Inline hotel strip — shown on first day of each city ─────────────────────
+function InlineHotelStrip({ cityKey, quizAnswers }) {
+  const cityData  = loadCityData(cityKey);
+  const allHotels = cityData?.hotels || [];
+  const cityName  = cityData?.name   || cityKey;
+  const checkIn   = quizAnswers?.departure_date || '';
+  const checkOut  = quizAnswers?.return_date    || '';
+
+  const TIER_LABELS = { luxury: 'Luxury', mid: 'Mid-range', budget: 'Budget' };
+  const TIER_EMOJIS = { luxury: '👑', mid: '🏨', budget: '💰' };
+
+  const hotelCards = ['luxury', 'mid', 'budget'].map(tier => ({
+    tier,
+    hotel: allHotels
+      .filter(h => h.budget_tier === tier)
+      .sort((a, b) => (b.rating ?? 0) - (a.rating ?? 0))[0],
+  })).filter(x => x.hotel);
+
+  console.log(`[InlineHotelStrip] city=${cityKey} total hotels=${allHotels.length} cards=${hotelCards.length}`);
+
+  if (hotelCards.length === 0) return null;
+
+  function agodaHref(hotel) {
+    const p = new URLSearchParams({ city: cityName, adults: '2', textToSearch: hotel.name });
+    if (checkIn)  p.set('checkIn',  checkIn);
+    if (checkOut) p.set('checkOut', checkOut);
+    return `https://www.agoda.com/search?${p}`;
+  }
+
+  return (
+    <div style={{ padding: '0 0 12px' }}>
+      <p style={{
+        fontSize: 10, fontWeight: 700, color: '#999', letterSpacing: 1,
+        margin: '0 0 8px', padding: '0 16px', textTransform: 'uppercase',
+      }}>
+        🏨 Where to stay in {cityName}
+      </p>
+      <div style={{
+        display: 'flex', gap: 10, overflowX: 'auto', padding: '0 16px 2px',
+        scrollbarWidth: 'none', msOverflowStyle: 'none',
+      }}>
+        {hotelCards.map(({ tier, hotel }) => (
+          <a
+            key={tier}
+            href={agodaHref(hotel)}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              flexShrink: 0, width: 160,
+              background: '#fff', borderRadius: 12,
+              boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+              textDecoration: 'none', overflow: 'hidden',
+              display: 'flex', flexDirection: 'column',
+              borderTop: `2px solid ${ACCENT}`,
+            }}
+          >
+            <div style={{ padding: '8px 10px 4px' }}>
+              <p style={{ fontSize: 10, fontWeight: 700, color: ACCENT, margin: 0, letterSpacing: 0.5 }}>
+                {TIER_EMOJIS[tier]} {TIER_LABELS[tier].toUpperCase()}
+              </p>
+            </div>
+            <div style={{ padding: '4px 10px 10px', flex: 1, display: 'flex', flexDirection: 'column', gap: 2 }}>
+              <p style={{
+                fontSize: 13, fontWeight: 500, color: '#1A1A1A', margin: 0, lineHeight: 1.3,
+                overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box',
+                WebkitLineClamp: 2, WebkitBoxOrient: 'vertical',
+              }}>
+                {hotel.name}
+              </p>
+              {hotel.price && (
+                <p style={{ fontSize: 12, color: '#666', margin: '2px 0 0' }}>{hotel.price}</p>
+              )}
+              {hotel.rating != null && (
+                <p style={{ fontSize: 11, color: '#999', margin: '2px 0 0' }}>⭐ {hotel.rating}</p>
+              )}
+              <p style={{ fontSize: 11, color: ACCENT, fontWeight: 600, margin: '6px 0 0' }}>
+                Book on Agoda →
+              </p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 // ── Hotel accordion card ──────────────────────────────────────────────────────
 function HotelAccordionCard({ hotel, agodaHref }) {
   const [imgErr, setImgErr] = useState(false);
@@ -852,6 +938,14 @@ export default function ItineraryDashboard({
                 cityEmoji={cityEmoji}
                 estimatedSpend={estimatedSpend}
               />
+
+              {/* ── Hotel strip — first sightseeing day of each city ─────── */}
+              {day.cityHeader && !isTransitDay && (
+                <InlineHotelStrip
+                  cityKey={day.city || primaryCity}
+                  quizAnswers={quizAnswers}
+                />
+              )}
 
               {/* ── Full travel day (long journey, no stops) ────────────── */}
               {isTravelDay && (

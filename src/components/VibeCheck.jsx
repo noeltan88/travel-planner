@@ -627,11 +627,18 @@ export default function VibeCheck({ selectedCities, onComplete }) {
     const { vibeArr, topCat } = finalData;
     const catKey  = topCat || vibeArr[0] || 'scenic';
     const catTags = VIBE_CATEGORIES.find(c => c.key === catKey)?.tags || [];
-    const picks   = Object.values(masterDb.cities || {})
-      .flatMap(city => (city.attractions || []).map(a => ({ ...a, cityName: city.name })))
-      .filter(a => a.vibe_tags?.some(t => catTags.includes(t)))
-      .sort((a, b) => (b.google_rating || 0) - (a.google_rating || 0))
-      .slice(0, 3);
+    // FIX 1: Filter to selected cities first; fall back to all cities if fewer than 3 matches
+    const cityEntries       = Object.entries(masterDb.cities || {});
+    const selectedEntries   = selectedCities?.length > 0
+      ? cityEntries.filter(([ck]) => selectedCities.includes(ck))
+      : cityEntries;
+    const makePickPool = (entries) =>
+      entries
+        .flatMap(([, city]) => (city.attractions || []).map(a => ({ ...a, cityName: city.name })))
+        .filter(a => a.vibe_tags?.some(t => catTags.includes(t)))
+        .sort((a, b) => (b.google_rating || 0) - (a.google_rating || 0));
+    const filteredPool = makePickPool(selectedEntries);
+    const picks = (filteredPool.length >= 3 ? filteredPool : makePickPool(cityEntries)).slice(0, 3);
 
     return (
       /* FIX 1: fixed outer */
