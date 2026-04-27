@@ -1,0 +1,512 @@
+{
+  "japan": {
+    "tokyo": {
+      "emoji": "🗼",
+      "tagline": "Where Ancient Temples Meet Neon Skies",
+      "clusters": [
+        "shinjuku-shibuya",
+        "asakusa-ueno",
+        "akihabara-ginza",
+        "harajuku-omotesando",
+        "odaiba-waterfront",
+        "roppongi-azabu"
+      ]
+    },
+    "osaka": {
+      "emoji": "🏯",
+      "tagline": "Japan's Kitchen and Soul",
+      "clusters": [
+        "dotonbori-namba",
+        "osaka-castle-tenmabashi",
+        "umeda-north",
+        "shinsekai-tennoji",
+        "bay-area-kaiyukan"
+      ]
+    },
+    "kyoto": {
+      "emoji": "⛩️",
+      "tagline": "A Thousand Temples, One Ancient Soul",
+      "clusters": [
+        "arashiyama-sagano",
+        "gion-higashiyama",
+        "fushimi-inari",
+        "downtown-nishiki",
+        "kinkakuji-ryoanji"
+      ]
+    },
+    "hiroshima": {
+      "emoji": "☮️",
+      "tagline": "From the Ashes, A City Reborn",
+      "clusters": [
+        "peace-memorial-park",
+        "miyajima-island",
+        "downtown-hondori",
+        "ujina-waterfront"
+      ]
+    },
+    "nara": {
+      "emoji": "🦌",
+      "tagline": "Ancient Capital Where Deer Roam Free",
+      "clusters": [
+        "nara-park-todaiji",
+        "naramachi-old-town",
+        "kasuga-shrine-area",
+        "ikaruga-horyuji"
+      ]
+    },
+    "hakone": {
+      "emoji": "🗻",
+      "tagline": "Fuji Views, Hot Springs and Mountain Air",
+      "clusters": [
+        "hakone-yumoto-onsen",
+        "owakudani-lake-ashi",
+        "gora-miyanoshita",
+        "sengokuhara-susono"
+      ]
+    },
+    "nikko": {
+      "emoji": "🌿",
+      "tagline": "Ornate Shrines Hidden in Ancient Forest",
+      "clusters": [
+        "toshogu-shrine-area",
+        "chuzenji-lake-kegon",
+        "nikko-town-centre",
+        "kinugawa-onsen"
+      ]
+    },
+    "sapporo": {
+      "emoji": "❄️",
+      "tagline": "Snow, Beer and Wide Open Horizons",
+      "clusters": [
+        "susukino-odori-park",
+        "sapporo-clock-tower-area",
+        "hokkaido-university-area",
+        "moerenuma-park",
+        "otaru-nearby"
+      ]
+    },
+    "fukuoka": {
+      "emoji": "🍜",
+      "tagline": "Ramen, Nightlife and Hakata Soul",
+      "clusters": [
+        "hakata-station-area",
+        "tenjin-downtown",
+        "canal-city-waterfront",
+        "ohori-park-maizuru",
+        "dazaifu-nearby"
+      ]
+    },
+    "nagasaki": {
+      "emoji": "🔔",
+      "tagline": "Where East and West Met for Centuries",
+      "clusters": [
+        "peace-park-hypocenter",
+        "dejima-glover-garden",
+        "chinatown-shinchi",
+        "mount-inasa-viewpoint"
+      ]
+    },
+    "kanazawa": {
+      "emoji": "🌸",
+      "tagline": "Little Kyoto With a Local Soul",
+      "clusters": [
+        "kenroku-en-castle",
+        "higashi-chaya-geisha",
+        "omicho-market-area",
+        "katamachi-downtown",
+        "nishi-chaya-teramachi"
+      ]
+    },
+    "yokohama": {
+      "emoji": "🎡",
+      "tagline": "Port City Where Japan Opened to the World",
+      "clusters": [
+        "minato-mirai-waterfront",
+        "chinatown-motomachi",
+        "yamashita-park-area",
+        "isezakicho-kannai"
+      ]
+    },
+    "kamakura": {
+      "emoji": "🪷",
+      "tagline": "Great Buddha, Bamboo Paths and Sea Breezes",
+      "clusters": [
+        "kotoku-in-great-buddha",
+        "engakuji-kita-kamakura",
+        "komachi-dori-tsurugaoka",
+        "enoshima-coast"
+      ]
+    },
+    "okinawa": {
+      "emoji": "🏖️",
+      "tagline": "Tropical Paradise at Japan's Southern Edge",
+      "clusters": [
+        "naha-shuri-castle",
+        "kokusai-dori-downtown",
+        "churaumi-aquarium-north",
+        "american-village-central",
+        "kerama-islands"
+      ]
+    },
+    "kawaguchiko": {
+      "emoji": "🗻",
+      "tagline": "The Perfect Frame for Mount Fuji",
+      "clusters": [
+        "kawaguchiko-north-shore",
+        "kawaguchiko-south-shore",
+        "fuji-five-lakes-area",
+        "aokigahara-jukai",
+        "fujiyoshida-town"
+      ]
+    }
+  },
+  "south_korea": {
+    "seoul": {
+      "emoji": "🏙️",
+      "tagline": "K-Culture, Palaces and Midnight Ramyeon",
+      "clusters": [
+        "gyeongbokgung-bukchon",
+        "myeongdong-namsan",
+        "hongdae-sinchon",
+        "itaewon-hannam",
+        "gangnam-apgujeong",
+        "insadong-jongno"
+      ]
+    },
+    "busan": {
+      "emoji": "🌊",
+      "tagline": "Korea's Coastal Soul",
+      "clusters": [
+        "haeundae-beach",
+        "gamcheon-culture-village",
+        "jagalchi-nampo-market",
+        "gwangalli-millak",
+        "haedong-yonggungsa"
+      ]
+    },
+    "jeju": {
+      "emoji": "🌺",
+      "tagline": "Volcanic Island of Waterfalls and Black Rock",
+      "clusters": [
+        "jeju-city-centre",
+        "hallasan-mountain",
+        "seongsan-ilchulbong",
+        "jungmun-resort-south",
+        "manjanggul-cave-east"
+      ]
+    },
+    "gyeongju": {
+      "emoji": "🏛️",
+      "tagline": "Open Air Museum of the Silla Kingdom",
+      "clusters": [
+        "bulguksa-seokguram",
+        "tumuli-park-daereungwon",
+        "gyeongju-downtown",
+        "anapji-pond-area",
+        "namsan-mountain"
+      ]
+    },
+    "jeonju": {
+      "emoji": "🏮",
+      "tagline": "Bibimbap, Hanok Villages and Korean Tradition",
+      "clusters": [
+        "hanok-village-core",
+        "jeonju-downtown-palpal",
+        "omokdae-imokdae",
+        "deokjin-park"
+      ]
+    },
+    "suwon": {
+      "emoji": "🏰",
+      "tagline": "A UNESCO Fortress City South of Seoul",
+      "clusters": [
+        "hwaseong-fortress",
+        "suwon-downtown-paldal",
+        "korean-folk-village-nearby",
+        "gwanggyo-lake-park"
+      ]
+    },
+    "sokcho": {
+      "emoji": "🏔️",
+      "tagline": "Gateway to Seoraksan and the East Sea",
+      "clusters": [
+        "seoraksan-national-park",
+        "sokcho-beach-downtown",
+        "abai-village-lagoon",
+        "naksansa-temple-coast"
+      ]
+    },
+    "andong": {
+      "emoji": "🎭",
+      "tagline": "The Heart of Korean Confucian Culture",
+      "clusters": [
+        "hahoe-folk-village",
+        "andong-downtown",
+        "dosan-seowon-confucian",
+        "andong-mask-dance-area"
+      ]
+    },
+    "tongyeong": {
+      "emoji": "⚓",
+      "tagline": "The Naples of Korea on the Southern Coast",
+      "clusters": [
+        "tongyeong-harbour-downtown",
+        "hansan-island-nearby",
+        "cable-car-mireuk-mountain",
+        "dongpirang-mural-village"
+      ]
+    },
+    "incheon": {
+      "emoji": "🛬",
+      "tagline": "Korea's Gateway With a Character of Its Own",
+      "clusters": [
+        "songdo-international-city",
+        "incheon-chinatown-jayu-park",
+        "wolmido-island",
+        "ganghwa-island-nearby"
+      ]
+    }
+  },
+  "thailand": {
+    "bangkok": {
+      "emoji": "🛕",
+      "tagline": "Temples, Street Food and Controlled Chaos",
+      "clusters": [
+        "rattanakosin-grand-palace",
+        "khao-san-banglamphu",
+        "chinatown-yaowarat",
+        "silom-sathorn",
+        "sukhumvit-asok",
+        "chatuchak-ari"
+      ]
+    },
+    "chiang_mai": {
+      "emoji": "🌸",
+      "tagline": "Ancient Moat City in the Mountain North",
+      "clusters": [
+        "old-city-moat",
+        "nimman-maya-area",
+        "sunday-walking-street",
+        "doi-suthep-mountain",
+        "elephants-mae-taeng-valley"
+      ]
+    },
+    "phuket": {
+      "emoji": "🏖️",
+      "tagline": "Andaman Beaches and Island Escapes",
+      "clusters": [
+        "patong-beach",
+        "phuket-old-town",
+        "kata-karon-south",
+        "surin-bang-tao-north",
+        "phang-nga-bay-nearby"
+      ]
+    },
+    "krabi": {
+      "emoji": "🧗",
+      "tagline": "Limestone Cliffs, Emerald Water, Pure Magic",
+      "clusters": [
+        "ao-nang-beach",
+        "railay-beach",
+        "krabi-town",
+        "four-islands-nearby",
+        "tiger-cave-temple"
+      ]
+    },
+    "koh_samui": {
+      "emoji": "🌴",
+      "tagline": "Gulf Island of Coconut Palms and Full Moon Parties",
+      "clusters": [
+        "chaweng-beach",
+        "lamai-beach",
+        "fisherman-village-bophut",
+        "big-buddha-north",
+        "nathon-town"
+      ]
+    },
+    "ayutthaya": {
+      "emoji": "🏯",
+      "tagline": "Ruined Kingdom Where History Sits in the Open Air",
+      "clusters": [
+        "ayutthaya-historical-park",
+        "wat-phra-si-sanphet-area",
+        "bang-pa-in-palace",
+        "ayutthaya-town-centre"
+      ]
+    },
+    "chiang_rai": {
+      "emoji": "☕",
+      "tagline": "White Temples, Hill Tribes and Golden Triangle",
+      "clusters": [
+        "white-temple-rong-khun",
+        "chiang-rai-town-centre",
+        "golden-triangle-sop-ruak",
+        "blue-temple-rong-suea-ten",
+        "doi-tung-mountain"
+      ]
+    },
+    "pattaya": {
+      "emoji": "🎡",
+      "tagline": "Beach Resort That Never Sleeps",
+      "clusters": [
+        "pattaya-beach-walking-street",
+        "jomtien-beach",
+        "sanctuary-of-truth",
+        "nong-nooch-garden",
+        "koh-larn-island"
+      ]
+    },
+    "hua_hin": {
+      "emoji": "🏄",
+      "tagline": "Royal Beach Town South of Bangkok",
+      "clusters": [
+        "hua-hin-beach-downtown",
+        "night-market-cicada",
+        "sam-roi-yot-national-park",
+        "khao-takiab-temple-hill"
+      ]
+    },
+    "kanchanaburi": {
+      "emoji": "🌉",
+      "tagline": "Death Railway, River Kwai and Jungle Waterfalls",
+      "clusters": [
+        "bridge-over-river-kwai",
+        "kanchanaburi-town-war-cemetery",
+        "erawan-waterfall-national-park",
+        "hellfire-pass-memorial"
+      ]
+    },
+    "sukhothai": {
+      "emoji": "🪔",
+      "tagline": "Cradle of Thai Civilisation",
+      "clusters": [
+        "sukhothai-historical-park",
+        "si-satchanalai-historical-park",
+        "sukhothai-new-town",
+        "ramkhamhaeng-national-park"
+      ]
+    },
+    "pai": {
+      "emoji": "🌄",
+      "tagline": "Hippie Valley in the Northern Mountains",
+      "clusters": [
+        "pai-walking-street-centre",
+        "pai-canyon-yun-lai-viewpoint",
+        "mo-paeng-waterfall",
+        "wat-mae-yen-hilltop"
+      ]
+    }
+  },
+  "vietnam": {
+    "hanoi": {
+      "emoji": "🏛️",
+      "tagline": "A Thousand Years of History on Every Corner",
+      "clusters": [
+        "old-quarter-hoan-kiem",
+        "french-quarter-ba-dinh",
+        "ho-chi-minh-mausoleum-area",
+        "tay-ho-west-lake",
+        "dong-xuan-market"
+      ]
+    },
+    "ho_chi_minh_city": {
+      "emoji": "🛵",
+      "tagline": "Relentless Energy, Street Food and History",
+      "clusters": [
+        "district1-ben-thanh",
+        "district3-reunification-palace",
+        "binh-thanh-thu-duc",
+        "chinatown-cholon-district5",
+        "phu-my-hung-district7"
+      ]
+    },
+    "da_nang": {
+      "emoji": "🌉",
+      "tagline": "Dragon Bridges, White Sand and Easy Living",
+      "clusters": [
+        "my-khe-beach",
+        "dragon-bridge-han-river",
+        "marble-mountains",
+        "son-tra-peninsula-monkey-mountain",
+        "ba-na-hills-nearby"
+      ]
+    },
+    "hoi_an": {
+      "emoji": "🏮",
+      "tagline": "Lantern Town Frozen Beautifully in Time",
+      "clusters": [
+        "ancient-town-core",
+        "an-bang-beach",
+        "cam-kim-island",
+        "tra-que-vegetable-village",
+        "cua-dai-beach"
+      ]
+    },
+    "ha_long_bay": {
+      "emoji": "🛶",
+      "tagline": "Three Thousand Limestone Islands Rising from the Sea",
+      "clusters": [
+        "ha-long-bay-cruise-area",
+        "bai-tu-long-bay",
+        "cat-ba-island",
+        "ha-long-city-town",
+        "lan-ha-bay"
+      ]
+    },
+    "hue": {
+      "emoji": "👑",
+      "tagline": "Imperial City of Palaces, Tombs and Royal Cuisine",
+      "clusters": [
+        "imperial-citadel-core",
+        "royal-tombs-south",
+        "thien-mu-pagoda-riverside",
+        "hue-downtown-dong-ba",
+        "lang-co-beach-nearby"
+      ]
+    },
+    "nha_trang": {
+      "emoji": "🏖️",
+      "tagline": "Vietnam's Beach Capital with Russian Flair",
+      "clusters": [
+        "nha-trang-beach-downtown",
+        "po-nagar-cham-towers",
+        "vinpearl-island",
+        "doc-let-beach-north",
+        "dam-market-area"
+      ]
+    },
+    "sapa": {
+      "emoji": "🌾",
+      "tagline": "Rice Terraces, Hill Tribes and Mountain Mist",
+      "clusters": [
+        "sapa-town-centre",
+        "fansipan-mountain",
+        "muong-hoa-valley-rice-terraces",
+        "cat-cat-village",
+        "ta-van-lao-chai-village"
+      ]
+    },
+    "da_lat": {
+      "emoji": "🌹",
+      "tagline": "City of Eternal Spring and Strawberry Fields",
+      "clusters": [
+        "da-lat-downtown-xuan-huong",
+        "crazy-house-linh-phuoc",
+        "langbiang-mountain",
+        "flower-gardens-valley-love",
+        "prenn-falls-elephant-waterfall"
+      ]
+    },
+    "phu_quoc": {
+      "emoji": "🐠",
+      "tagline": "Pearl Island at Vietnam's Tropical Southern Tip",
+      "clusters": [
+        "duong-dong-town-night-market",
+        "long-beach-phu-quoc",
+        "vinwonders-grand-world",
+        "sao-beach-an-thoi-south",
+        "northern-national-park"
+      ]
+    }
+  }
+}
