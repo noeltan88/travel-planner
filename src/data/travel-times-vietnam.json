@@ -1,0 +1,922 @@
+{
+  "hanoi": {
+    "old-quarter-hoan-kiem→old-quarter-hoan-kiem": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "french-quarter-ba-dinh→french-quarter-ba-dinh": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "ho-chi-minh-mausoleum-area→ho-chi-minh-mausoleum-area": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "tay-ho-west-lake→tay-ho-west-lake": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "dong-xuan-market→dong-xuan-market": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "old-quarter-hoan-kiem→french-quarter-ba-dinh": {
+      "drive_minutes": 20,
+      "recommended_minutes": 20,
+      "recommended_mode": "taxi",
+      "note": "Grab recommended — faster and cheaper than metered taxi"
+    },
+    "old-quarter-hoan-kiem→ho-chi-minh-mausoleum-area": {
+      "drive_minutes": 22,
+      "recommended_minutes": 22,
+      "recommended_mode": "taxi",
+      "note": "Grab or taxi — allow extra time in Old Quarter traffic"
+    },
+    "old-quarter-hoan-kiem→tay-ho-west-lake": {
+      "drive_minutes": 17,
+      "recommended_minutes": 17,
+      "recommended_mode": "taxi",
+      "note": "Grab recommended — faster and cheaper than metered taxi"
+    },
+    "old-quarter-hoan-kiem→dong-xuan-market": {
+      "drive_minutes": 9,
+      "recommended_minutes": 9,
+      "recommended_mode": "taxi",
+      "note": "Grab recommended — faster and cheaper than metered taxi"
+    },
+    "french-quarter-ba-dinh→ho-chi-minh-mausoleum-area": {
+      "drive_minutes": 14,
+      "recommended_minutes": 14,
+      "recommended_mode": "taxi",
+      "note": "Grab recommended — faster and cheaper than metered taxi"
+    },
+    "french-quarter-ba-dinh→tay-ho-west-lake": {
+      "drive_minutes": 21,
+      "recommended_minutes": 21,
+      "recommended_mode": "taxi",
+      "note": "Grab or taxi — allow extra time in Old Quarter traffic"
+    },
+    "french-quarter-ba-dinh→dong-xuan-market": {
+      "drive_minutes": 17,
+      "recommended_minutes": 17,
+      "recommended_mode": "taxi",
+      "note": "Grab recommended — faster and cheaper than metered taxi"
+    },
+    "ho-chi-minh-mausoleum-area→tay-ho-west-lake": {
+      "drive_minutes": 26,
+      "recommended_minutes": 26,
+      "recommended_mode": "taxi",
+      "note": "Grab or taxi — allow extra time in Old Quarter traffic"
+    },
+    "ho-chi-minh-mausoleum-area→dong-xuan-market": {
+      "drive_minutes": 19,
+      "recommended_minutes": 19,
+      "recommended_mode": "taxi",
+      "note": "Grab recommended — faster and cheaper than metered taxi"
+    },
+    "tay-ho-west-lake→dong-xuan-market": {
+      "drive_minutes": 13,
+      "recommended_minutes": 13,
+      "recommended_mode": "taxi",
+      "note": "Grab recommended — faster and cheaper than metered taxi"
+    }
+  },
+  "ho_chi_minh_city": {
+    "district1-ben-thanh→district1-ben-thanh": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "district3-reunification-palace→district3-reunification-palace": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "binh-thanh-thu-duc→binh-thanh-thu-duc": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "chinatown-cholon-district5→chinatown-cholon-district5": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "phu-my-hung-district7→phu-my-hung-district7": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "district1-ben-thanh→district3-reunification-palace": {
+      "drive_minutes": 5,
+      "recommended_minutes": 5,
+      "recommended_mode": "taxi",
+      "note": "Grab recommended — avoid metered taxis"
+    },
+    "district1-ben-thanh→binh-thanh-thu-duc": {
+      "drive_minutes": 125,
+      "recommended_minutes": 125,
+      "recommended_mode": "taxi",
+      "note": "Grab or taxi — peak-hour traffic significant"
+    },
+    "district1-ben-thanh→chinatown-cholon-district5": {
+      "drive_minutes": 12,
+      "recommended_minutes": 12,
+      "recommended_mode": "taxi",
+      "note": "Grab recommended — avoid metered taxis"
+    },
+    "district1-ben-thanh→phu-my-hung-district7": {
+      "drive_minutes": 122,
+      "recommended_minutes": 122,
+      "recommended_mode": "taxi",
+      "note": "Grab or taxi — peak-hour traffic significant"
+    },
+    "district3-reunification-palace→binh-thanh-thu-duc": {
+      "drive_minutes": 120,
+      "recommended_minutes": 120,
+      "recommended_mode": "taxi",
+      "note": "Grab or taxi — peak-hour traffic significant"
+    },
+    "district3-reunification-palace→chinatown-cholon-district5": {
+      "drive_minutes": 12,
+      "recommended_minutes": 12,
+      "recommended_mode": "taxi",
+      "note": "Grab recommended — avoid metered taxis"
+    },
+    "district3-reunification-palace→phu-my-hung-district7": {
+      "drive_minutes": 118,
+      "recommended_minutes": 118,
+      "recommended_mode": "taxi",
+      "note": "Grab or taxi — peak-hour traffic significant"
+    },
+    "binh-thanh-thu-duc→chinatown-cholon-district5": {
+      "drive_minutes": 133,
+      "recommended_minutes": 133,
+      "recommended_mode": "taxi",
+      "note": "Grab or taxi — peak-hour traffic significant"
+    },
+    "binh-thanh-thu-duc→phu-my-hung-district7": {
+      "drive_minutes": 16,
+      "recommended_minutes": 16,
+      "recommended_mode": "taxi",
+      "note": "Grab recommended — avoid metered taxis"
+    },
+    "chinatown-cholon-district5→phu-my-hung-district7": {
+      "drive_minutes": 126,
+      "recommended_minutes": 126,
+      "recommended_mode": "taxi",
+      "note": "Grab or taxi — peak-hour traffic significant"
+    }
+  },
+  "da_nang": {
+    "my-khe-beach→my-khe-beach": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "dragon-bridge-han-river→dragon-bridge-han-river": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "marble-mountains→marble-mountains": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "son-tra-peninsula-monkey-mountain→son-tra-peninsula-monkey-mountain": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "ba-na-hills-nearby→ba-na-hills-nearby": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "my-khe-beach→dragon-bridge-han-river": {
+      "drive_minutes": 13,
+      "recommended_minutes": 13,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "my-khe-beach→marble-mountains": {
+      "drive_minutes": 16,
+      "recommended_minutes": 16,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "my-khe-beach→son-tra-peninsula-monkey-mountain": {
+      "drive_minutes": 42,
+      "recommended_minutes": 42,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "my-khe-beach→ba-na-hills-nearby": {
+      "drive_minutes": 43,
+      "recommended_minutes": 43,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "dragon-bridge-han-river→marble-mountains": {
+      "drive_minutes": 18,
+      "recommended_minutes": 18,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "dragon-bridge-han-river→son-tra-peninsula-monkey-mountain": {
+      "drive_minutes": 32,
+      "recommended_minutes": 32,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "dragon-bridge-han-river→ba-na-hills-nearby": {
+      "drive_minutes": 48,
+      "recommended_minutes": 48,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "marble-mountains→son-tra-peninsula-monkey-mountain": {
+      "drive_minutes": 43,
+      "recommended_minutes": 43,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "marble-mountains→ba-na-hills-nearby": {
+      "drive_minutes": 44,
+      "recommended_minutes": 44,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "son-tra-peninsula-monkey-mountain→ba-na-hills-nearby": {
+      "drive_minutes": 70,
+      "recommended_minutes": 70,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    }
+  },
+  "hoi_an": {
+    "ancient-town-core→ancient-town-core": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "an-bang-beach→an-bang-beach": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "cam-kim-island→cam-kim-island": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "tra-que-vegetable-village→tra-que-vegetable-village": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "cua-dai-beach→cua-dai-beach": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "ancient-town-core→an-bang-beach": {
+      "drive_minutes": 8,
+      "recommended_minutes": 8,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "ancient-town-core→cam-kim-island": {
+      "drive_minutes": 16,
+      "recommended_minutes": 16,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "ancient-town-core→tra-que-vegetable-village": {
+      "drive_minutes": 7,
+      "recommended_minutes": 7,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "ancient-town-core→cua-dai-beach": {
+      "drive_minutes": 13,
+      "recommended_minutes": 13,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "an-bang-beach→cam-kim-island": {
+      "drive_minutes": 17,
+      "recommended_minutes": 17,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "an-bang-beach→tra-que-vegetable-village": {
+      "drive_minutes": 4,
+      "recommended_minutes": 4,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "an-bang-beach→cua-dai-beach": {
+      "drive_minutes": 9,
+      "recommended_minutes": 9,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "cam-kim-island→tra-que-vegetable-village": {
+      "drive_minutes": 17,
+      "recommended_minutes": 17,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "cam-kim-island→cua-dai-beach": {
+      "drive_minutes": 25,
+      "recommended_minutes": 25,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "tra-que-vegetable-village→cua-dai-beach": {
+      "drive_minutes": 12,
+      "recommended_minutes": 12,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    }
+  },
+  "ha_long_bay": {
+    "ha-long-bay-cruise-area→ha-long-bay-cruise-area": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "bai-tu-long-bay→bai-tu-long-bay": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "cat-ba-island→cat-ba-island": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "ha-long-city-town→ha-long-city-town": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "lan-ha-bay→lan-ha-bay": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "ha-long-bay-cruise-area→bai-tu-long-bay": {
+      "drive_minutes": 42,
+      "recommended_minutes": 42,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "ha-long-bay-cruise-area→cat-ba-island": {
+      "drive_minutes": 86,
+      "recommended_minutes": 86,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (28.6 km apart)"
+    },
+    "ha-long-bay-cruise-area→ha-long-city-town": {
+      "drive_minutes": 30,
+      "recommended_minutes": 30,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "ha-long-bay-cruise-area→lan-ha-bay": {
+      "drive_minutes": 117,
+      "recommended_minutes": 117,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "bai-tu-long-bay→cat-ba-island": {
+      "drive_minutes": 65,
+      "recommended_minutes": 65,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (21.7 km apart)"
+    },
+    "bai-tu-long-bay→ha-long-city-town": {
+      "drive_minutes": 20,
+      "recommended_minutes": 20,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "bai-tu-long-bay→lan-ha-bay": {
+      "drive_minutes": 142,
+      "recommended_minutes": 142,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "cat-ba-island→ha-long-city-town": {
+      "drive_minutes": 61,
+      "recommended_minutes": 61,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (20.3 km apart)"
+    },
+    "cat-ba-island→lan-ha-bay": {
+      "drive_minutes": 379,
+      "recommended_minutes": 379,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (126.2 km apart)"
+    },
+    "ha-long-city-town→lan-ha-bay": {
+      "drive_minutes": 128,
+      "recommended_minutes": 128,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    }
+  },
+  "hue": {
+    "imperial-citadel-core→imperial-citadel-core": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "royal-tombs-south→royal-tombs-south": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "thien-mu-pagoda-riverside→thien-mu-pagoda-riverside": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "hue-downtown-dong-ba→hue-downtown-dong-ba": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "lang-co-beach-nearby→lang-co-beach-nearby": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "imperial-citadel-core→royal-tombs-south": {
+      "drive_minutes": 63,
+      "recommended_minutes": 63,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "imperial-citadel-core→thien-mu-pagoda-riverside": {
+      "drive_minutes": 61,
+      "recommended_minutes": 61,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "imperial-citadel-core→hue-downtown-dong-ba": {
+      "drive_minutes": 72,
+      "recommended_minutes": 72,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "imperial-citadel-core→lang-co-beach-nearby": {
+      "drive_minutes": 106,
+      "recommended_minutes": 106,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "royal-tombs-south→thien-mu-pagoda-riverside": {
+      "drive_minutes": 10,
+      "recommended_minutes": 10,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "royal-tombs-south→hue-downtown-dong-ba": {
+      "drive_minutes": 28,
+      "recommended_minutes": 28,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "royal-tombs-south→lang-co-beach-nearby": {
+      "drive_minutes": 74,
+      "recommended_minutes": 74,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "thien-mu-pagoda-riverside→hue-downtown-dong-ba": {
+      "drive_minutes": 27,
+      "recommended_minutes": 27,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "thien-mu-pagoda-riverside→lang-co-beach-nearby": {
+      "drive_minutes": 73,
+      "recommended_minutes": 73,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "hue-downtown-dong-ba→lang-co-beach-nearby": {
+      "drive_minutes": 62,
+      "recommended_minutes": 62,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    }
+  },
+  "nha_trang": {
+    "nha-trang-beach-downtown→nha-trang-beach-downtown": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "po-nagar-cham-towers→po-nagar-cham-towers": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "vinpearl-island→vinpearl-island": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "doc-let-beach-north→doc-let-beach-north": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "dam-market-area→dam-market-area": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "nha-trang-beach-downtown→po-nagar-cham-towers": {
+      "drive_minutes": 14,
+      "recommended_minutes": 14,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "nha-trang-beach-downtown→vinpearl-island": {
+      "drive_minutes": 10,
+      "recommended_minutes": 10,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (3.4 km apart)"
+    },
+    "nha-trang-beach-downtown→doc-let-beach-north": {
+      "drive_minutes": 31,
+      "recommended_minutes": 31,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "nha-trang-beach-downtown→dam-market-area": {
+      "drive_minutes": 12,
+      "recommended_minutes": 12,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "po-nagar-cham-towers→vinpearl-island": {
+      "drive_minutes": 17,
+      "recommended_minutes": 17,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (5.6 km apart)"
+    },
+    "po-nagar-cham-towers→doc-let-beach-north": {
+      "drive_minutes": 42,
+      "recommended_minutes": 42,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "po-nagar-cham-towers→dam-market-area": {
+      "drive_minutes": 16,
+      "recommended_minutes": 16,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "vinpearl-island→doc-let-beach-north": {
+      "drive_minutes": 50,
+      "recommended_minutes": 50,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (16.8 km apart)"
+    },
+    "vinpearl-island→dam-market-area": {
+      "drive_minutes": 18,
+      "recommended_minutes": 18,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (6.1 km apart)"
+    },
+    "doc-let-beach-north→dam-market-area": {
+      "drive_minutes": 35,
+      "recommended_minutes": 35,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    }
+  },
+  "sapa": {
+    "sapa-town-centre→sapa-town-centre": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "fansipan-mountain→fansipan-mountain": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "muong-hoa-valley-rice-terraces→muong-hoa-valley-rice-terraces": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "cat-cat-village→cat-cat-village": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "ta-van-lao-chai-village→ta-van-lao-chai-village": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "sapa-town-centre→fansipan-mountain": {
+      "drive_minutes": 16,
+      "recommended_minutes": 16,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "sapa-town-centre→muong-hoa-valley-rice-terraces": {
+      "drive_minutes": 16,
+      "recommended_minutes": 16,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "sapa-town-centre→cat-cat-village": {
+      "drive_minutes": 11,
+      "recommended_minutes": 11,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "sapa-town-centre→ta-van-lao-chai-village": {
+      "drive_minutes": 17,
+      "recommended_minutes": 17,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "fansipan-mountain→muong-hoa-valley-rice-terraces": {
+      "drive_minutes": 18,
+      "recommended_minutes": 18,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "fansipan-mountain→cat-cat-village": {
+      "drive_minutes": 5,
+      "recommended_minutes": 5,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "fansipan-mountain→ta-van-lao-chai-village": {
+      "drive_minutes": 19,
+      "recommended_minutes": 19,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "muong-hoa-valley-rice-terraces→cat-cat-village": {
+      "drive_minutes": 13,
+      "recommended_minutes": 13,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "muong-hoa-valley-rice-terraces→ta-van-lao-chai-village": {
+      "drive_minutes": 9,
+      "recommended_minutes": 9,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "cat-cat-village→ta-van-lao-chai-village": {
+      "drive_minutes": 14,
+      "recommended_minutes": 14,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    }
+  },
+  "da_lat": {
+    "da-lat-downtown-xuan-huong→da-lat-downtown-xuan-huong": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "crazy-house-linh-phuoc→crazy-house-linh-phuoc": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "langbiang-mountain→langbiang-mountain": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "flower-gardens-valley-love→flower-gardens-valley-love": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "prenn-falls-elephant-waterfall→prenn-falls-elephant-waterfall": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "da-lat-downtown-xuan-huong→crazy-house-linh-phuoc": {
+      "drive_minutes": 8,
+      "recommended_minutes": 8,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "da-lat-downtown-xuan-huong→langbiang-mountain": {
+      "drive_minutes": 9,
+      "recommended_minutes": 9,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "da-lat-downtown-xuan-huong→flower-gardens-valley-love": {
+      "drive_minutes": 9,
+      "recommended_minutes": 9,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "da-lat-downtown-xuan-huong→prenn-falls-elephant-waterfall": {
+      "drive_minutes": 48,
+      "recommended_minutes": 48,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "crazy-house-linh-phuoc→langbiang-mountain": {
+      "drive_minutes": 9,
+      "recommended_minutes": 9,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "crazy-house-linh-phuoc→flower-gardens-valley-love": {
+      "drive_minutes": 10,
+      "recommended_minutes": 10,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "crazy-house-linh-phuoc→prenn-falls-elephant-waterfall": {
+      "drive_minutes": 50,
+      "recommended_minutes": 50,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "langbiang-mountain→flower-gardens-valley-love": {
+      "drive_minutes": 4,
+      "recommended_minutes": 4,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "langbiang-mountain→prenn-falls-elephant-waterfall": {
+      "drive_minutes": 50,
+      "recommended_minutes": 50,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "flower-gardens-valley-love→prenn-falls-elephant-waterfall": {
+      "drive_minutes": 51,
+      "recommended_minutes": 51,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    }
+  },
+  "phu_quoc": {
+    "duong-dong-town-night-market→duong-dong-town-night-market": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "long-beach-phu-quoc→long-beach-phu-quoc": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "vinwonders-grand-world→vinwonders-grand-world": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "sao-beach-an-thoi-south→sao-beach-an-thoi-south": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "northern-national-park→northern-national-park": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "duong-dong-town-night-market→long-beach-phu-quoc": {
+      "drive_minutes": 8,
+      "recommended_minutes": 8,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "duong-dong-town-night-market→vinwonders-grand-world": {
+      "drive_minutes": 38,
+      "recommended_minutes": 38,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "duong-dong-town-night-market→sao-beach-an-thoi-south": {
+      "drive_minutes": 18,
+      "recommended_minutes": 18,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "duong-dong-town-night-market→northern-national-park": {
+      "drive_minutes": 12,
+      "recommended_minutes": 12,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "long-beach-phu-quoc→vinwonders-grand-world": {
+      "drive_minutes": 41,
+      "recommended_minutes": 41,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "long-beach-phu-quoc→sao-beach-an-thoi-south": {
+      "drive_minutes": 21,
+      "recommended_minutes": 21,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "long-beach-phu-quoc→northern-national-park": {
+      "drive_minutes": 16,
+      "recommended_minutes": 16,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "vinwonders-grand-world→sao-beach-an-thoi-south": {
+      "drive_minutes": 50,
+      "recommended_minutes": 50,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "vinwonders-grand-world→northern-national-park": {
+      "drive_minutes": 34,
+      "recommended_minutes": 34,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "sao-beach-an-thoi-south→northern-national-park": {
+      "drive_minutes": 22,
+      "recommended_minutes": 22,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    }
+  }
+}

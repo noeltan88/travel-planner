@@ -1,0 +1,778 @@
+{
+  "seoul": {
+    "gyeongbokgung-bukchon→gyeongbokgung-bukchon": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "myeongdong-namsan→myeongdong-namsan": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "hongdae-sinchon→hongdae-sinchon": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "itaewon-hannam→itaewon-hannam": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "gangnam-apgujeong→gangnam-apgujeong": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "insadong-jongno→insadong-jongno": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "gyeongbokgung-bukchon→myeongdong-namsan": {
+      "drive_minutes": 7,
+      "recommended_minutes": 7,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (2.4 km apart)"
+    },
+    "gyeongbokgung-bukchon→hongdae-sinchon": {
+      "drive_minutes": 15,
+      "recommended_minutes": 15,
+      "recommended_mode": "transit",
+      "note": "estimated — no route data (4.9 km apart)"
+    },
+    "gyeongbokgung-bukchon→itaewon-hannam": {
+      "drive_minutes": 13,
+      "recommended_minutes": 13,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (4.3 km apart)"
+    },
+    "gyeongbokgung-bukchon→gangnam-apgujeong": {
+      "drive_minutes": 25,
+      "recommended_minutes": 25,
+      "recommended_mode": "transit",
+      "note": "estimated — no route data (8.2 km apart)"
+    },
+    "gyeongbokgung-bukchon→insadong-jongno": {
+      "drive_minutes": 4,
+      "recommended_minutes": 4,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (1.2 km apart)"
+    },
+    "myeongdong-namsan→hongdae-sinchon": {
+      "drive_minutes": 15,
+      "recommended_minutes": 15,
+      "recommended_mode": "transit",
+      "note": "estimated — no route data (5.1 km apart)"
+    },
+    "myeongdong-namsan→itaewon-hannam": {
+      "drive_minutes": 6,
+      "recommended_minutes": 6,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (1.9 km apart)"
+    },
+    "myeongdong-namsan→gangnam-apgujeong": {
+      "drive_minutes": 18,
+      "recommended_minutes": 18,
+      "recommended_mode": "transit",
+      "note": "estimated — no route data (6.0 km apart)"
+    },
+    "myeongdong-namsan→insadong-jongno": {
+      "drive_minutes": 4,
+      "recommended_minutes": 4,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (1.4 km apart)"
+    },
+    "hongdae-sinchon→itaewon-hannam": {
+      "drive_minutes": 17,
+      "recommended_minutes": 17,
+      "recommended_mode": "transit",
+      "note": "estimated — no route data (5.8 km apart)"
+    },
+    "hongdae-sinchon→gangnam-apgujeong": {
+      "drive_minutes": 31,
+      "recommended_minutes": 31,
+      "recommended_mode": "transit",
+      "note": "estimated — no route data (10.3 km apart)"
+    },
+    "hongdae-sinchon→insadong-jongno": {
+      "drive_minutes": 16,
+      "recommended_minutes": 16,
+      "recommended_mode": "transit",
+      "note": "estimated — no route data (5.4 km apart)"
+    },
+    "itaewon-hannam→gangnam-apgujeong": {
+      "drive_minutes": 14,
+      "recommended_minutes": 14,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (4.6 km apart)"
+    },
+    "itaewon-hannam→insadong-jongno": {
+      "drive_minutes": 10,
+      "recommended_minutes": 10,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (3.3 km apart)"
+    },
+    "gangnam-apgujeong→insadong-jongno": {
+      "drive_minutes": 21,
+      "recommended_minutes": 21,
+      "recommended_mode": "transit",
+      "note": "estimated — no route data (7.0 km apart)"
+    }
+  },
+  "busan": {
+    "haeundae-beach→haeundae-beach": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "gamcheon-culture-village→gamcheon-culture-village": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "jagalchi-nampo-market→jagalchi-nampo-market": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "gwangalli-millak→gwangalli-millak": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "haedong-yonggungsa→haedong-yonggungsa": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "haeundae-beach→gamcheon-culture-village": {
+      "drive_minutes": 41,
+      "recommended_minutes": 41,
+      "recommended_mode": "transit",
+      "note": "estimated — no route data (13.7 km apart)"
+    },
+    "haeundae-beach→jagalchi-nampo-market": {
+      "drive_minutes": 33,
+      "recommended_minutes": 33,
+      "recommended_mode": "transit",
+      "note": "estimated — no route data (11.2 km apart)"
+    },
+    "haeundae-beach→gwangalli-millak": {
+      "drive_minutes": 10,
+      "recommended_minutes": 10,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (3.3 km apart)"
+    },
+    "haeundae-beach→haedong-yonggungsa": {
+      "drive_minutes": 25,
+      "recommended_minutes": 25,
+      "recommended_mode": "transit",
+      "note": "estimated — no route data (8.3 km apart)"
+    },
+    "gamcheon-culture-village→jagalchi-nampo-market": {
+      "drive_minutes": 8,
+      "recommended_minutes": 8,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (2.6 km apart)"
+    },
+    "gamcheon-culture-village→gwangalli-millak": {
+      "drive_minutes": 37,
+      "recommended_minutes": 37,
+      "recommended_mode": "transit",
+      "note": "estimated — no route data (12.5 km apart)"
+    },
+    "gamcheon-culture-village→haedong-yonggungsa": {
+      "drive_minutes": 66,
+      "recommended_minutes": 66,
+      "recommended_mode": "transit",
+      "note": "estimated — no route data (22.0 km apart)"
+    },
+    "jagalchi-nampo-market→gwangalli-millak": {
+      "drive_minutes": 30,
+      "recommended_minutes": 30,
+      "recommended_mode": "transit",
+      "note": "estimated — no route data (9.9 km apart)"
+    },
+    "jagalchi-nampo-market→haedong-yonggungsa": {
+      "drive_minutes": 58,
+      "recommended_minutes": 58,
+      "recommended_mode": "transit",
+      "note": "estimated — no route data (19.5 km apart)"
+    },
+    "gwangalli-millak→haedong-yonggungsa": {
+      "drive_minutes": 31,
+      "recommended_minutes": 31,
+      "recommended_mode": "transit",
+      "note": "estimated — no route data (10.4 km apart)"
+    }
+  },
+  "jeju": {
+    "jeju-city-centre→jeju-city-centre": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "hallasan-mountain→hallasan-mountain": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "seongsan-ilchulbong→seongsan-ilchulbong": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "jungmun-resort-south→jungmun-resort-south": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "manjanggul-cave-east→manjanggul-cave-east": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "jeju-city-centre→hallasan-mountain": {
+      "drive_minutes": 21,
+      "recommended_minutes": 21,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (6.9 km apart)"
+    },
+    "jeju-city-centre→seongsan-ilchulbong": {
+      "drive_minutes": 105,
+      "recommended_minutes": 105,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (35.1 km apart)"
+    },
+    "jeju-city-centre→jungmun-resort-south": {
+      "drive_minutes": 21,
+      "recommended_minutes": 21,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (7.2 km apart)"
+    },
+    "jeju-city-centre→manjanggul-cave-east": {
+      "drive_minutes": 89,
+      "recommended_minutes": 89,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (29.7 km apart)"
+    },
+    "hallasan-mountain→seongsan-ilchulbong": {
+      "drive_minutes": 124,
+      "recommended_minutes": 124,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (41.3 km apart)"
+    },
+    "hallasan-mountain→jungmun-resort-south": {
+      "drive_minutes": 8,
+      "recommended_minutes": 8,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (2.7 km apart)"
+    },
+    "hallasan-mountain→manjanggul-cave-east": {
+      "drive_minutes": 109,
+      "recommended_minutes": 109,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (36.4 km apart)"
+    },
+    "seongsan-ilchulbong→jungmun-resort-south": {
+      "drive_minutes": 120,
+      "recommended_minutes": 120,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (39.9 km apart)"
+    },
+    "seongsan-ilchulbong→manjanggul-cave-east": {
+      "drive_minutes": 28,
+      "recommended_minutes": 28,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (9.3 km apart)"
+    },
+    "jungmun-resort-south→manjanggul-cave-east": {
+      "drive_minutes": 107,
+      "recommended_minutes": 107,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (35.6 km apart)"
+    }
+  },
+  "gyeongju": {
+    "bulguksa-seokguram→bulguksa-seokguram": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "tumuli-park-daereungwon→tumuli-park-daereungwon": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "gyeongju-downtown→gyeongju-downtown": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "anapji-pond-area→anapji-pond-area": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "namsan-mountain→namsan-mountain": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "bulguksa-seokguram→tumuli-park-daereungwon": {
+      "drive_minutes": 14,
+      "recommended_minutes": 14,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (4.8 km apart)"
+    },
+    "bulguksa-seokguram→gyeongju-downtown": {
+      "drive_minutes": 17,
+      "recommended_minutes": 17,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (5.7 km apart)"
+    },
+    "bulguksa-seokguram→anapji-pond-area": {
+      "drive_minutes": 3,
+      "recommended_minutes": 3,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (0.9 km apart)"
+    },
+    "bulguksa-seokguram→namsan-mountain": {
+      "drive_minutes": 120,
+      "recommended_minutes": 120,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (39.9 km apart)"
+    },
+    "tumuli-park-daereungwon→gyeongju-downtown": {
+      "drive_minutes": 11,
+      "recommended_minutes": 11,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (3.6 km apart)"
+    },
+    "tumuli-park-daereungwon→anapji-pond-area": {
+      "drive_minutes": 14,
+      "recommended_minutes": 14,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (4.7 km apart)"
+    },
+    "tumuli-park-daereungwon→namsan-mountain": {
+      "drive_minutes": 106,
+      "recommended_minutes": 106,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (35.2 km apart)"
+    },
+    "gyeongju-downtown→anapji-pond-area": {
+      "drive_minutes": 15,
+      "recommended_minutes": 15,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (5.0 km apart)"
+    },
+    "gyeongju-downtown→namsan-mountain": {
+      "drive_minutes": 105,
+      "recommended_minutes": 105,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (34.9 km apart)"
+    },
+    "anapji-pond-area→namsan-mountain": {
+      "drive_minutes": 119,
+      "recommended_minutes": 119,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (39.5 km apart)"
+    }
+  },
+  "jeonju": {
+    "hanok-village-core→hanok-village-core": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "jeonju-downtown-palpal→jeonju-downtown-palpal": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "omokdae-imokdae→omokdae-imokdae": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "deokjin-park→deokjin-park": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "hanok-village-core→jeonju-downtown-palpal": {
+      "drive_minutes": 49,
+      "recommended_minutes": 49,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (16.5 km apart)"
+    },
+    "hanok-village-core→omokdae-imokdae": {
+      "drive_minutes": 54,
+      "recommended_minutes": 54,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (18.1 km apart)"
+    },
+    "hanok-village-core→deokjin-park": {
+      "drive_minutes": 46,
+      "recommended_minutes": 46,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (15.3 km apart)"
+    },
+    "jeonju-downtown-palpal→omokdae-imokdae": {
+      "drive_minutes": 6,
+      "recommended_minutes": 6,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (2.1 km apart)"
+    },
+    "jeonju-downtown-palpal→deokjin-park": {
+      "drive_minutes": 4,
+      "recommended_minutes": 4,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (1.4 km apart)"
+    },
+    "omokdae-imokdae→deokjin-park": {
+      "drive_minutes": 8,
+      "recommended_minutes": 8,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (2.8 km apart)"
+    }
+  },
+  "suwon": {
+    "hwaseong-fortress→hwaseong-fortress": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "suwon-downtown-paldal→suwon-downtown-paldal": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "korean-folk-village-nearby→korean-folk-village-nearby": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "gwanggyo-lake-park→gwanggyo-lake-park": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "hwaseong-fortress→suwon-downtown-paldal": {
+      "drive_minutes": 1,
+      "recommended_minutes": 1,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (0.5 km apart)"
+    },
+    "hwaseong-fortress→korean-folk-village-nearby": {
+      "drive_minutes": 34,
+      "recommended_minutes": 34,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (11.5 km apart)"
+    },
+    "hwaseong-fortress→gwanggyo-lake-park": {
+      "drive_minutes": 8,
+      "recommended_minutes": 8,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (2.8 km apart)"
+    },
+    "suwon-downtown-paldal→korean-folk-village-nearby": {
+      "drive_minutes": 34,
+      "recommended_minutes": 34,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (11.2 km apart)"
+    },
+    "suwon-downtown-paldal→gwanggyo-lake-park": {
+      "drive_minutes": 9,
+      "recommended_minutes": 9,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (3.1 km apart)"
+    },
+    "korean-folk-village-nearby→gwanggyo-lake-park": {
+      "drive_minutes": 32,
+      "recommended_minutes": 32,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (10.8 km apart)"
+    }
+  },
+  "sokcho": {
+    "seoraksan-national-park→seoraksan-national-park": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "sokcho-beach-downtown→sokcho-beach-downtown": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "abai-village-lagoon→abai-village-lagoon": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "naksansa-temple-coast→naksansa-temple-coast": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "seoraksan-national-park→sokcho-beach-downtown": {
+      "drive_minutes": 19,
+      "recommended_minutes": 19,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (6.3 km apart)"
+    },
+    "seoraksan-national-park→abai-village-lagoon": {
+      "drive_minutes": 140,
+      "recommended_minutes": 140,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (46.6 km apart)"
+    },
+    "seoraksan-national-park→naksansa-temple-coast": {
+      "drive_minutes": 23,
+      "recommended_minutes": 23,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (7.6 km apart)"
+    },
+    "sokcho-beach-downtown→abai-village-lagoon": {
+      "drive_minutes": 153,
+      "recommended_minutes": 153,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (50.8 km apart)"
+    },
+    "sokcho-beach-downtown→naksansa-temple-coast": {
+      "drive_minutes": 32,
+      "recommended_minutes": 32,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (10.7 km apart)"
+    },
+    "abai-village-lagoon→naksansa-temple-coast": {
+      "drive_minutes": 121,
+      "recommended_minutes": 121,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (40.2 km apart)"
+    }
+  },
+  "andong": {
+    "hahoe-folk-village→hahoe-folk-village": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "andong-downtown→andong-downtown": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "dosan-seowon-confucian→dosan-seowon-confucian": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "andong-mask-dance-area→andong-mask-dance-area": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "hahoe-folk-village→andong-downtown": {
+      "drive_minutes": 41,
+      "recommended_minutes": 41,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (13.5 km apart)"
+    },
+    "hahoe-folk-village→dosan-seowon-confucian": {
+      "drive_minutes": 71,
+      "recommended_minutes": 71,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (23.6 km apart)"
+    },
+    "hahoe-folk-village→andong-mask-dance-area": {
+      "drive_minutes": 28,
+      "recommended_minutes": 28,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (9.3 km apart)"
+    },
+    "andong-downtown→dosan-seowon-confucian": {
+      "drive_minutes": 109,
+      "recommended_minutes": 109,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (36.5 km apart)"
+    },
+    "andong-downtown→andong-mask-dance-area": {
+      "drive_minutes": 14,
+      "recommended_minutes": 14,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (4.7 km apart)"
+    },
+    "dosan-seowon-confucian→andong-mask-dance-area": {
+      "drive_minutes": 96,
+      "recommended_minutes": 96,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (31.9 km apart)"
+    }
+  },
+  "tongyeong": {
+    "tongyeong-harbour-downtown→tongyeong-harbour-downtown": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "hansan-island-nearby→hansan-island-nearby": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "cable-car-mireuk-mountain→cable-car-mireuk-mountain": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "dongpirang-mural-village→dongpirang-mural-village": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "tongyeong-harbour-downtown→hansan-island-nearby": {
+      "drive_minutes": 14,
+      "recommended_minutes": 14,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (4.7 km apart)"
+    },
+    "tongyeong-harbour-downtown→cable-car-mireuk-mountain": {
+      "drive_minutes": 41,
+      "recommended_minutes": 41,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (13.5 km apart)"
+    },
+    "tongyeong-harbour-downtown→dongpirang-mural-village": {
+      "drive_minutes": 106,
+      "recommended_minutes": 106,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (35.2 km apart)"
+    },
+    "hansan-island-nearby→cable-car-mireuk-mountain": {
+      "drive_minutes": 30,
+      "recommended_minutes": 30,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (9.9 km apart)"
+    },
+    "hansan-island-nearby→dongpirang-mural-village": {
+      "drive_minutes": 108,
+      "recommended_minutes": 108,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (36.0 km apart)"
+    },
+    "cable-car-mireuk-mountain→dongpirang-mural-village": {
+      "drive_minutes": 95,
+      "recommended_minutes": 95,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (31.6 km apart)"
+    }
+  },
+  "incheon": {
+    "songdo-international-city→songdo-international-city": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "incheon-chinatown-jayu-park→incheon-chinatown-jayu-park": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "wolmido-island→wolmido-island": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "ganghwa-island-nearby→ganghwa-island-nearby": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "songdo-international-city→incheon-chinatown-jayu-park": {
+      "drive_minutes": 160,
+      "recommended_minutes": 160,
+      "recommended_mode": "transit",
+      "note": "estimated — no route data (53.4 km apart)"
+    },
+    "songdo-international-city→wolmido-island": {
+      "drive_minutes": 162,
+      "recommended_minutes": 162,
+      "recommended_mode": "transit",
+      "note": "estimated — no route data (54.1 km apart)"
+    },
+    "songdo-international-city→ganghwa-island-nearby": {
+      "drive_minutes": 232,
+      "recommended_minutes": 232,
+      "recommended_mode": "transit",
+      "note": "estimated — no route data (77.2 km apart)"
+    },
+    "incheon-chinatown-jayu-park→wolmido-island": {
+      "drive_minutes": 6,
+      "recommended_minutes": 6,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (2.1 km apart)"
+    },
+    "incheon-chinatown-jayu-park→ganghwa-island-nearby": {
+      "drive_minutes": 71,
+      "recommended_minutes": 71,
+      "recommended_mode": "transit",
+      "note": "estimated — no route data (23.7 km apart)"
+    },
+    "wolmido-island→ganghwa-island-nearby": {
+      "drive_minutes": 70,
+      "recommended_minutes": 70,
+      "recommended_mode": "transit",
+      "note": "estimated — no route data (23.2 km apart)"
+    }
+  }
+}

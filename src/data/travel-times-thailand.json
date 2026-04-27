@@ -1,0 +1,992 @@
+{
+  "bangkok": {
+    "rattanakosin-grand-palace→rattanakosin-grand-palace": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "khao-san-banglamphu→khao-san-banglamphu": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "chinatown-yaowarat→chinatown-yaowarat": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "silom-sathorn→silom-sathorn": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "sukhumvit-asok→sukhumvit-asok": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "chatuchak-ari→chatuchak-ari": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "rattanakosin-grand-palace→khao-san-banglamphu": {
+      "drive_minutes": 9,
+      "recommended_minutes": 9,
+      "recommended_mode": "taxi",
+      "note": "BTS Skytrain/MRT available — faster than taxi in traffic"
+    },
+    "rattanakosin-grand-palace→chinatown-yaowarat": {
+      "drive_minutes": 6,
+      "recommended_minutes": 6,
+      "recommended_mode": "taxi",
+      "note": "BTS Skytrain/MRT available — faster than taxi in traffic"
+    },
+    "rattanakosin-grand-palace→silom-sathorn": {
+      "drive_minutes": 16,
+      "recommended_minutes": 16,
+      "recommended_mode": "transit",
+      "note": "BTS Skytrain/MRT available — faster than taxi in traffic"
+    },
+    "rattanakosin-grand-palace→sukhumvit-asok": {
+      "drive_minutes": 25,
+      "recommended_minutes": 25,
+      "recommended_mode": "transit",
+      "note": "Grab or taxi — allow 2× for peak-hour traffic"
+    },
+    "rattanakosin-grand-palace→chatuchak-ari": {
+      "drive_minutes": 17,
+      "recommended_minutes": 17,
+      "recommended_mode": "transit",
+      "note": "BTS Skytrain/MRT available — faster than taxi in traffic"
+    },
+    "khao-san-banglamphu→chinatown-yaowarat": {
+      "drive_minutes": 9,
+      "recommended_minutes": 9,
+      "recommended_mode": "taxi",
+      "note": "BTS Skytrain/MRT available — faster than taxi in traffic"
+    },
+    "khao-san-banglamphu→silom-sathorn": {
+      "drive_minutes": 17,
+      "recommended_minutes": 17,
+      "recommended_mode": "transit",
+      "note": "BTS Skytrain/MRT available — faster than taxi in traffic"
+    },
+    "khao-san-banglamphu→sukhumvit-asok": {
+      "drive_minutes": 26,
+      "recommended_minutes": 26,
+      "recommended_mode": "transit",
+      "note": "Grab or taxi — allow 2× for peak-hour traffic"
+    },
+    "khao-san-banglamphu→chatuchak-ari": {
+      "drive_minutes": 13,
+      "recommended_minutes": 13,
+      "recommended_mode": "taxi",
+      "note": "BTS Skytrain/MRT available — faster than taxi in traffic"
+    },
+    "chinatown-yaowarat→silom-sathorn": {
+      "drive_minutes": 14,
+      "recommended_minutes": 14,
+      "recommended_mode": "taxi",
+      "note": "BTS Skytrain/MRT available — faster than taxi in traffic"
+    },
+    "chinatown-yaowarat→sukhumvit-asok": {
+      "drive_minutes": 23,
+      "recommended_minutes": 23,
+      "recommended_mode": "transit",
+      "note": "Grab or taxi — allow 2× for peak-hour traffic"
+    },
+    "chinatown-yaowarat→chatuchak-ari": {
+      "drive_minutes": 15,
+      "recommended_minutes": 15,
+      "recommended_mode": "transit",
+      "note": "BTS Skytrain/MRT available — faster than taxi in traffic"
+    },
+    "silom-sathorn→sukhumvit-asok": {
+      "drive_minutes": 20,
+      "recommended_minutes": 20,
+      "recommended_mode": "transit",
+      "note": "BTS Skytrain/MRT available — faster than taxi in traffic"
+    },
+    "silom-sathorn→chatuchak-ari": {
+      "drive_minutes": 20,
+      "recommended_minutes": 20,
+      "recommended_mode": "transit",
+      "note": "BTS Skytrain/MRT available — faster than taxi in traffic"
+    },
+    "sukhumvit-asok→chatuchak-ari": {
+      "drive_minutes": 21,
+      "recommended_minutes": 21,
+      "recommended_mode": "transit",
+      "note": "Grab or taxi — allow 2× for peak-hour traffic"
+    }
+  },
+  "chiang_mai": {
+    "old-city-moat→old-city-moat": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "nimman-maya-area→nimman-maya-area": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "sunday-walking-street→sunday-walking-street": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "doi-suthep-mountain→doi-suthep-mountain": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "elephants-mae-taeng-valley→elephants-mae-taeng-valley": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "old-city-moat→nimman-maya-area": {
+      "drive_minutes": 29,
+      "recommended_minutes": 29,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "old-city-moat→sunday-walking-street": {
+      "drive_minutes": 10,
+      "recommended_minutes": 10,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "old-city-moat→doi-suthep-mountain": {
+      "drive_minutes": 58,
+      "recommended_minutes": 58,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "old-city-moat→elephants-mae-taeng-valley": {
+      "drive_minutes": 63,
+      "recommended_minutes": 63,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "nimman-maya-area→sunday-walking-street": {
+      "drive_minutes": 25,
+      "recommended_minutes": 25,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "nimman-maya-area→doi-suthep-mountain": {
+      "drive_minutes": 16,
+      "recommended_minutes": 16,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "nimman-maya-area→elephants-mae-taeng-valley": {
+      "drive_minutes": 67,
+      "recommended_minutes": 67,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "sunday-walking-street→doi-suthep-mountain": {
+      "drive_minutes": 51,
+      "recommended_minutes": 51,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "sunday-walking-street→elephants-mae-taeng-valley": {
+      "drive_minutes": 56,
+      "recommended_minutes": 56,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "doi-suthep-mountain→elephants-mae-taeng-valley": {
+      "drive_minutes": 69,
+      "recommended_minutes": 69,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    }
+  },
+  "phuket": {
+    "patong-beach→patong-beach": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "phuket-old-town→phuket-old-town": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "kata-karon-south→kata-karon-south": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "surin-bang-tao-north→surin-bang-tao-north": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "phang-nga-bay-nearby→phang-nga-bay-nearby": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "patong-beach→phuket-old-town": {
+      "drive_minutes": 29,
+      "recommended_minutes": 29,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "patong-beach→kata-karon-south": {
+      "drive_minutes": 64,
+      "recommended_minutes": 64,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "patong-beach→surin-bang-tao-north": {
+      "drive_minutes": 30,
+      "recommended_minutes": 30,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "patong-beach→phang-nga-bay-nearby": {
+      "drive_minutes": 58,
+      "recommended_minutes": 58,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "phuket-old-town→kata-karon-south": {
+      "drive_minutes": 42,
+      "recommended_minutes": 42,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "phuket-old-town→surin-bang-tao-north": {
+      "drive_minutes": 33,
+      "recommended_minutes": 33,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "phuket-old-town→phang-nga-bay-nearby": {
+      "drive_minutes": 78,
+      "recommended_minutes": 78,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "kata-karon-south→surin-bang-tao-north": {
+      "drive_minutes": 58,
+      "recommended_minutes": 58,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "kata-karon-south→phang-nga-bay-nearby": {
+      "drive_minutes": 104,
+      "recommended_minutes": 104,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "surin-bang-tao-north→phang-nga-bay-nearby": {
+      "drive_minutes": 61,
+      "recommended_minutes": 61,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    }
+  },
+  "krabi": {
+    "ao-nang-beach→ao-nang-beach": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "railay-beach→railay-beach": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "krabi-town→krabi-town": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "four-islands-nearby→four-islands-nearby": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "tiger-cave-temple→tiger-cave-temple": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "ao-nang-beach→railay-beach": {
+      "drive_minutes": 3,
+      "recommended_minutes": 3,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "ao-nang-beach→krabi-town": {
+      "drive_minutes": 10,
+      "recommended_minutes": 10,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "ao-nang-beach→four-islands-nearby": {
+      "drive_minutes": 8,
+      "recommended_minutes": 8,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "ao-nang-beach→tiger-cave-temple": {
+      "drive_minutes": 26,
+      "recommended_minutes": 26,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "railay-beach→krabi-town": {
+      "drive_minutes": 11,
+      "recommended_minutes": 11,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "railay-beach→four-islands-nearby": {
+      "drive_minutes": 11,
+      "recommended_minutes": 11,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "railay-beach→tiger-cave-temple": {
+      "drive_minutes": 27,
+      "recommended_minutes": 27,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "krabi-town→four-islands-nearby": {
+      "drive_minutes": 23,
+      "recommended_minutes": 23,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "krabi-town→tiger-cave-temple": {
+      "drive_minutes": 16,
+      "recommended_minutes": 16,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "four-islands-nearby→tiger-cave-temple": {
+      "drive_minutes": 31,
+      "recommended_minutes": 31,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    }
+  },
+  "koh_samui": {
+    "chaweng-beach→chaweng-beach": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "lamai-beach→lamai-beach": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "fisherman-village-bophut→fisherman-village-bophut": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "big-buddha-north→big-buddha-north": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "nathon-town→nathon-town": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "chaweng-beach→lamai-beach": {
+      "drive_minutes": 15,
+      "recommended_minutes": 15,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "chaweng-beach→fisherman-village-bophut": {
+      "drive_minutes": 23,
+      "recommended_minutes": 23,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "chaweng-beach→big-buddha-north": {
+      "drive_minutes": 15,
+      "recommended_minutes": 15,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "chaweng-beach→nathon-town": {
+      "drive_minutes": 39,
+      "recommended_minutes": 39,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "lamai-beach→fisherman-village-bophut": {
+      "drive_minutes": 32,
+      "recommended_minutes": 32,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "lamai-beach→big-buddha-north": {
+      "drive_minutes": 24,
+      "recommended_minutes": 24,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "lamai-beach→nathon-town": {
+      "drive_minutes": 37,
+      "recommended_minutes": 37,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "fisherman-village-bophut→big-buddha-north": {
+      "drive_minutes": 32,
+      "recommended_minutes": 32,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "fisherman-village-bophut→nathon-town": {
+      "drive_minutes": 31,
+      "recommended_minutes": 31,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "big-buddha-north→nathon-town": {
+      "drive_minutes": 43,
+      "recommended_minutes": 43,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    }
+  },
+  "ayutthaya": {
+    "ayutthaya-historical-park→ayutthaya-historical-park": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "wat-phra-si-sanphet-area→wat-phra-si-sanphet-area": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "bang-pa-in-palace→bang-pa-in-palace": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "ayutthaya-town-centre→ayutthaya-town-centre": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "ayutthaya-historical-park→wat-phra-si-sanphet-area": {
+      "drive_minutes": 4,
+      "recommended_minutes": 4,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "ayutthaya-historical-park→bang-pa-in-palace": {
+      "drive_minutes": 26,
+      "recommended_minutes": 26,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "ayutthaya-historical-park→ayutthaya-town-centre": {
+      "drive_minutes": 9,
+      "recommended_minutes": 9,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "wat-phra-si-sanphet-area→bang-pa-in-palace": {
+      "drive_minutes": 28,
+      "recommended_minutes": 28,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "wat-phra-si-sanphet-area→ayutthaya-town-centre": {
+      "drive_minutes": 10,
+      "recommended_minutes": 10,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "bang-pa-in-palace→ayutthaya-town-centre": {
+      "drive_minutes": 22,
+      "recommended_minutes": 22,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    }
+  },
+  "chiang_rai": {
+    "white-temple-rong-khun→white-temple-rong-khun": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "chiang-rai-town-centre→chiang-rai-town-centre": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "golden-triangle-sop-ruak→golden-triangle-sop-ruak": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "blue-temple-rong-suea-ten→blue-temple-rong-suea-ten": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "doi-tung-mountain→doi-tung-mountain": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "white-temple-rong-khun→chiang-rai-town-centre": {
+      "drive_minutes": 25,
+      "recommended_minutes": 25,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "white-temple-rong-khun→golden-triangle-sop-ruak": {
+      "drive_minutes": 88,
+      "recommended_minutes": 88,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "white-temple-rong-khun→blue-temple-rong-suea-ten": {
+      "drive_minutes": 28,
+      "recommended_minutes": 28,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "white-temple-rong-khun→doi-tung-mountain": {
+      "drive_minutes": 62,
+      "recommended_minutes": 62,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "chiang-rai-town-centre→golden-triangle-sop-ruak": {
+      "drive_minutes": 68,
+      "recommended_minutes": 68,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "chiang-rai-town-centre→blue-temple-rong-suea-ten": {
+      "drive_minutes": 8,
+      "recommended_minutes": 8,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "chiang-rai-town-centre→doi-tung-mountain": {
+      "drive_minutes": 42,
+      "recommended_minutes": 42,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "golden-triangle-sop-ruak→blue-temple-rong-suea-ten": {
+      "drive_minutes": 68,
+      "recommended_minutes": 68,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "golden-triangle-sop-ruak→doi-tung-mountain": {
+      "drive_minutes": 49,
+      "recommended_minutes": 49,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "blue-temple-rong-suea-ten→doi-tung-mountain": {
+      "drive_minutes": 42,
+      "recommended_minutes": 42,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    }
+  },
+  "pattaya": {
+    "pattaya-beach-walking-street→pattaya-beach-walking-street": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "jomtien-beach→jomtien-beach": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "sanctuary-of-truth→sanctuary-of-truth": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "nong-nooch-garden→nong-nooch-garden": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "koh-larn-island→koh-larn-island": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "pattaya-beach-walking-street→jomtien-beach": {
+      "drive_minutes": 11,
+      "recommended_minutes": 11,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "pattaya-beach-walking-street→sanctuary-of-truth": {
+      "drive_minutes": 10,
+      "recommended_minutes": 10,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "pattaya-beach-walking-street→nong-nooch-garden": {
+      "drive_minutes": 25,
+      "recommended_minutes": 25,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "pattaya-beach-walking-street→koh-larn-island": {
+      "drive_minutes": 32,
+      "recommended_minutes": 32,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (10.7 km apart)"
+    },
+    "jomtien-beach→sanctuary-of-truth": {
+      "drive_minutes": 12,
+      "recommended_minutes": 12,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "jomtien-beach→nong-nooch-garden": {
+      "drive_minutes": 20,
+      "recommended_minutes": 20,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "jomtien-beach→koh-larn-island": {
+      "drive_minutes": 37,
+      "recommended_minutes": 37,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (12.3 km apart)"
+    },
+    "sanctuary-of-truth→nong-nooch-garden": {
+      "drive_minutes": 28,
+      "recommended_minutes": 28,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "sanctuary-of-truth→koh-larn-island": {
+      "drive_minutes": 37,
+      "recommended_minutes": 37,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (12.4 km apart)"
+    },
+    "nong-nooch-garden→koh-larn-island": {
+      "drive_minutes": 60,
+      "recommended_minutes": 60,
+      "recommended_mode": "taxi",
+      "note": "estimated — no route data (20.0 km apart)"
+    }
+  },
+  "hua_hin": {
+    "hua-hin-beach-downtown→hua-hin-beach-downtown": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "night-market-cicada→night-market-cicada": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "sam-roi-yot-national-park→sam-roi-yot-national-park": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "khao-takiab-temple-hill→khao-takiab-temple-hill": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "hua-hin-beach-downtown→night-market-cicada": {
+      "drive_minutes": 15,
+      "recommended_minutes": 15,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "hua-hin-beach-downtown→sam-roi-yot-national-park": {
+      "drive_minutes": 50,
+      "recommended_minutes": 50,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "hua-hin-beach-downtown→khao-takiab-temple-hill": {
+      "drive_minutes": 17,
+      "recommended_minutes": 17,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "night-market-cicada→sam-roi-yot-national-park": {
+      "drive_minutes": 51,
+      "recommended_minutes": 51,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "night-market-cicada→khao-takiab-temple-hill": {
+      "drive_minutes": 15,
+      "recommended_minutes": 15,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "sam-roi-yot-national-park→khao-takiab-temple-hill": {
+      "drive_minutes": 38,
+      "recommended_minutes": 38,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    }
+  },
+  "kanchanaburi": {
+    "bridge-over-river-kwai→bridge-over-river-kwai": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "kanchanaburi-town-war-cemetery→kanchanaburi-town-war-cemetery": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "erawan-waterfall-national-park→erawan-waterfall-national-park": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "hellfire-pass-memorial→hellfire-pass-memorial": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "bridge-over-river-kwai→kanchanaburi-town-war-cemetery": {
+      "drive_minutes": 27,
+      "recommended_minutes": 27,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "bridge-over-river-kwai→erawan-waterfall-national-park": {
+      "drive_minutes": 19,
+      "recommended_minutes": 19,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "bridge-over-river-kwai→hellfire-pass-memorial": {
+      "drive_minutes": 61,
+      "recommended_minutes": 61,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "kanchanaburi-town-war-cemetery→erawan-waterfall-national-park": {
+      "drive_minutes": 42,
+      "recommended_minutes": 42,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "kanchanaburi-town-war-cemetery→hellfire-pass-memorial": {
+      "drive_minutes": 67,
+      "recommended_minutes": 67,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "erawan-waterfall-national-park→hellfire-pass-memorial": {
+      "drive_minutes": 73,
+      "recommended_minutes": 73,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    }
+  },
+  "sukhothai": {
+    "sukhothai-historical-park→sukhothai-historical-park": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "si-satchanalai-historical-park→si-satchanalai-historical-park": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "sukhothai-new-town→sukhothai-new-town": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "ramkhamhaeng-national-park→ramkhamhaeng-national-park": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "sukhothai-historical-park→si-satchanalai-historical-park": {
+      "drive_minutes": 50,
+      "recommended_minutes": 50,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "sukhothai-historical-park→sukhothai-new-town": {
+      "drive_minutes": 13,
+      "recommended_minutes": 13,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "sukhothai-historical-park→ramkhamhaeng-national-park": {
+      "drive_minutes": 16,
+      "recommended_minutes": 16,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "si-satchanalai-historical-park→sukhothai-new-town": {
+      "drive_minutes": 65,
+      "recommended_minutes": 65,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "si-satchanalai-historical-park→ramkhamhaeng-national-park": {
+      "drive_minutes": 65,
+      "recommended_minutes": 65,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "sukhothai-new-town→ramkhamhaeng-national-park": {
+      "drive_minutes": 10,
+      "recommended_minutes": 10,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    }
+  },
+  "pai": {
+    "pai-walking-street-centre→pai-walking-street-centre": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "pai-canyon-yun-lai-viewpoint→pai-canyon-yun-lai-viewpoint": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "mo-paeng-waterfall→mo-paeng-waterfall": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "wat-mae-yen-hilltop→wat-mae-yen-hilltop": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "pai-walking-street-centre→pai-canyon-yun-lai-viewpoint": {
+      "drive_minutes": 13,
+      "recommended_minutes": 13,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "pai-walking-street-centre→mo-paeng-waterfall": {
+      "drive_minutes": 44,
+      "recommended_minutes": 44,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "pai-walking-street-centre→wat-mae-yen-hilltop": {
+      "drive_minutes": 6,
+      "recommended_minutes": 6,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "pai-canyon-yun-lai-viewpoint→mo-paeng-waterfall": {
+      "drive_minutes": 53,
+      "recommended_minutes": 53,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "pai-canyon-yun-lai-viewpoint→wat-mae-yen-hilltop": {
+      "drive_minutes": 8,
+      "recommended_minutes": 8,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "mo-paeng-waterfall→wat-mae-yen-hilltop": {
+      "drive_minutes": 46,
+      "recommended_minutes": 46,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    }
+  }
+}

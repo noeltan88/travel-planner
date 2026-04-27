@@ -1,0 +1,1208 @@
+{
+  "tokyo": {
+    "shinjuku-shibuya→shinjuku-shibuya": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "asakusa-ueno→asakusa-ueno": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "akihabara-ginza→akihabara-ginza": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "harajuku-omotesando→harajuku-omotesando": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "odaiba-waterfront→odaiba-waterfront": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "roppongi-azabu→roppongi-azabu": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "shinjuku-shibuya→asakusa-ueno": {
+      "drive_minutes": 30,
+      "recommended_minutes": 30,
+      "recommended_mode": "transit",
+      "note": "Consider Shinkansen or bus for distant clusters"
+    },
+    "shinjuku-shibuya→akihabara-ginza": {
+      "drive_minutes": 24,
+      "recommended_minutes": 24,
+      "recommended_mode": "transit",
+      "note": "Consider Shinkansen or bus for distant clusters"
+    },
+    "shinjuku-shibuya→harajuku-omotesando": {
+      "drive_minutes": 9,
+      "recommended_minutes": 9,
+      "recommended_mode": "taxi",
+      "note": "Tokyo Metro/JR — faster than taxi at peak hours"
+    },
+    "shinjuku-shibuya→odaiba-waterfront": {
+      "drive_minutes": 28,
+      "recommended_minutes": 28,
+      "recommended_mode": "transit",
+      "note": "Consider Shinkansen or bus for distant clusters"
+    },
+    "shinjuku-shibuya→roppongi-azabu": {
+      "drive_minutes": 19,
+      "recommended_minutes": 19,
+      "recommended_mode": "transit",
+      "note": "Tokyo Metro/JR — faster than taxi at peak hours"
+    },
+    "asakusa-ueno→akihabara-ginza": {
+      "drive_minutes": 17,
+      "recommended_minutes": 17,
+      "recommended_mode": "transit",
+      "note": "Tokyo Metro/JR — faster than taxi at peak hours"
+    },
+    "asakusa-ueno→harajuku-omotesando": {
+      "drive_minutes": 30,
+      "recommended_minutes": 30,
+      "recommended_mode": "transit",
+      "note": "Consider Shinkansen or bus for distant clusters"
+    },
+    "asakusa-ueno→odaiba-waterfront": {
+      "drive_minutes": 22,
+      "recommended_minutes": 22,
+      "recommended_mode": "transit",
+      "note": "Consider Shinkansen or bus for distant clusters"
+    },
+    "asakusa-ueno→roppongi-azabu": {
+      "drive_minutes": 21,
+      "recommended_minutes": 21,
+      "recommended_mode": "transit",
+      "note": "Consider Shinkansen or bus for distant clusters"
+    },
+    "akihabara-ginza→harajuku-omotesando": {
+      "drive_minutes": 18,
+      "recommended_minutes": 18,
+      "recommended_mode": "transit",
+      "note": "Tokyo Metro/JR — faster than taxi at peak hours"
+    },
+    "akihabara-ginza→odaiba-waterfront": {
+      "drive_minutes": 17,
+      "recommended_minutes": 17,
+      "recommended_mode": "transit",
+      "note": "Tokyo Metro/JR — faster than taxi at peak hours"
+    },
+    "akihabara-ginza→roppongi-azabu": {
+      "drive_minutes": 15,
+      "recommended_minutes": 15,
+      "recommended_mode": "transit",
+      "note": "Tokyo Metro/JR — faster than taxi at peak hours"
+    },
+    "harajuku-omotesando→odaiba-waterfront": {
+      "drive_minutes": 21,
+      "recommended_minutes": 21,
+      "recommended_mode": "transit",
+      "note": "Consider Shinkansen or bus for distant clusters"
+    },
+    "harajuku-omotesando→roppongi-azabu": {
+      "drive_minutes": 12,
+      "recommended_minutes": 12,
+      "recommended_mode": "taxi",
+      "note": "Tokyo Metro/JR — faster than taxi at peak hours"
+    },
+    "odaiba-waterfront→roppongi-azabu": {
+      "drive_minutes": 14,
+      "recommended_minutes": 14,
+      "recommended_mode": "taxi",
+      "note": "Tokyo Metro/JR — faster than taxi at peak hours"
+    }
+  },
+  "osaka": {
+    "dotonbori-namba→dotonbori-namba": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "osaka-castle-tenmabashi→osaka-castle-tenmabashi": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "umeda-north→umeda-north": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "shinsekai-tennoji→shinsekai-tennoji": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "bay-area-kaiyukan→bay-area-kaiyukan": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "dotonbori-namba→osaka-castle-tenmabashi": {
+      "drive_minutes": 11,
+      "recommended_minutes": 11,
+      "recommended_mode": "taxi",
+      "note": "Osaka Metro — faster than taxi in central areas"
+    },
+    "dotonbori-namba→umeda-north": {
+      "drive_minutes": 14,
+      "recommended_minutes": 14,
+      "recommended_mode": "taxi",
+      "note": "Osaka Metro — faster than taxi in central areas"
+    },
+    "dotonbori-namba→shinsekai-tennoji": {
+      "drive_minutes": 9,
+      "recommended_minutes": 9,
+      "recommended_mode": "taxi",
+      "note": "Osaka Metro — faster than taxi in central areas"
+    },
+    "dotonbori-namba→bay-area-kaiyukan": {
+      "drive_minutes": 18,
+      "recommended_minutes": 18,
+      "recommended_mode": "transit",
+      "note": "Osaka Metro — faster than taxi in central areas"
+    },
+    "osaka-castle-tenmabashi→umeda-north": {
+      "drive_minutes": 14,
+      "recommended_minutes": 14,
+      "recommended_mode": "taxi",
+      "note": "Osaka Metro — faster than taxi in central areas"
+    },
+    "osaka-castle-tenmabashi→shinsekai-tennoji": {
+      "drive_minutes": 7,
+      "recommended_minutes": 7,
+      "recommended_mode": "taxi",
+      "note": "Osaka Metro — faster than taxi in central areas"
+    },
+    "osaka-castle-tenmabashi→bay-area-kaiyukan": {
+      "drive_minutes": 18,
+      "recommended_minutes": 18,
+      "recommended_mode": "transit",
+      "note": "Osaka Metro — faster than taxi in central areas"
+    },
+    "umeda-north→shinsekai-tennoji": {
+      "drive_minutes": 11,
+      "recommended_minutes": 11,
+      "recommended_mode": "taxi",
+      "note": "Osaka Metro — faster than taxi in central areas"
+    },
+    "umeda-north→bay-area-kaiyukan": {
+      "drive_minutes": 22,
+      "recommended_minutes": 22,
+      "recommended_mode": "transit",
+      "note": "Osaka Metro or taxi — comparable off-peak"
+    },
+    "shinsekai-tennoji→bay-area-kaiyukan": {
+      "drive_minutes": 23,
+      "recommended_minutes": 23,
+      "recommended_mode": "transit",
+      "note": "Osaka Metro or taxi — comparable off-peak"
+    }
+  },
+  "kyoto": {
+    "arashiyama-sagano→arashiyama-sagano": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "gion-higashiyama→gion-higashiyama": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "fushimi-inari→fushimi-inari": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "downtown-nishiki→downtown-nishiki": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "kinkakuji-ryoanji→kinkakuji-ryoanji": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "arashiyama-sagano→gion-higashiyama": {
+      "drive_minutes": 36,
+      "recommended_minutes": 36,
+      "recommended_mode": "taxi",
+      "note": "Taxi recommended — buses can be slow in traffic"
+    },
+    "arashiyama-sagano→fushimi-inari": {
+      "drive_minutes": 42,
+      "recommended_minutes": 42,
+      "recommended_mode": "taxi",
+      "note": "Taxi recommended — buses can be slow in traffic"
+    },
+    "arashiyama-sagano→downtown-nishiki": {
+      "drive_minutes": 30,
+      "recommended_minutes": 30,
+      "recommended_mode": "taxi",
+      "note": "Taxi recommended — buses can be slow in traffic"
+    },
+    "arashiyama-sagano→kinkakuji-ryoanji": {
+      "drive_minutes": 19,
+      "recommended_minutes": 19,
+      "recommended_mode": "taxi",
+      "note": "Bus or taxi — comparable journey times"
+    },
+    "gion-higashiyama→fushimi-inari": {
+      "drive_minutes": 18,
+      "recommended_minutes": 18,
+      "recommended_mode": "taxi",
+      "note": "Bus or taxi — comparable journey times"
+    },
+    "gion-higashiyama→downtown-nishiki": {
+      "drive_minutes": 9,
+      "recommended_minutes": 9,
+      "recommended_mode": "taxi",
+      "note": "Bus or taxi — comparable journey times"
+    },
+    "gion-higashiyama→kinkakuji-ryoanji": {
+      "drive_minutes": 27,
+      "recommended_minutes": 27,
+      "recommended_mode": "taxi",
+      "note": "Taxi recommended — buses can be slow in traffic"
+    },
+    "fushimi-inari→downtown-nishiki": {
+      "drive_minutes": 20,
+      "recommended_minutes": 20,
+      "recommended_mode": "taxi",
+      "note": "Bus or taxi — comparable journey times"
+    },
+    "fushimi-inari→kinkakuji-ryoanji": {
+      "drive_minutes": 39,
+      "recommended_minutes": 39,
+      "recommended_mode": "taxi",
+      "note": "Taxi recommended — buses can be slow in traffic"
+    },
+    "downtown-nishiki→kinkakuji-ryoanji": {
+      "drive_minutes": 21,
+      "recommended_minutes": 21,
+      "recommended_mode": "taxi",
+      "note": "Taxi recommended — buses can be slow in traffic"
+    }
+  },
+  "hiroshima": {
+    "peace-memorial-park→peace-memorial-park": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "miyajima-island→miyajima-island": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "downtown-hondori→downtown-hondori": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "ujina-waterfront→ujina-waterfront": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "peace-memorial-park→miyajima-island": {
+      "drive_minutes": 67,
+      "recommended_minutes": 67,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "peace-memorial-park→downtown-hondori": {
+      "drive_minutes": 5,
+      "recommended_minutes": 5,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "peace-memorial-park→ujina-waterfront": {
+      "drive_minutes": 15,
+      "recommended_minutes": 15,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "miyajima-island→downtown-hondori": {
+      "drive_minutes": 71,
+      "recommended_minutes": 71,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "miyajima-island→ujina-waterfront": {
+      "drive_minutes": 70,
+      "recommended_minutes": 70,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "downtown-hondori→ujina-waterfront": {
+      "drive_minutes": 15,
+      "recommended_minutes": 15,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    }
+  },
+  "nara": {
+    "nara-park-todaiji→nara-park-todaiji": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "naramachi-old-town→naramachi-old-town": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "kasuga-shrine-area→kasuga-shrine-area": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "ikaruga-horyuji→ikaruga-horyuji": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "nara-park-todaiji→naramachi-old-town": {
+      "drive_minutes": 2,
+      "recommended_minutes": 2,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "nara-park-todaiji→kasuga-shrine-area": {
+      "drive_minutes": 8,
+      "recommended_minutes": 8,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "nara-park-todaiji→ikaruga-horyuji": {
+      "drive_minutes": 29,
+      "recommended_minutes": 29,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "naramachi-old-town→kasuga-shrine-area": {
+      "drive_minutes": 6,
+      "recommended_minutes": 6,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "naramachi-old-town→ikaruga-horyuji": {
+      "drive_minutes": 27,
+      "recommended_minutes": 27,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "kasuga-shrine-area→ikaruga-horyuji": {
+      "drive_minutes": 27,
+      "recommended_minutes": 27,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    }
+  },
+  "hakone": {
+    "hakone-yumoto-onsen→hakone-yumoto-onsen": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "owakudani-lake-ashi→owakudani-lake-ashi": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "gora-miyanoshita→gora-miyanoshita": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "sengokuhara-susono→sengokuhara-susono": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "hakone-yumoto-onsen→owakudani-lake-ashi": {
+      "drive_minutes": 21,
+      "recommended_minutes": 21,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "hakone-yumoto-onsen→gora-miyanoshita": {
+      "drive_minutes": 5,
+      "recommended_minutes": 5,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "hakone-yumoto-onsen→sengokuhara-susono": {
+      "drive_minutes": 12,
+      "recommended_minutes": 12,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "owakudani-lake-ashi→gora-miyanoshita": {
+      "drive_minutes": 17,
+      "recommended_minutes": 17,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "owakudani-lake-ashi→sengokuhara-susono": {
+      "drive_minutes": 20,
+      "recommended_minutes": 20,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "gora-miyanoshita→sengokuhara-susono": {
+      "drive_minutes": 12,
+      "recommended_minutes": 12,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    }
+  },
+  "nikko": {
+    "toshogu-shrine-area→toshogu-shrine-area": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "chuzenji-lake-kegon→chuzenji-lake-kegon": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "nikko-town-centre→nikko-town-centre": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "kinugawa-onsen→kinugawa-onsen": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "toshogu-shrine-area→chuzenji-lake-kegon": {
+      "drive_minutes": 29,
+      "recommended_minutes": 29,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "toshogu-shrine-area→nikko-town-centre": {
+      "drive_minutes": 10,
+      "recommended_minutes": 10,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "toshogu-shrine-area→kinugawa-onsen": {
+      "drive_minutes": 29,
+      "recommended_minutes": 29,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "chuzenji-lake-kegon→nikko-town-centre": {
+      "drive_minutes": 29,
+      "recommended_minutes": 29,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "chuzenji-lake-kegon→kinugawa-onsen": {
+      "drive_minutes": 48,
+      "recommended_minutes": 48,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "nikko-town-centre→kinugawa-onsen": {
+      "drive_minutes": 25,
+      "recommended_minutes": 25,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    }
+  },
+  "sapporo": {
+    "susukino-odori-park→susukino-odori-park": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "sapporo-clock-tower-area→sapporo-clock-tower-area": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "hokkaido-university-area→hokkaido-university-area": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "moerenuma-park→moerenuma-park": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "otaru-nearby→otaru-nearby": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "susukino-odori-park→sapporo-clock-tower-area": {
+      "drive_minutes": 5,
+      "recommended_minutes": 5,
+      "recommended_mode": "taxi",
+      "note": "Sapporo Subway available for central clusters"
+    },
+    "susukino-odori-park→hokkaido-university-area": {
+      "drive_minutes": 9,
+      "recommended_minutes": 9,
+      "recommended_mode": "taxi",
+      "note": "Sapporo Subway available for central clusters"
+    },
+    "susukino-odori-park→moerenuma-park": {
+      "drive_minutes": 20,
+      "recommended_minutes": 20,
+      "recommended_mode": "transit",
+      "note": "Sapporo Subway available for central clusters"
+    },
+    "susukino-odori-park→otaru-nearby": {
+      "drive_minutes": 45,
+      "recommended_minutes": 45,
+      "recommended_mode": "transit",
+      "note": "Taxi recommended for outlying areas"
+    },
+    "sapporo-clock-tower-area→hokkaido-university-area": {
+      "drive_minutes": 7,
+      "recommended_minutes": 7,
+      "recommended_mode": "taxi",
+      "note": "Sapporo Subway available for central clusters"
+    },
+    "sapporo-clock-tower-area→moerenuma-park": {
+      "drive_minutes": 18,
+      "recommended_minutes": 18,
+      "recommended_mode": "transit",
+      "note": "Sapporo Subway available for central clusters"
+    },
+    "sapporo-clock-tower-area→otaru-nearby": {
+      "drive_minutes": 44,
+      "recommended_minutes": 44,
+      "recommended_mode": "transit",
+      "note": "Taxi recommended for outlying areas"
+    },
+    "hokkaido-university-area→moerenuma-park": {
+      "drive_minutes": 18,
+      "recommended_minutes": 18,
+      "recommended_mode": "transit",
+      "note": "Sapporo Subway available for central clusters"
+    },
+    "hokkaido-university-area→otaru-nearby": {
+      "drive_minutes": 47,
+      "recommended_minutes": 47,
+      "recommended_mode": "transit",
+      "note": "Taxi recommended for outlying areas"
+    },
+    "moerenuma-park→otaru-nearby": {
+      "drive_minutes": 37,
+      "recommended_minutes": 37,
+      "recommended_mode": "transit",
+      "note": "Taxi recommended for outlying areas"
+    }
+  },
+  "fukuoka": {
+    "hakata-station-area→hakata-station-area": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "tenjin-downtown→tenjin-downtown": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "canal-city-waterfront→canal-city-waterfront": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "ohori-park-maizuru→ohori-park-maizuru": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "dazaifu-nearby→dazaifu-nearby": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "hakata-station-area→tenjin-downtown": {
+      "drive_minutes": 9,
+      "recommended_minutes": 9,
+      "recommended_mode": "taxi",
+      "note": "Fukuoka City Subway — quicker than taxi downtown"
+    },
+    "hakata-station-area→canal-city-waterfront": {
+      "drive_minutes": 13,
+      "recommended_minutes": 13,
+      "recommended_mode": "taxi",
+      "note": "Fukuoka City Subway — quicker than taxi downtown"
+    },
+    "hakata-station-area→ohori-park-maizuru": {
+      "drive_minutes": 13,
+      "recommended_minutes": 13,
+      "recommended_mode": "taxi",
+      "note": "Fukuoka City Subway — quicker than taxi downtown"
+    },
+    "hakata-station-area→dazaifu-nearby": {
+      "drive_minutes": 23,
+      "recommended_minutes": 23,
+      "recommended_mode": "transit",
+      "note": "Taxi or bus for suburban clusters"
+    },
+    "tenjin-downtown→canal-city-waterfront": {
+      "drive_minutes": 9,
+      "recommended_minutes": 9,
+      "recommended_mode": "taxi",
+      "note": "Fukuoka City Subway — quicker than taxi downtown"
+    },
+    "tenjin-downtown→ohori-park-maizuru": {
+      "drive_minutes": 7,
+      "recommended_minutes": 7,
+      "recommended_mode": "taxi",
+      "note": "Fukuoka City Subway — quicker than taxi downtown"
+    },
+    "tenjin-downtown→dazaifu-nearby": {
+      "drive_minutes": 28,
+      "recommended_minutes": 28,
+      "recommended_mode": "transit",
+      "note": "Taxi or bus for suburban clusters"
+    },
+    "canal-city-waterfront→ohori-park-maizuru": {
+      "drive_minutes": 11,
+      "recommended_minutes": 11,
+      "recommended_mode": "taxi",
+      "note": "Fukuoka City Subway — quicker than taxi downtown"
+    },
+    "canal-city-waterfront→dazaifu-nearby": {
+      "drive_minutes": 27,
+      "recommended_minutes": 27,
+      "recommended_mode": "transit",
+      "note": "Taxi or bus for suburban clusters"
+    },
+    "ohori-park-maizuru→dazaifu-nearby": {
+      "drive_minutes": 28,
+      "recommended_minutes": 28,
+      "recommended_mode": "transit",
+      "note": "Taxi or bus for suburban clusters"
+    }
+  },
+  "nagasaki": {
+    "peace-park-hypocenter→peace-park-hypocenter": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "dejima-glover-garden→dejima-glover-garden": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "chinatown-shinchi→chinatown-shinchi": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "mount-inasa-viewpoint→mount-inasa-viewpoint": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "peace-park-hypocenter→dejima-glover-garden": {
+      "drive_minutes": 37,
+      "recommended_minutes": 37,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "peace-park-hypocenter→chinatown-shinchi": {
+      "drive_minutes": 16,
+      "recommended_minutes": 16,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "peace-park-hypocenter→mount-inasa-viewpoint": {
+      "drive_minutes": 9,
+      "recommended_minutes": 9,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "dejima-glover-garden→chinatown-shinchi": {
+      "drive_minutes": 17,
+      "recommended_minutes": 17,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "dejima-glover-garden→mount-inasa-viewpoint": {
+      "drive_minutes": 16,
+      "recommended_minutes": 16,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "chinatown-shinchi→mount-inasa-viewpoint": {
+      "drive_minutes": 12,
+      "recommended_minutes": 12,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    }
+  },
+  "kanazawa": {
+    "kenroku-en-castle→kenroku-en-castle": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "higashi-chaya-geisha→higashi-chaya-geisha": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "omicho-market-area→omicho-market-area": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "katamachi-downtown→katamachi-downtown": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "nishi-chaya-teramachi→nishi-chaya-teramachi": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "kenroku-en-castle→higashi-chaya-geisha": {
+      "drive_minutes": 9,
+      "recommended_minutes": 9,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "kenroku-en-castle→omicho-market-area": {
+      "drive_minutes": 4,
+      "recommended_minutes": 4,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "kenroku-en-castle→katamachi-downtown": {
+      "drive_minutes": 2,
+      "recommended_minutes": 2,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "kenroku-en-castle→nishi-chaya-teramachi": {
+      "drive_minutes": 3,
+      "recommended_minutes": 3,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "higashi-chaya-geisha→omicho-market-area": {
+      "drive_minutes": 6,
+      "recommended_minutes": 6,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "higashi-chaya-geisha→katamachi-downtown": {
+      "drive_minutes": 10,
+      "recommended_minutes": 10,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "higashi-chaya-geisha→nishi-chaya-teramachi": {
+      "drive_minutes": 10,
+      "recommended_minutes": 10,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "omicho-market-area→katamachi-downtown": {
+      "drive_minutes": 4,
+      "recommended_minutes": 4,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "omicho-market-area→nishi-chaya-teramachi": {
+      "drive_minutes": 5,
+      "recommended_minutes": 5,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "katamachi-downtown→nishi-chaya-teramachi": {
+      "drive_minutes": 1,
+      "recommended_minutes": 1,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    }
+  },
+  "yokohama": {
+    "minato-mirai-waterfront→minato-mirai-waterfront": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "chinatown-motomachi→chinatown-motomachi": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "yamashita-park-area→yamashita-park-area": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "isezakicho-kannai→isezakicho-kannai": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "minato-mirai-waterfront→chinatown-motomachi": {
+      "drive_minutes": 6,
+      "recommended_minutes": 6,
+      "recommended_mode": "taxi",
+      "note": "Yokohama Municipal Subway/JR available"
+    },
+    "minato-mirai-waterfront→yamashita-park-area": {
+      "drive_minutes": 11,
+      "recommended_minutes": 11,
+      "recommended_mode": "taxi",
+      "note": "Yokohama Municipal Subway/JR available"
+    },
+    "minato-mirai-waterfront→isezakicho-kannai": {
+      "drive_minutes": 15,
+      "recommended_minutes": 15,
+      "recommended_mode": "transit",
+      "note": "Yokohama Municipal Subway/JR available"
+    },
+    "chinatown-motomachi→yamashita-park-area": {
+      "drive_minutes": 11,
+      "recommended_minutes": 11,
+      "recommended_mode": "taxi",
+      "note": "Yokohama Municipal Subway/JR available"
+    },
+    "chinatown-motomachi→isezakicho-kannai": {
+      "drive_minutes": 17,
+      "recommended_minutes": 17,
+      "recommended_mode": "transit",
+      "note": "Yokohama Municipal Subway/JR available"
+    },
+    "yamashita-park-area→isezakicho-kannai": {
+      "drive_minutes": 19,
+      "recommended_minutes": 19,
+      "recommended_mode": "transit",
+      "note": "Yokohama Municipal Subway/JR available"
+    }
+  },
+  "kamakura": {
+    "kotoku-in-great-buddha→kotoku-in-great-buddha": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "engakuji-kita-kamakura→engakuji-kita-kamakura": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "komachi-dori-tsurugaoka→komachi-dori-tsurugaoka": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "enoshima-coast→enoshima-coast": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "kotoku-in-great-buddha→engakuji-kita-kamakura": {
+      "drive_minutes": 7,
+      "recommended_minutes": 7,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "kotoku-in-great-buddha→komachi-dori-tsurugaoka": {
+      "drive_minutes": 5,
+      "recommended_minutes": 5,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "kotoku-in-great-buddha→enoshima-coast": {
+      "drive_minutes": 16,
+      "recommended_minutes": 16,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "engakuji-kita-kamakura→komachi-dori-tsurugaoka": {
+      "drive_minutes": 4,
+      "recommended_minutes": 4,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "engakuji-kita-kamakura→enoshima-coast": {
+      "drive_minutes": 22,
+      "recommended_minutes": 22,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "komachi-dori-tsurugaoka→enoshima-coast": {
+      "drive_minutes": 20,
+      "recommended_minutes": 20,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    }
+  },
+  "okinawa": {
+    "naha-shuri-castle→naha-shuri-castle": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "kokusai-dori-downtown→kokusai-dori-downtown": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "churaumi-aquarium-north→churaumi-aquarium-north": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "american-village-central→american-village-central": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "kerama-islands→kerama-islands": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "naha-shuri-castle→kokusai-dori-downtown": {
+      "drive_minutes": 12,
+      "recommended_minutes": 12,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "naha-shuri-castle→churaumi-aquarium-north": {
+      "drive_minutes": 103,
+      "recommended_minutes": 103,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "naha-shuri-castle→american-village-central": {
+      "drive_minutes": 28,
+      "recommended_minutes": 28,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "naha-shuri-castle→kerama-islands": {
+      "drive_minutes": 83,
+      "recommended_minutes": 83,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "kokusai-dori-downtown→churaumi-aquarium-north": {
+      "drive_minutes": 106,
+      "recommended_minutes": 106,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "kokusai-dori-downtown→american-village-central": {
+      "drive_minutes": 31,
+      "recommended_minutes": 31,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "kokusai-dori-downtown→kerama-islands": {
+      "drive_minutes": 74,
+      "recommended_minutes": 74,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "churaumi-aquarium-north→american-village-central": {
+      "drive_minutes": 71,
+      "recommended_minutes": 71,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "churaumi-aquarium-north→kerama-islands": {
+      "drive_minutes": 63,
+      "recommended_minutes": 63,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "american-village-central→kerama-islands": {
+      "drive_minutes": 104,
+      "recommended_minutes": 104,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    }
+  },
+  "kawaguchiko": {
+    "kawaguchiko-north-shore→kawaguchiko-north-shore": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "kawaguchiko-south-shore→kawaguchiko-south-shore": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "fuji-five-lakes-area→fuji-five-lakes-area": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "aokigahara-jukai→aokigahara-jukai": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "fujiyoshida-town→fujiyoshida-town": {
+      "drive_minutes": 5,
+      "recommended_minutes": 10,
+      "recommended_mode": "walk",
+      "note": "Walking distance within cluster"
+    },
+    "kawaguchiko-north-shore→kawaguchiko-south-shore": {
+      "drive_minutes": 14,
+      "recommended_minutes": 14,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "kawaguchiko-north-shore→fuji-five-lakes-area": {
+      "drive_minutes": 18,
+      "recommended_minutes": 18,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "kawaguchiko-north-shore→aokigahara-jukai": {
+      "drive_minutes": 161,
+      "recommended_minutes": 161,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "kawaguchiko-north-shore→fujiyoshida-town": {
+      "drive_minutes": 11,
+      "recommended_minutes": 11,
+      "recommended_mode": "taxi",
+      "note": "Short ride — taxi or local transport"
+    },
+    "kawaguchiko-south-shore→fuji-five-lakes-area": {
+      "drive_minutes": 21,
+      "recommended_minutes": 21,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "kawaguchiko-south-shore→aokigahara-jukai": {
+      "drive_minutes": 161,
+      "recommended_minutes": 161,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "kawaguchiko-south-shore→fujiyoshida-town": {
+      "drive_minutes": 21,
+      "recommended_minutes": 21,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "fuji-five-lakes-area→aokigahara-jukai": {
+      "drive_minutes": 162,
+      "recommended_minutes": 162,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "fuji-five-lakes-area→fujiyoshida-town": {
+      "drive_minutes": 18,
+      "recommended_minutes": 18,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    },
+    "aokigahara-jukai→fujiyoshida-town": {
+      "drive_minutes": 159,
+      "recommended_minutes": 159,
+      "recommended_mode": "taxi",
+      "note": "Taxi or rideshare recommended"
+    }
+  }
+}
