@@ -74,13 +74,13 @@ function shuffle(arr) {
 const CONFETTI_COLORS = ['#E8472A', '#FFB347', '#4FC3F7', '#81C784', '#F06292'];
 function Confetti() {
   const pieces = useMemo(() =>
-    Array.from({ length: 28 }, (_, i) => ({
+    Array.from({ length: 20 }, (_, i) => ({
       id:       i,
       left:     Math.random() * 100,
       color:    CONFETTI_COLORS[i % CONFETTI_COLORS.length],
       size:     6 + Math.random() * 6,
-      delay:    Math.random() * 0.7,
-      duration: 1.4 + Math.random() * 0.8,
+      delay:    Math.random() * 0.5,
+      duration: 1.5 + Math.random() * 0.5,
       isCircle: i % 3 === 0,
     })),
   []); // stable per mount — no deps needed
@@ -695,19 +695,17 @@ export default function VibeCheck({ selectedCities, onComplete }) {
           </div>
 
           {/* ── Personality label ── */}
-          <p style={{ fontSize: 20, color: '#999', textAlign: 'center', margin: 0, lineHeight: 1.3 }}>
-            You're a
-          </p>
-          <p style={{ fontSize: 28, fontWeight: 700, color: '#1A1A1A', textAlign: 'center', margin: '4px 0 0', lineHeight: 1.2 }}>
-            {pers.name} <span style={{ fontSize: 24 }}>{pers.emoji}</span>
-          </p>
-          <p style={{
-            fontSize: 14, color: '#666', textAlign: 'center',
-            margin: '8px 0 0', lineHeight: 1.55,
-            display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden',
-          }}>
-            {pers.desc}
-          </p>
+          <div style={{ textAlign: 'center' }}>
+            <p style={{ fontSize: 20, color: '#999', margin: 0, lineHeight: 1.3 }}>
+              You're a
+            </p>
+            <p style={{ fontSize: 28, fontWeight: 700, color: '#1A1A1A', margin: '4px 0 0', lineHeight: 1.2 }}>
+              {pers.name} <span style={{ fontSize: 24 }}>{pers.emoji}</span>
+            </p>
+            <p style={{ fontSize: 14, color: '#666', margin: '8px 0 0', lineHeight: 1.55 }}>
+              {pers.desc}
+            </p>
+          </div>
 
           {/* ── Top 3 tags ── */}
           {displayTags.length > 0 && (
@@ -715,11 +713,11 @@ export default function VibeCheck({ selectedCities, onComplete }) {
               <p style={{ fontSize: 13, fontWeight: 500, color: '#1A1A1A', margin: '20px 0 8px' }}>
                 Top 3 tags for you
               </p>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 8 }}>
                 {displayTags.map(tag => (
                   <div key={tag} style={{
-                    display: 'flex', alignItems: 'center', gap: 10,
-                    background: '#fff', border: '1px solid #E0E0E0',
+                    display: 'inline-flex', alignItems: 'center', alignSelf: 'flex-start',
+                    gap: 10, background: '#fff', border: '1px solid #E0E0E0',
                     borderRadius: 20, padding: '8px 14px',
                   }}>
                     <span style={{ fontSize: 16 }}>{TAG_EMOJI[tag] || '✨'}</span>
