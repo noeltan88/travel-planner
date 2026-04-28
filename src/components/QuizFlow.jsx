@@ -842,7 +842,7 @@ export default function QuizFlow({ onComplete }) {
 
       {/* ── VIBECHECK ────────────────────────────────────────────────────── */}
       {isVibe && (
-        <VibeCheck key={step} selectedCities={answers.city || []} onComplete={handleVibeComplete} />
+        <VibeCheck key={step} selectedCities={answers.city || []} country={answers.country || 'china'} onComplete={handleVibeComplete} />
       )}
 
       {/* ════════════════ BOTTOM BAR ══════════════════════════════════════════ */}

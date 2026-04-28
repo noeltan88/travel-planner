@@ -10,8 +10,20 @@
  * Phase flow: 'swiping' → 'loading' (1.8s) → 'results' → 'picks' → onComplete()
  */
 import { useState, useRef, useMemo, useEffect } from 'react';
-import masterDb from '../data/china-master-db-v1.json';
+import chinaDb    from '../data/china-master-db-v1.json';
+import japanDb    from '../data/japan-master-db-v1.json';
+import koreaDb    from '../data/korea-master-db-v1.json';
+import thailandDb from '../data/thailand-master-db-v1.json';
+import vietnamDb  from '../data/vietnam-master-db-v1.json';
 import AttractionImage from './AttractionImage';
+
+const DB_MAP = {
+  china:       chinaDb,
+  japan:       japanDb,
+  south_korea: koreaDb,
+  thailand:    thailandDb,
+  vietnam:     vietnamDb,
+};
 
 // ── Constants ──────────────────────────────────────────────────────────────────
 const ACC = '#E8472A';
@@ -114,7 +126,9 @@ function Confetti() {
   );
 }
 
-function buildVibeCards(selectedCities) {
+function buildVibeCards(selectedCities, country) {
+  const masterDb = DB_MAP[country] || chinaDb;
+
   function getAttractions(cityKeys) {
     const out = [];
     cityKeys.forEach(ck => {
@@ -232,8 +246,8 @@ function VibeCard({ card, cardIdx, cardTotal, style = {}, dragX = 0, isActive = 
 }
 
 // ── Main component ─────────────────────────────────────────────────────────────
-export default function VibeCheck({ selectedCities, onComplete }) {
-  const rawCards = useMemo(() => buildVibeCards(selectedCities), []); // eslint-disable-line react-hooks/exhaustive-deps
+export default function VibeCheck({ selectedCities, country = 'china', onComplete }) {
+  const rawCards = useMemo(() => buildVibeCards(selectedCities, country), []); // eslint-disable-line react-hooks/exhaustive-deps
   const total    = rawCards.length;
 
   const [idx,       setIdx]       = useState(0);
