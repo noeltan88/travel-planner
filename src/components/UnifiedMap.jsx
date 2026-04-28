@@ -980,18 +980,19 @@ export default function UnifiedMap({
           {/* ══ EXPLORE MODE ═════════════════════════════════════════════════ */}
           {explore && (
             <>
-              {/* White filter pills — below the minimize button (top:12 + height:36 + gap:12 = 60) */}
+              {/* Filter pills row — leaves 52px gap on right for minimize button */}
               <div style={{
                 position:       'absolute',
-                top:            60,
-                left:           0,
-                right:          0,
+                top:            12,
+                left:           12,
+                right:          52,
                 zIndex:         20,
                 display:        'flex',
+                flexDirection:  'row',
                 alignItems:     'center',
                 gap:            8,
-                padding:        '0 16px',
                 overflowX:      'auto',
+                whiteSpace:     'nowrap',
                 scrollbarWidth: 'none',
               }}>
                 {[
@@ -1005,17 +1006,16 @@ export default function UnifiedMap({
                       key={cat}
                       onClick={() => toggleFilter(cat)}
                       style={{
-                        flexShrink:     0,
-                        display:        'flex', alignItems: 'center', gap: 5,
-                        padding:        '7px 14px', borderRadius: 20,
-                        fontSize:       12, fontWeight: 600, cursor: 'pointer',
-                        border:         `1.5px solid ${active ? ACCENT : 'rgba(0,0,0,0.12)'}`,
-                        background:     active ? ACCENT : 'rgba(255,255,255,0.96)',
-                        color:          active ? '#fff' : '#1a1a2e',
-                        boxShadow:      '0 2px 8px rgba(0,0,0,0.12)',
-                        backdropFilter: 'blur(8px)',
-                        whiteSpace:     'nowrap',
-                        transition:     'all 0.18s ease',
+                        flexShrink:   0,
+                        display:      'inline-flex', alignItems: 'center', gap: 6,
+                        padding:      '8px 12px', borderRadius: 20,
+                        fontSize:     12, fontWeight: 600, cursor: 'pointer',
+                        border:       `1px solid ${active ? ACCENT : '#E0E0E0'}`,
+                        background:   active ? ACCENT : '#fff',
+                        color:        active ? '#fff' : '#1a1a2e',
+                        boxShadow:    '0 2px 8px rgba(0,0,0,0.12)',
+                        whiteSpace:   'nowrap',
+                        transition:   'all 0.18s ease',
                       }}
                     >
                       <Icon size={13} />

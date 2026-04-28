@@ -567,7 +567,13 @@ export default function VibeCheck({ selectedCities, country = 'china', onComplet
   if (phase === 'loading') {
     const topCatIdx = finalData?.topCat ? VIBE_CATEGORIES.findIndex(c => c.key === finalData.topCat) : -1;
     return (
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: '#fff' }}>
+      <div style={{
+        position: 'fixed', top: 0, left: 0,
+        width: '100%', height: '100dvh',
+        display: 'flex', flexDirection: 'column',
+        alignItems: 'center', justifyContent: 'center',
+        background: '#FFFFFF',
+      }}>
         <style>{`@keyframes vibeLoadBar { from { width: 0px; } to { width: 120px; } }`}</style>
         <div style={{ display: 'flex', gap: 16, marginBottom: 24 }}>
           {VIBE_EMOJIS.map((em, i) => {
