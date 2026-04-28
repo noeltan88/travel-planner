@@ -20,6 +20,7 @@ import PrintView from './PrintView';
 import { exportToPDF } from '../utils/pdfExport';
 import { loadCityData } from '../utils/algorithm';
 import UnifiedMap from './UnifiedMap';
+import masterDb from '../data/china-master-db-v1.json';
 
 // ── Design tokens ─────────────────────────────────────────────────────────────
 const ACCENT   = '#E8472A';
@@ -332,25 +333,57 @@ function MapFAB({ onClick }) {
   );
 }
 
+// ── Budget-tier normaliser (handles raw Google PRICE_LEVEL_* strings + ints) ──
+function normalizeBudgetTier(tier) {
+  if (tier === null || tier === undefined) return 'mid';
+  if (tier === 'PRICE_LEVEL_INEXPENSIVE' || tier === 1 || tier === 2) return 'budget';
+  if (tier === 'PRICE_LEVEL_MODERATE'    || tier === 3)               return 'mid';
+  if (tier === 'PRICE_LEVEL_EXPENSIVE'   || tier === 'PRICE_LEVEL_VERY_EXPENSIVE' || tier === 4) return 'luxury';
+  if (tier === 'luxury' || tier === 'mid' || tier === 'budget') return tier;
+  return 'mid';
+}
+
 // ── Inline hotel strip — shown on first day of each city ─────────────────────
 function InlineHotelStrip({ cityKey, quizAnswers }) {
   const cityData  = loadCityData(cityKey);
-  const allHotels = cityData?.hotels || [];
-  const cityName  = cityData?.name   || cityKey;
+  const cityName  = cityData?.name || cityKey;
   const checkIn   = quizAnswers?.departure_date || '';
   const checkOut  = quizAnswers?.return_date    || '';
+
+  // Debug: confirm source count from master DB
+  console.log('Hotels for city:', cityKey, masterDb.cities?.[cityKey]?.hotels?.length);
+
+  // Normalise budget_tier on every hotel entry
+  const allHotels = (cityData?.hotels || []).map(h => ({
+    ...h,
+    budget_tier: normalizeBudgetTier(h.budget_tier),
+  }));
 
   const TIER_LABELS = { luxury: 'Luxury', mid: 'Mid-range', budget: 'Budget' };
   const TIER_EMOJIS = { luxury: '👑', mid: '🏨', budget: '💰' };
 
-  const hotelCards = ['luxury', 'mid', 'budget'].map(tier => ({
-    tier,
-    hotel: allHotels
-      .filter(h => h.budget_tier === tier)
-      .sort((a, b) => (b.rating ?? 0) - (a.rating ?? 0))[0],
-  })).filter(x => x.hotel);
+  // Build up to 15 cards: target 5 per tier; cycle through remaining sorted by
+  // rating when any tier comes up short.
+  const TIERS = ['luxury', 'mid', 'budget'];
+  const byTier = Object.fromEntries(
+    TIERS.map(t => [t, allHotels.filter(h => h.budget_tier === t).sort((a, b) => (b.rating ?? 0) - (a.rating ?? 0))]),
+  );
 
-  console.log(`[InlineHotelStrip] city=${cityKey} total hotels=${allHotels.length} cards=${hotelCards.length}`);
+  const hotelCards = [];
+  for (const t of TIERS) {
+    byTier[t].slice(0, 5).forEach(hotel => hotelCards.push({ tier: t, hotel }));
+  }
+  // Top-up to 15 from remaining hotels (any tier) sorted by rating
+  if (hotelCards.length < 15) {
+    const usedIds   = new Set(hotelCards.map(c => c.hotel.id));
+    const remaining = allHotels
+      .filter(h => !usedIds.has(h.id))
+      .sort((a, b) => (b.rating ?? 0) - (a.rating ?? 0));
+    for (const hotel of remaining) {
+      if (hotelCards.length >= 15) break;
+      hotelCards.push({ tier: hotel.budget_tier, hotel });
+    }
+  }
 
   if (hotelCards.length === 0) return null;
 

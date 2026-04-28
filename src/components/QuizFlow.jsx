@@ -12,10 +12,11 @@ const HOLIDAYS = [
   { name: 'Chinese New Year 2026',         start: '2026-01-28', end: '2026-02-04' },
   { name: 'Qingming Festival 2026',        start: '2026-04-04', end: '2026-04-06' },
   { name: 'May Day Golden Week 2026',      start: '2026-05-01', end: '2026-05-05' },
-  { name: 'Dragon Boat Festival 2026',     start: '2026-05-28', end: '2026-05-30' },
+  { name: 'Dragon Boat Festival 2026',     chineseName: '端午节', start: '2026-06-19', end: '2026-06-21', warning: 'Dragon Boat Festival — expect crowds at scenic spots and higher prices. Book accommodation early.', severity: 'medium' },
   { name: 'National Day Golden Week 2026', start: '2026-10-01', end: '2026-10-07' },
   { name: 'Chinese New Year 2027',         start: '2027-02-15', end: '2027-02-22' },
   { name: 'May Day Golden Week 2027',      start: '2027-05-01', end: '2027-05-05' },
+  { name: 'Dragon Boat Festival 2027',     chineseName: '端午节', start: '2027-06-09', end: '2027-06-11', warning: 'Dragon Boat Festival — expect crowds at scenic spots and higher prices. Book accommodation early.', severity: 'medium' },
   { name: 'National Day Golden Week 2027', start: '2027-10-01', end: '2027-10-07' },
 ];
 
@@ -641,7 +642,10 @@ export default function QuizFlow({ onComplete }) {
           {overlappingHolidays.map(h => (
             <div key={h.name} style={{ background: 'rgba(245,158,11,0.07)', border: '1.5px solid rgba(245,158,11,0.28)', borderRadius: 14, padding: '11px 16px', marginBottom: 10 }}>
               <p style={{ fontSize: 13, color: '#92400e', lineHeight: 1.5, margin: 0 }}>
-                ⚠️ Your dates overlap with <strong>{h.name}</strong> — very crowded. Book well in advance.
+                ⚠️ {h.warning
+                  ? <><strong>{h.name}{h.chineseName ? ` ${h.chineseName}` : ''}</strong> — {h.warning}</>
+                  : <>Your dates overlap with <strong>{h.name}</strong> — very crowded. Book well in advance.</>
+                }
               </p>
             </div>
           ))}
