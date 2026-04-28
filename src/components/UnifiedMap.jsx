@@ -593,7 +593,7 @@ export default function UnifiedMap({
         .filter(a => a.lat && a.lng)
         .map(a => ({ ...a, _cat: 'attraction' }));
       const foodItems = (allFoodByCity_.current?.[cityKey] || [])
-        .filter(f => f.lat && f.lng)
+        .filter(f => f.lat && f.lng && f.photo_url)  // skip entries with no photo
         .map(f => ({ ...f, _cat: 'food' }));
       const all   = [...attrItems, ...foodItems];
       const items = (exploreFilter && exploreFilter !== 'all') ? all.filter(i => i._cat === exploreFilter) : all;

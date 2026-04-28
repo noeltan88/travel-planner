@@ -307,6 +307,7 @@ function pickFood(foodPool, preferredCluster, dietary, usedFoodIds) {
 
   const eligible = foodPool.filter(f => {
     if (usedFoodIds.has(f.id)) return false;
+    if (!f.photo_url) return false;  // skip entries with no photo
     if (noRestrictions) return true;
     if (dietary.includes('halal')       && !f.halal)                                  return false;
     if (dietary.includes('vegetarian')  && !f.dietary_tags?.includes('veg-ok'))       return false;

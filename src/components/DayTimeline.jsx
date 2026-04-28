@@ -43,6 +43,7 @@ function pickMealFoods(stops, slotIndex, allFood, dietary, count = 5) {
 
   const noRestrictions = !dietary?.length || dietary.includes('none');
   const eligible = allFood.filter(f => {
+    if (!f.photo_url) return false;  // skip entries with no photo
     if (noRestrictions) return true;
     if (dietary.includes('halal')       && !f.halal && !f.dietary_tags?.includes('halal-ok')) return false;
     if (dietary.includes('vegetarian')  && !f.dietary_tags?.includes('veg-ok'))               return false;
