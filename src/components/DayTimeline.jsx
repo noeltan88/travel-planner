@@ -161,25 +161,36 @@ function StopCard({ stop, index, onDelete, onSwapRequest }) {
         onPointerUp={onPointerUp}
         onPointerCancel={onPointerUp}
       >
-        {/* Photo — 165 px tall */}
-        <div style={{ height: 165, position: 'relative', overflow: 'hidden' }}>
-          <AttractionImage
-            src={stop.photo_url || null}
-            alt={stop.name}
-            category={stop.category}
-            style={{ height: 165 }}
-          />
-          <div style={{
-            position: 'absolute', inset: 0,
-            background: 'linear-gradient(to top, rgba(0,0,0,0.38) 0%, transparent 56%)',
-          }} />
+        {/* Ripple keyframe — local so it's always available regardless of global CSS */}
+        <style>{`
+          @keyframes ripplePulse {
+            0%   { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(3); opacity: 0; }
+          }
+        `}</style>
+
+        {/* Photo — 165 px tall; overflow:visible so ripple rings aren't clipped */}
+        <div style={{ height: 165, position: 'relative', overflow: 'visible' }}>
+          {/* Inner clip — keeps photo + gradient inside the 165px frame */}
+          <div style={{ position: 'absolute', inset: 0, overflow: 'hidden' }}>
+            <AttractionImage
+              src={stop.photo_url || null}
+              alt={stop.name}
+              category={stop.category}
+              style={{ height: 165 }}
+            />
+            <div style={{
+              position: 'absolute', inset: 0,
+              background: 'linear-gradient(to top, rgba(0,0,0,0.38) 0%, transparent 56%)',
+            }} />
+          </div>
 
           {(stop.must_see || stop.iconic) && (
             <div style={{
               position: 'absolute', top: 10, left: 10,
               background: 'rgba(0,0,0,0.48)', backdropFilter: 'blur(4px)',
               borderRadius: 20, padding: '3px 10px',
-              fontSize: 10, fontWeight: 700, color: '#fff',
+              fontSize: 10, fontWeight: 700, color: '#fff', zIndex: 5,
             }}>
               Iconic
             </div>
@@ -189,7 +200,7 @@ function StopCard({ stop, index, onDelete, onSwapRequest }) {
             position: 'absolute', top: 10, right: 10,
             background: 'rgba(0,0,0,0.48)', backdropFilter: 'blur(4px)',
             borderRadius: 20, padding: '3px 10px',
-            fontSize: 10, fontWeight: 600, color: '#fff',
+            fontSize: 10, fontWeight: 600, color: '#fff', zIndex: 5,
           }}>
             {stop.startTime}
           </div>
@@ -199,34 +210,30 @@ function StopCard({ stop, index, onDelete, onSwapRequest }) {
             width: 26, height: 26, borderRadius: '50%',
             background: ACCENT, border: '2px solid #fff',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontSize: 11, fontWeight: 800, color: '#fff',
+            fontSize: 11, fontWeight: 800, color: '#fff', zIndex: 5,
           }}>
             {index + 1}
           </div>
 
-          {/* Ripple hint dot — top-left of photo */}
+          {/* Ripple hint dot — top-left of photo, overflows visible so rings show */}
           {!hintDismissed && (
             <div
               onClick={e => { e.stopPropagation(); setHintTipOpen(t => !t); }}
-              style={{
-                position: 'absolute', top: 10, left: 10,
-                width: 18, height: 18, cursor: 'pointer', zIndex: 10,
-              }}
+              style={{ position: 'absolute', top: 10, left: 10, width: 18, height: 18, zIndex: 10, cursor: 'pointer' }}
             >
               <div style={{
                 position: 'absolute', inset: 0, borderRadius: '50%',
                 background: 'rgba(255,255,255,0.9)',
-                animation: 'ripple 1.8s ease-out infinite',
+                animation: 'ripplePulse 1.8s ease-out infinite',
               }} />
               <div style={{
                 position: 'absolute', inset: 0, borderRadius: '50%',
                 background: 'rgba(255,255,255,0.9)',
-                animation: 'ripple 1.8s ease-out infinite 0.6s',
+                animation: 'ripplePulse 1.8s ease-out infinite 0.6s',
               }} />
               <div style={{
                 position: 'absolute', inset: 0, borderRadius: '50%',
-                background: '#FFFFFF',
-                zIndex: 1,
+                background: '#FFFFFF', zIndex: 1,
               }} />
             </div>
           )}
