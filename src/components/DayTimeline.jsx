@@ -356,7 +356,7 @@ function FoodMiniCard({ food, onClick }) {
     <div
       onClick={onClick}
       style={{
-        width: 200, height: 160, flexShrink: 0, scrollSnapAlign: 'start',
+        width: 200, minHeight: 160, flexShrink: 0, scrollSnapAlign: 'start',
         borderRadius: 14,
         background: '#FFF8F2',
         border: '1px solid #FFCFBF',
@@ -389,8 +389,14 @@ function FoodMiniCard({ food, onClick }) {
           <p style={{ fontSize: 11, color: '#999', margin: '0 0 1px' }}>{formatFoodPrice(food)}</p>
         )}
         {(food.type || food.category || food.cuisine) && (
-          <p style={{ fontSize: 10, color: '#bbb', margin: 0 }}>
+          <p style={{ fontSize: 10, color: '#bbb', margin: '0 0 1px' }}>
             {formatFoodType(food)}
+          </p>
+        )}
+        {food.google_rating != null && (
+          <p style={{ fontSize: 11, color: '#999', margin: 0 }}>
+            ⭐ {food.google_rating}
+            {food.google_review_count ? ` · ${food.google_review_count} reviews` : ''}
           </p>
         )}
       </div>

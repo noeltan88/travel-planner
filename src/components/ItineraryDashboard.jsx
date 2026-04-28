@@ -448,10 +448,13 @@ function InlineHotelStrip({ cityKey, quizAnswers }) {
               {hotel.price && (
                 <p style={{ fontSize: 12, color: '#666', margin: '2px 0 0' }}>{hotel.price}</p>
               )}
-              {/* FIX 2 — google_rating + review count */}
-              {hotel.google_rating != null && (
+              {/* Rating — hotels store field as "rating" (fallback) or "google_rating" */}
+              {(hotel.google_rating ?? hotel.rating) != null && (
                 <p style={{ fontSize: 11, color: '#999', margin: '2px 0 0' }}>
-                  ⭐ {hotel.google_rating}{hotel.google_review_count ? ` · ${hotel.google_review_count} reviews` : ''}
+                  ⭐ {hotel.google_rating ?? hotel.rating}
+                  {(hotel.google_review_count || hotel.reviews)
+                    ? ` · ${(hotel.google_review_count || hotel.reviews).toLocaleString()} reviews`
+                    : ''}
                 </p>
               )}
               <p style={{ fontSize: 11, color: ACCENT, fontWeight: 600, margin: '6px 0 0' }}>
