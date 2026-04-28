@@ -90,7 +90,8 @@ function buildVibeCards(selectedCities) {
       cards.push({ ...a, vibeCategory: cat.key, vibeCategoryLabel: cat.label, vibeCategoryEmoji: cat.emoji });
     });
   });
-  return cards;
+  // Shuffle final deck so categories are interspersed (not scenic×2, culture×2…)
+  return shuffle(cards);
 }
 
 // ── VibeCard ───────────────────────────────────────────────────────────────────
@@ -256,12 +257,37 @@ export default function VibeCheck({ selectedCities, onComplete }) {
     return () => { clearInterval(waveTimer); clearInterval(textTimer); clearTimeout(doneTimer); };
   }, [phase]);
 
-  // ── Compute results ────────────────────────────────────────────────────────
+  // ── Compute results — relative normalised scoring ─────────────────────────
   function computeResults(newScores) {
-    const sorted  = Object.entries(newScores).sort((a, b) => b[1] - a[1]);
-    const topCat  = sorted[0][1] > 0 ? sorted[0][0] : null;
-    const top3    = sorted.filter(([, s]) => s > 0).slice(0, 3).map(([k]) => k);
-    setFinalData({ vibeArr: top3.length > 0 ? top3 : ['surprise'], topCat, top3, scores: newScores });
+    // Normalise relative to the highest category so even if user likes
+    // everything the winner is the category they liked MOST.
+    const rawMax = Math.max(...Object.values(newScores));
+    const normScores = Object.fromEntries(
+      Object.entries(newScores).map(([k, v]) => [
+        k,
+        rawMax > 0 ? Math.round(Math.max(0, v) / rawMax * 100) : 0,
+      ]),
+    );
+
+    // topCat: the unique highest-scoring category; null when 2+ categories tie
+    const sorted   = Object.entries(newScores).sort((a, b) => b[1] - a[1]);
+    const topRaw   = sorted[0][1];
+    const numAtTop = sorted.filter(([, s]) => s === topRaw).length;
+    const topCat   = topRaw > 0 && numAtTop === 1 ? sorted[0][0] : null;
+
+    const top3 = [...Object.entries(normScores)]
+      .sort((a, b) => b[1] - a[1])
+      .filter(([, s]) => s > 0)
+      .slice(0, 3)
+      .map(([k]) => k);
+
+    setFinalData({
+      vibeArr:   top3.length > 0 ? top3 : ['surprise'],
+      topCat,
+      top3,
+      scores:    normScores,   // normalised 0-100 — used for bars in results
+      rawScores: newScores,
+    });
     setPhase('loading');
   }
 
@@ -532,8 +558,8 @@ export default function VibeCheck({ selectedCities, onComplete }) {
   if (phase === 'results') {
     const { vibeArr, topCat, scores: sc } = finalData;
     const pers       = topCat ? (PERSONALITY[topCat] || DEFAULT_PERSONALITY) : DEFAULT_PERSONALITY;
+    // sc already contains normalised 0-100 values from computeResults
     const sortedCats = [...VIBE_CATEGORIES].sort((a, b) => (sc[b.key] || 0) - (sc[a.key] || 0));
-    const MAX_POSS   = 4;
 
     // FIX 1: photo from the actual vibe-check card pool, matched to top category.
     // rawCards are the cards built from the user's selected cities — search those
@@ -583,7 +609,7 @@ export default function VibeCheck({ selectedCities, onComplete }) {
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           {sortedCats.map(cat => {
-            const pct = Math.round(Math.max(0, sc[cat.key] || 0) / MAX_POSS * 100);
+            const pct = Math.max(0, sc[cat.key] || 0); // already 0-100 after normalisation
             return (
               <div key={cat.key}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 3 }}>
