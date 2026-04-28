@@ -346,18 +346,6 @@ export default function VibeCheck({ selectedCities, onComplete }) {
     setPhase('loading');
   }
 
-  // ── advanceCard: updates score + idx (captures idx/scores at call time) ──────
-  function advanceCard(direction) {
-    const love      = direction === 'right';
-    const card      = rawCards[idx];
-    if (!card) return;
-    const newScores = { ...scores, [card.vibeCategory]: (scores[card.vibeCategory] || 0) + (love ? 2 : -1) };
-    setScores(newScores);
-    const next = idx + 1;
-    if (next >= rawCards.length) computeResults(newScores);
-    else setIdx(next);
-  }
-
   // ── Button taps: trigger fly-off immediately ───────────────────────────────
   function advance(love) {
     if (isSwipingRef.current) return;
@@ -369,13 +357,6 @@ export default function VibeCheck({ selectedCities, onComplete }) {
     const capturedScores = scores;
     setTimeout(() => {
       // Use captured values — avoid stale closure from re-renders during timeout
-      // Debug (step 5): card2/card3 never carry translateX — only scale + translateY.
-      console.log(
-        '[VibeCheck] advance—before idx update:',
-        `card2 transform = scale(1.00) translateY(0px) [identity, no translateX]`,
-        `| card3 transform = scale(0.92) translateY(12px) [no translateX]`,
-        `| old active UNMOUNTS via key change, middle DOM reused as new active`,
-      );
       const capturedCard = rawCards[capturedIdx];
       if (capturedCard) {
         const isLove    = dir === 'right';
@@ -449,17 +430,6 @@ export default function VibeCheck({ selectedCities, onComplete }) {
       const capturedIdx    = idx;
       const capturedScores = scores;
       setTimeout(() => {
-        // Debug (step 5): confirm card2/card3 have no translateX before advance.
-        // card2 (middle) transform is always `scale(${c1Scale}) translateY(${c1TY}px)`.
-        // During flyOff progress=1 → scale(1.00) translateY(0px) = identity matrix.
-        // card3 (back)   transform is always `scale(${c2Scale}) translateY(${c2TY}px)`.
-        // During flyOff progress=1 → scale(0.92) translateY(12px). No translateX on either.
-        console.log(
-          '[VibeCheck] onEnd—before advance:',
-          `card2 transform = scale(1.00) translateY(0px) [identity, no translateX]`,
-          `| card3 transform = scale(0.92) translateY(12px) [no translateX]`,
-          `| old active will UNMOUNT (key change), middle DOM promoted to active slot`,
-        );
         const capturedCard = rawCards[capturedIdx];
         if (capturedCard) {
           const isLove    = dir === 'right'; // use captured dir — not the cleared ref
