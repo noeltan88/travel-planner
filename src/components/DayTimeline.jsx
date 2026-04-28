@@ -204,24 +204,30 @@ function StopCard({ stop, index, onDelete, onSwapRequest }) {
             {index + 1}
           </div>
 
-          {/* FIX 3: Ripple hint dot — inside photo bottom-right, away from price */}
+          {/* Ripple hint dot — top-left of photo */}
           {!hintDismissed && (
             <div
               onClick={e => { e.stopPropagation(); setHintTipOpen(t => !t); }}
               style={{
-                position: 'absolute', bottom: 10, right: 10,
-                width: 14, height: 14, cursor: 'pointer', zIndex: 3,
+                position: 'absolute', top: 10, left: 10,
+                width: 18, height: 18, cursor: 'pointer', zIndex: 10,
               }}
             >
               <div style={{
                 position: 'absolute', inset: 0, borderRadius: '50%',
-                background: '#fff', animation: 'ripple 1.5s ease-out infinite',
+                background: 'rgba(255,255,255,0.9)',
+                animation: 'ripple 1.8s ease-out infinite',
               }} />
               <div style={{
                 position: 'absolute', inset: 0, borderRadius: '50%',
-                background: '#fff', animation: 'ripple 1.5s ease-out infinite 0.5s',
+                background: 'rgba(255,255,255,0.9)',
+                animation: 'ripple 1.8s ease-out infinite 0.6s',
               }} />
-              <div style={{ position: 'absolute', inset: 0, borderRadius: '50%', background: '#fff', zIndex: 1 }} />
+              <div style={{
+                position: 'absolute', inset: 0, borderRadius: '50%',
+                background: '#FFFFFF',
+                zIndex: 1,
+              }} />
             </div>
           )}
         </div>
