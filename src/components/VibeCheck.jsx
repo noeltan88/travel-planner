@@ -43,8 +43,8 @@ const PERSONALITY = {
   adventure:      { label: "You're a Thrill Chaser ⚡",      name: 'Thrill Chaser',      emoji: '⚡', desc: 'Cable cars, hot springs, and theme parks — bring it on.' },
 };
 const DEFAULT_PERSONALITY = {
-  label: "You're full of Surprises 🎲",
-  name:  'full of Surprises',
+  label: "You're Full of Surprises 🎲",
+  name:  'Full of Surprises',
   emoji: '🎲',
   desc:  'Your eclectic taste means every trip is an adventure.',
 };
