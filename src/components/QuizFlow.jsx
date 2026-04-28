@@ -6,17 +6,19 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { QUIZ, getCityOptions } from '../utils/quizData';
 import VibeCheck from './VibeCheck';
-import chinaConnections from '../data/city-connections.json';
-import japanConnections  from '../data/city-connections-japan.json';
-import restConnections   from '../data/city-connections-rest.json';
+import chinaConnections   from '../data/city-connections.json';
+import japanConnections   from '../data/city-connections-japan.json';
+import koreaConnections   from '../data/city-connections-korea.json';
+import thailandConnections from '../data/city-connections-thailand.json';
+import vietnamConnections  from '../data/city-connections-vietnam.json';
 
 // City connections indexed by country key
 const CITY_CONNECTIONS_BY_COUNTRY = {
   china:       chinaConnections,
   japan:       japanConnections,
-  south_korea: restConnections.south_korea,
-  thailand:    restConnections.thailand,
-  vietnam:     restConnections.vietnam,
+  south_korea: koreaConnections,
+  thailand:    thailandConnections,
+  vietnam:     vietnamConnections,
 };
 
 // Base sightseeing days per city by country
