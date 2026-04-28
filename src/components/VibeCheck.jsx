@@ -697,13 +697,12 @@ export default function VibeCheck({ selectedCities, onComplete }) {
             <p style={{ fontSize: 13, fontWeight: 500, color: '#1A1A1A', margin: '20px 0 8px' }}>
               Top 3 tags for you
             </p>
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 8, width: '100%' }}>
+            <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: 8, width: '100%', marginTop: 12 }}>
               {displayTags.map(tag => (
                 <div key={tag} style={{
-                  display: 'inline-flex', alignItems: 'center', gap: 8,
+                  display: 'inline-flex', alignItems: 'center', gap: 6,
                   backgroundColor: '#FFFFFF', border: '1px solid #E0E0E0',
-                  borderRadius: 20, padding: '8px 16px',
-                  width: 'auto', alignSelf: 'flex-start',
+                  borderRadius: 20, padding: '6px 12px',
                 }}>
                   <span style={{ fontSize: 16 }}>{TAG_EMOJI[tag] || '✨'}</span>
                   <span style={{ fontSize: 13, color: '#1A1A1A', textTransform: 'capitalize' }}>
