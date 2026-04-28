@@ -427,6 +427,7 @@ export default function UnifiedMap({
   expanded, onExpand, onCollapse,
   deleteStop, swapStop, allAttractions, allAttractionsByCity,
   allFoodByCity,
+  allHotelsByCity,
   depDate,
   onAddToDay,       // optional: (item, dayIdx) => void — wire up in parent to add an explore item
 }) {
@@ -442,6 +443,7 @@ export default function UnifiedMap({
   // Stale-closure-safe refs
   const allAttractionsByCity_ = useRef(allAttractionsByCity);
   const allFoodByCity_        = useRef(allFoodByCity || {});
+  const allHotelsByCity_      = useRef(allHotelsByCity || {});
   const activeFlatIdxRef      = useRef(0);
   const setExploreSelectedRef = useRef(null);   // kept in sync each render
 
@@ -497,13 +499,15 @@ export default function UnifiedMap({
   const totalStops     = cardList.filter(item => item.type === 'stop').length;
 
   // Counts for explore filter pills
-  const attrCount = (allAttractionsByCity?.[cityKey] || []).filter(a => a.lat && a.lng).length;
-  const foodCount = (allFoodByCity?.[cityKey]         || []).filter(f => f.lat && f.lng).length;
+  const attrCount  = (allAttractionsByCity?.[cityKey] || []).filter(a => a.lat && a.lng).length;
+  const foodCount  = (allFoodByCity?.[cityKey]         || []).filter(f => f.lat && f.lng).length;
+  const hotelCount = (allHotelsByCity?.[cityKey]       || []).filter(h => h.lat && h.lng).length;
 
   // ── Sync stale-closure refs ───────────────────────────────────────────────
   useEffect(() => { activeFlatIdxRef.current      = activeFlatIdx; },      [activeFlatIdx]);
   useEffect(() => { allAttractionsByCity_.current = allAttractionsByCity; }, [allAttractionsByCity]);
   useEffect(() => { allFoodByCity_.current        = allFoodByCity || {}; }, [allFoodByCity]);
+  useEffect(() => { allHotelsByCity_.current      = allHotelsByCity || {}; }, [allHotelsByCity]);
 
   // ── Notify parent when displayed day changes ──────────────────────────────
   useEffect(() => {
@@ -589,13 +593,18 @@ export default function UnifiedMap({
 
     if (explore) {
       // ── Explore mode — category markers, tap opens ExploreSheet ──────────
-      const attrItems = (allAttractionsByCity_.current?.[cityKey] || [])
+      const attrItems  = (allAttractionsByCity_.current?.[cityKey] || [])
         .filter(a => a.lat && a.lng)
         .map(a => ({ ...a, _cat: 'attraction' }));
-      const foodItems = (allFoodByCity_.current?.[cityKey] || [])
+      const foodItems  = (allFoodByCity_.current?.[cityKey] || [])
         .filter(f => f.lat && f.lng && f.photo_url)  // skip entries with no photo
         .map(f => ({ ...f, _cat: 'food' }));
-      const all   = [...attrItems, ...foodItems];
+      const cityHotels = (allHotelsByCity_.current?.[cityKey] || []);
+      console.log('Explore hotels:', cityHotels?.length, cityHotels?.[0]);
+      const hotelItems = cityHotels
+        .filter(h => h.lat && h.lng)
+        .map(h => ({ ...h, _cat: 'hotel' }));
+      const all   = [...attrItems, ...foodItems, ...hotelItems];
       const items = (exploreFilter && exploreFilter !== 'all') ? all.filter(i => i._cat === exploreFilter) : all;
       if (!items.length) return;
 
@@ -711,7 +720,8 @@ export default function UnifiedMap({
     } else if (cat === 'food') {
       el.innerHTML = '<svg width="8" height="8" viewBox="0 0 8 8"><circle cx="4" cy="4" r="3.5" fill="white"/></svg>';
     } else {
-      el.innerHTML = '<svg width="8" height="8" viewBox="0 0 8 8"><rect x="1" y="1" width="6" height="6" rx="1" fill="white"/></svg>';
+      // Hotel — "H" letter marker
+      el.innerHTML = '<span style="font-size:9px;font-weight:800;color:white;line-height:1;font-family:sans-serif">H</span>';
     }
     return el;
   }
@@ -970,10 +980,10 @@ export default function UnifiedMap({
           {/* ══ EXPLORE MODE ═════════════════════════════════════════════════ */}
           {explore && (
             <>
-              {/* White filter pills — absolute top-16px */}
+              {/* White filter pills — below the minimize button (top:12 + height:36 + gap:12 = 60) */}
               <div style={{
                 position:       'absolute',
-                top:            16,
+                top:            60,
                 left:           0,
                 right:          0,
                 zIndex:         20,
@@ -985,9 +995,9 @@ export default function UnifiedMap({
                 scrollbarWidth: 'none',
               }}>
                 {[
-                  { cat: 'attraction', Icon: Mountain, label: 'Attractions', count: attrCount },
-                  { cat: 'food',       Icon: Utensils, label: 'Food',        count: foodCount },
-                  { cat: 'hotel',      Icon: Bed,      label: 'Hotels',      count: 0         },
+                  { cat: 'attraction', Icon: Mountain, label: 'Attractions', count: attrCount  },
+                  { cat: 'food',       Icon: Utensils, label: 'Food',        count: foodCount  },
+                  { cat: 'hotel',      Icon: Bed,      label: 'Hotels',      count: hotelCount },
                 ].map(({ cat, Icon, label, count }) => {
                   const active = exploreFilter === cat;
                   return (

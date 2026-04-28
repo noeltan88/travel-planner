@@ -746,6 +746,13 @@ export default function ItineraryDashboard({
     if (cd?.food) allFoodByCity[ck] = cd.food;
   });
 
+  // Hotel data per city for UnifiedMap explore mode
+  const allHotelsByCity = {};
+  (cities || []).forEach(ck => {
+    const cd = loadCityData(ck, country);
+    if (cd?.hotels) allHotelsByCity[ck] = cd.hotels;
+  });
+
   // ── Sticky header content ─────────────────────────────────────────────────
   // FIX 1: De-duplicate by city KEY, then look up display name + emoji.
   // cityHeader is only set on the first day of each city group; later days of
@@ -1125,6 +1132,7 @@ export default function ItineraryDashboard({
             allAttractions={allAttractions}
             allAttractionsByCity={allAttractionsByCity}
             allFoodByCity={allFoodByCity}
+            allHotelsByCity={allHotelsByCity}
             depDate={depDate}
             onAddToDay={addStopToDay}
           />
