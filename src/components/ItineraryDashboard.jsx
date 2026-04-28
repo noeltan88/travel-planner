@@ -20,6 +20,7 @@ import PrintView from './PrintView';
 import { exportToPDF } from '../utils/pdfExport';
 import { loadCityData } from '../utils/algorithm';
 import UnifiedMap from './UnifiedMap';
+import AttractionImage from './AttractionImage';
 import masterDb from '../data/china-master-db-v1.json';
 
 // ── Design tokens ─────────────────────────────────────────────────────────────
@@ -388,10 +389,14 @@ function InlineHotelStrip({ cityKey, quizAnswers }) {
   if (hotelCards.length === 0) return null;
 
   function agodaHref(hotel) {
-    const p = new URLSearchParams({ city: cityName, adults: '2', textToSearch: hotel.name });
-    if (checkIn)  p.set('checkIn',  checkIn);
-    if (checkOut) p.set('checkOut', checkOut);
-    return `https://www.agoda.com/search?${p}`;
+    const params = [
+      `city=${encodeURIComponent(cityName)}`,
+      checkIn  ? `checkIn=${checkIn}`   : '',
+      checkOut ? `checkOut=${checkOut}` : '',
+      'adults=2',
+      `textToSearch=${encodeURIComponent(hotel.name)}`,
+    ].filter(Boolean).join('&');
+    return `https://www.agoda.com/search?${params}`;
   }
 
   return (
@@ -408,25 +413,31 @@ function InlineHotelStrip({ cityKey, quizAnswers }) {
       }}>
         {hotelCards.map(({ tier, hotel }) => (
           <a
-            key={tier}
+            key={hotel.id || `${tier}-${hotel.name}`}
             href={agodaHref(hotel)}
             target="_blank"
             rel="noopener noreferrer"
             style={{
               flexShrink: 0, width: 160,
-              background: '#fff', borderRadius: 12,
+              background: '#fff', borderRadius: 14,
               boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
               textDecoration: 'none', overflow: 'hidden',
               display: 'flex', flexDirection: 'column',
-              borderTop: `2px solid ${ACCENT}`,
             }}
           >
-            <div style={{ padding: '8px 10px 4px' }}>
+            {/* FIX 1 — hotel photo with AttractionImage fallback */}
+            <AttractionImage
+              src={hotel.photo_url}
+              alt={hotel.name}
+              category="hotel"
+              style={{ width: '100%', height: 110, objectFit: 'cover', borderRadius: '14px 14px 0 0', display: 'block' }}
+            />
+            <div style={{ padding: '6px 10px 4px' }}>
               <p style={{ fontSize: 10, fontWeight: 700, color: ACCENT, margin: 0, letterSpacing: 0.5 }}>
                 {TIER_EMOJIS[tier]} {TIER_LABELS[tier].toUpperCase()}
               </p>
             </div>
-            <div style={{ padding: '4px 10px 10px', flex: 1, display: 'flex', flexDirection: 'column', gap: 2 }}>
+            <div style={{ padding: '2px 10px 10px', flex: 1, display: 'flex', flexDirection: 'column', gap: 2 }}>
               <p style={{
                 fontSize: 13, fontWeight: 500, color: '#1A1A1A', margin: 0, lineHeight: 1.3,
                 overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box',
@@ -437,8 +448,11 @@ function InlineHotelStrip({ cityKey, quizAnswers }) {
               {hotel.price && (
                 <p style={{ fontSize: 12, color: '#666', margin: '2px 0 0' }}>{hotel.price}</p>
               )}
-              {hotel.rating != null && (
-                <p style={{ fontSize: 11, color: '#999', margin: '2px 0 0' }}>⭐ {hotel.rating}</p>
+              {/* FIX 2 — google_rating + review count */}
+              {hotel.google_rating != null && (
+                <p style={{ fontSize: 11, color: '#999', margin: '2px 0 0' }}>
+                  ⭐ {hotel.google_rating}{hotel.google_review_count ? ` · ${hotel.google_review_count} reviews` : ''}
+                </p>
               )}
               <p style={{ fontSize: 11, color: ACCENT, fontWeight: 600, margin: '6px 0 0' }}>
                 Book on Agoda →
