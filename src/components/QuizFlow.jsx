@@ -365,6 +365,7 @@ export default function QuizFlow({ onComplete }) {
         CITY_CONNECTIONS_BY_COUNTRY[answers.country || 'china'],
       )
     : null;
+  if (isDateRange) console.log('recDays:', recDays, 'cities:', answers.city, 'country:', answers.country);
   const activeHolidays = HOLIDAYS_BY_COUNTRY[answers.country] || HOLIDAYS_BY_COUNTRY.china;
   const overlappingHolidays = useMemo(() => {
     if (!dep || !ret || dateError) return [];
@@ -678,35 +679,6 @@ export default function QuizFlow({ onComplete }) {
             </button>
           </div>
 
-          {/* Recommended days pill — shown when at least 1 city selected */}
-          {recDays && (
-            <div style={{
-              display:      'flex',
-              flexDirection: 'column',
-              alignItems:   'center',
-              marginBottom: 10,
-            }}>
-              <div style={{
-                display:      'inline-flex',
-                flexDirection: 'column',
-                alignItems:   'center',
-                background:   '#FEF0EC',
-                border:       '1px solid #FFCFBF',
-                borderRadius: 20,
-                padding:      '8px 16px',
-              }}>
-                <span style={{ fontSize: 13, fontWeight: 500, color: '#E8472A', whiteSpace: 'nowrap' }}>
-                  💡 We recommend {recDays.minDays}–{recDays.maxDays} days
-                </span>
-                {recDays.travelDays > 0 && (
-                  <span style={{ fontSize: 11, color: '#B83520', marginTop: 2, whiteSpace: 'nowrap' }}>
-                    Includes {recDays.travelDays} travel day{recDays.travelDays > 1 ? 's' : ''} between cities
-                  </span>
-                )}
-              </div>
-            </div>
-          )}
-
           {/* Animated calendar card — swipe left/right to change month */}
           <div
             ref={calendarRef}
@@ -736,6 +708,30 @@ export default function QuizFlow({ onComplete }) {
               </div>
             )}
           </div>
+
+          {/* Recommended days pill — below date summary, always visible */}
+          {recDays && (
+            <div style={{ textAlign: 'center', marginBottom: 10 }}>
+              <div style={{
+                display:       'inline-flex',
+                flexDirection: 'column',
+                alignItems:    'center',
+                background:    '#FEF0EC',
+                border:        '1px solid #FFCFBF',
+                borderRadius:  20,
+                padding:       '8px 16px',
+              }}>
+                <span style={{ fontSize: 13, fontWeight: 500, color: '#E8472A', whiteSpace: 'nowrap' }}>
+                  💡 We recommend {recDays.minDays}–{recDays.maxDays} days
+                </span>
+                {recDays.travelDays > 0 && (
+                  <span style={{ fontSize: 11, color: '#B83520', marginTop: 2, whiteSpace: 'nowrap' }}>
+                    Includes {recDays.travelDays} travel day{recDays.travelDays > 1 ? 's' : ''} between cities
+                  </span>
+                )}
+              </div>
+            </div>
+          )}
 
           {/* Holiday warnings */}
           {overlappingHolidays.map(h => (
