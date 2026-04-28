@@ -1,0 +1,329 @@
+{
+  "metadata": {
+    "notes": "Vietnam is a long narrow country — domestic flights essential for north-south travel. Reunification Express train is scenic but slow. All times in hours.",
+    "transport_modes": {
+      "flight": "Domestic flight (Vietnam Airlines, VietJet, Bamboo)",
+      "train": "Reunification Express (scenic but slow)",
+      "bus": "Sleeper bus or open tour bus",
+      "ferry": "Ferry to islands",
+      "flight_then_bus": "Fly to nearest airport then bus"
+    }
+  },
+  "cities": {
+    "hanoi→ho_chi_minh_city": {
+      "mode": "flight",
+      "duration_hrs": 2,
+      "frequency": "Every 30-60 min",
+      "station_note": "Noi Bai → Tan Son Nhat Airport. Very frequent. Train exists but 30hrs.",
+      "travel_day": true
+    },
+    "hanoi→da_nang": {
+      "mode": "flight",
+      "duration_hrs": 1.25,
+      "frequency": "Every 30-60 min",
+      "station_note": "Noi Bai → Da Nang Airport. Very frequent.",
+      "travel_day": true
+    },
+    "hanoi→hoi_an": {
+      "mode": "flight",
+      "duration_hrs": 2,
+      "frequency": "Several daily",
+      "station_note": "Noi Bai → Da Nang then bus/taxi to Hoi An (45min).",
+      "travel_day": true
+    },
+    "hanoi→ha_long_bay": {
+      "mode": "bus",
+      "duration_hrs": 3.5,
+      "frequency": "Every 30-60 min",
+      "station_note": "Hanoi → Ha Long Bay by bus or cruise transfer. Classic overnight cruise.",
+      "travel_day": true
+    },
+    "hanoi→hue": {
+      "mode": "flight",
+      "duration_hrs": 1.25,
+      "frequency": "Several daily",
+      "station_note": "Noi Bai → Phu Bai Airport (Hue). Or train (14hrs scenic).",
+      "travel_day": true
+    },
+    "hanoi→nha_trang": {
+      "mode": "flight",
+      "duration_hrs": 1.5,
+      "frequency": "Several daily",
+      "station_note": "Noi Bai → Cam Ranh Airport (Nha Trang).",
+      "travel_day": true
+    },
+    "hanoi→sapa": {
+      "mode": "train",
+      "duration_hrs": 8,
+      "frequency": "Several daily",
+      "station_note": "Hanoi → Lao Cai by overnight train (8hrs) then bus to Sapa (1hr). Classic experience.",
+      "travel_day": true
+    },
+    "hanoi→da_lat": {
+      "mode": "flight",
+      "duration_hrs": 2,
+      "frequency": "Several daily",
+      "station_note": "Noi Bai → Lien Khuong Airport (Da Lat).",
+      "travel_day": true
+    },
+    "hanoi→phu_quoc": {
+      "mode": "flight",
+      "duration_hrs": 2,
+      "frequency": "Several daily",
+      "station_note": "Noi Bai → Phu Quoc International Airport.",
+      "travel_day": true
+    },
+    "ho_chi_minh_city→da_nang": {
+      "mode": "flight",
+      "duration_hrs": 1.25,
+      "frequency": "Every 30-60 min",
+      "station_note": "Tan Son Nhat → Da Nang Airport. Very frequent.",
+      "travel_day": true
+    },
+    "ho_chi_minh_city→hoi_an": {
+      "mode": "flight",
+      "duration_hrs": 2,
+      "frequency": "Several daily",
+      "station_note": "Tan Son Nhat → Da Nang then bus/taxi to Hoi An (45min).",
+      "travel_day": true
+    },
+    "ho_chi_minh_city→ha_long_bay": {
+      "mode": "flight",
+      "duration_hrs": 4,
+      "frequency": "Several daily",
+      "station_note": "Tan Son Nhat → Noi Bai (Hanoi) then bus to Ha Long Bay.",
+      "travel_day": true
+    },
+    "ho_chi_minh_city→hue": {
+      "mode": "flight",
+      "duration_hrs": 1.25,
+      "frequency": "Several daily",
+      "station_note": "Tan Son Nhat → Phu Bai Airport (Hue).",
+      "travel_day": true
+    },
+    "ho_chi_minh_city→nha_trang": {
+      "mode": "flight",
+      "duration_hrs": 1,
+      "frequency": "Several daily",
+      "station_note": "Tan Son Nhat → Cam Ranh Airport. Or sleeper bus (9hrs).",
+      "travel_day": true
+    },
+    "ho_chi_minh_city→sapa": {
+      "mode": "flight",
+      "duration_hrs": 4,
+      "frequency": "Several daily",
+      "station_note": "Tan Son Nhat → Noi Bai then overnight train to Lao Cai then bus to Sapa.",
+      "travel_day": true
+    },
+    "ho_chi_minh_city→da_lat": {
+      "mode": "flight",
+      "duration_hrs": 1,
+      "frequency": "Several daily",
+      "station_note": "Tan Son Nhat → Lien Khuong Airport (Da Lat). Or bus (7hrs scenic).",
+      "travel_day": true
+    },
+    "ho_chi_minh_city→phu_quoc": {
+      "mode": "flight",
+      "duration_hrs": 1,
+      "frequency": "Every 30-60 min",
+      "station_note": "Tan Son Nhat → Phu Quoc International Airport. Very frequent.",
+      "travel_day": true
+    },
+    "da_nang→hoi_an": {
+      "mode": "bus",
+      "duration_hrs": 0.75,
+      "frequency": "Every 30 min",
+      "station_note": "Da Nang → Hoi An by taxi or shuttle bus. Effectively same destination area.",
+      "travel_day": false
+    },
+    "da_nang→ha_long_bay": {
+      "mode": "flight",
+      "duration_hrs": 3.5,
+      "frequency": "Several daily",
+      "station_note": "Da Nang → Noi Bai (Hanoi) then bus to Ha Long Bay.",
+      "travel_day": true
+    },
+    "da_nang→hue": {
+      "mode": "bus",
+      "duration_hrs": 2.5,
+      "frequency": "Every 30-60 min",
+      "station_note": "Da Nang → Hue by bus over Hai Van Pass. Scenic mountain road. Easy combination.",
+      "travel_day": false
+    },
+    "da_nang→nha_trang": {
+      "mode": "flight",
+      "duration_hrs": 1.25,
+      "frequency": "Several daily",
+      "station_note": "Da Nang → Cam Ranh Airport (Nha Trang).",
+      "travel_day": true
+    },
+    "da_nang→sapa": {
+      "mode": "flight",
+      "duration_hrs": 4,
+      "frequency": "Several daily",
+      "station_note": "Da Nang → Hanoi then overnight train to Lao Cai then bus to Sapa.",
+      "travel_day": true
+    },
+    "da_nang→da_lat": {
+      "mode": "flight",
+      "duration_hrs": 1.5,
+      "frequency": "Several daily",
+      "station_note": "Da Nang → Lien Khuong Airport (Da Lat).",
+      "travel_day": true
+    },
+    "da_nang→phu_quoc": {
+      "mode": "flight",
+      "duration_hrs": 2,
+      "frequency": "Several daily",
+      "station_note": "Da Nang → Phu Quoc Airport direct or via HCMC.",
+      "travel_day": true
+    },
+    "hoi_an→ha_long_bay": {
+      "mode": "flight",
+      "duration_hrs": 4,
+      "frequency": "Several daily",
+      "station_note": "Hoi An → Da Nang Airport → Hanoi then bus to Ha Long Bay.",
+      "travel_day": true
+    },
+    "hoi_an→hue": {
+      "mode": "bus",
+      "duration_hrs": 3,
+      "frequency": "Every 30-60 min",
+      "station_note": "Hoi An → Hue by bus over Hai Van Pass. Classic scenic route.",
+      "travel_day": true
+    },
+    "hoi_an→nha_trang": {
+      "mode": "flight",
+      "duration_hrs": 2,
+      "frequency": "Several daily",
+      "station_note": "Hoi An → Da Nang Airport → Cam Ranh (Nha Trang).",
+      "travel_day": true
+    },
+    "hoi_an→sapa": {
+      "mode": "flight",
+      "duration_hrs": 4.5,
+      "frequency": "Several daily",
+      "station_note": "Hoi An → Da Nang → Hanoi → Lao Cai → Sapa.",
+      "travel_day": true
+    },
+    "hoi_an→da_lat": {
+      "mode": "flight",
+      "duration_hrs": 2,
+      "frequency": "Several daily",
+      "station_note": "Hoi An → Da Nang → Da Lat.",
+      "travel_day": true
+    },
+    "hoi_an→phu_quoc": {
+      "mode": "flight",
+      "duration_hrs": 2.5,
+      "frequency": "Several daily",
+      "station_note": "Hoi An → Da Nang → Phu Quoc.",
+      "travel_day": true
+    },
+    "ha_long_bay→hue": {
+      "mode": "flight",
+      "duration_hrs": 3,
+      "frequency": "Several daily",
+      "station_note": "Ha Long Bay → Hanoi → Phu Bai (Hue).",
+      "travel_day": true
+    },
+    "ha_long_bay→nha_trang": {
+      "mode": "flight",
+      "duration_hrs": 3.5,
+      "frequency": "Several daily",
+      "station_note": "Ha Long Bay → Hanoi → Cam Ranh (Nha Trang).",
+      "travel_day": true
+    },
+    "ha_long_bay→sapa": {
+      "mode": "bus",
+      "duration_hrs": 6,
+      "frequency": "Several daily",
+      "station_note": "Ha Long Bay → Hanoi then overnight train to Lao Cai then bus to Sapa.",
+      "travel_day": true
+    },
+    "ha_long_bay→da_lat": {
+      "mode": "flight",
+      "duration_hrs": 4,
+      "frequency": "Several daily",
+      "station_note": "Ha Long Bay → Hanoi → Da Lat.",
+      "travel_day": true
+    },
+    "ha_long_bay→phu_quoc": {
+      "mode": "flight",
+      "duration_hrs": 4,
+      "frequency": "Several daily",
+      "station_note": "Ha Long Bay → Hanoi → Phu Quoc.",
+      "travel_day": true
+    },
+    "hue→nha_trang": {
+      "mode": "train",
+      "duration_hrs": 10,
+      "frequency": "Several daily",
+      "station_note": "Hue → Nha Trang by Reunification Express. Scenic coastal route. Or fly via Da Nang.",
+      "travel_day": true
+    },
+    "hue→sapa": {
+      "mode": "flight",
+      "duration_hrs": 4,
+      "frequency": "Several daily",
+      "station_note": "Hue → Hanoi then overnight train to Lao Cai then bus to Sapa.",
+      "travel_day": true
+    },
+    "hue→da_lat": {
+      "mode": "flight",
+      "duration_hrs": 2.5,
+      "frequency": "Several daily",
+      "station_note": "Phu Bai (Hue) → Da Nang → Da Lat.",
+      "travel_day": true
+    },
+    "hue→phu_quoc": {
+      "mode": "flight",
+      "duration_hrs": 3,
+      "frequency": "Several daily",
+      "station_note": "Phu Bai (Hue) → HCMC → Phu Quoc.",
+      "travel_day": true
+    },
+    "nha_trang→sapa": {
+      "mode": "flight",
+      "duration_hrs": 4.5,
+      "frequency": "Several daily",
+      "station_note": "Cam Ranh → Hanoi then overnight train to Lao Cai then bus to Sapa.",
+      "travel_day": true
+    },
+    "nha_trang→da_lat": {
+      "mode": "bus",
+      "duration_hrs": 3.5,
+      "frequency": "Several daily",
+      "station_note": "Nha Trang → Da Lat by bus. Scenic mountain road. Easy combination.",
+      "travel_day": true
+    },
+    "nha_trang→phu_quoc": {
+      "mode": "flight",
+      "duration_hrs": 2,
+      "frequency": "Several daily",
+      "station_note": "Cam Ranh (Nha Trang) → Phu Quoc Airport. Or via HCMC.",
+      "travel_day": true
+    },
+    "sapa→da_lat": {
+      "mode": "flight",
+      "duration_hrs": 5,
+      "frequency": "Several daily",
+      "station_note": "Sapa → Lao Cai → Hanoi → Da Lat. Very long journey.",
+      "travel_day": true
+    },
+    "sapa→phu_quoc": {
+      "mode": "flight",
+      "duration_hrs": 5,
+      "frequency": "Several daily",
+      "station_note": "Sapa → Hanoi → Phu Quoc. Very long journey.",
+      "travel_day": true
+    },
+    "da_lat→phu_quoc": {
+      "mode": "flight",
+      "duration_hrs": 2,
+      "frequency": "Several daily",
+      "station_note": "Lien Khuong (Da Lat) → Phu Quoc Airport. Or via HCMC.",
+      "travel_day": true
+    }
+  }
+}

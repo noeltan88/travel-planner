@@ -1,0 +1,476 @@
+{
+  "metadata": {
+    "notes": "Thailand domestic flights are the primary intercity transport for distances over 3hrs. Overnight buses and trains available for budget travellers. Island destinations require ferry. All times in hours.",
+    "transport_modes": {
+      "flight": "Domestic flight (AirAsia, Bangkok Airways, Thai Lion)",
+      "bus": "Express bus or VIP overnight bus",
+      "train": "State Railway of Thailand (slower but scenic)",
+      "ferry": "Ferry or speedboat to islands",
+      "flight_then_ferry": "Fly to nearest airport then ferry to island"
+    }
+  },
+  "cities": {
+    "bangkok→chiang_mai": {
+      "mode": "flight",
+      "duration_hrs": 1.25,
+      "frequency": "Every 30-60 min",
+      "station_note": "Suvarnabhumi/Don Mueang → Chiang Mai Airport. Very frequent. Overnight train also available (12hrs, scenic).",
+      "travel_day": true
+    },
+    "bangkok→phuket": {
+      "mode": "flight",
+      "duration_hrs": 1.5,
+      "frequency": "Every 30-60 min",
+      "station_note": "Suvarnabhumi/Don Mueang → Phuket Airport. Very frequent.",
+      "travel_day": true
+    },
+    "bangkok→krabi": {
+      "mode": "flight",
+      "duration_hrs": 1.5,
+      "frequency": "Several daily",
+      "station_note": "Suvarnabhumi → Krabi Airport. Or bus (12hrs overnight).",
+      "travel_day": true
+    },
+    "bangkok→koh_samui": {
+      "mode": "flight",
+      "duration_hrs": 1.25,
+      "frequency": "Several daily",
+      "station_note": "Suvarnabhumi → Koh Samui Airport (Bangkok Airways). Or bus + ferry (10hrs).",
+      "travel_day": true
+    },
+    "bangkok→ayutthaya": {
+      "mode": "train",
+      "duration_hrs": 1.5,
+      "frequency": "Every 30-60 min",
+      "station_note": "Hua Lamphong → Ayutthaya by train. Classic day trip from Bangkok.",
+      "travel_day": false
+    },
+    "bangkok→chiang_rai": {
+      "mode": "flight",
+      "duration_hrs": 1.5,
+      "frequency": "Several daily",
+      "station_note": "Don Mueang → Chiang Rai Airport. Or bus via Chiang Mai (5hrs).",
+      "travel_day": true
+    },
+    "bangkok→pattaya": {
+      "mode": "bus",
+      "duration_hrs": 2,
+      "frequency": "Every 30 min",
+      "station_note": "Bangkok Eastern Bus Terminal → Pattaya. Easy day trip or overnight.",
+      "travel_day": false
+    },
+    "bangkok→hua_hin": {
+      "mode": "bus",
+      "duration_hrs": 3,
+      "frequency": "Every 30-60 min",
+      "station_note": "Bangkok Southern Bus Terminal → Hua Hin. Or train from Hua Lamphong.",
+      "travel_day": true
+    },
+    "bangkok→kanchanaburi": {
+      "mode": "bus",
+      "duration_hrs": 2.5,
+      "frequency": "Every 30-60 min",
+      "station_note": "Bangkok Northern Bus Terminal → Kanchanaburi. Easy day trip.",
+      "travel_day": false
+    },
+    "bangkok→sukhothai": {
+      "mode": "bus",
+      "duration_hrs": 6,
+      "frequency": "Several daily",
+      "station_note": "Bangkok Northern Bus Terminal → Sukhothai. Or fly to Phitsanulok then bus (1hr).",
+      "travel_day": true
+    },
+    "bangkok→pai": {
+      "mode": "flight",
+      "duration_hrs": 3,
+      "frequency": "Several daily",
+      "station_note": "Don Mueang → Chiang Mai then minivan to Pai (3hrs mountain road). Or overnight bus.",
+      "travel_day": true
+    },
+    "chiang_mai→phuket": {
+      "mode": "flight",
+      "duration_hrs": 1.5,
+      "frequency": "Several daily",
+      "station_note": "Chiang Mai → Phuket Airport. Direct flights available.",
+      "travel_day": true
+    },
+    "chiang_mai→krabi": {
+      "mode": "flight",
+      "duration_hrs": 2,
+      "frequency": "Several daily",
+      "station_note": "Chiang Mai → Krabi Airport. Direct or via Bangkok.",
+      "travel_day": true
+    },
+    "chiang_mai→koh_samui": {
+      "mode": "flight",
+      "duration_hrs": 2,
+      "frequency": "Several daily",
+      "station_note": "Chiang Mai → Koh Samui via Bangkok Airways.",
+      "travel_day": true
+    },
+    "chiang_mai→ayutthaya": {
+      "mode": "flight",
+      "duration_hrs": 2.5,
+      "frequency": "Several daily",
+      "station_note": "Chiang Mai → Bangkok then train to Ayutthaya.",
+      "travel_day": true
+    },
+    "chiang_mai→chiang_rai": {
+      "mode": "bus",
+      "duration_hrs": 3,
+      "frequency": "Every 30-60 min",
+      "station_note": "Chiang Mai → Chiang Rai by minivan or bus. Scenic mountain road.",
+      "travel_day": true
+    },
+    "chiang_mai→pattaya": {
+      "mode": "flight",
+      "duration_hrs": 3,
+      "frequency": "Several daily",
+      "station_note": "Chiang Mai → Bangkok then bus to Pattaya.",
+      "travel_day": true
+    },
+    "chiang_mai→hua_hin": {
+      "mode": "flight",
+      "duration_hrs": 3,
+      "frequency": "Several daily",
+      "station_note": "Chiang Mai → Bangkok then bus to Hua Hin.",
+      "travel_day": true
+    },
+    "chiang_mai→kanchanaburi": {
+      "mode": "flight",
+      "duration_hrs": 3,
+      "frequency": "Several daily",
+      "station_note": "Chiang Mai → Bangkok then bus to Kanchanaburi.",
+      "travel_day": true
+    },
+    "chiang_mai→sukhothai": {
+      "mode": "bus",
+      "duration_hrs": 4,
+      "frequency": "Several daily",
+      "station_note": "Chiang Mai → Sukhothai by bus. Or fly to Phitsanulok then bus.",
+      "travel_day": true
+    },
+    "chiang_mai→pai": {
+      "mode": "bus",
+      "duration_hrs": 3,
+      "frequency": "Every 30-60 min",
+      "station_note": "Chiang Mai Arcade Bus Terminal → Pai by minivan. Winding mountain road — bring motion sickness pills.",
+      "travel_day": true
+    },
+    "phuket→krabi": {
+      "mode": "ferry",
+      "duration_hrs": 1.5,
+      "frequency": "Several daily",
+      "station_note": "Phuket Rassada Pier → Krabi Town by ferry. Or bus (3hrs). Classic combination.",
+      "travel_day": false
+    },
+    "phuket→koh_samui": {
+      "mode": "flight_then_ferry",
+      "duration_hrs": 3,
+      "frequency": "Several daily",
+      "station_note": "Phuket → Surat Thani then ferry to Koh Samui. Or fly direct via Bangkok.",
+      "travel_day": true
+    },
+    "phuket→ayutthaya": {
+      "mode": "flight",
+      "duration_hrs": 3,
+      "frequency": "Several daily",
+      "station_note": "Phuket → Bangkok then train to Ayutthaya.",
+      "travel_day": true
+    },
+    "phuket→chiang_rai": {
+      "mode": "flight",
+      "duration_hrs": 3,
+      "frequency": "Several daily",
+      "station_note": "Phuket → Bangkok then to Chiang Rai.",
+      "travel_day": true
+    },
+    "phuket→pattaya": {
+      "mode": "flight",
+      "duration_hrs": 3,
+      "frequency": "Several daily",
+      "station_note": "Phuket → Bangkok then bus to Pattaya.",
+      "travel_day": true
+    },
+    "phuket→hua_hin": {
+      "mode": "flight",
+      "duration_hrs": 2.5,
+      "frequency": "Several daily",
+      "station_note": "Phuket → Bangkok then bus to Hua Hin.",
+      "travel_day": true
+    },
+    "phuket→kanchanaburi": {
+      "mode": "flight",
+      "duration_hrs": 3,
+      "frequency": "Several daily",
+      "station_note": "Phuket → Bangkok then bus to Kanchanaburi.",
+      "travel_day": true
+    },
+    "phuket→sukhothai": {
+      "mode": "flight",
+      "duration_hrs": 3,
+      "frequency": "Several daily",
+      "station_note": "Phuket → Bangkok then to Sukhothai.",
+      "travel_day": true
+    },
+    "phuket→pai": {
+      "mode": "flight",
+      "duration_hrs": 4,
+      "frequency": "Several daily",
+      "station_note": "Phuket → Chiang Mai then minivan to Pai.",
+      "travel_day": true
+    },
+    "krabi→koh_samui": {
+      "mode": "ferry",
+      "duration_hrs": 3,
+      "frequency": "Several daily",
+      "station_note": "Krabi → Koh Samui by ferry. Or fly via Bangkok.",
+      "travel_day": true
+    },
+    "krabi→ayutthaya": {
+      "mode": "flight",
+      "duration_hrs": 3,
+      "frequency": "Several daily",
+      "station_note": "Krabi → Bangkok then train to Ayutthaya.",
+      "travel_day": true
+    },
+    "krabi→chiang_rai": {
+      "mode": "flight",
+      "duration_hrs": 3.5,
+      "frequency": "Several daily",
+      "station_note": "Krabi → Bangkok then to Chiang Rai.",
+      "travel_day": true
+    },
+    "krabi→pattaya": {
+      "mode": "flight",
+      "duration_hrs": 3.5,
+      "frequency": "Several daily",
+      "station_note": "Krabi → Bangkok then bus to Pattaya.",
+      "travel_day": true
+    },
+    "krabi→hua_hin": {
+      "mode": "bus",
+      "duration_hrs": 5,
+      "frequency": "Several daily",
+      "station_note": "Krabi → Hua Hin by overnight bus. Or fly via Bangkok.",
+      "travel_day": true
+    },
+    "krabi→kanchanaburi": {
+      "mode": "flight",
+      "duration_hrs": 3.5,
+      "frequency": "Several daily",
+      "station_note": "Krabi → Bangkok then bus to Kanchanaburi.",
+      "travel_day": true
+    },
+    "krabi→sukhothai": {
+      "mode": "flight",
+      "duration_hrs": 3.5,
+      "frequency": "Several daily",
+      "station_note": "Krabi → Bangkok then to Sukhothai.",
+      "travel_day": true
+    },
+    "krabi→pai": {
+      "mode": "flight",
+      "duration_hrs": 4.5,
+      "frequency": "Several daily",
+      "station_note": "Krabi → Chiang Mai then minivan to Pai.",
+      "travel_day": true
+    },
+    "koh_samui→ayutthaya": {
+      "mode": "flight_then_ferry",
+      "duration_hrs": 3.5,
+      "frequency": "Several daily",
+      "station_note": "Koh Samui → Surat Thani → Bangkok → Ayutthaya.",
+      "travel_day": true
+    },
+    "koh_samui→chiang_rai": {
+      "mode": "flight",
+      "duration_hrs": 3.5,
+      "frequency": "Several daily",
+      "station_note": "Koh Samui → Bangkok then to Chiang Rai.",
+      "travel_day": true
+    },
+    "koh_samui→pattaya": {
+      "mode": "flight",
+      "duration_hrs": 3,
+      "frequency": "Several daily",
+      "station_note": "Koh Samui → Bangkok then bus to Pattaya.",
+      "travel_day": true
+    },
+    "koh_samui→hua_hin": {
+      "mode": "ferry",
+      "duration_hrs": 3.5,
+      "frequency": "Several daily",
+      "station_note": "Koh Samui → Surat Thani then bus to Hua Hin. Or fly via Bangkok.",
+      "travel_day": true
+    },
+    "koh_samui→kanchanaburi": {
+      "mode": "flight",
+      "duration_hrs": 4,
+      "frequency": "Several daily",
+      "station_note": "Koh Samui → Bangkok then bus to Kanchanaburi.",
+      "travel_day": true
+    },
+    "koh_samui→sukhothai": {
+      "mode": "flight",
+      "duration_hrs": 4,
+      "frequency": "Several daily",
+      "station_note": "Koh Samui → Bangkok then to Sukhothai.",
+      "travel_day": true
+    },
+    "koh_samui→pai": {
+      "mode": "flight",
+      "duration_hrs": 5,
+      "frequency": "Several daily",
+      "station_note": "Koh Samui → Chiang Mai then minivan to Pai.",
+      "travel_day": true
+    },
+    "ayutthaya→chiang_rai": {
+      "mode": "flight",
+      "duration_hrs": 3,
+      "frequency": "Several daily",
+      "station_note": "Ayutthaya → Bangkok then to Chiang Rai.",
+      "travel_day": true
+    },
+    "ayutthaya→pattaya": {
+      "mode": "bus",
+      "duration_hrs": 3,
+      "frequency": "Several daily",
+      "station_note": "Ayutthaya → Pattaya by bus via Bangkok.",
+      "travel_day": true
+    },
+    "ayutthaya→hua_hin": {
+      "mode": "bus",
+      "duration_hrs": 4,
+      "frequency": "Several daily",
+      "station_note": "Ayutthaya → Hua Hin by bus via Bangkok.",
+      "travel_day": true
+    },
+    "ayutthaya→kanchanaburi": {
+      "mode": "bus",
+      "duration_hrs": 3,
+      "frequency": "Several daily",
+      "station_note": "Ayutthaya → Kanchanaburi by bus via Bangkok.",
+      "travel_day": true
+    },
+    "ayutthaya→sukhothai": {
+      "mode": "bus",
+      "duration_hrs": 5,
+      "frequency": "Several daily",
+      "station_note": "Ayutthaya → Sukhothai by bus.",
+      "travel_day": true
+    },
+    "ayutthaya→pai": {
+      "mode": "flight",
+      "duration_hrs": 4,
+      "frequency": "Several daily",
+      "station_note": "Ayutthaya → Bangkok → Chiang Mai then minivan to Pai.",
+      "travel_day": true
+    },
+    "chiang_rai→pattaya": {
+      "mode": "flight",
+      "duration_hrs": 3.5,
+      "frequency": "Several daily",
+      "station_note": "Chiang Rai → Bangkok then bus to Pattaya.",
+      "travel_day": true
+    },
+    "chiang_rai→hua_hin": {
+      "mode": "flight",
+      "duration_hrs": 3.5,
+      "frequency": "Several daily",
+      "station_note": "Chiang Rai → Bangkok then bus to Hua Hin.",
+      "travel_day": true
+    },
+    "chiang_rai→kanchanaburi": {
+      "mode": "flight",
+      "duration_hrs": 4,
+      "frequency": "Several daily",
+      "station_note": "Chiang Rai → Bangkok then bus to Kanchanaburi.",
+      "travel_day": true
+    },
+    "chiang_rai→sukhothai": {
+      "mode": "bus",
+      "duration_hrs": 5,
+      "frequency": "Several daily",
+      "station_note": "Chiang Rai → Sukhothai by bus via Chiang Mai.",
+      "travel_day": true
+    },
+    "chiang_rai→pai": {
+      "mode": "bus",
+      "duration_hrs": 4,
+      "frequency": "Several daily",
+      "station_note": "Chiang Rai → Pai via Chiang Mai by minivan.",
+      "travel_day": true
+    },
+    "pattaya→hua_hin": {
+      "mode": "bus",
+      "duration_hrs": 4,
+      "frequency": "Several daily",
+      "station_note": "Pattaya → Hua Hin by bus via Bangkok.",
+      "travel_day": true
+    },
+    "pattaya→kanchanaburi": {
+      "mode": "bus",
+      "duration_hrs": 3.5,
+      "frequency": "Several daily",
+      "station_note": "Pattaya → Kanchanaburi by bus via Bangkok.",
+      "travel_day": true
+    },
+    "pattaya→sukhothai": {
+      "mode": "bus",
+      "duration_hrs": 6,
+      "frequency": "Several daily",
+      "station_note": "Pattaya → Sukhothai by bus via Bangkok.",
+      "travel_day": true
+    },
+    "pattaya→pai": {
+      "mode": "flight",
+      "duration_hrs": 4.5,
+      "frequency": "Several daily",
+      "station_note": "Pattaya → Bangkok → Chiang Mai then minivan to Pai.",
+      "travel_day": true
+    },
+    "hua_hin→kanchanaburi": {
+      "mode": "bus",
+      "duration_hrs": 4,
+      "frequency": "Several daily",
+      "station_note": "Hua Hin → Kanchanaburi by bus via Bangkok.",
+      "travel_day": true
+    },
+    "hua_hin→sukhothai": {
+      "mode": "bus",
+      "duration_hrs": 6,
+      "frequency": "Several daily",
+      "station_note": "Hua Hin → Sukhothai by overnight bus.",
+      "travel_day": true
+    },
+    "hua_hin→pai": {
+      "mode": "flight",
+      "duration_hrs": 5,
+      "frequency": "Several daily",
+      "station_note": "Hua Hin → Bangkok → Chiang Mai then minivan to Pai.",
+      "travel_day": true
+    },
+    "kanchanaburi→sukhothai": {
+      "mode": "bus",
+      "duration_hrs": 6,
+      "frequency": "Several daily",
+      "station_note": "Kanchanaburi → Sukhothai by bus via Bangkok.",
+      "travel_day": true
+    },
+    "kanchanaburi→pai": {
+      "mode": "flight",
+      "duration_hrs": 5,
+      "frequency": "Several daily",
+      "station_note": "Kanchanaburi → Bangkok → Chiang Mai then minivan to Pai.",
+      "travel_day": true
+    },
+    "sukhothai→pai": {
+      "mode": "bus",
+      "duration_hrs": 5,
+      "frequency": "Several daily",
+      "station_note": "Sukhothai → Chiang Mai then minivan to Pai.",
+      "travel_day": true
+    }
+  }
+}

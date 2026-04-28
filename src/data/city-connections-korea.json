@@ -1,0 +1,328 @@
+{
+  "metadata": {
+    "notes": "KTX = Korea Train Express (bullet train). Jeju has no land connection — flight only. All times in hours.",
+    "transport_modes": {
+      "ktx": "Korea Train Express (bullet train)",
+      "flight": "Domestic flight",
+      "bus": "Express bus",
+      "ferry": "Ferry service"
+    }
+  },
+  "cities": {
+    "seoul→busan": {
+      "mode": "ktx",
+      "duration_hrs": 2.5,
+      "frequency": "Every 30 min",
+      "station_note": "Seoul → Busan on KTX. Very frequent. Most popular KTX route.",
+      "travel_day": false
+    },
+    "seoul→jeju": {
+      "mode": "flight",
+      "duration_hrs": 1,
+      "frequency": "Every 30 min",
+      "station_note": "Gimpo → Jeju Airport. World's busiest air route. No land connection.",
+      "travel_day": true
+    },
+    "seoul→gyeongju": {
+      "mode": "ktx",
+      "duration_hrs": 2,
+      "frequency": "Several daily",
+      "station_note": "Seoul → Singyeongju then taxi/bus to Gyeongju city.",
+      "travel_day": false
+    },
+    "seoul→jeonju": {
+      "mode": "ktx",
+      "duration_hrs": 1.5,
+      "frequency": "Several daily",
+      "station_note": "Seoul → Jeonju on KTX. Or express bus from Seoul Express Bus Terminal.",
+      "travel_day": false
+    },
+    "seoul→suwon": {
+      "mode": "bus",
+      "duration_hrs": 0.75,
+      "frequency": "Every 10-15 min",
+      "station_note": "Seoul → Suwon by subway (Line 1) or bus. Easy day trip.",
+      "travel_day": false
+    },
+    "seoul→sokcho": {
+      "mode": "bus",
+      "duration_hrs": 2.5,
+      "frequency": "Every 30-60 min",
+      "station_note": "Seoul Express Bus Terminal → Sokcho. No direct train — bus is best option.",
+      "travel_day": false
+    },
+    "seoul→andong": {
+      "mode": "ktx",
+      "duration_hrs": 2,
+      "frequency": "Several daily",
+      "station_note": "Seoul → Andong on KTX.",
+      "travel_day": false
+    },
+    "seoul→tongyeong": {
+      "mode": "bus",
+      "duration_hrs": 3.5,
+      "frequency": "Several daily",
+      "station_note": "Seoul → Tongyeong by express bus. Or KTX to Masan then bus.",
+      "travel_day": true
+    },
+    "seoul→incheon": {
+      "mode": "bus",
+      "duration_hrs": 0.75,
+      "frequency": "Every 10 min",
+      "station_note": "Seoul → Incheon by AREX airport train or bus. Essentially same metro area.",
+      "travel_day": false
+    },
+    "busan→jeju": {
+      "mode": "flight",
+      "duration_hrs": 1,
+      "frequency": "Several daily",
+      "station_note": "Gimhae Airport → Jeju Airport. Or ferry (13hrs overnight).",
+      "travel_day": true
+    },
+    "busan→gyeongju": {
+      "mode": "ktx",
+      "duration_hrs": 0.5,
+      "frequency": "Every 30 min",
+      "station_note": "Busan → Singyeongju on KTX. Very easy — classic combination.",
+      "travel_day": false
+    },
+    "busan→jeonju": {
+      "mode": "ktx",
+      "duration_hrs": 2,
+      "frequency": "Several daily",
+      "station_note": "Busan → Jeonju on KTX.",
+      "travel_day": false
+    },
+    "busan→suwon": {
+      "mode": "ktx",
+      "duration_hrs": 3,
+      "frequency": "Several daily",
+      "station_note": "Busan → Seoul then to Suwon.",
+      "travel_day": true
+    },
+    "busan→sokcho": {
+      "mode": "bus",
+      "duration_hrs": 5,
+      "frequency": "Several daily",
+      "station_note": "Busan → Sokcho by express bus. Long journey — consider flight or overnight.",
+      "travel_day": true
+    },
+    "busan→andong": {
+      "mode": "bus",
+      "duration_hrs": 2.5,
+      "frequency": "Several daily",
+      "station_note": "Busan → Andong by express bus.",
+      "travel_day": false
+    },
+    "busan→tongyeong": {
+      "mode": "bus",
+      "duration_hrs": 1.5,
+      "frequency": "Every 30-60 min",
+      "station_note": "Busan → Tongyeong by express bus. Easy combination.",
+      "travel_day": false
+    },
+    "busan→incheon": {
+      "mode": "ktx",
+      "duration_hrs": 3,
+      "frequency": "Several daily",
+      "station_note": "Busan → Seoul then AREX to Incheon.",
+      "travel_day": true
+    },
+    "jeju→gyeongju": {
+      "mode": "flight",
+      "duration_hrs": 2,
+      "frequency": "Several daily",
+      "station_note": "Jeju Airport → Gimhae (Busan) then KTX to Singyeongju.",
+      "travel_day": true
+    },
+    "jeju→jeonju": {
+      "mode": "flight",
+      "duration_hrs": 2.5,
+      "frequency": "Several daily",
+      "station_note": "Jeju Airport → Gimpo (Seoul) then KTX to Jeonju.",
+      "travel_day": true
+    },
+    "jeju→suwon": {
+      "mode": "flight",
+      "duration_hrs": 2,
+      "frequency": "Several daily",
+      "station_note": "Jeju Airport → Gimpo (Seoul) then to Suwon.",
+      "travel_day": true
+    },
+    "jeju→sokcho": {
+      "mode": "flight",
+      "duration_hrs": 3,
+      "frequency": "Several daily",
+      "station_note": "Jeju → Seoul then bus to Sokcho. Long journey.",
+      "travel_day": true
+    },
+    "jeju→andong": {
+      "mode": "flight",
+      "duration_hrs": 3,
+      "frequency": "Several daily",
+      "station_note": "Jeju → Seoul/Busan then to Andong.",
+      "travel_day": true
+    },
+    "jeju→tongyeong": {
+      "mode": "flight",
+      "duration_hrs": 2.5,
+      "frequency": "Several daily",
+      "station_note": "Jeju → Gimhae (Busan) then bus to Tongyeong.",
+      "travel_day": true
+    },
+    "jeju→incheon": {
+      "mode": "flight",
+      "duration_hrs": 1,
+      "frequency": "Several daily",
+      "station_note": "Jeju Airport → Incheon Airport. Direct flight.",
+      "travel_day": true
+    },
+    "gyeongju→jeonju": {
+      "mode": "ktx",
+      "duration_hrs": 2.5,
+      "frequency": "Several daily",
+      "station_note": "Singyeongju → Jeonju on KTX.",
+      "travel_day": false
+    },
+    "gyeongju→suwon": {
+      "mode": "ktx",
+      "duration_hrs": 2.5,
+      "frequency": "Several daily",
+      "station_note": "Singyeongju → Seoul then to Suwon.",
+      "travel_day": false
+    },
+    "gyeongju→sokcho": {
+      "mode": "bus",
+      "duration_hrs": 4,
+      "frequency": "Several daily",
+      "station_note": "Gyeongju → Sokcho by express bus via Seoul.",
+      "travel_day": true
+    },
+    "gyeongju→andong": {
+      "mode": "bus",
+      "duration_hrs": 1.5,
+      "frequency": "Several daily",
+      "station_note": "Gyeongju → Andong by express bus. Easy combination.",
+      "travel_day": false
+    },
+    "gyeongju→tongyeong": {
+      "mode": "bus",
+      "duration_hrs": 2,
+      "frequency": "Several daily",
+      "station_note": "Gyeongju → Tongyeong by express bus.",
+      "travel_day": false
+    },
+    "gyeongju→incheon": {
+      "mode": "ktx",
+      "duration_hrs": 3,
+      "frequency": "Several daily",
+      "station_note": "Singyeongju → Seoul then AREX to Incheon.",
+      "travel_day": true
+    },
+    "jeonju→suwon": {
+      "mode": "ktx",
+      "duration_hrs": 1.5,
+      "frequency": "Several daily",
+      "station_note": "Jeonju → Seoul then to Suwon.",
+      "travel_day": false
+    },
+    "jeonju→sokcho": {
+      "mode": "bus",
+      "duration_hrs": 4,
+      "frequency": "Several daily",
+      "station_note": "Jeonju → Seoul then bus to Sokcho.",
+      "travel_day": true
+    },
+    "jeonju→andong": {
+      "mode": "bus",
+      "duration_hrs": 3,
+      "frequency": "Several daily",
+      "station_note": "Jeonju → Andong by express bus.",
+      "travel_day": true
+    },
+    "jeonju→tongyeong": {
+      "mode": "bus",
+      "duration_hrs": 3,
+      "frequency": "Several daily",
+      "station_note": "Jeonju → Tongyeong by express bus.",
+      "travel_day": true
+    },
+    "jeonju→incheon": {
+      "mode": "ktx",
+      "duration_hrs": 2,
+      "frequency": "Several daily",
+      "station_note": "Jeonju → Seoul then AREX to Incheon.",
+      "travel_day": false
+    },
+    "suwon→sokcho": {
+      "mode": "bus",
+      "duration_hrs": 3,
+      "frequency": "Several daily",
+      "station_note": "Suwon → Sokcho by express bus.",
+      "travel_day": true
+    },
+    "suwon→andong": {
+      "mode": "ktx",
+      "duration_hrs": 2.5,
+      "frequency": "Several daily",
+      "station_note": "Suwon → Seoul then KTX to Andong.",
+      "travel_day": false
+    },
+    "suwon→tongyeong": {
+      "mode": "bus",
+      "duration_hrs": 4,
+      "frequency": "Several daily",
+      "station_note": "Suwon → Tongyeong by express bus via Seoul.",
+      "travel_day": true
+    },
+    "suwon→incheon": {
+      "mode": "bus",
+      "duration_hrs": 1,
+      "frequency": "Every 30 min",
+      "station_note": "Suwon → Incheon by bus or subway.",
+      "travel_day": false
+    },
+    "sokcho→andong": {
+      "mode": "bus",
+      "duration_hrs": 3,
+      "frequency": "Several daily",
+      "station_note": "Sokcho → Andong by express bus.",
+      "travel_day": true
+    },
+    "sokcho→tongyeong": {
+      "mode": "bus",
+      "duration_hrs": 6,
+      "frequency": "Several daily",
+      "station_note": "Sokcho → Tongyeong via Seoul. Very long — not recommended combination.",
+      "travel_day": true
+    },
+    "sokcho→incheon": {
+      "mode": "bus",
+      "duration_hrs": 3,
+      "frequency": "Several daily",
+      "station_note": "Sokcho → Incheon by express bus.",
+      "travel_day": true
+    },
+    "andong→tongyeong": {
+      "mode": "bus",
+      "duration_hrs": 3,
+      "frequency": "Several daily",
+      "station_note": "Andong → Tongyeong by express bus.",
+      "travel_day": true
+    },
+    "andong→incheon": {
+      "mode": "ktx",
+      "duration_hrs": 3,
+      "frequency": "Several daily",
+      "station_note": "Andong → Seoul then AREX to Incheon.",
+      "travel_day": true
+    },
+    "tongyeong→incheon": {
+      "mode": "bus",
+      "duration_hrs": 4.5,
+      "frequency": "Several daily",
+      "station_note": "Tongyeong → Seoul then AREX to Incheon.",
+      "travel_day": true
+    }
+  }
+}
