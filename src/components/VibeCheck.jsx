@@ -638,14 +638,18 @@ export default function VibeCheck({ selectedCities, onComplete }) {
       .sort((a, b) => b[1] - a[1])
       .slice(0, 3)
       .map(([tag]) => tag);
-    // Fallback: use top-category tags if nothing loved
     const displayTags = top3Tags.length > 0
       ? top3Tags
       : (topCat ? (VIBE_CATEGORIES.find(c => c.key === topCat)?.tags || []).slice(0, 3) : []);
 
-    // 3 photos for "Based on places you loved" row
-    const lovedWithPhoto = loved.filter(c => c.photo_url);
-    const lovedPhotos    = [...lovedWithPhoto].slice(0, 3);
+    // 3 photos for "Based on places you loved" — deduped by attraction id
+    const seenPhotoIds = new Set();
+    const lovedWithPhoto = loved.filter(c => {
+      if (!c.photo_url || seenPhotoIds.has(c.id)) return false;
+      seenPhotoIds.add(c.id);
+      return true;
+    });
+    const lovedPhotos = [...lovedWithPhoto].slice(0, 3);
     if (lovedPhotos.length < 3) {
       const usedIds = new Set(lovedPhotos.map(c => c.id));
       const extras  = rawCards
@@ -657,126 +661,136 @@ export default function VibeCheck({ selectedCities, onComplete }) {
       }
     }
 
+    // FIX 1: position:fixed covers the parent QuizFlow navigation bar entirely.
+    // FIX 2: overflowY:auto + height:100dvh makes it the scrollable viewport.
     return (
-      <div style={{ background: BG, minHeight: '100dvh', overflowY: 'auto', boxSizing: 'border-box' }}>
+      <div style={{
+        position: 'fixed', top: 0, left: 0, width: '100%',
+        overflowY: 'auto', height: '100dvh',
+        paddingTop: 60, paddingBottom: 40,
+        paddingLeft: 24, paddingRight: 24,
+        background: '#F5F4F2', boxSizing: 'border-box',
+        zIndex: 50,
+      }}>
 
         {/* ── Confetti burst on reveal ── */}
         <Confetti />
 
-        <div style={{ padding: '40px 20px 0', paddingBottom: 'max(32px, env(safe-area-inset-bottom, 32px))' }}>
+        {/* ── Centre-aligned hero block ── */}
+        <div style={{ textAlign: 'center' }}>
 
-          {/* ── Circular photo + heart badge ── */}
-          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 16 }}>
-            <div style={{ position: 'relative', width: 110, height: 110 }}>
-              <div style={{
-                width: 110, height: 110, borderRadius: '50%',
-                border: `3px solid ${ACC}`, overflow: 'hidden',
-                boxShadow: '0 4px 16px rgba(232,71,42,0.25)',
-              }}>
-                {heroPhoto
-                  ? <img src={heroPhoto} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                  : <div style={{
-                      width: '100%', height: '100%',
-                      background: 'linear-gradient(135deg, #E8472A 0%, #FF8A65 100%)',
-                      display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      fontSize: 36,
-                    }}>{pers.emoji}</div>
-                }
-              </div>
-              {/* Heart badge */}
-              <div style={{
-                position: 'absolute', bottom: 2, right: 2,
-                width: 28, height: 28, borderRadius: '50%',
-                background: ACC, border: '2.5px solid #fff',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontSize: 13,
-              }}>❤️</div>
+          {/* Circular photo + heart badge */}
+          <div style={{ display: 'inline-block', position: 'relative', marginBottom: 16 }}>
+            <div style={{
+              width: 110, height: 110, borderRadius: '50%',
+              border: `3px solid ${ACC}`, overflow: 'hidden',
+              boxShadow: '0 4px 16px rgba(232,71,42,0.25)',
+            }}>
+              {heroPhoto
+                ? <img src={heroPhoto} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                : <div style={{
+                    width: '100%', height: '100%',
+                    background: 'linear-gradient(135deg, #E8472A 0%, #FF8A65 100%)',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    fontSize: 36,
+                  }}>{pers.emoji}</div>
+              }
             </div>
+            {/* Heart badge */}
+            <div style={{
+              position: 'absolute', bottom: 2, right: 2,
+              width: 28, height: 28, borderRadius: '50%',
+              background: ACC, border: '2.5px solid #fff',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              fontSize: 13,
+            }}>❤️</div>
           </div>
 
-          {/* ── Personality label ── */}
-          <div style={{ textAlign: 'center' }}>
-            <p style={{ fontSize: 20, color: '#999', margin: 0, lineHeight: 1.3 }}>
-              You're a
+          {/* Personality label — all centred */}
+          <p style={{ fontSize: 20, color: '#999', margin: 0, lineHeight: 1.3 }}>
+            You're a
+          </p>
+          <p style={{ fontSize: 28, fontWeight: 700, color: '#1A1A1A', margin: '4px 0 0', lineHeight: 1.2 }}>
+            {pers.name} <span style={{ fontSize: 24 }}>{pers.emoji}</span>
+          </p>
+          <p style={{ fontSize: 14, color: '#666', margin: '8px 0 0', lineHeight: 1.55 }}>
+            {pers.desc}
+          </p>
+
+        </div>{/* end centre-aligned hero block */}
+
+        {/* ── Left-aligned sections ── */}
+
+        {/* Top 3 tags */}
+        {displayTags.length > 0 && (
+          <>
+            <p style={{ fontSize: 13, fontWeight: 500, color: '#1A1A1A', margin: '20px 0 8px' }}>
+              Top 3 tags for you
             </p>
-            <p style={{ fontSize: 28, fontWeight: 700, color: '#1A1A1A', margin: '4px 0 0', lineHeight: 1.2 }}>
-              {pers.name} <span style={{ fontSize: 24 }}>{pers.emoji}</span>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 8, width: '100%' }}>
+              {displayTags.map(tag => (
+                <div key={tag} style={{
+                  display: 'inline-flex', alignItems: 'center', gap: 8,
+                  backgroundColor: '#FFFFFF', border: '1px solid #E0E0E0',
+                  borderRadius: 20, padding: '8px 16px',
+                  width: 'auto', alignSelf: 'flex-start',
+                }}>
+                  <span style={{ fontSize: 16 }}>{TAG_EMOJI[tag] || '✨'}</span>
+                  <span style={{ fontSize: 13, color: '#1A1A1A', textTransform: 'capitalize' }}>
+                    {tag.replace(/-/g, ' ')}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
+
+        {/* Based on places you loved */}
+        {lovedPhotos.length > 0 && (
+          <>
+            <p style={{ fontSize: 13, fontWeight: 500, color: '#1A1A1A', margin: '20px 0 8px' }}>
+              Based on places you loved
             </p>
-            <p style={{ fontSize: 14, color: '#666', margin: '8px 0 0', lineHeight: 1.55 }}>
-              {pers.desc}
-            </p>
-          </div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8 }}>
+              {lovedPhotos.map((c, i) => (
+                <div key={c.id || i} style={{
+                  aspectRatio: '1 / 1', borderRadius: 10, overflow: 'hidden',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.10)',
+                }}>
+                  <img
+                    src={c.photo_url}
+                    alt={c.name}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                  />
+                </div>
+              ))}
+            </div>
+          </>
+        )}
 
-          {/* ── Top 3 tags ── */}
-          {displayTags.length > 0 && (
-            <>
-              <p style={{ fontSize: 13, fontWeight: 500, color: '#1A1A1A', margin: '20px 0 8px' }}>
-                Top 3 tags for you
-              </p>
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 8 }}>
-                {displayTags.map(tag => (
-                  <div key={tag} style={{
-                    display: 'inline-flex', alignItems: 'center', alignSelf: 'flex-start',
-                    gap: 10, background: '#fff', border: '1px solid #E0E0E0',
-                    borderRadius: 20, padding: '8px 14px',
-                  }}>
-                    <span style={{ fontSize: 16 }}>{TAG_EMOJI[tag] || '✨'}</span>
-                    <span style={{ fontSize: 13, color: '#1A1A1A', textTransform: 'capitalize' }}>
-                      {tag.replace(/-/g, ' ')}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </>
-          )}
+        {/* CTA */}
+        <button
+          onClick={() => onComplete(finalData.vibeArr)}
+          style={{
+            width: '100%', height: 52, borderRadius: 28,
+            background: ACC, color: '#fff', border: 'none',
+            cursor: 'pointer', fontSize: 14, fontWeight: 500,
+            marginTop: 24, display: 'block',
+          }}
+        >
+          See my itinerary →
+        </button>
+        <button
+          onClick={resetSwipe}
+          style={{
+            background: 'none', border: 'none', cursor: 'pointer',
+            fontSize: 13, color: ACC, fontWeight: 500,
+            textAlign: 'center', width: '100%', marginTop: 10, display: 'block',
+          }}
+        >
+          Retake vibe check
+        </button>
 
-          {/* ── Based on places you loved ── */}
-          {lovedPhotos.length > 0 && (
-            <>
-              <p style={{ fontSize: 13, fontWeight: 500, color: '#1A1A1A', margin: '20px 0 8px' }}>
-                Based on places you loved
-              </p>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8 }}>
-                {lovedPhotos.map((c, i) => (
-                  <div key={c.id || i} style={{
-                    aspectRatio: '1 / 1', borderRadius: 10, overflow: 'hidden',
-                    boxShadow: '0 2px 8px rgba(0,0,0,0.10)',
-                  }}>
-                    <img
-                      src={c.photo_url}
-                      alt={c.name}
-                      style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-                    />
-                  </div>
-                ))}
-              </div>
-            </>
-          )}
-
-          {/* ── CTA ── */}
-          <button
-            onClick={() => onComplete(finalData.vibeArr)}
-            style={{
-              width: '100%', height: 52, borderRadius: 28,
-              background: ACC, color: '#fff', border: 'none',
-              cursor: 'pointer', fontSize: 14, fontWeight: 500,
-              marginTop: 24, display: 'block',
-            }}
-          >
-            See my itinerary →
-          </button>
-          <button
-            onClick={resetSwipe}
-            style={{
-              background: 'none', border: 'none', cursor: 'pointer',
-              fontSize: 13, color: ACC, fontWeight: 500,
-              textAlign: 'center', width: '100%', marginTop: 10, display: 'block',
-            }}
-          >
-            Retake vibe check
-          </button>
-
-        </div>
       </div>
     );
   }
