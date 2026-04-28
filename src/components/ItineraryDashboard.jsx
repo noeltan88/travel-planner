@@ -857,14 +857,14 @@ export default function ItineraryDashboard({
       return `*${header}*\n${stops.map(s => `  • ${s.name}`).join('\n')}`;
     });
     const lines = [
-      '✈️ My China Trip Itinerary', cityLine,
+      '✈️ My Trip Itinerary', cityLine,
       dep && ret
         ? `📅 ${dep} → ${ret} (${days.length} days)`
         : `📅 ${days.length} days`,
       '', ...dayLines, '',
       hotel ? `🏨 Staying at: ${hotel.name}` : '',
       '',
-      'Generated with ChinaTrip Planner 🗺️',
+      'Generated with Travel Planner 🗺️',
     ].filter((l, i, arr) => !(l === '' && arr[i - 1] === ''));
     window.open(`https://wa.me/?text=${encodeURIComponent(lines.join('\n'))}`, '_blank');
   }

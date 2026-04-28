@@ -6,6 +6,40 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { QUIZ, getCityOptions } from '../utils/quizData';
 import VibeCheck from './VibeCheck';
+import chinaConnections from '../data/city-connections.json';
+import japanConnections  from '../data/city-connections-japan.json';
+import restConnections   from '../data/city-connections-rest.json';
+
+// City connections indexed by country key
+const CITY_CONNECTIONS_BY_COUNTRY = {
+  china:       chinaConnections,
+  japan:       japanConnections,
+  south_korea: restConnections.south_korea,
+  thailand:    restConnections.thailand,
+  vietnam:     restConnections.vietnam,
+};
+
+// Base sightseeing days per city by country
+const DAYS_PER_CITY = { china: 2.5, japan: 3, south_korea: 2.5, thailand: 3, vietnam: 2.5 };
+
+function getRecommendedDays(cities, country, cityConnections) {
+  if (!cities || cities.length === 0) return null;
+  const cityCount = cities.length;
+
+  // Count travel days needed between consecutive cities
+  let travelDays = 0;
+  for (let i = 0; i < cities.length - 1; i++) {
+    const key1 = `${cities[i]}→${cities[i + 1]}`;
+    const key2 = `${cities[i + 1]}→${cities[i]}`;
+    const connection = cityConnections?.cities?.[key1] || cityConnections?.cities?.[key2];
+    if (connection?.travel_day === true) travelDays++;
+  }
+
+  const base    = DAYS_PER_CITY[country] || 2.5;
+  const minDays = Math.round(cityCount * base) + travelDays;
+  const maxDays = Math.round(cityCount * (base + 1)) + travelDays;
+  return { minDays, maxDays, travelDays };
+}
 
 // ── Holiday definitions by country ────────────────────────────────────────────
 const HOLIDAYS_BY_COUNTRY = {
@@ -322,6 +356,15 @@ export default function QuizFlow({ onComplete }) {
   const ret         = datesAnswer.return    || '';
   const totalDays   = dep && ret ? Math.round((new Date(ret) - new Date(dep)) / 86400000) + 1 : 0;
   const dateError   = dep && ret && dep >= ret;
+
+  // Recommended days — computed from selected cities + country connections
+  const recDays = isDateRange
+    ? getRecommendedDays(
+        answers.city || [],
+        answers.country || 'china',
+        CITY_CONNECTIONS_BY_COUNTRY[answers.country || 'china'],
+      )
+    : null;
   const activeHolidays = HOLIDAYS_BY_COUNTRY[answers.country] || HOLIDAYS_BY_COUNTRY.china;
   const overlappingHolidays = useMemo(() => {
     if (!dep || !ret || dateError) return [];
@@ -488,7 +531,7 @@ export default function QuizFlow({ onComplete }) {
             ←
           </button>
         ) : (
-          <span style={{ fontSize: 14, fontWeight: 700, color: ACC, letterSpacing: -0.2 }}>China Travel Planner</span>
+          <span style={{ fontSize: 14, fontWeight: 700, color: ACC, letterSpacing: -0.2 }}>Travel Planner</span>
         )}
       </div>
 
@@ -634,6 +677,35 @@ export default function QuizFlow({ onComplete }) {
               <svg width="8" height="14" viewBox="0 0 8 14" fill="none"><path d="M1 1L7 7L1 13" stroke="#1A1A1A" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
             </button>
           </div>
+
+          {/* Recommended days pill — shown when at least 1 city selected */}
+          {recDays && (
+            <div style={{
+              display:      'flex',
+              flexDirection: 'column',
+              alignItems:   'center',
+              marginBottom: 10,
+            }}>
+              <div style={{
+                display:      'inline-flex',
+                flexDirection: 'column',
+                alignItems:   'center',
+                background:   '#FEF0EC',
+                border:       '1px solid #FFCFBF',
+                borderRadius: 20,
+                padding:      '8px 16px',
+              }}>
+                <span style={{ fontSize: 13, fontWeight: 500, color: '#E8472A', whiteSpace: 'nowrap' }}>
+                  💡 We recommend {recDays.minDays}–{recDays.maxDays} days
+                </span>
+                {recDays.travelDays > 0 && (
+                  <span style={{ fontSize: 11, color: '#B83520', marginTop: 2, whiteSpace: 'nowrap' }}>
+                    Includes {recDays.travelDays} travel day{recDays.travelDays > 1 ? 's' : ''} between cities
+                  </span>
+                )}
+              </div>
+            </div>
+          )}
 
           {/* Animated calendar card — swipe left/right to change month */}
           <div
