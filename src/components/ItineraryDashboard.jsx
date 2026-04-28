@@ -18,10 +18,9 @@ import DayTimeline from './DayTimeline';
 import PracticalTips from './PracticalTips';
 import PrintView from './PrintView';
 import { exportToPDF } from '../utils/pdfExport';
-import { loadCityData } from '../utils/algorithm';
+import { loadCityData, getDb, CURRENCY } from '../utils/algorithm';
 import UnifiedMap from './UnifiedMap';
 import AttractionImage from './AttractionImage';
-import masterDb from '../data/china-master-db-v1.json';
 
 // ── Design tokens ─────────────────────────────────────────────────────────────
 const ACCENT   = '#E8472A';
@@ -58,8 +57,9 @@ function formatTripDates(dep, ret) {
 }
 
 // ── Day section header — "DAY 01", date, stops, estimated spend ───────────────
-function DaySectionHeader({ dayNum, dateStr, stopCount, cityName, cityEmoji, estimatedSpend }) {
+function DaySectionHeader({ dayNum, dateStr, stopCount, cityName, cityEmoji, estimatedSpend, currencySymbol }) {
   const label = `DAY ${String(dayNum).padStart(2, '0')}`;
+  const sym   = currencySymbol || '¥';
   return (
     <div style={{
       padding: '20px 16px 10px',
@@ -88,7 +88,7 @@ function DaySectionHeader({ dayNum, dateStr, stopCount, cityName, cityEmoji, est
         <div style={{ textAlign: 'right', flexShrink: 0 }}>
           <p style={{ fontSize: 10, color: '#999', margin: 0, fontWeight: 500 }}>Est. spend</p>
           <p style={{ fontSize: 15, fontWeight: 700, color: '#1A1A1A', margin: '2px 0 0' }}>
-            ¥{estimatedSpend}
+            {sym}{estimatedSpend}
           </p>
         </div>
       )}
@@ -346,13 +346,11 @@ function normalizeBudgetTier(tier) {
 
 // ── Inline hotel strip — shown on first day of each city ─────────────────────
 function InlineHotelStrip({ cityKey, quizAnswers }) {
-  const cityData  = loadCityData(cityKey);
+  const country   = quizAnswers?.country || 'china';
+  const cityData  = loadCityData(cityKey, country);
   const cityName  = cityData?.name || cityKey;
   const checkIn   = quizAnswers?.departure_date || '';
   const checkOut  = quizAnswers?.return_date    || '';
-
-  // Debug: confirm source count from master DB
-  console.log('Hotels for city:', cityKey, masterDb.cities?.[cityKey]?.hotels?.length);
 
   // Normalise budget_tier on every hotel entry
   const allHotels = (cityData?.hotels || []).map(h => ({
@@ -544,6 +542,8 @@ function HotelAccordionCard({ hotel, agodaHref }) {
 
 // ── Where to stay section ─────────────────────────────────────────────────────
 function WhereToStay({ cities, days, quizAnswers }) {
+  const country = quizAnswers?.country || 'china';
+
   // Distinct sightseeing city keys, in visit order, intersected with itinerary cities list
   const visitedCities = [...new Set(
     days
@@ -555,7 +555,7 @@ function WhereToStay({ cities, days, quizAnswers }) {
   const [selectedCity, setSelectedCity] = useState(defaultCity);
   const [openTier,     setOpenTier]     = useState('luxury'); // luxury expanded by default
 
-  const cityData  = loadCityData(selectedCity);
+  const cityData  = loadCityData(selectedCity, country);
   const allHotels = cityData?.hotels || [];
   const cityName  = cityData?.name   || selectedCity;
   const checkIn   = quizAnswers?.departure_date || '';
@@ -611,7 +611,7 @@ function WhereToStay({ cities, days, quizAnswers }) {
           overflowX: 'auto', scrollbarWidth: 'none', msOverflowStyle: 'none',
         }}>
           {visitedCities.map(ck => {
-            const nm  = loadCityData(ck)?.name || ck;
+            const nm  = loadCityData(ck, country)?.name || ck;
             const sel = ck === selectedCity;
             return (
               <button
@@ -727,10 +727,12 @@ export default function ItineraryDashboard({
   if (!itinerary) return null;
 
   const { days, allAttractionsByCity, cities, hotel, otherHotels } = itinerary;
-  const primaryCity    = cities?.[0] || 'guangzhou';
-  const allAttractions = Object.values(allAttractionsByCity || {}).flat();
-  const depDate        = quizAnswers?.departure_date || null;
-  const retDate        = quizAnswers?.return_date    || null;
+  const primaryCity      = cities?.[0] || 'guangzhou';
+  const country          = quizAnswers?.country || itinerary?.country || 'china';
+  const currencySymbol   = (CURRENCY[country] || CURRENCY.china).symbol;
+  const allAttractions   = Object.values(allAttractionsByCity || {}).flat();
+  const depDate          = quizAnswers?.departure_date || null;
+  const retDate          = quizAnswers?.return_date    || null;
 
   // All used stop IDs across every day (for swap deduplication)
   const allUsedIds = new Set(
@@ -740,7 +742,7 @@ export default function ItineraryDashboard({
   // Food data per city for UnifiedMap explore mode
   const allFoodByCity = {};
   (cities || []).forEach(ck => {
-    const cd = loadCityData(ck);
+    const cd = loadCityData(ck, country);
     if (cd?.food) allFoodByCity[ck] = cd.food;
   });
 
@@ -963,7 +965,7 @@ export default function ItineraryDashboard({
             ? (TRAVEL_EMOJI[day.connection?.mode] || '✈️')
             : (day.cityHeader?.emoji || '');
 
-          const cityData_i = isTransitDay ? null : loadCityData(day.city || primaryCity);
+          const cityData_i = isTransitDay ? null : loadCityData(day.city || primaryCity, country);
           const estimatedSpend = isTransitDay ? 0 : stops
             .filter(s => !s.free && s.price_rmb)
             .reduce((sum, s) => sum + (Number(s.price_rmb) || 0), 0);
@@ -987,6 +989,7 @@ export default function ItineraryDashboard({
                 cityName={cityName}
                 cityEmoji={cityEmoji}
                 estimatedSpend={estimatedSpend}
+                currencySymbol={currencySymbol}
               />
 
               {/* ── Hotel strip — first sightseeing day of each city ─────── */}
@@ -1017,7 +1020,7 @@ export default function ItineraryDashboard({
                         allAttractionsByCity?.[day.fromCity] || allAttractions
                       }
                       allUsedIds={allUsedIds}
-                      allFoodItems={loadCityData(day.fromCity)?.food || []}
+                      allFoodItems={loadCityData(day.fromCity, country)?.food || []}
                       dietary={quizAnswers?.dietary || []}
                       city={day.fromCity}
                     />
@@ -1042,7 +1045,7 @@ export default function ItineraryDashboard({
                         allAttractionsByCity?.[day.toCity] || allAttractions
                       }
                       allUsedIds={allUsedIds}
-                      allFoodItems={loadCityData(day.toCity)?.food || []}
+                      allFoodItems={loadCityData(day.toCity, country)?.food || []}
                       dietary={quizAnswers?.dietary || []}
                       city={day.toCity}
                     />
@@ -1077,8 +1080,8 @@ export default function ItineraryDashboard({
               )}
 
               {/* "Before You Go" only on the very first day, never on transit days */}
-              {i === 0 && !isTransitDay && cityData_i?.practical && (
-                <PracticalTips practical={cityData_i.practical} />
+              {i === 0 && !isTransitDay && (
+                <PracticalTips practical={cityData_i?.practical} country={country} />
               )}
             </div>
           );

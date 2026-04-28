@@ -1,6 +1,58 @@
-import masterDb        from '../data/china-master-db-v1.json';
-import travelTimes     from '../data/travel-times.json';
-import cityConnections from '../data/city-connections.json';
+import chinaDb        from '../data/china-master-db-v1.json';
+import japanDb        from '../data/japan-master-db-v1.json';
+import koreaDb        from '../data/korea-master-db-v1.json';
+import thailandDb     from '../data/thailand-master-db-v1.json';
+import vietnamDb      from '../data/vietnam-master-db-v1.json';
+
+import chinaTravelTimes    from '../data/travel-times.json';
+import japanTravelTimes    from '../data/travel-times-japan.json';
+import koreaTravelTimes    from '../data/travel-times-korea.json';
+import thailandTravelTimes from '../data/travel-times-thailand.json';
+import vietnamTravelTimes  from '../data/travel-times-vietnam.json';
+
+import chinaCityConnections    from '../data/city-connections.json';
+import japanCityConnections    from '../data/city-connections-japan.json';
+import koreaCityConnections    from '../data/city-connections-korea.json';
+import thailandCityConnections from '../data/city-connections-thailand.json';
+import vietnamCityConnections  from '../data/city-connections-vietnam.json';
+
+// ── Country → data maps ────────────────────────────────────────────
+const DB_MAP = {
+  china:       chinaDb,
+  japan:       japanDb,
+  south_korea: koreaDb,
+  thailand:    thailandDb,
+  vietnam:     vietnamDb,
+};
+
+const TRAVEL_TIMES_MAP = {
+  china:       chinaTravelTimes,
+  japan:       japanTravelTimes,
+  south_korea: koreaTravelTimes,
+  thailand:    thailandTravelTimes,
+  vietnam:     vietnamTravelTimes,
+};
+
+const CITY_CONNECTIONS_MAP = {
+  china:       chinaCityConnections,
+  japan:       japanCityConnections,
+  south_korea: koreaCityConnections,
+  thailand:    thailandCityConnections,
+  vietnam:     vietnamCityConnections,
+};
+
+export const CURRENCY = {
+  china:       { symbol: '¥',  code: 'CNY' },
+  japan:       { symbol: '¥',  code: 'JPY' },
+  south_korea: { symbol: '₩',  code: 'KRW' },
+  thailand:    { symbol: '฿',  code: 'THB' },
+  vietnam:     { symbol: '₫',  code: 'VND' },
+};
+
+// Active data sources — set at the start of buildFullItinerary
+let masterDb        = chinaDb;
+let travelTimes     = chinaTravelTimes;
+let cityConnections = chinaCityConnections;
 
 // ── Constants ─────────────────────────────────────────────────────
 //
@@ -32,8 +84,13 @@ const COMPANION_MAP = {
 
 // ── Public helpers ─────────────────────────────────────────────────
 
-export function loadCityData(city) {
-  return masterDb.cities[city] || null;
+export function getDb(country) {
+  return DB_MAP[country] || chinaDb;
+}
+
+export function loadCityData(city, country) {
+  const db = country ? (DB_MAP[country] || chinaDb) : masterDb;
+  return db.cities[city] || null;
 }
 
 /**
@@ -728,6 +785,12 @@ export function buildDayBlocks(pool, foodPool, totalDays) {
 // ── Main entry point ──────────────────────────────────────────────
 
 export function buildFullItinerary(answers) {
+  // ── Switch active data sources based on country ───────────────────
+  const country = answers.country || 'china';
+  masterDb        = DB_MAP[country]              || chinaDb;
+  travelTimes     = TRAVEL_TIMES_MAP[country]    || chinaTravelTimes;
+  cityConnections = CITY_CONNECTIONS_MAP[country] || chinaCityConnections;
+
   const cities = (Array.isArray(answers.city) ? answers.city : [answers.city]).filter(Boolean);
   if (!cities.length) return { days: [], allAttractionsByCity: {}, cities: [] };
 
@@ -1003,5 +1066,5 @@ export function buildFullItinerary(answers) {
 
   allDays.forEach((d, i) => { d.day = i + 1; d.label = `Day ${i + 1}`; });
 
-  return { days: allDays, allAttractionsByCity, cities };
+  return { days: allDays, allAttractionsByCity, cities, country };
 }

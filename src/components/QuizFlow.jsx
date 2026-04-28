@@ -4,21 +4,53 @@
  * Step order: country → city → dates → group → pace → dietary → vibe (VibeCheck)
  */
 import { useState, useEffect, useMemo, useRef } from 'react';
-import { QUIZ }  from '../utils/quizData';
+import { QUIZ, getCityOptions } from '../utils/quizData';
 import VibeCheck from './VibeCheck';
 
-// ── Constants ──────────────────────────────────────────────────────────────────
-const HOLIDAYS = [
-  { name: 'Chinese New Year 2026',         start: '2026-01-28', end: '2026-02-04' },
-  { name: 'Qingming Festival 2026',        start: '2026-04-04', end: '2026-04-06' },
-  { name: 'May Day Golden Week 2026',      start: '2026-05-01', end: '2026-05-05' },
-  { name: 'Dragon Boat Festival 2026',     chineseName: '端午节', start: '2026-06-19', end: '2026-06-21', warning: 'Dragon Boat Festival — expect crowds at scenic spots and higher prices. Book accommodation early.', severity: 'medium' },
-  { name: 'National Day Golden Week 2026', start: '2026-10-01', end: '2026-10-07' },
-  { name: 'Chinese New Year 2027',         start: '2027-02-15', end: '2027-02-22' },
-  { name: 'May Day Golden Week 2027',      start: '2027-05-01', end: '2027-05-05' },
-  { name: 'Dragon Boat Festival 2027',     chineseName: '端午节', start: '2027-06-09', end: '2027-06-11', warning: 'Dragon Boat Festival — expect crowds at scenic spots and higher prices. Book accommodation early.', severity: 'medium' },
-  { name: 'National Day Golden Week 2027', start: '2027-10-01', end: '2027-10-07' },
-];
+// ── Holiday definitions by country ────────────────────────────────────────────
+const HOLIDAYS_BY_COUNTRY = {
+  china: [
+    { name: 'Chinese New Year 2026',         start: '2026-01-28', end: '2026-02-04' },
+    { name: 'Qingming Festival 2026',        start: '2026-04-04', end: '2026-04-06' },
+    { name: 'May Day Golden Week 2026',      start: '2026-05-01', end: '2026-05-05' },
+    { name: 'Dragon Boat Festival 2026',     chineseName: '端午节', start: '2026-06-19', end: '2026-06-21', warning: 'Dragon Boat Festival — expect crowds at scenic spots and higher prices. Book accommodation early.', severity: 'medium' },
+    { name: 'National Day Golden Week 2026', start: '2026-10-01', end: '2026-10-07' },
+    { name: 'Chinese New Year 2027',         start: '2027-02-15', end: '2027-02-22' },
+    { name: 'May Day Golden Week 2027',      start: '2027-05-01', end: '2027-05-05' },
+    { name: 'Dragon Boat Festival 2027',     chineseName: '端午节', start: '2027-06-09', end: '2027-06-11', warning: 'Dragon Boat Festival — expect crowds at scenic spots and higher prices. Book accommodation early.', severity: 'medium' },
+    { name: 'National Day Golden Week 2027', start: '2027-10-01', end: '2027-10-07' },
+  ],
+  japan: [
+    { name: 'Golden Week 2026',  start: '2026-04-29', end: '2026-05-05', warning: 'Golden Week — one of Japan\'s busiest travel periods. Trains and hotels book out fast. Reserve well in advance.' },
+    { name: 'Obon 2026',         start: '2026-08-13', end: '2026-08-16', warning: 'Obon Festival — many Japanese travel home. Expect busy transport and some shop closures.' },
+    { name: 'New Year 2026–27',  start: '2026-12-29', end: '2027-01-03', warning: 'New Year period — Japan is very busy. Shrines are crowded and many businesses close.' },
+    { name: 'Golden Week 2027',  start: '2027-04-29', end: '2027-05-05', warning: 'Golden Week — one of Japan\'s busiest travel periods. Trains and hotels book out fast. Reserve well in advance.' },
+    { name: 'Obon 2027',         start: '2027-08-13', end: '2027-08-16', warning: 'Obon Festival — many Japanese travel home. Expect busy transport and some shop closures.' },
+  ],
+  south_korea: [
+    { name: 'Chuseok 2026',           start: '2026-09-25', end: '2026-09-27', warning: 'Chuseok (Korean Thanksgiving) — major holiday. Expect very busy transport and many shop closures.' },
+    { name: "Children's Day 2026",     start: '2026-05-05', end: '2026-05-05', warning: "Children's Day — family-friendly attractions are packed. Book ahead." },
+    { name: 'Chuseok 2027',           start: '2027-10-14', end: '2027-10-16', warning: 'Chuseok (Korean Thanksgiving) — major holiday. Expect very busy transport and many shop closures.' },
+    { name: 'Lunar New Year 2027',    start: '2027-01-28', end: '2027-01-30', warning: 'Lunar New Year — busy travel period. Book transport and accommodation well in advance.' },
+    { name: "Children's Day 2027",     start: '2027-05-05', end: '2027-05-05', warning: "Children's Day — family-friendly attractions are packed. Book ahead." },
+  ],
+  thailand: [
+    { name: 'Songkran 2026',       start: '2026-04-13', end: '2026-04-15', warning: 'Songkran (Thai New Year) — water festival nationwide. Streets are very busy and wet. Embrace it!' },
+    { name: 'Loy Krathong 2026',   start: '2026-11-01', end: '2026-11-01', warning: 'Loy Krathong — beautiful lantern festival. Chiang Mai is especially crowded. Book early.' },
+    { name: 'Songkran 2027',       start: '2027-04-13', end: '2027-04-15', warning: 'Songkran (Thai New Year) — water festival nationwide. Streets are very busy and wet. Embrace it!' },
+    { name: 'Loy Krathong 2027',   start: '2027-10-21', end: '2027-10-21', warning: 'Loy Krathong — beautiful lantern festival. Chiang Mai is especially crowded. Book early.' },
+  ],
+  vietnam: [
+    { name: 'Tet 2027',              start: '2027-01-28', end: '2027-02-03', warning: 'Tet (Vietnamese New Year) — the biggest holiday of the year. Most businesses close for a week. Transport is very busy.' },
+    { name: 'Reunification Day 2026', start: '2026-04-30', end: '2026-04-30', warning: 'Reunification Day — national holiday. Some closures; Ho Chi Minh City is especially busy.' },
+    { name: 'National Day 2026',      start: '2026-09-02', end: '2026-09-02', warning: 'National Day — public holiday. Expect parades and crowds in major cities.' },
+    { name: 'Reunification Day 2027', start: '2027-04-30', end: '2027-04-30', warning: 'Reunification Day — national holiday. Some closures; Ho Chi Minh City is especially busy.' },
+    { name: 'National Day 2027',      start: '2027-09-02', end: '2027-09-02', warning: 'National Day — public holiday. Expect parades and crowds in major cities.' },
+  ],
+};
+
+// Legacy default (China) for backward compat
+const HOLIDAYS = HOLIDAYS_BY_COUNTRY.china;
 
 const today = new Date().toISOString().split('T')[0];
 
@@ -272,9 +304,14 @@ export default function QuizFlow({ onComplete }) {
     return () => clearTimeout(t);
   }, [isFamilyKids]);
 
-  // Auto-advance 1s after China is selected on country screen
+  // Clear city selection when country changes (prevents stale city keys crossing over)
   useEffect(() => {
-    if (step !== 0 || answers.country !== 'china') return;
+    setAnswers(a => ({ ...a, city: [] }));
+  }, [answers.country]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Auto-advance 1s after any country is selected on country screen
+  useEffect(() => {
+    if (step !== 0 || !answers.country) return;
     const t = setTimeout(() => { setStep(1); }, 1000);
     return () => clearTimeout(t);
   }, [answers.country, step]);
@@ -285,10 +322,11 @@ export default function QuizFlow({ onComplete }) {
   const ret         = datesAnswer.return    || '';
   const totalDays   = dep && ret ? Math.round((new Date(ret) - new Date(dep)) / 86400000) + 1 : 0;
   const dateError   = dep && ret && dep >= ret;
+  const activeHolidays = HOLIDAYS_BY_COUNTRY[answers.country] || HOLIDAYS_BY_COUNTRY.china;
   const overlappingHolidays = useMemo(() => {
     if (!dep || !ret || dateError) return [];
-    return HOLIDAYS.filter(h => dep <= h.end && ret >= h.start);
-  }, [dep, ret, dateError]);
+    return activeHolidays.filter(h => dep <= h.end && ret >= h.start);
+  }, [dep, ret, dateError, answers.country]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Reveal + scroll flight times when both dates are picked
   useEffect(() => {
@@ -317,9 +355,11 @@ export default function QuizFlow({ onComplete }) {
     ? Boolean(dep && ret && !dateError && totalDays >= 1)
     : q.multi ? (selected || []).length > 0 : selected !== null && selected !== undefined;
 
+  // Dynamic city options based on selected country
+  const activeCityOptions = isCity ? getCityOptions(answers.country || 'china') : q.options;
   const visibleCities = isCity && citySearch.trim()
-    ? q.options.filter(o => o.name.toLowerCase().includes(citySearch.toLowerCase()))
-    : q.options;
+    ? activeCityOptions.filter(o => o.name.toLowerCase().includes(citySearch.toLowerCase()))
+    : activeCityOptions;
   const selectedCityCount = (answers.city || []).length;
 
   // ── Date tap logic ─────────────────────────────────────────────────────────
@@ -504,45 +544,32 @@ export default function QuizFlow({ onComplete }) {
             return (
               <button
                 key={opt.value}
-                onClick={() => toggle(opt.value, opt.comingSoon)}
+                onClick={() => toggle(opt.value)}
                 style={{
                   width: '100%', display: 'flex', alignItems: 'center', gap: 14,
                   padding: '16px 18px', borderRadius: 16, textAlign: 'left',
-                  cursor: opt.comingSoon ? 'default' : 'pointer',
-                  background: '#fff',
+                  cursor: 'pointer', background: '#fff',
                   borderTop: `1.5px solid ${sel ? ACC : 'transparent'}`,
                   borderRight: `1.5px solid ${sel ? ACC : 'transparent'}`,
                   borderBottom: `1.5px solid ${sel ? ACC : 'transparent'}`,
                   borderLeft: `4px solid ${sel ? ACC : 'transparent'}`,
-                  opacity: opt.comingSoon ? 0.5 : 1,
                   boxSizing: 'border-box',
                   transition: 'border-color 0.15s',
                 }}
               >
                 <span style={{ fontSize: 26, flexShrink: 0 }}>{opt.icon}</span>
-                <span style={{ flex: 1, fontSize: 15, fontWeight: 600, color: '#1A1A1A' }}>{opt.name}</span>
-                {opt.comingSoon && (
-                  <span style={{ fontSize: 10, fontWeight: 700, padding: '3px 8px', borderRadius: 20, background: '#F0F0F0', color: '#999', flexShrink: 0 }}>
-                    Coming Soon
-                  </span>
-                )}
-                {!opt.comingSoon && (
-                  <div style={{
-                    width: 20, height: 20, borderRadius: '50%', flexShrink: 0,
-                    border: sel ? `6px solid ${ACC}` : '2px solid #D0D0D0',
-                    background: '#fff', transition: 'border 0.15s',
-                  }} />
-                )}
+                <div style={{ flex: 1, minWidth: 0, textAlign: 'left' }}>
+                  <p style={{ margin: 0, fontSize: 15, fontWeight: 600, color: '#1A1A1A' }}>{opt.name}</p>
+                  <p style={{ margin: 0, fontSize: 11, color: '#999', marginTop: 2 }}>{opt.desc}</p>
+                </div>
+                <div style={{
+                  width: 20, height: 20, borderRadius: '50%', flexShrink: 0,
+                  border: sel ? `6px solid ${ACC}` : '2px solid #D0D0D0',
+                  background: '#fff', transition: 'border 0.15s',
+                }} />
               </button>
             );
           })}
-
-          {/* Coming soon inline message — below the full list, never inside it */}
-          {comingSoonTapped && (
-            <p style={{ fontSize: 13, color: '#999', textAlign: 'center', margin: '2px 0 0' }}>
-              Coming soon — China is available now 🇨🇳
-            </p>
-          )}
         </div>
       )}
 
@@ -826,9 +853,9 @@ export default function QuizFlow({ onComplete }) {
           {/* Country: show confirmation text instead of button */}
           {isCountry ? (
             <div style={{ height: 54, display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: 10 }}>
-              {answers.country === 'china' ? (
+              {answers.country ? (
                 <p style={{ fontSize: 14, color: ACC, fontWeight: 600, margin: 0 }}>
-                  ✓ Great choice! Setting up China…
+                  ✓ Great choice! Setting up your trip…
                 </p>
               ) : (
                 <p style={{ fontSize: 13, color: '#C0BDB9', margin: 0 }}>
